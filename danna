@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Danna: Cazadora de Ranas en la Alberca 🐸💦</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Fredoka', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0077b6;
+      color: #fff;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #00b4d8 0%, #0077b6 100%);
+      cursor: pointer;
+    }
+
+    /* UI Layer */
+    .hud {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .badge {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: 2px solid #90e0ef;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .controls-btn {
+      pointer-events: auto;
+      background: #ffd166;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.1s;
+    }
+    .controls-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* Modales / Pantallas de estado */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 48, 73, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 20;
+      transition: opacity 0.3s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0 0 10px 0;
+      color: #ffd166;
+      text-shadow: 3px 3px 0px #000;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #06d6a0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 500px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .btn-play {
+      background: #06d6a0;
+      color: #003049;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0px #028090, 0 10px 20px rgba(0,0,0,0.3);
+      transition: transform 0.1s, background 0.2s;
+    }
+    .btn-play:hover {
+      background: #119da4;
+      color: #fff;
+    }
+    .btn-play:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0px #028090;
+    }
+
+    .level-card {
+      background: rgba(255,255,255,0.1);
+      padding: 15px 25px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <!-- HUD superior -->
+    <div class="hud">
+      <div class="badge" id="level-badge">🏆 Nivel 1</div>
+      <div class="badge" id="score-badge">🐸 Ranas: 0 / 5</div>
+      <div class="badge" id="timer-badge">⏱️ 30s</div>
+      <button class="controls-btn" id="sound-btn" onclick="toggleAudio()">🔊</button>
+    </div>
+
+    <!-- Canvas principal del juego -->
+    <canvas id="poolCanvas"></canvas>
+
+    <!-- Pantalla de Inicio -->
+    <div id="start-screen" class="overlay">
+      <h1>🌊 DANNA EN LA ALBERCA 🐸</h1>
+      <h2>¡Atrapa a las Ranas!</h2>
+      <p>Ayuda a Danna a atrapar todas las ranas traviesas que saltan por la piscina antes de que se acabe el tiempo.</p>
+      <div class="level-card">
+        <strong>Objetivo:</strong> Toca o haz clic sobre las ranas para atraparlas. ¡Cuidado con las doradas, son súper rápidas!
+      </div>
+      <button class="btn-play" onclick="startGame()">¡EMPEZAR A JUGAR!</button>
+    </div>
+
+    <!-- Pantalla de Cambio de Nivel -->
+    <div id="level-screen" class="overlay hidden">
+      <h1 id="level-title">¡Nivel Completado! 🎉</h1>
+      <p id="level-desc">Danna atrapó todas las ranas.</p>
+      <button class="btn-play" onclick="nextLevel()">SIGUIENTE NIVEL ➡️</button>
+    </div>
+
+    <!-- Pantalla de Victoria Final -->
+    <div id="win-screen" class="overlay hidden">
+      <h1>👑 ¡DANNA ES LA CAMPEONA! 👑</h1>
+      <h2>¡Completaste los 5 Niveles!</h2>
+      <p>Atrapaste a todas las ranas de la alberca, incluida la legendaria Rana Dorada. ¡Eres la mejor cazadora de ranas!</p>
+      <button class="btn-play" onclick="restartGame()">VOLVER A JUGAR 🔄</button>
+    </div>
+
+    <!-- Pantalla de Game Over -->
+    <div id="gameover-screen" class="overlay hidden">
+      <h1 style="color:#ef476f">¡Casi lo logras! 🐸💦</h1>
+      <p>Las ranas eran muy rápidas y se escaparon bajo el agua.</p>
+      <button class="btn-play" onclick="retryLevel()" style="background:#ef476f; box-shadow: 0 6px 0px #b5179e">INTENTAR DE NUEVO 🔄</button>
+    </div>
+  </div>
+
+  <script>
+    // --- SINTETIZADOR DE AUDIO (Web Audio API) ---
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('sound-btn').innerText = audioEnabled ? '🔊' : '🔇';
+    }
+
+    // Efecto: Chapoteo de agua
+    function playSplashSound() {
+      if (!audioEnabled || !audioCtx) return;
+      const bufferSize = audioCtx.sampleRate * 0.15;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      const whiteNoise = audioCtx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      whiteNoise.start();
+    }
+
+    // Efecto: Croac de Rana
+    function playCroakSound() {
+      if (!audioEnabled || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, audioCtx.currentTime);
+      osc.frequency.linearRampToValueAtTime(90, audioCtx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.12);
+    }
+
+    // Efecto: Captura Exitosa (Tono Alegre)
+    function playCatchSound() {
+      if (!audioEnabled || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.15);
+
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.15);
+    }
+
+    // BGM Loop Sintético (Melodía Tropical alegre)
+    let bgmInterval = null;
+    const bgmNotes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; // C, E, G, C, G, E
+    let bgmIndex = 0;
+
+    function startBGM() {
+      if (bgmInterval) clearInterval(bgmInterval);
+      bgmInterval = setInterval(() => {
+        if (!audioEnabled || !audioCtx || gameState !== 'PLAYING') return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(bgmNotes[bgmIndex], audioCtx.currentTime);
+        
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.25);
+
+        bgmIndex = (bgmIndex + 1) % bgmNotes.length;
+      }, 350);
+    }
+
+    // --- CONFIGURACIÓN DE NIVELES ---
+    const LEVELS = [
+      { id: 1, title: "Nivel 1: Alberca Infantil 👶", goal: 5, time: 30, speed: 1.2, goldenChance: 0, desc: "Ranas tranquilas para calentar motores." },
+      { id: 2, title: "Nivel 2: Tobogán Veloz 🛝", goal: 8, time: 25, speed: 2.0, goldenChance: 0.1, desc: "¡Las ranas aprendieron a nadar más rápido!" },
+      { id: 3, title: "Nivel 3: Fiesta de Inflables 🛟", goal: 10, time: 25, speed: 2.5, goldenChance: 0.2, desc: "Ranas saltarinas entre salvavidas coloridos." },
+      { id: 4, title: "Nivel 4: Alberca Nocturna 🌙", goal: 12, time: 22, speed: 3.2, goldenChance: 0.3, desc: "¡Noche de luz de luna! Ranas doradas más frecuentes." },
+      { id: 5, title: "Nivel 5: El Gran Torneo 👑", goal: 15, time: 20, speed: 4.0, goldenChance: 0.5, desc: "¡Nivel Máximo! Demuestra que Danna es la reina de la piscina." }
+    ];
+
+    // --- MOTOR DEL JUEGO ---
+    const canvas = document.getElementById('poolCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let currentLevelIdx = 0;
+    let score = 0;
+    let timeLeft = 0;
+    let timerTimer = null;
+    let gameState = 'START'; // START, PLAYING, LEVEL_CLEAR, WIN, GAMEOVER
+
+    let frogs = [];
+    let splashes = [];
+    let inflatables = [];
+    let particles = [];
+
+    // Ajuste de tamaño de pantalla
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initInflatables();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Clase Rana
+    class Frog {
+      constructor(speed, isGolden = false) {
+        this.radius = isGolden ? 22 : 26;
+        this.x = Math.random() * (canvas.width - 100) + 50;
+        this.y = Math.random() * (canvas.height - 100) + 50;
+        this.vx = (Math.random() - 0.5) * speed * 2;
+        this.vy = (Math.random() - 0.5) * speed * 2;
+        this.isGolden = isGolden;
+        this.jumpTimer = Math.random() * 100;
+        this.submerged = false;
+        this.submergeTimer = 0;
+      }
+
+      update() {
+        if (this.submerged) {
+          this.submergeTimer--;
+          if (this.submergeTimer <= 0) {
+            this.submerged = false;
+            this.x = Math.random() * (canvas.width - 100) + 50;
+            this.y = Math.random() * (canvas.height - 100) + 50;
+            createSplash(this.x, this.y);
+          }
+          return;
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Rebote en bordes
+        if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) this.vx *= -1;
+        if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) this.vy *= -1;
+
+        // Movimiento de salto aleatorio
+        this.jumpTimer++;
+        if (this.jumpTimer > 120) {
+          this.vx = (Math.random() - 0.5) * LEVELS[currentLevelIdx].speed * 2.5;
+          this.vy = (Math.random() - 0.5) * LEVELS[currentLevelIdx].speed * 2.5;
+          this.jumpTimer = 0;
+          if (Math.random() < 0.2) playCroakSound();
+        }
+      }
+
+      draw() {
+        if (this.submerged) return;
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        // Sombrita en el agua
+        ctx.beginPath();
+        ctx.ellipse(0, this.radius * 0.7, this.radius, this.radius * 0.4, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.fill();
+
+        // Cuerpecito de la rana
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.isGolden ? '#ffd166' : '#06d6a0';
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = this.isGolden ? '#ffb703' : '#059669';
+        ctx.stroke();
+
+        // Ojos saltones
+        ctx.beginPath();
+        ctx.arc(-this.radius * 0.5, -this.radius * 0.6, this.radius * 0.35, 0, Math.PI * 2);
+        ctx.arc(this.radius * 0.5, -this.radius * 0.6, this.radius * 0.35, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.stroke();
+
+        // Pupilas
+        ctx.beginPath();
+        ctx.arc(-this.radius * 0.5, -this.radius * 0.6, this.radius * 0.15, 0, Math.PI * 2);
+        ctx.arc(this.radius * 0.5, -this.radius * 0.6, this.radius * 0.15, 0, Math.PI * 2);
+        ctx.fillStyle = '#000';
+        ctx.fill();
+
+        // Sonrisita
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius * 0.5, 0.2, Math.PI - 0.2);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    // Efectos de Chapoteos y Partículas
+    function createSplash(x, y) {
+      playSplashSound();
+      splashes.push({ x, y, radius: 5, maxRadius: 40, opacity: 1 });
+      for (let i = 0; i < 8; i++) {
+        particles.push({
+          x, y,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6,
+          life: 20,
+          color: '#90e0ef'
+        });
+      }
+    }
+
+    // Salvavidas / Inflables flotantes decorativos
+    function initInflatables() {
+      inflatables = [
+        { x: canvas.width * 0.2, y: canvas.height * 0.3, radius: 50, color: '#ef476f' },
+        { x: canvas.width * 0.7, y: canvas.height * 0.6, radius: 65, color: '#ffd166' }
+      ];
+    }
+
+    function drawInflatables() {
+      inflatables.forEach(inf => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(inf.x, inf.y, inf.radius, 0, Math.PI * 2);
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = inf.color;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(inf.x, inf.y, inf.radius + 10, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    // --- CICLO PRINCIPAL (LOOP) ---
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Efecto de agua / Noche en Nivel 4
+      if (currentLevelIdx === 3) {
+        ctx.fillStyle = '#001d3d';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      drawInflatables();
+
+      // Dibujar y actualizar Chapoteos
+      splashes.forEach((s, idx) => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${s.opacity})`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        s.radius += 2;
+        s.opacity -= 0.03;
+        if (s.opacity <= 0) splashes.splice(idx, 1);
+      });
+
+      // Dibujar Partículas
+      particles.forEach((p, idx) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        if (p.life <= 0) particles.splice(idx, 1);
+      });
+
+      // Actualizar y Dibujar Ranas
+      if (gameState === 'PLAYING') {
+        frogs.forEach(frog => {
+          frog.update();
+          frog.draw();
+        });
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // --- INTERACCIÓN Y CAPTURA ---
+    function handleTap(e) {
+      if (gameState !== 'PLAYING') return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const clickY = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+      createSplash(clickX, clickY);
+
+      frogs.forEach((frog) => {
+        if (frog.submerged) return;
+
+        const dist = Math.hypot(clickX - frog.x, clickY - frog.y);
+        if (dist < frog.radius + 15) {
+          // ¡Rana Atrapada!
+          playCatchSound();
+          frog.submerged = true;
+          frog.submergeTimer = 180; // Se oculta temporalmente
+          score += frog.isGolden ? 2 : 1; // Las doradas valen doble
+          updateHUD();
+
+          // Comprobar Victoria del Nivel
+          if (score >= LEVELS[currentLevelIdx].goal) {
+            completeLevel();
+          }
+        }
+      });
+    }
+
+    canvas.addEventListener('mousedown', handleTap);
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleTap(e);
+    }, { passive: false });
+
+    // --- GESTIÓN DEL JUEGO ---
+    function updateHUD() {
+      document.getElementById('level-badge').innerText = `🏆 ${LEVELS[currentLevelIdx].title.split(':')[0]}`;
+      document.getElementById('score-badge').innerText = `🐸 Ranas: ${score} / ${LEVELS[currentLevelIdx].goal}`;
+      document.getElementById('timer-badge').innerText = `⏱️ ${timeLeft}s`;
+    }
+
+    function startGame() {
+      initAudio();
+      startBGM();
+      currentLevelIdx = 0;
+      loadLevel(currentLevelIdx);
+      document.getElementById('start-screen').classList.add('hidden');
+    }
+
+    function loadLevel(idx) {
+      const lvl = LEVELS[idx];
+      score = 0;
+      timeLeft = lvl.time;
+      gameState = 'PLAYING';
+
+      // Generar ranas del nivel
+      frogs = [];
+      for (let i = 0; i < lvl.goal + 2; i++) {
+        const isGolden = Math.random() < lvl.goldenChance;
+        frogs.push(new Frog(lvl.speed, isGolden));
+      }
+
+      updateHUD();
+
+      // Contador de tiempo
+      if (timerTimer) clearInterval(timerTimer);
+      timerTimer = setInterval(() => {
+        if (gameState !== 'PLAYING') return;
+        timeLeft--;
+        updateHUD();
+
+        if (timeLeft <= 0) {
+          clearInterval(timerTimer);
+          gameOver();
+        }
+      }, 1000);
+    }
+
+    function completeLevel() {
+      gameState = 'LEVEL_CLEAR';
+      clearInterval(timerTimer);
+
+      if (currentLevelIdx + 1 < LEVELS.length) {
+        document.getElementById('level-title').innerText = `¡Nivel ${currentLevelIdx + 1} Superado! 🎉`;
+        document.getElementById('level-desc').innerText = `Danna atrapó todas las ranas necesarias. ¡Siguiente reto!`;
+        document.getElementById('level-screen').classList.remove('hidden');
+      } else {
+        document.getElementById('win-screen').classList.remove('hidden');
+      }
+    }
+
+    function nextLevel() {
+      currentLevelIdx++;
+      document.getElementById('level-screen').classList.add('hidden');
+      loadLevel(currentLevelIdx);
+    }
+
+    function gameOver() {
+      gameState = 'GAMEOVER';
+      document.getElementById('gameover-screen').classList.remove('hidden');
+    }
+
+    function retryLevel() {
+      document.getElementById('gameover-screen').classList.add('hidden');
+      loadLevel(currentLevelIdx);
+    }
+
+    function restartGame() {
+      document.getElementById('win-screen').classList.add('hidden');
+      startGame();
+    }
+
+    // Inicialización
+    resizeCanvas();
+    animate();
+  </script>
+</body>
+</html>
