@@ -142,7 +142,7 @@
     .btn-next:hover { background: var(--primary-dark); }
     .btn-next:disabled { background: #94a3b8; cursor: not-allowed; }
 
-    /* Estilos de la pantalla de resultados */
+    /* Pantalla de resultados */
     .results-container {
       text-align: center;
       padding: 1.5rem 0.5rem;
@@ -210,15 +210,21 @@
   </header>
 
   <div id="quiz-body">
-    <div class="question-block">
-      <div class="question-title" id="question-text"></div>
-      <div class="options" id="options-container"></div>
-      <div class="explanation" id="explanation-box"></div>
+    <!-- Vista de preguntas -->
+    <div id="question-view">
+      <div class="question-block">
+        <div class="question-title" id="question-text"></div>
+        <div class="options" id="options-container"></div>
+        <div class="explanation" id="explanation-box"></div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Siguiente</button>
+      </div>
     </div>
 
-    <div class="nav-actions">
-      <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Siguiente</button>
-    </div>
+    <!-- Vista de resultados -->
+    <div id="results-view" class="results-container" style="display: none;"></div>
   </div>
 </div>
 
@@ -263,6 +269,10 @@
   function loadQuestion() {
     answered = false;
     const q = questions[currentIdx];
+
+    document.getElementById('question-view').style.display = 'block';
+    document.getElementById('results-view').style.display = 'none';
+
     document.getElementById('progress').innerText = `Pregunta ${currentIdx + 1} de ${questions.length}`;
     document.getElementById('question-text').innerText = q.q;
     document.getElementById('btn-next').disabled = true;
@@ -319,6 +329,10 @@
   }
 
   function showResults() {
+    document.getElementById('question-view').style.display = 'none';
+    const resultsView = document.getElementById('results-view');
+    resultsView.style.display = 'block';
+
     document.getElementById('progress').innerText = "Evaluación finalizada";
     
     let circleClass = "low";
@@ -338,16 +352,14 @@
       titleColor = "var(--warning)";
     }
 
-    document.getElementById('quiz-body').innerHTML = `
-      <div class="results-container">
-        <div class="score-circle ${circleClass}">
-          <span>${score}/${questions.length}</span>
-          <span class="score-label">Aciertos</span>
-        </div>
-        <div class="result-title" style="color: ${titleColor};">${title}</div>
-        <p class="result-msg">${message}</p>
-        <button class="btn-next" onclick="resetQuiz()">Reintentar ejercicios</button>
+    resultsView.innerHTML = `
+      <div class="score-circle ${circleClass}">
+        <span>${score}/${questions.length}</span>
+        <span class="score-label">Aciertos</span>
       </div>
+      <div class="result-title" style="color: ${titleColor};">${title}</div>
+      <p class="result-msg">${message}</p>
+      <button class="btn-next" onclick="resetQuiz()">Reintentar ejercicios</button>
     `;
   }
 
