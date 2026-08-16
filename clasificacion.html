@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clasificación de Magnitudes y Unidades - SI</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --success: #16a34a;
+      --error: #dc2626;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 780px;
+      width: 100%;
+      background: var(--card-bg);
+      padding: 1.75rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    p.instruction {
+      font-size: 0.95rem;
+      color: #64748b;
+    }
+
+    .pool-section {
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      min-height: 90px;
+      border: 2px dashed var(--border);
+    }
+
+    .pool-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card.selected {
+      border-color: var(--primary);
+      background-color: #eff6ff;
+      outline: 2px solid var(--primary);
+    }
+
+    .bins-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 580px) {
+      .bins-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bin {
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bin-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: center;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .bin-fundamental .bin-header { color: #0284c7; }
+    .bin-derivada .bin-header { color: #7c3aed; }
+
+    .bin-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      flex-grow: 1;
+      align-content: flex-start;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 0.65rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .btn-check {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-check:hover { background: var(--primary-dark); }
+
+    .btn-reset {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn-reset:hover { background: #cbd5e1; }
+
+    .feedback-panel {
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback-correct {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .feedback-partial {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+
+    .card.correct { border: 2px solid var(--success); background: #f0fdf4; }
+    .card.incorrect { border: 2px solid var(--error); background: #fef2f2; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Clasificación: Unidades Fundamentales y Derivadas</h1>
+    <p class="instruction">Haz clic o toca una unidad y luego selecciona el contenedor correspondiente.</p>
+  </header>
+
+  <section class="pool-section">
+    <div class="pool-title">Unidades disponibles para clasificar</div>
+    <div class="cards-container" id="pool"></div>
+  </section>
+
+  <div class="bins-grid">
+    <div class="bin bin-fundamental" onclick="placeSelected('fundamental')">
+      <div class="bin-header">Unidades Fundamentales</div>
+      <div class="bin-content" id="bin-fundamental"></div>
+    </div>
+
+    <div class="bin bin-derivada" onclick="placeSelected('derivada')">
+      <div class="bin-header">Unidades Derivadas</div>
+      <div class="bin-content" id="bin-derivada"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-check" onclick="checkAnswers()">Comprobar</button>
+    <button class="btn-reset" onclick="resetExercise()">Reiniciar</button>
+  </div>
+
+  <div id="feedback" class="feedback-panel"></div>
+</div>
+
+<script>
+  const items = [
+    { id: 1, name: "Metro (m)", type: "fundamental", desc: "Longitud (base del SI)" },
+    { id: 2, name: "Newton (N)", type: "derivada", desc: "Fuerza (kg·m/s²)" },
+    { id: 3, name: "Segundo (s)", type: "fundamental", desc: "Tiempo (base del SI)" },
+    { id: 4, name: "Pascal (Pa)", type: "derivada", desc: "Presión (N/m²)" },
+    { id: 5, name: "Kilogramo (kg)", type: "fundamental", desc: "Masa (base del SI)" },
+    { id: 6, name: "Metro por segundo (m/s)", type: "derivada", desc: "Velocidad" }
+  ];
+
+  let selectedItem = null;
+  let placements = { fundamental: [], derivada: [] };
+
+  function init() {
+    placements = { fundamental: [], derivada: [] };
+    selectedItem = null;
+    document.getElementById('feedback').style.display = 'none';
+    render();
+  }
+
+  function render() {
+    const pool = document.getElementById('pool');
+    const binFund = document.getElementById('bin-fundamental');
+    const binDeriv = document.getElementById('bin-derivada');
+
+    pool.innerHTML = '';
+    binFund.innerHTML = '';
+    binDeriv.innerHTML = '';
+
+    items.forEach(item => {
+      const isFund = placements.fundamental.includes(item.id);
+      const isDeriv = placements.derivada.includes(item.id);
+
+      const card = document.createElement('div');
+      card.className = `card ${selectedItem === item.id ? 'selected' : ''}`;
+      card.innerText = item.name;
+      card.onclick = (e) => {
+        e.stopPropagation();
+        selectCard(item.id);
+      };
+
+      if (isFund) {
+        binFund.appendChild(card);
+      } else if (isDeriv) {
+        binDeriv.appendChild(card);
+      } else {
+        pool.appendChild(card);
+      }
+    });
+  }
+
+  function selectCard(id) {
+    selectedItem = selectedItem === id ? null : id;
+    render();
+  }
+
+  function placeSelected(targetBin) {
+    if (!selectedItem) return;
+
+    placements.fundamental = placements.fundamental.filter(id => id !== selectedItem);
+    placements.derivada = placements.derivada.filter(id => id !== selectedItem);
+
+    placements[targetBin].push(selectedItem);
+    selectedItem = null;
+    render();
+  }
+
+  function checkAnswers() {
+    const totalPlaced = placements.fundamental.length + placements.derivada.length;
+    const feedback = document.getElementById('feedback');
+
+    if (totalPlaced < items.length) {
+      feedback.className = "feedback-panel feedback-partial";
+      feedback.style.display = "block";
+      feedback.innerHTML = "<strong>Faltan elementos:</strong> Por favor clasifica todas las tarjetas antes de comprobar.";
+      return;
+    }
+
+    let correctCount = 0;
+    const cardsInFund = document.querySelectorAll('#bin-fundamental .card');
+    const cardsInDeriv = document.querySelectorAll('#bin-derivada .card');
+
+    cardsInFund.forEach(card => {
+      const item = items.find(i => i.name === card.innerText);
+      if (item.type === 'fundamental') {
+        card.className = 'card correct';
+        correctCount++;
+      } else {
+        card.className = 'card incorrect';
+      }
+    });
+
+    cardsInDeriv.forEach(card => {
+      const item = items.find(i => i.name === card.innerText);
+      if (item.type === 'derivada') {
+        card.className = 'card correct';
+        correctCount++;
+      } else {
+        card.className = 'card incorrect';
+      }
+    });
+
+    feedback.style.display = "block";
+    if (correctCount === items.length) {
+      feedback.className = "feedback-panel feedback-correct";
+      feedback.innerHTML = "<strong>¡Excelente trabajo!</strong> Has clasificado correctamente las 7 magnitudes fundamentales y sus derivadas.";
+    } else {
+      feedback.className = "feedback-panel feedback-partial";
+      feedback.innerHTML = `<strong>Revisión (${correctCount}/${items.length} aciertos):</strong> Los elementos marcados en rojo están en la categoría incorrecta. Recuerda que las derivadas se obtienen multiplicando o dividiendo magnitudes fundamentales.`;
+    }
+  }
+
+  function resetExercise() {
+    init();
+  }
+
+  init();
+</script>
+
+</body>
+</html>
