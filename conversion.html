@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversión de Unidades y Prefijos del SI</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --success: #16a34a;
+      --error: #dc2626;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+    }
+
+    .quiz-card {
+      max-width: 680px;
+      width: 100%;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .progress {
+      font-size: 0.85rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .question-block {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .option-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background-color: #f0f9ff;
+    }
+
+    .option-btn.selected-correct {
+      background-color: #dcfce7;
+      border-color: var(--success);
+      color: #166534;
+      font-weight: 600;
+    }
+
+    .option-btn.selected-incorrect {
+      background-color: #fef2f2;
+      border-color: var(--error);
+      color: #991b1b;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+    .exp-correct { background: #f0fdf4; border-left: 4px solid var(--success); color: #166534; }
+    .exp-incorrect { background: #fff1f2; border-left: 4px solid var(--error); color: #9f1239; }
+
+    .nav-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .btn-next {
+      background: var(--primary);
+      color: white;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-next:hover { background: var(--primary-dark); }
+    .btn-next:disabled { background: #94a3b8; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+<div class="quiz-card">
+  <header>
+    <div class="progress" id="progress">Pregunta 1 de 3</div>
+    <h1>Conversión y Prefijos del SI</h1>
+  </header>
+
+  <div id="quiz-body">
+    <div class="question-block">
+      <div class="question-title" id="question-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="explanation" id="explanation-box"></div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Siguiente</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "¿A cuántos metros equivalen 5 km?",
+      options: [
+        { text: "A) 50 m", correct: false },
+        { text: "B) 5,000 m", correct: true },
+        { text: "C) 500 m", correct: false },
+        { text: "D) 0.005 m", correct: false }
+      ],
+      exp: "¡Correcto! El prefijo 'kilo' representa 10³ (1,000 unidades). Por lo tanto, 5 km = 5 × 1,000 m = 5,000 m."
+    },
+    {
+      q: "Si un vehículo viaja a 25 m/s, ¿cuál es su velocidad equivalente en kilómetros por hora (km/h)?",
+      options: [
+        { text: "A) 72 km/h", correct: false },
+        { text: "B) 90 km/h", correct: true },
+        { text: "C) 100 km/h", correct: false },
+        { text: "D) 60 km/h", correct: false }
+      ],
+      exp: "¡Correcto! Aplicando factores de conversión: 25 m/s × (3600 s / 1 h) × (1 km / 1000 m) = 90 km/h (o multiplicando directamente 25 × 3.6 = 90)."
+    },
+    {
+      q: "¿Qué prefijo del SI representa un factor de 10⁻³ (una milésima parte)?",
+      options: [
+        { text: "A) Centi-", correct: false },
+        { text: "B) Micro-", correct: false },
+        { text: "C) Mili-", correct: true },
+        { text: "D) Kilo-", correct: false }
+      ],
+      exp: "¡Correcto! 'Mili-' (m) equivale a 10⁻³ (0.001). Recuerda que 'centi-' es 10⁻² y 'micro-' es 10⁻⁶."
+    }
+  ];
+
+  let currentIdx = 0;
+  let answered = false;
+
+  function loadQuestion() {
+    answered = false;
+    const q = questions[currentIdx];
+    document.getElementById('progress').innerText = `Pregunta ${currentIdx + 1} de ${questions.length}`;
+    document.getElementById('question-text').innerText = q.q;
+    document.getElementById('btn-next').disabled = true;
+    document.getElementById('btn-next').innerText = currentIdx === questions.length - 1 ? "Finalizar" : "Siguiente";
+
+    const expBox = document.getElementById('explanation-box');
+    expBox.className = "explanation";
+    expBox.innerHTML = "";
+
+    const optContainer = document.getElementById('options-container');
+    optContainer.innerHTML = '';
+
+    q.options.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = opt.text;
+      btn.onclick = () => selectOption(btn, opt.correct, q.exp);
+      optContainer.appendChild(btn);
+    });
+  }
+
+  function selectOption(button, isCorrect, expText) {
+    if (answered) return;
+    answered = true;
+
+    const allButtons = document.querySelectorAll('.option-btn');
+    allButtons.forEach(b => b.disabled = true);
+
+    const expBox = document.getElementById('explanation-box');
+    expBox.classList.add('show');
+
+    if (isCorrect) {
+      button.classList.add('selected-correct');
+      expBox.classList.add('exp-correct');
+      expBox.innerHTML = `<strong>¡Correcto!</strong> ${expText}`;
+    } else {
+      button.classList.add('selected-incorrect');
+      expBox.classList.add('exp-incorrect');
+      expBox.innerHTML = `<strong>Incorrecto.</strong> ${expText}`;
+    }
+
+    document.getElementById('btn-next').disabled = false;
+  }
+
+  function nextQuestion() {
+    if (currentIdx < questions.length - 1) {
+      currentIdx++;
+      loadQuestion();
+    } else {
+      document.getElementById('quiz-body').innerHTML = `
+        <div style="text-align:center; padding: 2rem 0;">
+          <h2 style="color:var(--success); margin-bottom:0.75rem;">¡Has completado los ejercicios!</h2>
+          <p style="color:#64748b; margin-bottom:1.5rem;">Comprendiste los factores de conversión y la notación de prefijos del Sistema Internacional.</p>
+          <button class="btn-next" onclick="location.reload()">Reintentar ejercicios</button>
+        </div>
+      `;
+    }
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
