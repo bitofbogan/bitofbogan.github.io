@@ -13,6 +13,7 @@
       --text: #1e293b;
       --success: #16a34a;
       --error: #dc2626;
+      --warning: #d97706;
       --border: #e2e8f0;
     }
 
@@ -135,10 +136,69 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      transition: background-color 0.15s;
     }
 
     .btn-next:hover { background: var(--primary-dark); }
     .btn-next:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* Estilos de la pantalla de resultados */
+    .results-container {
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .score-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-weight: 800;
+      font-size: 1.8rem;
+    }
+
+    .score-circle.perfect {
+      background: #dcfce7;
+      color: var(--success);
+      border: 4px solid var(--success);
+    }
+
+    .score-circle.partial {
+      background: #fef3c7;
+      color: var(--warning);
+      border: 4px solid var(--warning);
+    }
+
+    .score-circle.low {
+      background: #fee2e2;
+      color: var(--error);
+      border: 4px solid var(--error);
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: -4px;
+    }
+
+    .result-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-msg {
+      font-size: 0.95rem;
+      color: #475569;
+      max-width: 500px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -198,6 +258,7 @@
 
   let currentIdx = 0;
   let answered = false;
+  let score = 0;
 
   function loadQuestion() {
     answered = false;
@@ -205,7 +266,7 @@
     document.getElementById('progress').innerText = `Pregunta ${currentIdx + 1} de ${questions.length}`;
     document.getElementById('question-text').innerText = q.q;
     document.getElementById('btn-next').disabled = true;
-    document.getElementById('btn-next').innerText = currentIdx === questions.length - 1 ? "Finalizar" : "Siguiente";
+    document.getElementById('btn-next').innerText = currentIdx === questions.length - 1 ? "Ver resultados" : "Siguiente";
 
     const expBox = document.getElementById('explanation-box');
     expBox.className = "explanation";
@@ -226,6 +287,8 @@
   function selectOption(button, isCorrect, expText) {
     if (answered) return;
     answered = true;
+
+    if (isCorrect) score++;
 
     const allButtons = document.querySelectorAll('.option-btn');
     allButtons.forEach(b => b.disabled = true);
@@ -251,14 +314,47 @@
       currentIdx++;
       loadQuestion();
     } else {
-      document.getElementById('quiz-body').innerHTML = `
-        <div style="text-align:center; padding: 2rem 0;">
-          <h2 style="color:var(--success); margin-bottom:0.75rem;">¡Has completado los ejercicios!</h2>
-          <p style="color:#64748b; margin-bottom:1.5rem;">Comprendiste los factores de conversión y la notación de prefijos del Sistema Internacional.</p>
-          <button class="btn-next" onclick="location.reload()">Reintentar ejercicios</button>
-        </div>
-      `;
+      showResults();
     }
+  }
+
+  function showResults() {
+    document.getElementById('progress').innerText = "Evaluación finalizada";
+    
+    let circleClass = "low";
+    let title = "Sigue repasando la lección";
+    let message = "Parece que algunos conceptos de conversión y prefijos aún generan dudas. ¡No te desanimes! Revisa nuevamente los videos explicativos y vuelve a intentarlo.";
+    let titleColor = "var(--error)";
+
+    if (score === questions.length) {
+      circleClass = "perfect";
+      title = "¡Excelente esfuerzo!";
+      message = "¡Dominas a la perfección las conversiones y los prefijos del Sistema Internacional! Estás listo para continuar con los siguientes temas de física.";
+      titleColor = "var(--success)";
+    } else if (score >= 1) {
+      circleClass = "partial";
+      title = "¡Buen trabajo, te falta poco!";
+      message = "Has demostrado comprender las bases, pero aún hay pequeños detalles por pulir. Da un repaso rápido a los factores de multiplicación y vuelve a practicar.";
+      titleColor = "var(--warning)";
+    }
+
+    document.getElementById('quiz-body').innerHTML = `
+      <div class="results-container">
+        <div class="score-circle ${circleClass}">
+          <span>${score}/${questions.length}</span>
+          <span class="score-label">Aciertos</span>
+        </div>
+        <div class="result-title" style="color: ${titleColor};">${title}</div>
+        <p class="result-msg">${message}</p>
+        <button class="btn-next" onclick="resetQuiz()">Reintentar ejercicios</button>
+      </div>
+    `;
+  }
+
+  function resetQuiz() {
+    score = 0;
+    currentIdx = 0;
+    loadQuestion();
   }
 
   loadQuestion();
