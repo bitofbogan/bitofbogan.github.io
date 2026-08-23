@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Examen - Preparatoria Abierta (v0.8.0)</title>
+  <title>Simulador de Examen - Preparatoria Abierta (v0.9.0)</title>
   <style>
     :root {
       --chrome-bg: #dee1e6;
@@ -194,7 +194,7 @@
     .taskbar-time { color: #cbd5e1; font-size: 0.8rem; text-align: right; }
 
     /* =========================================
-       2. VENTANA DE GOOGLE CHROME (PESTAÑAS FIX)
+       2. VENTANA DE GOOGLE CHROME
        ========================================= */
     #browser-window {
       position: absolute;
@@ -220,7 +220,6 @@
       gap: 4px;
     }
 
-    /* Pestañas con ancho amplio y recorte con puntos suspensivos */
     .tab {
       background: var(--chrome-tab-inactive);
       padding: 8px 14px;
@@ -379,6 +378,14 @@
       font-size: 0.95rem;
     }
 
+    .glight-search-icons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #70757a;
+      font-size: 1.1rem;
+    }
+
     .glight-tabs-menu {
       display: flex;
       gap: 24px;
@@ -474,7 +481,7 @@
     }
 
     /* =========================================
-       4. LOGIN GOOGLE & GMAIL (PRIVACIDAD RESTAURADA)
+       4. LOGIN GOOGLE & GMAIL
        ========================================= */
     .login-container {
       height: 100%;
@@ -922,7 +929,6 @@
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Animación continua en el último mensaje para resaltar */
     @keyframes latestMsgGlow {
       0% { box-shadow: 0 0 0 1px rgba(26,115,232,0.3); }
       100% { box-shadow: 0 0 10px 2px rgba(26,115,232,0.7); }
@@ -1012,7 +1018,7 @@
     }
 
     /* =========================================
-       6. PLATAFORMA SIPAG (ESPACIADO LIMPIO)
+       6. PLATAFORMA SIPAG
        ========================================= */
     .sipag-page-layout {
       height: 100%;
@@ -1086,7 +1092,6 @@
       margin-bottom: 12px;
     }
 
-    /* Espaciado limpio para no amontonar con los botones */
     .sipag-hero-content p {
       font-size: 0.95rem;
       color: #64748b;
@@ -1181,7 +1186,7 @@
     }
 
     /* =========================================
-       7. DASHBOARD & SOLICITUDES SIPAG (DONUT FIX)
+       7. DASHBOARD & SOLICITUDES SIPAG
        ========================================= */
     .sipag-dashboard-layout {
       height: 100%;
@@ -1452,7 +1457,7 @@
 <body>
 
   <!-- ETIQUETA DE VERSIÓN DISCRETA -->
-  <div class="app-version-tag">v0.8.0 (Build 2026)</div>
+  <div class="app-version-tag">v0.9.0 (Build 2026)</div>
 
   <!-- MODAL INICIAL DE REGISTRO -->
   <div id="setup-modal">
@@ -1788,7 +1793,7 @@
       <!-- ================= PESTAÑA 2: GOOGLE MEET ================= -->
       <div id="tab-view-meet" class="tab-view">
         
-        <!-- SUBVISTA 2.1: SALA PREVIA (LOBBY ORGÁNICO) -->
+        <!-- SUBVISTA 2.1: SALA PREVIA (LOBBY) -->
         <div id="view-meet-lobby" class="view-sub active" style="height:100%;">
           <div class="meet-lobby-container">
             
@@ -1896,7 +1901,6 @@
                 <div class="tile-label" id="meet-my-label">Estudiante (Tú)</div>
                 <div class="tile-mic-status" id="tile-user-mic-status">🎤</div>
 
-                <!-- CREDENCIAL EXACTA A ANDRESCRED.PNG -->
                 <div id="id-card-display" class="id-card-official-replica hidden">
                   <div class="id-logo-top">
                     <svg style="width:36px; height:36px;" viewBox="0 0 100 100">
@@ -1944,7 +1948,6 @@
               </div>
             </div>
 
-            <!-- BARRA COMPLETA DE HERRAMIENTAS -->
             <div class="meet-bottom-dock">
               <div class="meet-pill-controls">
                 <button class="meet-btn-circle" onclick="showTutorAlert('Opciones adicionales.')">···</button>
@@ -2201,7 +2204,7 @@
           </div>
         </div>
 
-        <!-- ================= SUBVISTA 3.5: DASHBOARD SIPAG (DONUT CONTINUO) ================= -->
+        <!-- ================= SUBVISTA 3.5: DASHBOARD SIPAG ================= -->
         <div id="view-sipag-dashboard" class="view-sub hidden" style="height:100%;">
           <div class="sipag-dashboard-layout">
             <div class="sipag-sidebar-menu">
@@ -2238,14 +2241,10 @@
                   <h3 style="font-size:1rem; color:#1e293b; margin-bottom:4px;">Mi avance académico</h3>
                   <p style="font-size:0.8rem; color:#64748b; margin-bottom:14px;">Consulta solicitudes y avance por módulos.</p>
                   
-                  <!-- DONUT CHART CONTINUO (100% CÍRCULO COMPLETO) -->
                   <div class="donut-chart-box">
                     <svg width="130" height="130" viewBox="0 0 42 42">
-                      <!-- Verde Acreditados: 60% (Dash: 60 100, Offset: 0) -->
                       <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#10b981" stroke-width="6.5" stroke-dasharray="60 100" stroke-dashoffset="0"></circle>
-                      <!-- Amarillo Pendientes: 30% (Dash: 30 100, Offset: -60) -->
                       <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#f59e0b" stroke-width="6.5" stroke-dasharray="30 100" stroke-dashoffset="-60"></circle>
-                      <!-- Rojo No Acreditados: 10% (Dash: 10 100, Offset: -90) -->
                       <circle cx="21" cy="21" r="15.9155" fill="transparent" stroke="#ef4444" stroke-width="6.5" stroke-dasharray="10 100" stroke-dashoffset="-90"></circle>
                     </svg>
 
@@ -2282,7 +2281,6 @@
               <div class="sipag-menu-item active">
                 <span>📝</span> <span>Examen</span>
               </div>
-              <!-- Botón Solicitar credencial mantenido -->
               <div class="sipag-menu-item" onclick="showTutorAlert('Para tu examen debes permanecer en esta sección.')">
                 <span>🪪</span> <span>Solicitar credencial</span>
               </div>
@@ -2381,11 +2379,10 @@
             
             <div id="exam-loading-screen" class="exam-loading-modal hidden">
               <div class="spinner"></div>
-              <h2 style="font-size:1.4rem; font-weight:600; margin-bottom:6px;">Esperando activación del examen...</h2>
-              <p style="font-size:0.85rem; color:#94a3b8;">Sincronizando reactivos oficiales con el servidor de evaluación.</p>
+              <h2 style="font-size:1.4rem; font-weight:600; margin-bottom:6px;" id="exam-loading-title">Esperando activación del examen...</h2>
+              <p style="font-size:0.85rem; color:#94a3b8;" id="exam-loading-desc">Sincronizando reactivos oficiales con el servidor de evaluación.</p>
             </div>
 
-            <!-- Suspensión con estilo elegante idéntico a carga -->
             <div id="exam-suspended-screen" class="exam-loading-modal hidden">
               <div style="font-size:3.5rem; margin-bottom:12px;">⚠️</div>
               <h2 style="font-size:1.6rem; font-weight:700; color:#f8fafc; margin-bottom:8px;">Tu examen ha sido suspendido, contacta a tu aplicador</h2>
@@ -2481,7 +2478,6 @@
       22: "Informática"
     };
 
-    // 4 Preguntas de examen variadas con 4 opciones cada una
     const PREGUNTAS_EXAMEN = [
       {
         q: "1.- ¿Cuál es la función primordial de la hipótesis dentro del método científico experimental?",
@@ -2528,6 +2524,7 @@
     let isSuspended = false;
     let isReactivated = false;
     let isExamTeacherActivated = false;
+    let isActivationPending = false;
     let finalScore = 9;
 
     const APLICADORES_LIST = [
@@ -2599,15 +2596,18 @@
     function showTutorAlert(msg) { alert(msg); }
 
     // ========================================================
-    // 2. GESTIÓN DE PESTAÑAS (MULTITAREA)
+    // 2. GESTIÓN DE PESTAÑAS (MULTITAREA & REACTIVACIÓN FIX)
     // ========================================================
     let activeTabId = 'gmail';
 
     function activateTab(tabId) {
-      // Regla: No regresar a SIPAG durante suspensión si el micro sigue encendido
-      if (activeTabId === 'meet' && tabId === 'sipag' && isSuspended && !document.getElementById('room-mic-btn').classList.contains('off')) {
-        alert("⚠️ Debes silenciar tu micrófono en Google Meet antes de regresar a la pestaña del examen.");
-        return;
+      // Bloqueo estricto: Si el examen fue reactivado en Meet, el alumno DEBE silenciar su micrófono antes de ir a SIPAG
+      if (activeTabId === 'meet' && tabId === 'sipag' && isReactivated && isSuspended) {
+        const micBtn = document.getElementById('room-mic-btn');
+        if (micBtn && !micBtn.classList.contains('off')) {
+          alert("⚠️ Recuerda silenciar tu micrófono (🎤) en Google Meet antes de regresar a la pestaña del examen.");
+          return;
+        }
       }
 
       activeTabId = tabId;
@@ -2622,8 +2622,13 @@
         if (meetTab) meetTab.classList.add('active');
         document.getElementById('tab-view-meet').classList.add('active');
 
-        if (!isExamTeacherActivated && document.getElementById('view-sipag-solicitudes') && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
-          triggerExamActivationInMeet();
+        // Espera de 2.5s al cambiar a Meet para la activación
+        if (!isExamTeacherActivated && !isActivationPending && document.getElementById('view-sipag-solicitudes') && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
+          isActivationPending = true;
+          updateTutor("Esperando al Aplicador...", "Espera unos segundos en la videollamada mientras el aplicador activa los exámenes...");
+          setTimeout(() => {
+            triggerExamActivationInMeet();
+          }, 2500);
         }
 
         if (isSuspended && !isReactivated) {
@@ -2637,6 +2642,24 @@
         const sipagTab = document.getElementById('tab-sipag');
         if (sipagTab) sipagTab.classList.add('active');
         document.getElementById('tab-view-sipag').classList.add('active');
+
+        // REACTIVACIÓN EXITOSA AL VOLVER A SIPAG
+        if (isSuspended && isReactivated) {
+          document.getElementById('exam-suspended-screen').classList.add('hidden');
+          const loadScreen = document.getElementById('exam-loading-screen');
+          loadScreen.classList.remove('hidden');
+          document.getElementById('exam-loading-title').innerText = "Sincronizando y reactivando evaluación...";
+          document.getElementById('exam-loading-desc').innerText = "Reanudando reactivos oficiales desde el servidor.";
+
+          updateTutor("Reanudando Examen...", "Sincronizando reactivos... el examen se reanudará en unos segundos.");
+
+          setTimeout(() => {
+            loadScreen.classList.add('hidden');
+            isSuspended = false;
+            loadQuestion(2); // Cargar Pregunta 3
+            updateTutor("Examen Reanudado ✅", "Continúa respondiendo tu evaluación. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
+          }, 2000);
+        }
       }
     }
 
@@ -2645,8 +2668,14 @@
       alert("⚠️ ¡Cuidado! No cierres las pestañas de tu examen para no perder tu sesión.");
     }
 
+    // BLOQUEO DE NUEVA PESTAÑA SI MIC NO ESTÁ SILENCIADO
     function handleNewTabClick() {
       if (activeTabId === 'meet') {
+        const micBtn = document.getElementById('room-mic-btn');
+        if (micBtn && !micBtn.classList.contains('off')) {
+          alert("⚠️ Debes silenciar tu micrófono (🎤) en Google Meet antes de abrir una pestaña nueva.");
+          return;
+        }
         openSipagNewTab();
       } else {
         alert("Primero completa el acceso a la videollamada de Google Meet antes de abrir nuevas pestañas.");
@@ -2668,7 +2697,7 @@
           switchGmailSubView('view-search-results');
           document.getElementById('glight-search-input').value = query;
           document.getElementById('omnibox').value = "https://www.google.com/search?q=" + query;
-          document.getElementById('tab-title-gmail').innerText = `🔍 ${query} - Buscar con Google`;
+          document.querySelector('#tab-gmail .tab-title-text').innerText = `🔍 ${query} - Buscar con Google`;
           updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail: Correo electrónico...'</strong>");
         } else {
           alert("Escribe 'Gmail' para continuar con el entrenamiento.");
@@ -2687,7 +2716,7 @@
     function goToLogin() {
       switchGmailSubView('view-login-select');
       document.getElementById('omnibox').value = "https://accounts.google.com/signin/v2/identifier";
-      document.getElementById('tab-title-gmail').innerText = "👤 Iniciar sesión: Cuentas de Google";
+      document.querySelector('#tab-gmail .tab-title-text').innerText = "👤 Iniciar sesión: Cuentas de Google";
       updateTutor("Paso 4: Seleccionar Cuenta", "Las cuentas mostradas no son tuyas. Haz clic en <strong>'Usar otra cuenta'</strong>.");
     }
 
@@ -2720,7 +2749,7 @@
 
     function goToInbox() {
       switchGmailSubView('view-gmail-inbox');
-      document.getElementById('tab-title-gmail').innerText = "✉️ Recibidos (11) - Gmail";
+      document.querySelector('#tab-gmail .tab-title-text').innerText = "✉️ Recibidos (11) - Gmail";
       document.getElementById('avatar-initial').innerText = studentName.charAt(0).toUpperCase();
 
       render11UnreadEmails();
@@ -2813,7 +2842,6 @@
       switchMeetSubView('view-meet-lobby');
       document.getElementById('omnibox').value = "https://meet.google.com/mag-ptbo-oaq";
 
-      // Correo consistente con el ingresado en el login
       document.getElementById('lobby-card-name').innerText = studentName;
       document.getElementById('lobby-user-email').innerText = enteredEmail;
       document.getElementById('lobby-header-avatar').innerText = studentName.charAt(0).toUpperCase();
@@ -2861,18 +2889,18 @@
       document.getElementById('id-card-mat-display').innerText = studentMatricula;
       document.getElementById('id-card-vigencia-display').innerText = "Septiembre 2026";
 
-      // El micrófono inicia encendido para responder al pase de lista
       document.getElementById('room-mic-btn').classList.remove('off');
       document.getElementById('tile-user-mic-status').innerText = "🎤";
 
       updateTutor("Paso 12: Pase de Lista", "Ya entraste a la llamada. Observa el <strong>Chat (💬)</strong> abajo a la derecha para el pase de lista.");
 
       setTimeout(() => {
-        triggerTeacherChatMessage();
+        triggerInitialRollCallChat();
       }, 1500);
     }
 
-    function triggerTeacherChatMessage() {
+    // EL BOTÓN DE CHAT SÓLO PULSA EN LA ACTIVACIÓN INICIAL
+    function triggerInitialRollCallChat() {
       const chatBtn = document.getElementById('meet-chat-toggle-btn');
       const badge = document.getElementById('chat-badge-count');
       chatBtn.classList.add('chat-btn-alert');
@@ -3096,11 +3124,6 @@
 
     function triggerExamActivationInMeet() {
       isExamTeacherActivated = true;
-      const chatBtn = document.getElementById('meet-chat-toggle-btn');
-      const badge = document.getElementById('chat-badge-count');
-      chatBtn.classList.add('chat-btn-alert');
-      badge.classList.remove('hidden');
-
       const chatBox = document.getElementById('chat-messages-box');
       chatBox.innerHTML += `
         <div class="chat-msg-bubble" style="background:#fef3c7; border-left:4px solid #f59e0b;">
@@ -3124,11 +3147,15 @@
       document.getElementById('omnibox').value = `https://www.sipag.tech/evaluacion/modulo-${XX}`;
       document.querySelector('#tab-sipag .tab-title-text').innerText = `📝 Examen Módulo ${XX}`;
 
-      document.getElementById('exam-loading-screen').classList.remove('hidden');
+      const loadScreen = document.getElementById('exam-loading-screen');
+      loadScreen.classList.remove('hidden');
+      document.getElementById('exam-loading-title').innerText = "Esperando activación del examen...";
+      document.getElementById('exam-loading-desc').innerText = "Sincronizando reactivos oficiales con el servidor de evaluación.";
+
       updateTutor("Cargando reactivos...", "Espera unos segundos mientras el sistema sincroniza tus preguntas oficiales...");
 
       setTimeout(() => {
-        document.getElementById('exam-loading-screen').classList.add('hidden');
+        loadScreen.classList.add('hidden');
         renderExamInterface();
       }, 2500);
     }
@@ -3292,13 +3319,15 @@
       const confirmFinish = confirm("¿Estás seguro de que deseas finalizar tu examen?");
       if (!confirmFinish) return;
 
-      document.getElementById('exam-loading-screen').classList.remove('hidden');
-      document.querySelector('#exam-loading-screen h2').innerText = "Generando calificación oficial...";
+      const loadScreen = document.getElementById('exam-loading-screen');
+      loadScreen.classList.remove('hidden');
+      document.getElementById('exam-loading-title').innerText = "Generando calificación oficial...";
+      document.getElementById('exam-loading-desc').innerText = "Calculando aciertos e integrando expediente académico.";
 
       finalScore = Math.floor(Math.random() * 4) + 7;
 
       setTimeout(() => {
-        document.getElementById('exam-loading-screen').classList.add('hidden');
+        loadScreen.classList.add('hidden');
         document.getElementById('final-score-display').innerText = `${finalScore} / 10`;
         document.getElementById('exam-score-modal').classList.remove('hidden');
 
