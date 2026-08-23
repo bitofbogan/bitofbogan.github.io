@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Examen - Fases 1, 2 y 3 (Gmail + Meet + SIPAG)</title>
+  <title>Simulador de Examen - Preparatoria Abierta (Fases 1 a 3)</title>
   <style>
     :root {
       --chrome-bg: #dee1e6;
@@ -14,14 +14,10 @@
       --google-red: #ea4335;
       --google-green: #34a853;
       --google-yellow: #fbbc05;
-      --dark-google-bg: #202124;
-      --dark-google-card: #303134;
       --text-main: #202124;
       --text-muted: #5f6368;
       --border-color: #dadce0;
-      --meet-bg: #111214;
-      --meet-tile-bg: #4a2818; /* Tono terracota exacto de la captura */
-      --sipag-header: #1e3a8a;
+      --meet-bg: #202124;
     }
 
     * {
@@ -36,7 +32,7 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: #0b0f19;
+      background: #0f172a;
     }
 
     /* =========================================
@@ -48,7 +44,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(11, 15, 25, 0.92);
+      background: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -316,123 +312,179 @@
     .tab-view.active { display: block; }
 
     /* =========================================
-       3. BÚSQUEDA GOOGLE TEMA OSCURO (IMAGEN 1)
+       3. BÚSQUEDA GOOGLE MODO CLARO (5 RESULTADOS)
        ========================================= */
-    .google-dark-container {
-      background: var(--dark-google-bg);
-      color: #e8eaed;
+    .glight-container {
+      background: #ffffff;
+      color: var(--text-main);
       min-height: 100%;
       display: flex;
       flex-direction: column;
     }
 
-    .gdark-header {
+    .glight-header {
       padding: 16px 24px;
       display: flex;
       align-items: center;
-      gap: 20px;
-      border-bottom: 1px solid #3c4043;
+      gap: 24px;
+      border-bottom: 1px solid #ebebeb;
     }
 
-    .gdark-logo {
+    .glight-logo {
       font-size: 1.6rem;
       font-weight: 700;
-      color: #fff;
+      letter-spacing: -1px;
       cursor: pointer;
     }
 
-    .gdark-search-bar {
+    .glight-search-bar {
       flex: 1;
       max-width: 690px;
-      background: var(--dark-google-card);
+      background: #ffffff;
+      border: 1px solid #dfe1e5;
       border-radius: 24px;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       gap: 14px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 6px rgba(32,33,36,.18);
     }
 
-    .gdark-search-bar input {
+    .glight-search-bar input {
       flex: 1;
       background: transparent;
       border: none;
       outline: none;
-      color: #fff;
+      color: var(--text-main);
       font-size: 0.95rem;
     }
 
-    .gdark-search-icons {
+    .glight-search-icons {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #9aa0a6;
+      color: #70757a;
       font-size: 1.1rem;
     }
 
-    .gdark-tabs-menu {
+    .glight-tabs-menu {
       display: flex;
       gap: 24px;
       padding: 10px 140px;
       font-size: 0.85rem;
-      color: #9aa0a6;
-      border-bottom: 1px solid #3c4043;
+      color: #5f6368;
+      border-bottom: 1px solid #ebebeb;
     }
-    .gdark-tabs-menu span.active {
-      color: #8ab4f8;
+    .glight-tabs-menu span.active {
+      color: #1a73e8;
       font-weight: 500;
-      border-bottom: 3px solid #8ab4f8;
+      border-bottom: 3px solid #1a73e8;
       padding-bottom: 8px;
     }
 
-    .gdark-results-body {
+    .glight-results-wrapper {
+      display: flex;
       padding: 20px 140px;
-      max-width: 960px;
+      gap: 40px;
     }
 
-    .gdark-result-item {
-      margin-bottom: 30px;
+    .glight-results-body {
+      flex: 1;
+      max-width: 650px;
     }
 
-    .gdark-site-info {
+    .glight-result-item {
+      margin-bottom: 28px;
+    }
+
+    .glight-site-info {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
-    .gdark-favicon {
+    .glight-favicon {
       width: 26px;
       height: 26px;
       border-radius: 50%;
-      background: #3c4043;
+      background: #f1f3f4;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.8rem;
     }
 
-    .gdark-url {
-      font-size: 0.78rem;
-      color: #bdc1c6;
+    .glight-url {
+      font-size: 0.8rem;
+      color: #202124;
     }
 
-    .gdark-title {
+    .glight-title {
       font-size: 1.25rem;
-      color: #8ab4f8;
+      color: #1a0dab;
       cursor: pointer;
       margin-bottom: 4px;
     }
-    .gdark-title:hover { text-decoration: underline; }
+    .glight-title:hover { text-decoration: underline; }
 
-    .gdark-desc {
+    .glight-desc {
       font-size: 0.88rem;
-      color: #bdc1c6;
+      color: #4d5156;
       line-height: 1.45;
     }
 
+    .glight-sitelinks {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-left: 10px;
+    }
+    .glight-sitelink-item a {
+      color: #1a0dab;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+    .glight-sitelink-item a:hover { text-decoration: underline; }
+    .glight-sitelink-item p {
+      font-size: 0.8rem;
+      color: #4d5156;
+      margin-top: 2px;
+    }
+
+    /* Panel Lateral de Google (Knowledge Panel) */
+    .glight-knowledge-panel {
+      width: 340px;
+      border: 1px solid #dfe1e5;
+      border-radius: 8px;
+      padding: 16px;
+      height: fit-content;
+      font-size: 0.85rem;
+      color: #3c4043;
+    }
+
+    .kp-images {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .kp-img {
+      flex: 1;
+      height: 90px;
+      background: #cbd5e1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
     /* =========================================
-       4. LOGIN GOOGLE (CON AVISO DE PRIVACIDAD)
+       4. LOGIN GOOGLE (CUENTAS FALSAS Y VACÍAS)
        ========================================= */
     .login-container {
       height: 100%;
@@ -459,8 +511,8 @@
       gap: 14px;
       padding: 12px;
       border-bottom: 1px solid #f1f3f4;
-      cursor: pointer;
       border-radius: 6px;
+      cursor: pointer;
     }
     .account-item:hover { background: #f8f9fa; }
 
@@ -522,7 +574,7 @@
     }
 
     /* =========================================
-       5. GMAIL BANDEJA (TODOS NO LEÍDOS)
+       5. GMAIL BANDEJA (11 NO LEÍDOS)
        ========================================= */
     .gmail-layout {
       height: 100%;
@@ -597,7 +649,7 @@
       cursor: pointer;
       font-size: 0.86rem;
       gap: 15px;
-      font-weight: 700; /* Todos no leídos */
+      font-weight: 700;
       background: #f2f6fc;
     }
 
@@ -607,8 +659,8 @@
     }
 
     .mail-sender {
-      min-width: 210px;
-      max-width: 210px;
+      min-width: 250px;
+      max-width: 250px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -707,7 +759,7 @@
     .btn-join-meet:hover { background: #1557b0; }
 
     /* =========================================
-       6. GOOGLE MEET EXACTO A LA CAPTURA (IMAGEN 2)
+       6. GOOGLE MEET MULTIUSUARIO
        ========================================= */
     .meet-container {
       height: 100%;
@@ -718,7 +770,6 @@
       position: relative;
     }
 
-    /* Header superior Meet */
     .meet-top-header {
       padding: 12px 20px;
       display: flex;
@@ -728,106 +779,68 @@
       color: #e8eaed;
     }
 
-    .meet-top-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 500;
-    }
-
-    .meet-top-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .meet-user-pill {
-      background: #3c4043;
-      padding: 4px 10px 4px 6px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-    }
-    .meet-user-avatar-circle {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #c2410c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-    }
-
-    /* Área central de video (Marco terracota) */
-    .meet-main-area {
+    .meet-grid-4 {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      padding: 12px 20px;
       position: relative;
     }
 
-    .meet-tile-terracota {
-      width: 100%;
-      height: 100%;
-      background: var(--meet-tile-bg);
-      border-radius: 16px;
+    .meet-tile-user {
+      background: #3c4043;
+      border-radius: 12px;
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    /* Simulación de Cámara Web Realista */
-    .webcam-feed-simulation {
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 40%, #5d311e 0%, #30170b 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
     }
+    .meet-tile-user.speaking { border-color: #8ab4f8; }
 
-    .student-center-circle {
-      width: 110px;
-      height: 110px;
+    .tile-avatar-circle {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      background: #ea580c;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      font-weight: 600;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      font-size: 1.8rem;
+      font-weight: 700;
     }
 
-    .meet-tile-username {
+    .tile-label {
       position: absolute;
-      bottom: 20px;
-      left: 24px;
-      font-size: 0.95rem;
+      bottom: 10px;
+      left: 12px;
+      background: rgba(0,0,0,0.65);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
       font-weight: 500;
-      color: #ffffff;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
 
-    /* Barra inferior estilo Meet */
+    .tile-mic-status {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 0.9rem;
+    }
+
+    /* Barra inferior Meet */
     .meet-bottom-dock {
-      height: 72px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       padding: 0 24px;
+      background: #1e1e1e;
     }
 
     .meet-pill-controls {
@@ -852,13 +865,7 @@
       transition: background 0.15s;
     }
     .meet-btn-circle:hover { background: #4f5358; }
-
-    .meet-btn-hangup {
-      background: var(--google-red);
-      width: 54px;
-      border-radius: 20px;
-    }
-    .meet-btn-hangup:hover { background: #d93025; }
+    .meet-btn-hangup { background: var(--google-red); width: 54px; border-radius: 20px; }
 
     .meet-right-dock {
       position: absolute;
@@ -868,7 +875,6 @@
       gap: 14px;
     }
 
-    /* Animación de brinco/pulso para nuevo mensaje */
     @keyframes chatBouncePulse {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.35); background: #f59e0b; }
@@ -896,12 +902,11 @@
       border: 2px solid var(--meet-bg);
     }
 
-    /* Panel Lateral de Chat */
     .meet-chat-flyout {
       position: absolute;
       top: 10px;
       right: 15px;
-      bottom: 80px;
+      bottom: 75px;
       width: 340px;
       background: #ffffff;
       color: var(--text-main);
@@ -938,7 +943,6 @@
       border-radius: 10px;
     }
 
-    /* Gráfico de Credencial Oficial */
     .id-card-graphic {
       position: absolute;
       top: 50%;
@@ -954,34 +958,8 @@
       color: #0f172a;
     }
 
-    .id-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #0284c7;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-    }
-
-    .id-card-body {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .id-card-photo {
-      width: 80px;
-      height: 95px;
-      background: #cbd5e1;
-      border: 1px solid #94a3b8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-    }
-
     /* =========================================
-       7. FASE 3: PLATAFORMA SIPAG
+       7. PLATAFORMA SIPAG (FOTOS 2, 3 Y 4)
        ========================================= */
     .sipag-page-layout {
       min-height: 100%;
@@ -992,114 +970,248 @@
       position: relative;
     }
 
-    .sipag-top-bar {
-      background: var(--sipag-header);
-      color: #fff;
-      padding: 14px 30px;
+    .sipag-top-nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 12px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.9rem;
+      color: #334155;
     }
 
-    .sipag-logo-block {
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .sipag-nav-links {
-      display: flex;
-      gap: 20px;
-      font-size: 0.85rem;
+    .sipag-top-nav a {
+      color: #334155;
+      text-decoration: none;
+      margin-left: 24px;
       font-weight: 500;
     }
 
-    .sipag-hero-banner {
-      background: #ffffff;
-      padding: 40px 30px;
-      text-align: center;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .sipag-hero-banner h1 {
-      font-size: 1.8rem;
-      color: #1e3a8a;
-      margin-bottom: 10px;
-    }
-
-    .sipag-actions-grid {
-      padding: 40px 30px;
-      max-width: 900px;
+    /* Homepage SIPAG (Foto 3) */
+    .sipag-home-hero {
+      padding: 40px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      max-width: 1100px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
     }
 
-    .sipag-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 24px;
+    .sipag-shield-logo {
+      width: 240px;
       text-align: center;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     }
 
-    .btn-spa-gray {
-      background: #64748b;
+    .sipag-shield-svg {
+      width: 180px;
+      height: 180px;
+      filter: drop-shadow(0 10px 15px rgba(2,132,199,0.25));
+    }
+
+    .sipag-hero-content {
+      max-width: 520px;
+    }
+
+    .sipag-hero-content h1 {
+      font-size: 2.2rem;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .sipag-hero-content p {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    .sipag-btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-sipag-gray {
+      background: #334155;
       color: #ffffff;
       border: none;
-      padding: 14px 20px;
-      border-radius: 8px;
-      font-size: 1.05rem;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
-      width: 100%;
-      margin-top: 15px;
-      box-shadow: 0 4px 6px rgba(100,116,139,0.3);
-      transition: background 0.15s;
+      box-shadow: 0 4px 6px rgba(51,65,85,0.25);
     }
-    .btn-spa-gray:hover { background: #475569; }
+    .btn-sipag-gray:hover { background: #1e293b; }
 
-    /* Pop-up de avisos SIPAG */
-    .sipag-notice-modal {
+    .btn-sipag-blue {
+      background: #38bdf8;
+      color: #ffffff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-sipag-pink {
+      background: #d946ef;
+      color: #ffffff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Sección Nuestros Servicios */
+    .sipag-services-section {
+      text-align: center;
+      padding: 30px 20px;
+      background: #ffffff;
+      border-top: 1px solid #f1f5f9;
+      flex: 1;
+    }
+
+    .sipag-carousel-card {
+      width: 220px;
+      height: 130px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      margin: 15px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    }
+
+    /* Pop-up Aviso Importante (Foto 2) */
+    .sipag-popup-backdrop {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(3px);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 200;
+      z-index: 500;
     }
 
-    .sipag-notice-box {
-      background: #fff;
+    .sipag-popup-card {
+      background: #ffffff;
       width: 90%;
-      max-width: 520px;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-      text-align: center;
+      max-width: 480px;
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      position: relative;
+      text-align: left;
     }
 
-    /* Pantalla Login SIPAG (Puente a Fase 4) */
-    .sipag-login-card {
-      width: 100%;
-      max-width: 460px;
-      background: #fff;
-      padding: 36px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      margin: 40px auto;
-      border: 1px solid #e2e8f0;
+    .sipag-popup-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      font-size: 1.3rem;
+      color: #64748b;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
+    .sipag-popup-close:hover { background: #f1f5f9; color: #0f172a; }
+
+    /* Login SIPAG (Foto 4) */
+    .sipag-login-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: #f1f5f9;
+    }
+
+    .sipag-login-split-card {
+      width: 100%;
+      max-width: 820px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .sipag-split-left {
+      width: 42%;
+      background: linear-gradient(135deg, #1e1e38 0%, #172554 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .sipag-split-right {
+      width: 58%;
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .sipag-input-box {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+    }
+    .sipag-input-box:focus-within {
+      background: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2,132,199,0.15);
+    }
+    .sipag-input-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .btn-sipag-submit {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(2,132,199,0.3);
+      transition: background 0.15s;
+    }
+    .btn-sipag-submit:hover { background: #0369a1; }
 
     /* =========================================
-       8. GUÍA DEL TUTOR (ARRIBA DERECHA FLOTANTE)
+       8. GUÍA DEL TUTOR (FLOTANTE ARRIBA DERECHA)
        ========================================= */
     #tutor-panel {
       position: fixed;
@@ -1114,7 +1226,6 @@
       max-width: 360px;
       font-size: 0.88rem;
       z-index: 100000;
-      transition: transform 0.2s;
     }
 
     .tutor-title {
@@ -1128,7 +1239,7 @@
 </head>
 <body>
 
-  <!-- MODAL INICIAL DE REGISTRO -->
+  <!-- MODAL INICIAL DE REGISTRO (INICIA VACÍO) -->
   <div id="setup-modal">
     <div class="setup-card">
       <h2>🎓 Simulador de Examen Virtual</h2>
@@ -1222,90 +1333,100 @@
           </div>
         </div>
 
-        <!-- VISTA: BÚSQUEDA GOOGLE OSCURA (CAPTURA 1) -->
+        <!-- VISTA: BÚSQUEDA GOOGLE MODO CLARO (5 RESULTADOS) -->
         <div id="view-search-results" class="view-sub hidden">
-          <div class="google-dark-container">
-            <div class="gdark-header">
-              <div class="gdark-logo">Google</div>
-              <div class="gdark-search-bar">
-                <input type="text" value="gmail" id="gdark-search-input" onfocus="this.select()" onkeydown="handleGoogleSearchDark(event)">
-                <div class="gdark-search-icons">
-                  <span style="cursor:pointer;" onclick="clearDarkInput()">✕</span>
+          <div class="glight-container">
+            <div class="glight-header">
+              <div class="glight-logo">
+                <span style="color:var(--google-blue)">G</span><span style="color:var(--google-red)">o</span><span style="color:var(--google-yellow)">o</span><span style="color:var(--google-blue)">g</span><span style="color:var(--google-green)">l</span><span style="color:var(--google-red)">e</span>
+              </div>
+              <div class="glight-search-bar">
+                <input type="text" value="gmail" id="glight-search-input" onfocus="this.select()" onkeydown="handleGoogleSearch(event)">
+                <div class="glight-search-icons">
+                  <span style="cursor:pointer;" onclick="document.getElementById('glight-search-input').value=''">✕</span>
                   <span>🎤</span>
                   <span>📷</span>
-                  <span style="color:#8ab4f8; cursor:pointer;">🔍</span>
+                  <span style="color:var(--google-blue); cursor:pointer;">🔍</span>
                 </div>
               </div>
             </div>
 
-            <div class="gdark-tabs-menu">
-              <span class="active">All</span>
-              <span>Images</span>
+            <div class="glight-tabs-menu">
+              <span class="active">Todo</span>
+              <span>Imágenes</span>
               <span>Videos</span>
-              <span>Shopping</span>
-              <span>Forums</span>
-              <span>Short videos</span>
-              <span>More ▾</span>
-              <span>Tools</span>
+              <span>Noticias</span>
+              <span>Maps</span>
+              <span>Más ▾</span>
             </div>
 
-            <div class="gdark-results-body">
-              <!-- Resultado 1 -->
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">G</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Google</div>
-                    <div class="gdark-url">https://www.google.com › about › signup_complete</div>
+            <div class="glight-results-wrapper">
+              <div class="glight-results-body">
+                <!-- 1. Principal Gmail -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">✉️</div>
+                    <div>
+                      <div class="glight-url">https://mail.google.com › mail</div>
+                    </div>
                   </div>
+                  <div class="glight-title" onclick="goToLogin()">Gmail: Correo electrónico gratuito, privado y seguro - Google</div>
+                  <div class="glight-desc">Descubre cómo Gmail mantiene tu cuenta protegida y organizada. Inicia sesión en tu cuenta personal para consultar tus mensajes recibidos y exámenes agendados.</div>
                 </div>
-                <div class="gdark-title" onclick="goToLogin()">Gmail</div>
-                <div class="gdark-desc">Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access.</div>
-              </div>
 
-              <!-- Resultado 2 -->
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">G</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Google Workspace</div>
-                    <div class="gdark-url">https://workspace.google.com › intl</div>
+                <!-- 2. Sign In Directo -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">👤</div>
+                    <div>
+                      <div class="glight-url">https://accounts.google.com › signin</div>
+                    </div>
                   </div>
+                  <div class="glight-title" onclick="goToLogin()">Iniciar sesión: Cuentas de Google - Gmail</div>
+                  <div class="glight-desc">Accede a Gmail usando tu cuenta de Google. Introduce tu correo electrónico o teléfono y contraseña para continuar.</div>
                 </div>
-                <div class="gdark-title" onclick="goToLogin()">Gmail: correo seguro y basado en IA para todos</div>
-                <div class="gdark-desc">Gmail, ahora con la tecnología de la IA de Gemini. Descubre nuevas formas de escribir, responder y organizar tus correos. Disfruta de una bandeja de entrada...</div>
-              </div>
 
-              <!-- Resultado 3 -->
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">G</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Google</div>
-                    <div class="gdark-url">https://accounts.google.com › identi...</div>
+                <!-- 3. Google Workspace -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">💼</div>
+                    <div>
+                      <div class="glight-url">https://workspace.google.com › gmail</div>
+                    </div>
                   </div>
+                  <div class="glight-title" onclick="goToLogin()">Gmail: correo seguro y basado en IA para empresas</div>
+                  <div class="glight-desc">Obtén correo electrónico personalizado con el dominio de tu organización y herramientas de productividad integradas.</div>
                 </div>
-                <div class="gdark-title" onclick="goToLogin()">Gmail</div>
-                <div class="gdark-desc">Gmail es un correo electrónico intuitivo, eficaz y útil. Cuenta con 15 GB de almacenamiento, mucho menos spam y acceso para dispositivos móviles.</div>
-              </div>
 
-              <!-- Resultado 4 -->
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">🍎</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Apple</div>
-                    <div class="gdark-url">https://apps.apple.com › app › gmail-email-by-google</div>
+                <!-- 4. App Store Apple -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">🍎</div>
+                    <div>
+                      <div class="glight-url">https://apps.apple.com › app › gmail</div>
+                    </div>
                   </div>
+                  <div class="glight-title" onclick="showTutorAlert('Para el examen en computadora entra al enlace web de Gmail.')">Gmail - Email by Google - App Store</div>
+                  <div class="glight-desc">Descarga la app oficial de Gmail para dispositivos móviles iOS con notificaciones en tiempo real y soporte multicuenta.</div>
                 </div>
-                <div class="gdark-title" onclick="showTutorAlert('Usa el enlace principal de Google para entrar a Gmail.')">Gmail - Email by Google - App Store - Apple</div>
-                <div class="gdark-desc">The official Gmail app brings the best of Gmail to your iPhone and iPad with helpful AI features, robust security, real-time notifications, multiple account...</div>
+
+                <!-- 5. Google Play -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">▶️</div>
+                    <div>
+                      <div class="glight-url">https://play.google.com › store › apps › gmail</div>
+                    </div>
+                  </div>
+                  <div class="glight-title" onclick="showTutorAlert('Para el examen en computadora entra al enlace web de Gmail.')">Gmail - Aplicaciones en Google Play</div>
+                  <div class="glight-desc">La aplicación oficial de Gmail te ofrece seguridad sólida, notificaciones instantáneas y almacenamiento de 15 GB.</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- VISTA: LOGIN GOOGLE (SELECT CUENTA) -->
+        <!-- VISTA: SELECTOR DE CUENTAS GOOGLE (2 FALSAS + USAR OTRA CUENTA) -->
         <div id="view-login-select" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
@@ -1315,18 +1436,29 @@
                 <p style="color:var(--text-muted); font-size:0.85rem;">para ir a Gmail</p>
               </div>
 
-              <div class="account-item" onclick="goToEmailInput('familiar.ejemplo@gmail.com')">
-                <div class="account-avatar">F</div>
+              <!-- Cuenta 1 No Seleccionable -->
+              <div class="account-item" onclick="showTutorAlert('⚠️ Esa cuenta no es la tuya. Debes dar clic en \'Usar otra cuenta\' para ingresar tu correo oficial.')">
+                <div class="account-avatar" id="fake-avatar-1" style="background:#059669;">M</div>
                 <div>
-                  <div style="font-weight:600; font-size:0.9rem;">Familiar / Cuenta Previa</div>
-                  <div style="color:var(--text-muted); font-size:0.8rem;">familiar.ejemplo@gmail.com</div>
+                  <div style="font-weight:600; font-size:0.9rem;" id="fake-name-1">María Elena López</div>
+                  <div style="color:var(--text-muted); font-size:0.8rem;" id="fake-email-1">m.lopez.familiar@gmail.com</div>
                 </div>
               </div>
 
+              <!-- Cuenta 2 No Seleccionable -->
+              <div class="account-item" onclick="showTutorAlert('⚠️ Esa cuenta no es la tuya. Debes dar clic en \'Usar otra cuenta\' para ingresar tu correo oficial.')">
+                <div class="account-avatar" id="fake-avatar-2" style="background:#d97706;">J</div>
+                <div>
+                  <div style="font-weight:600; font-size:0.9rem;" id="fake-name-2">Juan Carlos Ramírez</div>
+                  <div style="color:var(--text-muted); font-size:0.8rem;" id="fake-email-2">carlos.ramirez88@gmail.com</div>
+                </div>
+              </div>
+
+              <!-- Opción Válida: USAR OTRA CUENTA -->
               <div class="account-item" onclick="goToEmailInput('')">
                 <div class="account-avatar" style="background:#5f6368;">👤</div>
                 <div>
-                  <div style="font-weight:600; font-size:0.9rem;">Usar otra cuenta</div>
+                  <div style="font-weight:600; font-size:0.9rem; color:var(--google-blue);">Usar otra cuenta</div>
                 </div>
               </div>
             </div>
@@ -1337,7 +1469,7 @@
           </div>
         </div>
 
-        <!-- VISTA: LOGIN GOOGLE (CORREO) -->
+        <!-- VISTA: LOGIN CORREO (VACÍO PARA ESCRIBIR) -->
         <div id="view-login-email" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
@@ -1362,7 +1494,7 @@
           </div>
         </div>
 
-        <!-- VISTA: LOGIN GOOGLE (CONTRASEÑA EN BLANCO) -->
+        <!-- VISTA: LOGIN CONTRASEÑA (COMPLETAMENTE VACÍA) -->
         <div id="view-login-pass" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
@@ -1372,7 +1504,6 @@
                 <p style="color:var(--text-muted); font-size:0.85rem;">Introduce tu contraseña</p>
               </div>
 
-              <!-- CONTRASEÑA COMPLETAMENTE VACÍA -->
               <input type="password" id="pass-input" class="input-google" placeholder="Introduce tu contraseña" value="">
               <button class="btn-google" onclick="goToInbox()">Iniciar sesión</button>
             </div>
@@ -1383,7 +1514,7 @@
           </div>
         </div>
 
-        <!-- VISTA: GMAIL BANDEJA (TODOS NO LEÍDOS) -->
+        <!-- VISTA: GMAIL BANDEJA (11 NO LEÍDOS) -->
         <div id="view-gmail-inbox" class="view-sub hidden">
           <div class="gmail-layout">
             <div class="gmail-header">
@@ -1407,7 +1538,7 @@
               </div>
 
               <div class="gmail-list" id="inbox-list-container">
-                <!-- Se puebla dinámicamente con los 11 correos NO LEÍDOS -->
+                <!-- Se puebla con los 11 correos NO LEÍDOS -->
               </div>
             </div>
           </div>
@@ -1457,71 +1588,83 @@
 
       </div>
 
-      <!-- ================= PESTAÑA 2: GOOGLE MEET ================= -->
+      <!-- ================= PESTAÑA 2: GOOGLE MEET MULTIUSUARIO ================= -->
       <div id="tab-view-meet" class="tab-view">
         <div class="meet-container">
           
-          <!-- Header superior -->
           <div class="meet-top-header">
-            <div class="meet-top-left">
+            <div style="display:flex; align-items:center; gap:10px;">
               <span>6:46 PM</span>
               <span>|</span>
               <span>mag-ptbo-oaq</span>
-              <span style="font-size:0.9rem; cursor:pointer;">ⓘ</span>
+              <span style="cursor:pointer;">ⓘ</span>
             </div>
-            <div class="meet-top-right">
-              <div class="meet-user-pill">
-                <div class="meet-user-avatar-circle" id="meet-header-avatar">R</div>
-                <span>1</span>
-              </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="background:#3c4043; padding:4px 10px; border-radius:14px; font-size:0.8rem;">👥 4</div>
             </div>
           </div>
 
-          <!-- Área central (Marco Terracota de Meet) -->
-          <div class="meet-main-area">
-            <div class="meet-tile-terracota">
-              <div class="webcam-feed-simulation">
-                <div class="student-center-circle" id="meet-center-avatar">R</div>
-              </div>
-              <div class="meet-tile-username" id="meet-display-username">Rodrigo Aguilar</div>
+          <!-- Cuadrícula de 4 personas -->
+          <div class="meet-grid-4">
+            <!-- 1. Aplicador -->
+            <div class="meet-tile-user speaking">
+              <div class="tile-avatar-circle" style="background:#0f766e;">👨‍🏫</div>
+              <div class="tile-label" id="meet-teacher-label">APLICADOR: Lic. Fernando Morales</div>
+              <div class="tile-mic-status">🎤</div>
             </div>
 
-            <!-- Gráfico de Credencial Oficial -->
-            <div id="id-card-display" class="id-card-graphic hidden">
-              <div class="id-card-header">
-                <strong>GOBIERNO DE MÉXICO / PREPARATORIA</strong>
-                <span>🇲🇽</span>
-              </div>
-              <div class="id-card-body">
-                <div class="id-card-photo">👤</div>
-                <div style="font-size:0.82rem; line-height:1.4;">
-                  <strong style="color:#0284c7;">IDENTIFICACIÓN OFICIAL</strong><br>
-                  <span id="id-card-fullname" style="font-weight:700;">JUAN PÉREZ LÓPEZ</span><br>
-                  <span>MATRÍCULA: 202610589</span><br>
-                  <span>MODALIDAD VIRTUAL - PREPA ABIERTA</span>
+            <!-- 2. Alumno 1 -->
+            <div class="meet-tile-user">
+              <div class="tile-avatar-circle" style="background:#b45309;">👩</div>
+              <div class="tile-label">Mariana Gómez</div>
+              <div class="tile-mic-status" style="color:var(--google-red);">🔇</div>
+            </div>
+
+            <!-- 3. Alumno 2 -->
+            <div class="meet-tile-user">
+              <div class="tile-avatar-circle" style="background:#4338ca;">👨</div>
+              <div class="tile-label">Carlos Paredes</div>
+              <div class="tile-mic-status" style="color:var(--google-red);">🔇</div>
+            </div>
+
+            <!-- 4. Estudiante (Tú) -->
+            <div class="meet-tile-user" style="background:radial-gradient(circle at 50% 40%, #5d311e 0%, #30170b 100%);">
+              <div class="tile-avatar-circle" id="meet-my-avatar" style="background:#ea580c;">R</div>
+              <div class="tile-label" id="meet-my-label">Estudiante (Tú)</div>
+              <div class="tile-mic-status" style="color:var(--google-red);">🔇</div>
+
+              <!-- Gráfico Credencial Oficial -->
+              <div id="id-card-display" class="id-card-graphic hidden">
+                <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0284c7; padding-bottom:6px; margin-bottom:10px;">
+                  <strong>GOBIERNO DE GUANAJUATO / PREPARATORIA ABIERTA</strong>
+                  <span>🇲🇽</span>
+                </div>
+                <div style="display:flex; gap:14px; align-items:center;">
+                  <div style="width:75px; height:90px; background:#cbd5e1; border:1px solid #94a3b8; display:flex; align-items:center; justify-content:center; font-size:2.2rem;">👤</div>
+                  <div style="font-size:0.82rem; line-height:1.4;">
+                    <strong style="color:#0284c7;">CREDENCIAL DE EVALUACIÓN</strong><br>
+                    <span id="id-card-fullname" style="font-weight:700;">JUAN PÉREZ LÓPEZ</span><br>
+                    <span>MATRÍCULA: 20261058912345</span><br>
+                    <span>SISTEMA INTEGRAL (SIPAG)</span>
+                  </div>
                 </div>
               </div>
-              <div style="font-size:0.65rem; color:#64748b; margin-top:10px; text-align:center;">
-                ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-              </div>
             </div>
 
-            <!-- Panel Lateral de Chat (Se abre manualmente) -->
+            <!-- Chat Lateral (Se abre por cuenta del usuario) -->
             <div id="meet-chat-flyout" class="meet-chat-flyout hidden">
               <div class="chat-flyout-header">
                 <span>Mensajes en la llamada</span>
                 <span style="cursor:pointer;" onclick="toggleChatFlyout()">✕</span>
               </div>
-              <div class="chat-flyout-messages" id="chat-messages-box">
-                <!-- Mensajes del aplicador -->
-              </div>
+              <div class="chat-flyout-messages" id="chat-messages-box"></div>
               <div style="padding:12px; border-top:1px solid var(--border-color); text-align:center;" id="chat-action-container">
                 <button class="btn-start-sim" style="font-size:0.85rem; padding:10px;" onclick="showIdToCameraAction()">📸 Mostrar credencial a la cámara</button>
               </div>
             </div>
           </div>
 
-          <!-- Barra Inferior de Controles (Exacta a tu captura) -->
+          <!-- Barra inferior -->
           <div class="meet-bottom-dock">
             <div class="meet-pill-controls">
               <button class="meet-btn-circle" onclick="showTutorAlert('Opciones adicionales.')">···</button>
@@ -1536,7 +1679,6 @@
               <button class="meet-btn-circle meet-btn-hangup" onclick="showTutorAlert('🚫 No cuelgues la llamada o perderás tu examen.')">📞</button>
             </div>
 
-            <!-- Dock derecho con botón de Chat -->
             <div class="meet-right-dock">
               <button class="meet-btn-circle" id="meet-chat-toggle-btn" onclick="toggleChatFlyout()">
                 💬
@@ -1550,122 +1692,257 @@
         </div>
       </div>
 
-      <!-- ================= PESTAÑA 3: SIPAG (FASE 3) ================= -->
+      <!-- ================= PESTAÑA 3: SIPAG ================= -->
       <div id="tab-view-sipag" class="tab-view">
         
-        <!-- SUBVISTA 3.1: BÚSQUEDA DE SIPAG EN GOOGLE -->
-        <div id="view-sipag-search" class="view-sub active">
-          <div class="google-dark-container">
-            <div class="gdark-header">
-              <div class="gdark-logo">Google</div>
-              <div class="gdark-search-bar">
-                <input type="text" value="sipag" id="sipag-query-input" onfocus="this.select()" onkeydown="handleSipagSearch(event)">
-                <div class="gdark-search-icons">
-                  <span style="color:#8ab4f8; cursor:pointer;" onclick="renderSipagResults()">🔍</span>
+        <!-- SUBVISTA 3.1: NUEVA PESTAÑA EN BLANCO -->
+        <div id="view-sipag-newtab" class="view-sub active">
+          <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:60px;">
+            <div style="font-size:3.5rem; font-weight:700; letter-spacing:-2px; margin-bottom:25px;">
+              <span style="color:var(--google-blue)">G</span><span style="color:var(--google-red)">o</span><span style="color:var(--google-yellow)">o</span><span style="color:var(--google-blue)">g</span><span style="color:var(--google-green)">l</span><span style="color:var(--google-red)">e</span>
+            </div>
+            <div style="width:90%; max-width:580px; border:1px solid var(--border-color); border-radius:24px; padding:12px 20px; display:flex; align-items:center; gap:12px; box-shadow:0 2px 6px rgba(0,0,0,0.06);">
+              <span>🔍</span>
+              <input type="text" id="sipag-google-input" style="width:100%; border:none; outline:none; font-size:1rem;" placeholder="Escribe 'sipag' y presiona Enter" onkeydown="handleSipagGoogleSearch(event)">
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBVISTA 3.2: BÚSQUEDA GOOGLE SIPAG (5 RESULTADOS + PANEL FOTO 1) -->
+        <div id="view-sipag-search" class="view-sub hidden">
+          <div class="glight-container">
+            <div class="glight-header">
+              <div class="glight-logo">
+                <span style="color:var(--google-blue)">G</span><span style="color:var(--google-red)">o</span><span style="color:var(--google-yellow)">o</span><span style="color:var(--google-blue)">g</span><span style="color:var(--google-green)">l</span><span style="color:var(--google-red)">e</span>
+              </div>
+              <div class="glight-search-bar">
+                <input type="text" value="sipag" id="sipag-search-query-input" onfocus="this.select()" onkeydown="handleSipagGoogleSearch(event)">
+                <div class="glight-search-icons">
+                  <span style="cursor:pointer;" onclick="document.getElementById('sipag-search-query-input').value=''">✕</span>
+                  <span>🎤</span>
+                  <span>📷</span>
+                  <span style="color:var(--google-blue); cursor:pointer;">🔍</span>
                 </div>
               </div>
             </div>
 
-            <div class="gdark-results-body" style="padding-top:30px;">
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">🏛️</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Plataforma Oficial Prepa Abierta</div>
-                    <div class="gdark-url">https://sipag.prepaabierta.gob.mx</div>
+            <div class="glight-tabs-menu">
+              <span class="active">Todo</span>
+              <span>Imágenes</span>
+              <span>Videos</span>
+              <span>Shopping</span>
+              <span>Noticias</span>
+              <span>Más ▾</span>
+            </div>
+
+            <div class="glight-results-wrapper">
+              <div class="glight-results-body">
+                <!-- 1. Principal SIPAG (ÚNICO QUE LLEVA A SIPAG) -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">🌐</div>
+                    <div>
+                      <div class="glight-url">https://www.sipag.tech</div>
+                    </div>
+                  </div>
+                  <div class="glight-title" onclick="openSipagPortal()">SIPAG</div>
+                  <div class="glight-desc">Bienvenido. A la plataforma educativa de Preparatoria Abierta Guanajuato, si deseas realizar trámites de pre inscripción o continuar con tu proceso selecciona...</div>
+                  
+                  <div class="glight-sitelinks">
+                    <div class="glight-sitelink-item">
+                      <a href="#" onclick="openSipagPortal(); return false;">Bienvenido</a>
+                      <p>Sistema Interno de Prepa Abierta de Guanajuato.</p>
+                    </div>
+                    <div class="glight-sitelink-item">
+                      <a href="#" onclick="openSipagPortal(); return false;">Buscar y Descargar Certificado</a>
+                      <p>Ingrese su CURP y folio para descargar su certificado...</p>
+                    </div>
+                    <div class="glight-sitelink-item">
+                      <a href="#" onclick="openSipagPortal(); return false;">Portal de Trámites</a>
+                      <p>Solicita tu credencial o consulta su estatus.</p>
+                    </div>
+                    <div class="glight-sitelink-item">
+                      <a href="#" onclick="openSipagPortal(); return false;">Solicitar credencial</a>
+                      <p>Solicitud de Credencial (TRÁMITE GRATUITO).</p>
+                    </div>
                   </div>
                 </div>
-                <div class="gdark-title" onclick="openSipagPortal()">SIPAG - Sistema Integral de Preparatoria Abierta</div>
-                <div class="gdark-desc">Portal institucional de acceso a servicios escolares, registro de trayectoria académica y sistema de presentación de exámenes virtuales SPA.</div>
+
+                <!-- 2. Sipag Mobile -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">▶️</div>
+                    <div>
+                      <div class="glight-url">https://play.google.com › store › apps › details</div>
+                    </div>
+                  </div>
+                  <div class="glight-title" onclick="showTutorAlert('Para presentar el examen debes ingresar al portal web oficial de SIPAG.')">Sipag Mobile - Apps en Google Play</div>
+                  <div class="glight-desc">Consulta tus calificaciones, seguimiento de trámites y avance modular desde tu dispositivo móvil Android.</div>
+                </div>
+
+                <!-- 3. Manuales -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">📄</div>
+                    <div>
+                      <div class="glight-url">https://www.prepaabierta.guanajuato.gob.mx › manuales</div>
+                    </div>
+                  </div>
+                  <div class="glight-title">Manual de Usuario del Examen Virtual - Prepa Abierta</div>
+                  <div class="glight-desc">Guía técnica detallada con los pasos para ingresar al Sistema de Evaluación Modular en línea.</div>
+                </div>
+
+                <!-- 4. Trámites SEG Gto -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">🏛️</div>
+                    <div>
+                      <div class="glight-url">https://seg.guanajuato.gob.mx › preparatoria-abierta</div>
+                    </div>
+                  </div>
+                  <div class="glight-title">Secretaría de Educación de Guanajuato - Prepa Abierta</div>
+                  <div class="glight-desc">Información institucional de calendarios de aplicación, sedes presenciales y certificados oficiales de preparatoria.</div>
+                </div>
+
+                <!-- 5. Convocatoria General -->
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">📋</div>
+                    <div>
+                      <div class="glight-url">https://www.gob.mx › sep › preparatoria-abierta</div>
+                    </div>
+                  </div>
+                  <div class="glight-title">Preparatoria Abierta Nacional - SEP</div>
+                  <div class="glight-desc">Modalidad no escolarizada de la Secretaría de Educación Pública para cursar el bachillerato a tu propio ritmo.</div>
+                </div>
               </div>
 
-              <div class="gdark-result-item">
-                <div class="gdark-site-info">
-                  <div class="gdark-favicon">📄</div>
-                  <div>
-                    <div style="font-size:0.85rem; color:#e8eaed;">Manual de Usuario</div>
-                    <div class="gdark-url">https://sipag.prepaabierta.gob.mx › manuales</div>
-                  </div>
+              <!-- Panel Lateral Exacto a Foto 1 -->
+              <div class="glight-knowledge-panel">
+                <div class="kp-images">
+                  <div class="kp-img">Sede Guanajuato</div>
+                  <div class="kp-img">Fachada Prepa</div>
                 </div>
-                <div class="gdark-title">Guía técnica y requerimientos para el examen en línea</div>
-                <div class="gdark-desc">Consulta los requerimientos técnicos y recomendaciones para presentar tus evaluaciones sin contratiempos.</div>
+                <h3 style="font-size:1.3rem; margin-bottom:4px; color:#202124;">Preparatoria Abierta</h3>
+                <p style="color:#70757a; font-size:0.85rem; margin-bottom:14px;">Escuela preparatoria en Guanajuato</p>
+                <div style="border-top:1px solid #ebebeb; padding-top:10px; line-height:1.6;">
+                  <strong>Dirección:</strong> 1 Hidalgo, Centro, 36000 Guanajuato, Gto.<br>
+                  <strong>Teléfono:</strong> 473 733 2630<br>
+                  <strong>Horario:</strong> Abierto • Cierra a las 4:00 p. m.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SUBVISTA 3.2: PORTAL INSTITUCIONAL SIPAG -->
+        <!-- SUBVISTA 3.3: PORTAL HOMEPAGE SIPAG (FOTO 3 + POPUP FOTO 2) -->
         <div id="view-sipag-portal" class="view-sub hidden">
           <div class="sipag-page-layout">
             
-            <!-- Modal de Avisos Importantes SIPAG -->
-            <div id="sipag-notice" class="sipag-notice-modal">
-              <div class="sipag-notice-box">
-                <h2 style="color:#1e3a8a; margin-bottom:12px; font-size:1.3rem;">📢 AVISO IMPORTANTE A ESTUDIANTES</h2>
-                <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.5; margin-bottom:20px;">
-                  Estimado alumno, asegúrate de ingresar puntualmente con tu cámara web encendida en Google Meet. Ten a la mano tu <strong>matrícula con el prefijo correspondiente</strong> y tu <strong>CURP oficial</strong>.
+            <!-- POP-UP DE AVISO IMPORTANTE (FOTO 2 - CON RETARDO DE 2s EN LA X) -->
+            <div id="sipag-popup-modal" class="sipag-popup-backdrop">
+              <div class="sipag-popup-card">
+                <div id="popup-close-x" class="sipag-popup-close hidden" onclick="closeSipagPopup()">✕</div>
+                <h2 style="font-size:1.5rem; color:#1e293b; margin-bottom:14px; font-weight:700;">Aviso Importante</h2>
+                <p style="font-size:0.95rem; color:#475569; line-height:1.5; margin-bottom:12px;">Estimado estudiante:</p>
+                <p style="font-size:0.95rem; color:#475569; line-height:1.6;">
+                  Recuerda depurar constantemente tu correo electrónico para que las ligas de aplicación puedan llegar oportunamente.
                 </p>
-                <button class="btn-start-sim" onclick="closeSipagNotice()">Aceptar y Continuar ➡️</button>
               </div>
             </div>
 
-            <!-- Header SIPAG -->
-            <div class="sipag-top-bar">
-              <div class="sipag-logo-block">🏛️ SIPAG | PREPARATORIA ABIERTA</div>
-              <div class="sipag-nav-links">
-                <span>Inicio</span>
-                <span>Trámites</span>
-                <span>Plan Modular</span>
-                <span>Contacto</span>
+            <!-- Barra Superior SIPAG -->
+            <div class="sipag-top-nav">
+              <div style="font-weight:700; color:#1e293b;">🎓 Preparatoria Abierta y a Distancia</div>
+              <div>
+                <a href="#">Ingresar</a>
+                <a href="#">Servicios</a>
+                <a href="#">Conócenos</a>
               </div>
             </div>
 
-            <div class="sipag-hero-banner">
-              <h1>Sistema Integral de Preparatoria Abierta</h1>
-              <p style="color:var(--text-muted); font-size:0.95rem;">Bienvenido al portal institucional de servicios académicos y acreditación</p>
+            <!-- Hero Section (Foto 3) -->
+            <div class="sipag-home-hero">
+              <div class="sipag-shield-logo">
+                <svg class="sipag-shield-svg" viewBox="0 0 100 100">
+                  <path fill="#0284c7" d="M50 5 L85 20 L85 55 C85 75 50 95 50 95 C50 95 15 75 15 55 L15 20 Z"/>
+                  <path fill="#38bdf8" d="M50 15 L75 26 L75 52 C75 68 50 82 50 82 C50 82 25 68 25 52 L25 26 Z"/>
+                  <circle cx="50" cy="48" r="14" fill="#ffffff"/>
+                </svg>
+                <div style="font-weight:800; font-size:1.1rem; color:#0369a1; margin-top:8px;">PREPARATORIA ABIERTA</div>
+                <div style="font-size:0.85rem; color:#0284c7; font-weight:700;">GUANAJUATO</div>
+              </div>
+
+              <div class="sipag-hero-content">
+                <h1>Bienvenido</h1>
+                <p>A la plataforma educativa de Preparatoria Abierta Guanajuato, si deseas realizar trámites de pre-inscripción o continuar con tu proceso selecciona la opción correspondiente en los botones de abajo; si ya estás inscrito entra a través del botón de acceso.</p>
+                
+                <div class="sipag-btn-group">
+                  <!-- BOTÓN GRIS OFICIAL ACCESO A SIPAG -->
+                  <button class="btn-sipag-gray" onclick="goToSipagLoginScreen()">Acceso a SIPAG</button>
+                  <button class="btn-sipag-blue" onclick="showTutorAlert('Para tu examen debes dar clic en \'Acceso a SIPAG\'.')">Reactivar mi cuenta</button>
+                  <button class="btn-sipag-pink" onclick="showTutorAlert('Para tu examen debes dar clic en \'Acceso a SIPAG\'.')">Consultar Calificaciones</button>
+                </div>
+              </div>
             </div>
 
-            <div class="sipag-actions-grid">
-              <div class="sipag-card">
-                <h3>📚 Plan de Estudios</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Consulta los 22 módulos y descarga los libros de texto oficiales.</p>
-              </div>
-
-              <!-- BOTÓN GRIS OFICIAL ACCESO A SPA -->
-              <div class="sipag-card" style="border:2px solid #64748b;">
-                <h3>📝 Examen Virtual</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Acceso directo al Sistema de Pruebas de Acreditación (SPA).</p>
-                <button class="btn-spa-gray" onclick="goToSipagLogin()">Acceso a SPA</button>
-              </div>
-
-              <div class="sipag-card">
-                <h3>📊 Calificaciones</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Historial de módulos acreditados y solicitud de certificados.</p>
+            <!-- Sección Inferior Nuestros Servicios -->
+            <div class="sipag-services-section">
+              <h2 style="font-size:1.6rem; color:#1e293b; margin-bottom:10px;">Nuestros Servicios</h2>
+              <div class="sipag-carousel-card">
+                <div style="font-size:1.4rem;">📅</div>
+                <div style="font-weight:700; font-size:0.95rem; margin-top:4px;">Calendario</div>
+                <p style="font-size:0.75rem; color:#64748b; margin-top:2px;">Consulta el calendario en el siguiente link</p>
+                <div style="background:#334155; color:#fff; font-size:0.7rem; font-weight:700; padding:4px 12px; border-radius:12px; margin-top:6px;">CALENDARIO</div>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- SUBVISTA 3.3: LOGIN SIPAG (PUENTE A FASE 4) -->
+        <!-- SUBVISTA 3.4: LOGIN SIPAG CON VALIDACIONES (FOTO 4) -->
         <div id="view-sipag-login" class="view-sub hidden">
-          <div class="sipag-page-layout">
-            <div class="sipag-top-bar">
-              <div class="sipag-logo-block">📝 SISTEMA DE PRUEBAS (SPA)</div>
+          <div class="sipag-page-layout" style="background:#f1f5f9;">
+            
+            <div class="sipag-top-nav">
+              <div style="font-weight:700; color:#1e293b;">🎓 Preparatoria Abierta y a Distancia</div>
             </div>
 
-            <div class="sipag-login-card">
-              <h2 style="color:#1e3a8a; font-size:1.4rem; text-align:center; margin-bottom:10px;">Acceso al Examen</h2>
-              <p style="color:var(--text-muted); font-size:0.85rem; text-align:center; margin-bottom:25px;">Ingresa tus credenciales oficiales de estudiante:</p>
+            <div class="sipag-login-wrapper">
+              <div class="sipag-login-split-card">
+                <!-- Tarjeta Izquierda Logo -->
+                <div class="sipag-split-left">
+                  <svg style="width:130px; height:130px;" viewBox="0 0 100 100">
+                    <path fill="#0284c7" d="M50 5 L85 20 L85 55 C85 75 50 95 50 95 C50 95 15 75 15 55 L15 20 Z"/>
+                    <path fill="#38bdf8" d="M50 15 L75 26 L75 52 C75 68 50 82 50 82 C50 82 25 68 25 52 L25 26 Z"/>
+                    <circle cx="50" cy="48" r="14" fill="#ffffff"/>
+                  </svg>
+                  <div style="color:#ffffff; font-weight:800; font-size:1.05rem; margin-top:12px;">PREPARATORIA ABIERTA</div>
+                  <div style="color:#38bdf8; font-weight:700; font-size:0.85rem;">GUANAJUATO</div>
+                </div>
 
-              <label style="font-size:0.85rem; font-weight:600; color:#334155;">Matrícula:</label>
-              <input type="text" id="sipag-mat-input" class="input-google" placeholder="Ej. 202610589" style="margin-top:5px; margin-bottom:18px;">
+                <!-- Formulario Derecho -->
+                <div class="sipag-split-right">
+                  <h2 style="font-size:1.8rem; color:#1e293b; margin-bottom:20px; font-weight:700;">Bienvenido</h2>
 
-              <label style="font-size:0.85rem; font-weight:600; color:#334155;">Contraseña (Primeros 10 caracteres del CURP):</label>
-              <input type="password" id="sipag-pass-input" class="input-google" placeholder="Ej. ABCD970427" style="margin-top:5px; margin-bottom:24px;">
+                  <label style="font-size:0.85rem; font-weight:600; color:#475569;">Matrícula o Correo</label>
+                  <div class="sipag-input-box">
+                    <span>👤</span>
+                    <input type="text" id="sipag-matricula-input" placeholder="Ingresa tu matrícula o correo" oninput="handleMatriculaInput(this)">
+                  </div>
 
-              <button class="btn-start-sim" style="background:#1e3a8a;" onclick="alert('🎉 ¡Llegaste a la meta de la Fase 3!\n\nEn la Fase 4 validaremos que el 20 esté bien puesto en la matrícula y el CURP en MAYÚSCULAS.')">INGRESAR AL SISTEMA 🚀</button>
+                  <label style="font-size:0.85rem; font-weight:600; color:#475569;">Contraseña (10 caracteres del CURP)</label>
+                  <div class="sipag-input-box">
+                    <span>🔒</span>
+                    <input type="password" id="sipag-password-input" placeholder="Ingresa tu contraseña" oninput="handlePasswordInput(this)">
+                    <span style="cursor:pointer;" onclick="toggleSipagPassVisibility()">👁️</span>
+                  </div>
+
+                  <button class="btn-sipag-submit" onclick="validateAndSubmitSipagLogin()">Ingresar</button>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
 
@@ -1701,6 +1978,13 @@
       { name: "APLICADOR: Lic. Gabriela Domínguez Torres", email: "gdominguezprepa@gmail.com" }
     ];
 
+    const FAKE_USERS = [
+      { name: "María Elena López", email: "m.elena.lopez@gmail.com" },
+      { name: "Juan Carlos Ramírez", email: "carlos.ramirez88@gmail.com" },
+      { name: "Sofía Martínez Trejo", email: "sofi.mtz.familiar@gmail.com" },
+      { name: "Pedro Antonio Vargas", email: "pedro.vargas92@gmail.com" }
+    ];
+
     let currentAplicador = APLICADORES_LIST[Math.floor(Math.random() * APLICADORES_LIST.length)];
     let XX = Math.floor(Math.random() * 22) + 1;
     let diaIdx = Math.floor(Math.random() * DIAS_ES.length);
@@ -1727,8 +2011,22 @@
       studentEmail = studentName.toLowerCase().replace(/\s+/g, '.') + "@gmail.com";
 
       generateExamSubject();
+      setupFakeAccounts();
       document.getElementById('setup-modal').classList.add('hidden');
       updateTutor("Paso 1: Abrir Google Chrome", "Da <strong>doble clic</strong> sobre el icono de <strong>Google Chrome</strong> en el escritorio para abrir el navegador.");
+    }
+
+    function setupFakeAccounts() {
+      const u1 = FAKE_USERS[0];
+      const u2 = FAKE_USERS[1];
+
+      document.getElementById('fake-name-1').innerText = u1.name;
+      document.getElementById('fake-email-1').innerText = u1.email;
+      document.getElementById('fake-avatar-1').innerText = u1.name.charAt(0);
+
+      document.getElementById('fake-name-2').innerText = u2.name;
+      document.getElementById('fake-email-2').innerText = u2.email;
+      document.getElementById('fake-avatar-2').innerText = u2.name.charAt(0);
     }
 
     function selectDesktopIcon(elem) {
@@ -1739,9 +2037,12 @@
     function launchBrowser() {
       // Limpieza total y reseteo
       document.getElementById('google-input').value = "";
+      document.getElementById('glight-search-input').value = "gmail";
       document.getElementById('omnibox').value = "";
       document.getElementById('email-input').value = "";
       document.getElementById('pass-input').value = "";
+      document.getElementById('sipag-matricula-input').value = "";
+      document.getElementById('sipag-password-input').value = "";
       document.getElementById('email-tip').style.display = 'none';
 
       document.getElementById('browser-window').classList.remove('hidden');
@@ -1784,7 +2085,6 @@
         const sipagTab = document.getElementById('tab-sipag');
         if (sipagTab) sipagTab.classList.add('active');
         document.getElementById('tab-view-sipag').classList.add('active');
-        document.getElementById('omnibox').value = "https://www.google.com/search?q=sipag";
       }
     }
 
@@ -1795,7 +2095,7 @@
 
     function handleNewTabClick() {
       if (activeTabId === 'meet') {
-        openSipagTab();
+        openSipagNewTab();
       } else {
         alert("Primero completa el acceso a la videollamada de Google Meet antes de abrir nuevas pestañas.");
       }
@@ -1814,28 +2114,21 @@
         const query = e.target.value.trim().toLowerCase();
         if (query.includes('gmail')) {
           switchGmailSubView('view-search-results');
-          document.getElementById('omnibox').value = "https://www.google.com/search?q=gmail";
-          document.getElementById('tab-title-gmail').innerText = "🔍 gmail - Buscar con Google";
-          updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail'</strong> de Google.");
+          document.getElementById('glight-search-input').value = query;
+          document.getElementById('omnibox').value = "https://www.google.com/search?q=" + query;
+          document.getElementById('tab-title-gmail').innerText = `🔍 ${query} - Buscar con Google`;
+          updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail: Correo electrónico...'</strong>");
         } else {
           alert("Escribe 'Gmail' para continuar con el entrenamiento.");
         }
       }
     }
 
-    function handleGoogleSearchDark(e) {
-      if (e.key === 'Enter') handleGoogleSearch({ key: 'Enter', target: e.target });
-    }
-
-    function clearDarkInput() {
-      document.getElementById('gdark-search-input').value = "";
-    }
-
     function handleOmniboxKey(e) {
       if (e.key === 'Enter') {
         const val = e.target.value.trim().toLowerCase();
         if (val.includes('gmail')) handleGoogleSearch({ key: 'Enter', target: e.target });
-        else if (val.includes('sipag')) handleSipagSearch({ key: 'Enter', target: e.target });
+        else if (val.includes('sipag')) handleSipagGoogleSearch({ key: 'Enter', target: e.target });
       }
     }
 
@@ -1843,14 +2136,14 @@
       switchGmailSubView('view-login-select');
       document.getElementById('omnibox').value = "https://accounts.google.com/signin/v2/identifier";
       document.getElementById('tab-title-gmail').innerText = "👤 Iniciar sesión: Cuentas de Google";
-      updateTutor("Paso 4: Identificar tu cuenta", "Haz clic en <strong>'Usar otra cuenta'</strong> para ingresar tus datos.");
+      updateTutor("Paso 4: Seleccionar Cuenta", "Las cuentas mostradas no son tuyas. Haz clic en <strong>'Usar otra cuenta'</strong>.");
     }
 
     function goToEmailInput(val) {
       switchGmailSubView('view-login-email');
       const inp = document.getElementById('email-input');
-      inp.value = val || studentName.toLowerCase().replace(/\s+/g, '.');
-      updateTutor("Paso 5: Escribir tu correo", "Revisa que tu usuario esté bien escrito y haz clic en <strong>'Siguiente'</strong>.");
+      inp.value = ""; // Totalmente limpio para escribir
+      updateTutor("Paso 5: Escribir tu correo", "Escribe tu correo electrónico en el campo y haz clic en <strong>'Siguiente'</strong>.");
       setTimeout(() => inp.focus(), 100);
     }
 
@@ -1860,7 +2153,12 @@
     }
 
     function goToPassword() {
-      document.getElementById('user-display').innerText = `Hola, ${studentName}`;
+      const emailEntered = document.getElementById('email-input').value.trim();
+      if (!emailEntered) {
+        alert("Por favor ingresa tu correo electrónico.");
+        return;
+      }
+      document.getElementById('user-display').innerText = `Hola, ${emailEntered}`;
       switchGmailSubView('view-login-pass');
       document.getElementById('pass-input').value = "";
       updateTutor("Paso 6: Contraseña", "Introduce tu contraseña y haz clic en <strong>'Iniciar sesión'</strong>.");
@@ -1876,7 +2174,6 @@
       updateTutor("Paso 7: Buscar el correo del examen", `Lee los correos y localiza la invitación enviada por <strong>${currentAplicador.name}</strong>.`);
     }
 
-    // 11 Correos NO LEÍDOS (sin destacar de entrada)
     function render11UnreadEmails() {
       const container = document.getElementById('inbox-list-container');
       container.innerHTML = "";
@@ -1941,7 +2238,7 @@
     }
 
     // ========================================================
-    // 4. FASE 2: GOOGLE MEET
+    // 4. FASE 2: GOOGLE MEET MULTIUSUARIO
     // ========================================================
     function openMeetTab() {
       if (!document.getElementById('tab-meet')) {
@@ -1958,12 +2255,11 @@
       }
 
       activateTab('meet');
-      document.getElementById('meet-display-username').innerText = studentName;
-      document.getElementById('meet-header-avatar').innerText = studentName.charAt(0).toUpperCase();
-      document.getElementById('meet-center-avatar').innerText = studentName.charAt(0).toUpperCase();
+      document.getElementById('meet-teacher-label').innerText = currentAplicador.name;
+      document.getElementById('meet-my-label').innerText = `${studentName} (Tú)`;
+      document.getElementById('meet-my-avatar').innerText = studentName.charAt(0).toUpperCase();
       document.getElementById('id-card-fullname').innerText = studentName.toUpperCase();
 
-      // Disparar mensaje del aplicador con animación en el chat a los 1.5s
       setTimeout(() => {
         triggerTeacherChatMessage();
       }, 1500);
@@ -2016,18 +2312,18 @@
         chatBox.innerHTML += `
           <div class="chat-msg-bubble" style="margin-top:10px; background:#e0f2fe;">
             <strong style="color:var(--google-blue);">${currentAplicador.name}:</strong><br>
-            ✅ Identificación verificada, ${studentName}. Ahora abre una nueva pestaña con el botón <strong>[+]</strong> arriba para entrar a SIPAG sin cerrar la llamada.
+            ✅ Identificación verificada, ${studentName}. Ahora abre una nueva pestaña con el botón <strong>[+]</strong> arriba para buscar SIPAG sin cerrar la llamada.
           </div>
         `;
 
-        updateTutor("Paso 12: Abrir nueva pestaña (+)", "¡Excelente! Ahora haz clic en el botón <strong>'+'</strong> de la barra de pestañas para buscar SIPAG sin cerrar la llamada.");
+        updateTutor("Paso 12: Abrir nueva pestaña (+)", "¡Excelente! Ahora haz clic en el botón <strong>'+'</strong> de la barra de pestañas para abrir una pestaña en blanco y buscar SIPAG.");
       }, 2500);
     }
 
     // ========================================================
-    // 5. FASE 3: PLATAFORMA SIPAG
+    // 5. FASE 3: PLATAFORMA SIPAG (FOTOS 1, 2, 3 Y 4)
     // ========================================================
-    function openSipagTab() {
+    function openSipagNewTab() {
       if (!document.getElementById('tab-sipag')) {
         const tabsContainer = document.getElementById('tabs-container');
         const newTab = document.createElement('div');
@@ -2042,43 +2338,121 @@
       }
 
       activateTab('sipag');
-      document.getElementById('view-sipag-search').classList.remove('hidden');
-      document.getElementById('view-sipag-portal').classList.add('hidden');
-      document.getElementById('view-sipag-login').classList.add('hidden');
+      switchSipagSubView('view-sipag-newtab');
+      document.getElementById('omnibox').value = "";
+      document.getElementById('sipag-google-input').value = "";
 
-      updateTutor("Paso 13: Buscar SIPAG", "Escribe <strong>sipag</strong> en la barra de búsqueda y presiona la lupa o <strong>Enter</strong>.");
+      updateTutor("Paso 13: Buscar SIPAG", "En la nueva pestaña, escribe <strong>sipag</strong> en la barra de búsqueda y presiona <strong>Enter</strong>.");
+      setTimeout(() => document.getElementById('sipag-google-input').focus(), 100);
     }
 
-    function handleSipagSearch(e) {
-      if (e.key === 'Enter') renderSipagResults();
+    function switchSipagSubView(viewId) {
+      document.querySelectorAll('#tab-view-sipag .view-sub').forEach(v => v.classList.add('hidden'));
+      document.getElementById(viewId).classList.remove('hidden');
     }
 
-    function renderSipagResults() {
-      document.getElementById('tab-sipag').innerHTML = `<span>🔍 sipag - Buscar con Google</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
-      updateTutor("Paso 14: Entrar a SIPAG", "Haz clic en el primer resultado: <strong>'SIPAG - Sistema Integral...'</strong>");
+    function handleSipagGoogleSearch(e) {
+      if (e.key === 'Enter') {
+        const query = e.target.value.trim().toLowerCase();
+        if (query.includes('sipag')) {
+          switchSipagSubView('view-sipag-search');
+          document.getElementById('sipag-search-query-input').value = query;
+          document.getElementById('omnibox').value = "https://www.google.com/search?q=" + query;
+          document.getElementById('tab-sipag').innerHTML = `<span>🔍 ${query} - Buscar con Google</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
+          updateTutor("Paso 14: Entrar a SIPAG", "Haz clic en el primer resultado: <strong>'SIPAG'</strong> de www.sipag.tech.");
+        } else {
+          alert("Escribe 'sipag' para buscar la plataforma oficial.");
+        }
+      }
     }
 
     function openSipagPortal() {
-      document.getElementById('view-sipag-search').classList.add('hidden');
-      document.getElementById('view-sipag-portal').classList.remove('hidden');
-      document.getElementById('tab-sipag').innerHTML = `<span>🏛️ SIPAG - Prepa Abierta</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
-      document.getElementById('omnibox').value = "https://sipag.prepaabierta.gob.mx";
+      switchSipagSubView('view-sipag-portal');
+      document.getElementById('omnibox').value = "https://www.sipag.tech";
+      document.getElementById('tab-sipag').innerHTML = `<span>🏛️ SIPAG - Preparatoria Abierta</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
 
-      updateTutor("Paso 15: Cerrar el aviso", "Lee el aviso emergente y haz clic en <strong>'Aceptar y Continuar'</strong> para ingresar al portal.");
+      // Pop-up con retardo de 2 segundos en la X
+      document.getElementById('sipag-popup-modal').classList.remove('hidden');
+      document.getElementById('popup-close-x').classList.add('hidden');
+      
+      updateTutor("Paso 15: Leer el Aviso", "Lee el aviso emergente. El botón de cerrar (✕) se habilitará en 2 segundos...");
+
+      setTimeout(() => {
+        document.getElementById('popup-close-x').classList.remove('hidden');
+        updateTutor("Paso 15: Cerrar el Aviso", "Haz clic en la <strong>✕</strong> en la esquina del aviso para ingresar a la portada.");
+      }, 2000);
     }
 
-    function closeSipagNotice() {
-      document.getElementById('sipag-notice').classList.add('hidden');
-      updateTutor("Paso 16: Acceso a SPA", "En la página principal de SIPAG, busca el botón gris que dice <strong>'Acceso a SPA'</strong>.");
+    function closeSipagPopup() {
+      document.getElementById('sipag-popup-modal').classList.add('hidden');
+      updateTutor("Paso 16: Acceso a SIPAG", "En la página principal, haz clic en el botón gris: <strong>'Acceso a SIPAG'</strong>.");
     }
 
-    function goToSipagLogin() {
-      document.getElementById('view-sipag-portal').classList.add('hidden');
-      document.getElementById('view-sipag-login').classList.remove('hidden');
-      document.getElementById('tab-sipag').innerHTML = `<span>📝 SIPAG - Acceso a Examen</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
-      document.getElementById('omnibox').value = "https://sipag.prepaabierta.gob.mx/evaluacion/login";
+    function goToSipagLoginScreen() {
+      switchSipagSubView('view-sipag-login');
+      document.getElementById('omnibox').value = "https://www.sipag.tech/login";
+      document.getElementById('tab-sipag').innerHTML = `<span>📝 SIPAG - Iniciar Sesión</span><span class="tab-close" onclick="closeTabWarning(event)">✕</span>`;
+      document.getElementById('sipag-matricula-input').value = "";
+      document.getElementById('sipag-password-input').value = "";
 
-      updateTutor("¡Fase 3 Completada! 🎉", "El estudiante ya sabe entrar a SIPAG en una pestaña paralela. En la <strong>Fase 4</strong> validaremos la matrícula y el CURP.");
+      updateTutor("Paso 17: Ingresar Credenciales", "Ingresa tu <strong>matrícula</strong> (14 dígitos iniciando con 20) y tu <strong>contraseña</strong> (10 caracteres del CURP en mayúsculas).");
+    }
+
+    // ========================================================
+    // 6. VALIDACIONES ESTRICTAS DE LOGIN SIPAG
+    // ========================================================
+    function handleMatriculaInput(input) {
+      if (input.value.includes(' ')) {
+        alert("⚠️ Cuidado: Has presionado la barra espaciadora. Las matrículas no deben contener espacios.");
+        input.value = input.value.replace(/\s+/g, '');
+      }
+    }
+
+    function handlePasswordInput(input) {
+      if (input.value.includes(' ')) {
+        alert("⚠️ Cuidado: Has presionado la barra espaciadora. La contraseña no debe contener espacios.");
+        input.value = input.value.replace(/\s+/g, '');
+      }
+    }
+
+    function toggleSipagPassVisibility() {
+      const passInput = document.getElementById('sipag-password-input');
+      passInput.type = passInput.type === 'password' ? 'text' : 'password';
+    }
+
+    function validateAndSubmitSipagLogin() {
+      const mat = document.getElementById('sipag-matricula-input').value.trim();
+      const pass = document.getElementById('sipag-password-input').value.trim();
+
+      // Validación 1: Matrícula inicia con 20
+      if (!mat.startsWith('20')) {
+        alert("❌ Error en Matrícula: Recuerda que tu matrícula debe comenzar siempre con el número '20' (ej. 20261058912345).");
+        return;
+      }
+
+      // Validación 2: Longitud de 14 dígitos numéricos
+      const matRegex = /^20\d{12}$/;
+      if (!matRegex.test(mat)) {
+        alert(`❌ Error en Matrícula: Debe ser un número exacto de 14 dígitos. Actualmente ingresaste ${mat.length} caracteres.`);
+        return;
+      }
+
+      // Validación 3: Contraseña (Primeros 10 caracteres del CURP en MAYÚSCULAS: 4 letras + 6 números)
+      const curpRegex = /^[A-Z]{4}\d{6}$/;
+      if (!curpRegex.test(pass)) {
+        if (pass.length !== 10) {
+          alert(`❌ Error en Contraseña: La contraseña deben ser únicamente los primeros 10 caracteres de tu CURP (ingresaste ${pass.length}).`);
+        } else if (pass !== pass.toUpperCase()) {
+          alert("❌ Error en Contraseña: Los primeros 10 caracteres de tu CURP deben estar totalmente en MAYÚSCULAS.");
+        } else {
+          alert("❌ Error en Contraseña: El formato debe ser 4 letras mayúsculas seguidas de 6 números (ej. ABCD970427).");
+        }
+        return;
+      }
+
+      // ¡ÉXITO TOTAL!
+      alert("🎉 ¡AUTENTICACIÓN EXITOSA EN SIPAG!\n\nHas ingresado correctamente tu matrícula de 14 dígitos con el '20' y tu CURP en mayúsculas.\n\nTodo el flujo de las Fases 1, 2 y 3 ha quedado dominado.");
+      updateTutor("¡Fases 1, 2 y 3 Completadas al 100%! 🏆", "El alumno ha completado todo el flujo: Gmail ➔ Meet ➔ Búsqueda ➔ SIPAG ➔ Login validado.");
     }
   </script>
 </body>
