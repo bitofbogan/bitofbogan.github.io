@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Examen - Preparatoria Abierta (v1.3.0)</title>
+  <title>Simulador de Examen - Preparatoria Abierta (v1.3.1)</title>
   <style>
     :root {
       --chrome-bg: #dee1e6;
@@ -330,6 +330,16 @@
       flex: 1;
     }
     .tab-view.active { display: flex; }
+
+    .view-sub {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .view-sub.hidden {
+      display: none !important;
+    }
 
     /* =========================================
        3. BÚSQUEDAS GOOGLE (ORGÁNICAS Y COMPLETAS)
@@ -1580,12 +1590,13 @@
 
     .tutor-title { font-weight: 700; color: #38bdf8; font-size: 0.98rem; }
     
+    /* Botón pastel suave para reiniciar */
     .btn-tutor-restart {
       align-self: flex-start;
-      background: #ef4444;
-      color: #ffffff;
-      border: none;
-      padding: 8px 14px;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      padding: 7px 14px;
       border-radius: 6px;
       font-size: 0.82rem;
       font-weight: 700;
@@ -1593,9 +1604,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: background 0.15s;
+      transition: all 0.15s;
     }
-    .btn-tutor-restart:hover { background: #dc2626; }
+    .btn-tutor-restart:hover {
+      background: #fecaca;
+      color: #7f1d1d;
+      border-color: #f87171;
+    }
 
     /* Modal emergente que reemplaza los alert() y confirm() nativos */
     #custom-dialog-backdrop {
@@ -1640,7 +1655,7 @@
 <body>
 
   <!-- ETIQUETA DE VERSIÓN REUBICADA -->
-  <div class="app-version-tag">v1.3.0 (Build 2026)</div>
+  <div class="app-version-tag">v1.3.1 (Build 2026)</div>
 
   <!-- MODAL INICIAL DE REGISTRO -->
   <div id="setup-modal">
@@ -1658,7 +1673,7 @@
     </div>
   </div>
 
-  <!-- DIÁLOGO PERSONALIZADO (ELIMINA POP-UPS NATIVOS Y LA CASILLA DEL NAVEGADOR) -->
+  <!-- DIÁLOGO PERSONALIZADO (SIN POP-UPS NATIVOS) -->
   <div id="custom-dialog-backdrop" class="hidden">
     <div class="custom-dialog-card">
       <div id="custom-dialog-icon" style="font-size:2rem; margin-bottom:8px;">💡</div>
@@ -1746,7 +1761,6 @@
         <div class="new-tab-btn" id="main-new-tab-btn" onclick="handleNewTabClick()">+</div>
       </div>
       <div class="nav-bar">
-        <!-- Botones decorativos sin reiniciar simulación -->
         <div class="nav-buttons">
           <span style="opacity:0.4; cursor:default;">←</span>
           <span style="opacity:0.4; cursor:default;">→</span>
@@ -1765,7 +1779,7 @@
       <div id="tab-view-gmail" class="tab-view active">
         
         <!-- VISTA 1.1: NUEVA PESTAÑA BLANCA -->
-        <div id="view-newtab" class="view-sub active" style="height:100%;">
+        <div id="view-newtab" class="view-sub">
           <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:60px;">
             <div style="font-size:3.5rem; font-weight:700; letter-spacing:-2px; margin-bottom:25px;">
               <span style="color:var(--google-blue)">G</span><span style="color:var(--google-red)">o</span><span style="color:var(--google-yellow)">o</span><span style="color:var(--google-blue)">g</span><span style="color:var(--google-green)">l</span><span style="color:var(--google-red)">e</span>
@@ -1778,7 +1792,7 @@
         </div>
 
         <!-- VISTA 1.2: BÚSQUEDA GOOGLE GMAIL (COMPLETA Y SCROLLEABLE) -->
-        <div id="view-search-results" class="view-sub hidden" style="height:100%;">
+        <div id="view-search-results" class="view-sub hidden">
           <div class="glight-container">
             <div class="glight-header">
               <div class="glight-logo">
@@ -1865,7 +1879,7 @@
         </div>
 
         <!-- VISTA 1.3: SELECTOR DE CUENTAS GOOGLE -->
-        <div id="view-login-select" class="view-sub hidden" style="height:100%;">
+        <div id="view-login-select" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
               <div style="text-align:center; margin-bottom:20px;">
@@ -1905,7 +1919,7 @@
         </div>
 
         <!-- VISTA 1.4: LOGIN CORREO -->
-        <div id="view-login-email" class="view-sub hidden" style="height:100%;">
+        <div id="view-login-email" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
               <div style="text-align:center; margin-bottom:15px;">
@@ -1930,7 +1944,7 @@
         </div>
 
         <!-- VISTA 1.5: LOGIN CONTRASEÑA -->
-        <div id="view-login-pass" class="view-sub hidden" style="height:100%;">
+        <div id="view-login-pass" class="view-sub hidden">
           <div class="login-container">
             <div class="login-card">
               <div style="text-align:center; margin-bottom:15px;">
@@ -1950,7 +1964,7 @@
         </div>
 
         <!-- VISTA 1.6: GMAIL BANDEJA -->
-        <div id="view-gmail-inbox" class="view-sub hidden" style="height:100%;">
+        <div id="view-gmail-inbox" class="view-sub hidden">
           <div class="gmail-layout">
             <div class="gmail-header">
               <div style="display:flex; align-items:center; gap:10px;">
@@ -1978,7 +1992,7 @@
         </div>
 
         <!-- VISTA 1.7: DETALLE DEL CORREO -->
-        <div id="view-mail-detail" class="view-sub hidden" style="height:100%;">
+        <div id="view-mail-detail" class="view-sub hidden">
           <div class="mail-detail">
             <button style="margin-bottom:15px; background:none; border:none; cursor:pointer; font-size:0.9rem;" onclick="backToInbox()">← Volver a Recibidos</button>
 
@@ -2025,8 +2039,8 @@
       <!-- ================= PESTAÑA 2: GOOGLE MEET (SALA 1) ================= -->
       <div id="tab-view-meet" class="tab-view">
         
-        <!-- SUBVISTA 2.1: SALA PREVIA (LOBBY CON ENTRADA ANIMADA) -->
-        <div id="view-meet-lobby" class="view-sub active" style="height:100%;">
+        <!-- SUBVISTA 2.1: SALA PREVIA (LOBBY) -->
+        <div id="view-meet-lobby" class="view-sub">
           <div class="meet-lobby-container">
             
             <div id="browser-perm-dialog" class="browser-perm-box-topleft">
@@ -2091,7 +2105,7 @@
         </div>
 
         <!-- SUBVISTA 2.2: SALA DE ESPERA -->
-        <div id="view-meet-waiting" class="view-sub hidden" style="height:100%;">
+        <div id="view-meet-waiting" class="view-sub hidden">
           <div class="meet-lobby-container" style="align-items:center; justify-content:center; text-align:center; background:#fff;">
             <div style="font-size:3rem; margin-bottom:15px;">⏳</div>
             <h2 style="font-size:1.6rem; color:#202124; margin-bottom:8px;">Espera a que un organizador te dé acceso...</h2>
@@ -2100,7 +2114,7 @@
         </div>
 
         <!-- SUBVISTA 2.3: SALA EN VIVO MULTIUSUARIO 1 -->
-        <div id="view-meet-live" class="view-sub hidden" style="height:100%;">
+        <div id="view-meet-live" class="view-sub hidden">
           <div class="meet-live-container">
             <div style="padding:12px 20px; display:flex; justify-content:space-between;">
               <div style="display:flex; align-items:center; gap:10px;">
@@ -2209,7 +2223,7 @@
         </div>
 
         <!-- SUBVISTA 2.4: SALISTE DE LA REUNIÓN -->
-        <div id="view-meet-left" class="view-sub hidden" style="height:100%;">
+        <div id="view-meet-left" class="view-sub hidden">
           <div class="left-meeting-layout">
             <div class="left-meeting-timer-top">
               <div class="countdown-circle-badge">59</div>
@@ -2233,7 +2247,7 @@
       <div id="tab-view-sipag" class="tab-view">
         
         <!-- SUBVISTA 3.1: NUEVA PESTAÑA EN BLANCO -->
-        <div id="view-sipag-newtab" class="view-sub active" style="height:100%;">
+        <div id="view-sipag-newtab" class="view-sub">
           <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:60px;">
             <div style="font-size:3.5rem; font-weight:700; letter-spacing:-2px; margin-bottom:25px;">
               <span style="color:var(--google-blue)">G</span><span style="color:var(--google-red)">o</span><span style="color:var(--google-yellow)">o</span><span style="color:var(--google-blue)">g</span><span style="color:var(--google-green)">l</span><span style="color:var(--google-red)">e</span>
@@ -2246,7 +2260,7 @@
         </div>
 
         <!-- SUBVISTA 3.2: BÚSQUEDA GOOGLE SIPAG (COMPLETA) -->
-        <div id="view-sipag-search" class="view-sub hidden" style="height:100%;">
+        <div id="view-sipag-search" class="view-sub hidden">
           <div class="glight-container">
             <div class="glight-header">
               <div class="glight-logo">
@@ -2356,8 +2370,8 @@
           </div>
         </div>
 
-        <!-- SUBVISTA 3.3: PORTAL HOMEPAGE SIPAG (3 BOTONES Y ESPACIADO PERFECTO) -->
-        <div id="view-sipag-portal" class="view-sub hidden" style="height:100%;">
+        <!-- SUBVISTA 3.3: PORTAL HOMEPAGE SIPAG -->
+        <div id="view-sipag-portal" class="view-sub hidden">
           <div class="sipag-page-layout">
             
             <div id="sipag-popup-modal" class="sipag-popup-backdrop">
@@ -2414,7 +2428,7 @@
         </div>
 
         <!-- SUBVISTA 3.4: LOGIN SIPAG -->
-        <div id="view-sipag-login" class="view-sub hidden" style="height:100%;">
+        <div id="view-sipag-login" class="view-sub hidden">
           <div class="sipag-page-layout" style="background:#f1f5f9;">
             <div class="sipag-login-wrapper">
               <div class="sipag-login-split-card">
@@ -2454,8 +2468,8 @@
           </div>
         </div>
 
-        <!-- ================= SUBVISTA 3.5: DASHBOARD SIPAG (DONUT CONTINUO) ================= -->
-        <div id="view-sipag-dashboard" class="view-sub hidden" style="height:100%;">
+        <!-- ================= SUBVISTA 3.5: DASHBOARD SIPAG ================= -->
+        <div id="view-sipag-dashboard" class="view-sub hidden">
           <div class="sipag-dashboard-layout">
             <div class="sipag-sidebar-menu">
               <div class="sipag-sidebar-header">
@@ -2518,7 +2532,7 @@
         </div>
 
         <!-- ================= SUBVISTA 3.6: TABLA DE SOLICITUDES ================= -->
-        <div id="view-sipag-solicitudes" class="view-sub hidden" style="height:100%;">
+        <div id="view-sipag-solicitudes" class="view-sub hidden">
           <div class="sipag-dashboard-layout">
             <div class="sipag-sidebar-menu">
               <div class="sipag-sidebar-header">
@@ -2624,7 +2638,7 @@
         </div>
 
         <!-- ================= SUBVISTA 3.7: ENTORNO DEL EXAMEN ================= -->
-        <div id="view-sipag-exam-sandbox" class="view-sub hidden" style="height:100%;">
+        <div id="view-sipag-exam-sandbox" class="view-sub hidden">
           <div class="exam-virtual-env">
             
             <div id="exam-loading-screen" class="exam-loading-modal hidden">
@@ -2667,7 +2681,6 @@
             <div class="exam-main-split">
               <div class="exam-left-pane">
                 <div style="font-size:0.75rem; text-transform:uppercase; color:#38bdf8; font-weight:700; margin-bottom:6px;">REACTIVO</div>
-                <!-- Solo número de pregunta -->
                 <h3 style="font-size:1.15rem; color:#f8fafc; margin-bottom:16px;" id="exam-q-title">Pregunta 1 de 6</h3>
                 <div style="font-size:0.92rem; color:#cbd5e1; line-height:1.6;" id="exam-q-body">Texto de la pregunta...</div>
               </div>
@@ -2694,8 +2707,8 @@
       <!-- ================= PESTAÑA 4: GOOGLE MEET (SALA 2) ================= -->
       <div id="tab-view-meet2" class="tab-view">
         
-        <!-- SUBVISTA 4.1: SALA PREVIA (LOBBY SALA 2 CON BOTÓN 'CAMBIAR AQUÍ') -->
-        <div id="view-meet2-lobby" class="view-sub active" style="height:100%;">
+        <!-- SUBVISTA 4.1: SALA PREVIA (LOBBY SALA 2) -->
+        <div id="view-meet2-lobby" class="view-sub">
           <div class="meet-lobby-container">
             <div style="padding:18px 28px; display:flex; justify-content:space-between; background:#ffffff; border-bottom:1px solid #e2e8f0;">
               <div style="display:flex; align-items:center; gap:8px; font-size:1.3rem; font-weight:600; color:#5f6368;">
@@ -2735,7 +2748,7 @@
         </div>
 
         <!-- SUBVISTA 4.2: SALA DE ESPERA SALA 2 -->
-        <div id="view-meet2-waiting" class="view-sub hidden" style="height:100%;">
+        <div id="view-meet2-waiting" class="view-sub hidden">
           <div class="meet-lobby-container" style="align-items:center; justify-content:center; text-align:center; background:#fff;">
             <div style="font-size:3rem; margin-bottom:15px;">⏳</div>
             <h2 style="font-size:1.6rem; color:#202124; margin-bottom:8px;">Uniéndote a la Sala 2 de Google Meet...</h2>
@@ -2744,7 +2757,7 @@
         </div>
 
         <!-- SUBVISTA 4.3: SALA EN VIVO 2 -->
-        <div id="view-meet2-live" class="view-sub hidden" style="height:100%;">
+        <div id="view-meet2-live" class="view-sub hidden">
           <div class="meet-live-container">
             <div style="padding:12px 20px; display:flex; justify-content:space-between;">
               <div style="display:flex; align-items:center; gap:10px;">
@@ -2821,7 +2834,7 @@
     </div>
   </div>
 
-  <!-- 3. GUÍA DEL TUTOR DIDÁCTICO (ANIMADO Y CON BOTÓN REINICIAR) -->
+  <!-- 3. GUÍA DEL TUTOR DIDÁCTICO -->
   <div id="tutor-panel">
     <div class="tutor-title">💡 Guía del Entrenamiento</div>
     <div id="tutor-text">Ingresa tu nombre en el formulario para comenzar.</div>
@@ -2954,7 +2967,7 @@
     };
 
     // ========================================================
-    // SISTEMA DE ALERTAS PERSONALIZADAS (SIN POP-UPS NATIVOS)
+    // SISTEMA DE ALERTAS Y CONFIRMACIONES PERSONALIZADAS
     // ========================================================
     let customDialogCallback = null;
 
@@ -3052,13 +3065,18 @@
       setTimeout(() => document.getElementById('google-input').focus(), 100);
     }
 
+    function updateTutor(title, text) {
+      document.querySelector('.tutor-title').innerHTML = `💡 ${title}`;
+      document.getElementById('tutor-text').innerHTML = text;
+    }
+
     // ========================================================
     // 2. GESTIÓN DE PESTAÑAS (MULTITAREA & URLs DINÁMICAS)
     // ========================================================
     let activeTabId = 'gmail';
 
     function activateTab(tabId) {
-      // Bloqueo: si el examen fue reactivado en Meet, el alumno DEBE silenciar su mic antes de volver a SIPAG desde cualquier pestaña
+      // Bloqueo: si el examen fue reactivado en Meet, el alumno DEBE silenciar su mic antes de volver a SIPAG
       if (activeTabId.startsWith('meet') && tabId === 'sipag' && isReactivated && isSuspended) {
         const micBtn = document.getElementById('room-mic-btn');
         if (micBtn && !micBtn.classList.contains('off')) {
@@ -3086,7 +3104,7 @@
         // Espera de 2.5s para activación oficial al volver a Meet
         if (!isExamTeacherActivated && !isActivationPending && document.getElementById('view-sipag-solicitudes') && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
           isActivationPending = true;
-          updateTutor("Esperando al Aplicador...", "Espera unos segundos en la videollamada mientras el aplicador activa los exámenes...");
+          updateTutor("Paso 21: Esperando al Aplicador", "Espera unos segundos en la videollamada mientras el aplicador activa los exámenes...");
           setTimeout(() => {
             triggerExamActivationInMeet();
           }, 2500);
@@ -3100,7 +3118,7 @@
         if (sipagTab) sipagTab.classList.add('active');
         document.getElementById('tab-view-sipag').classList.add('active');
 
-        // REACTIVACIÓN EN LA PREGUNTA 2 TRAS SUSPENSIÓN
+        // REACTIVACIÓN TRAS SUSPENSIÓN AL REGRESAR A SIPAG
         if (isSuspended && isReactivated) {
           document.getElementById('exam-suspended-screen').classList.add('hidden');
           const loadScreen = document.getElementById('exam-loading-screen');
@@ -3114,7 +3132,7 @@
             loadScreen.classList.add('hidden');
             isSuspended = false;
             loadQuestion(1); // Regresa a la Pregunta 2
-            updateTutor("Examen Reanudado ✅", "Continúa respondiendo la Pregunta 2. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
+            updateTutor("Paso 25: Examen Reanudado", "Continúa respondiendo la Pregunta 2. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
           }, 2000);
         }
       } else if (tabId === 'meet2') {
@@ -3147,7 +3165,7 @@
     }
 
     // ========================================================
-    // 3. FLUJO GMAIL (CORREO EN POSICIÓN ALEATORIA 3 A 8)
+    // 3. FLUJO GMAIL
     // ========================================================
     function switchGmailSubView(viewId) {
       document.querySelectorAll('#tab-view-gmail .view-sub').forEach(v => v.classList.add('hidden'));
@@ -3300,7 +3318,10 @@
     // ========================================================
     function switchMeetSubView(viewId) {
       document.querySelectorAll('#tab-view-meet .view-sub').forEach(v => v.classList.add('hidden'));
-      document.getElementById(viewId).classList.remove('hidden');
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.classList.remove('hidden');
+      }
     }
 
     function openMeetTab() {
@@ -3323,6 +3344,7 @@
       tabUrls['meet'] = "https://meet.google.com/mag-ptbo-oaq";
       document.getElementById('omnibox').value = tabUrls['meet'];
 
+      // Nombre del alumno en la videollamada
       document.getElementById('lobby-card-name').innerText = studentName;
       document.getElementById('lobby-user-email').innerText = enteredEmail;
       document.getElementById('lobby-header-avatar').innerText = studentName.charAt(0).toUpperCase();
@@ -3356,7 +3378,7 @@
 
       setTimeout(() => {
         enterLiveRoom();
-      }, 2500);
+      }, 2000);
     }
 
     function enterLiveRoom() {
@@ -3373,10 +3395,11 @@
       document.getElementById('room-mic-btn').classList.remove('off');
       document.getElementById('tile-user-mic-status').innerText = "🎤";
 
-      updateTutor("Paso 12: Pase de Lista", "Ya entraste a la llamada. Observa el <strong>Chat (💬)</strong> abajo a la derecha para el pase de lista.");
+      updateTutor("Paso 12: Pase de Lista", "Ya entraste a la llamada. Observa el <strong>Chat (💬)</strong> abajo a la derecha y haz clic en <strong>'📸 Mostrar credencial'</strong> para decir presente.");
 
-      // El chat pulsa inmediatamente al entrar a la llamada
-      triggerInitialRollCallChat();
+      setTimeout(() => {
+        triggerInitialRollCallChat();
+      }, 800);
     }
 
     function triggerInitialRollCallChat() {
@@ -3445,7 +3468,10 @@
     // ========================================================
     function switchSipagSubView(viewId) {
       document.querySelectorAll('#tab-view-sipag .view-sub').forEach(v => v.classList.add('hidden'));
-      document.getElementById(viewId).classList.remove('hidden');
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.classList.remove('hidden');
+      }
     }
 
     function openSipagNewTab() {
@@ -3519,7 +3545,7 @@
       document.getElementById('sipag-matricula-input').value = "";
       document.getElementById('sipag-password-input').value = "";
 
-      updateTutor("Paso 19: Ingresar Credenciales", "Ingresa tu <strong>matrícula</strong> (14 dígitos iniciando con 20) y tu <strong>contraseña</strong>.");
+      updateTutor("Paso 19: Ingresar Credenciales", "Ingresa tu <strong>matrícula</strong> (14 dígitos con prefijo 20) y tu <strong>contraseña</strong> (CURP en mayúsculas).");
     }
 
     function handleMatriculaInput(input) {
@@ -3585,7 +3611,7 @@
       document.getElementById('dash-user-badge').innerText = studentName.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
       document.getElementById('dash-user-email-tag').innerText = `${studentMatricula}@sipag.com`;
 
-      updateTutor("Paso 20: Menú Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.");
+      updateTutor("Paso 20: Ir a Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.");
     }
 
     function handleDashboardMenuClick() {
@@ -3605,7 +3631,7 @@
       document.getElementById('table-active-mod-num').innerText = XX;
       document.getElementById('table-active-mod-title').innerText = NOMBRE_MODULO_ACTUAL;
 
-      updateTutor("Paso 21: Esperar activación", "Aún no des clic en iniciar. Debes cambiar a la pestaña de <strong>Google Meet</strong> y esperar a que el aplicador active los exámenes.");
+      updateTutor("Paso 21: Esperar activación", "Aún no des clic en iniciar. Cambia a la pestaña de <strong>Google Meet</strong> y espera a que el aplicador active los exámenes.");
     }
 
     function triggerExamActivationInMeet() {
@@ -3619,7 +3645,7 @@
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      updateTutor("Exámenes Activados 🚀", "El aplicador ya activó los exámenes en el chat. Regresa a la pestaña de <strong>SIPAG</strong> y presiona <strong>'Iniciar'</strong>.");
+      updateTutor("Paso 22: Iniciar Examen", "El aplicador activó los exámenes en el chat. Regresa a la pestaña de <strong>SIPAG</strong> y presiona <strong>'Iniciar'</strong>.");
     }
 
     function handleStartExamButtonClick() {
@@ -3669,7 +3695,7 @@
       }
 
       loadQuestion(0);
-      updateTutor("Examen en curso", "Selecciona una opción de respuesta y haz clic en <strong>'Siguiente reactivo'</strong>.");
+      updateTutor("Paso 23: Responder Examen", "Selecciona tu respuesta y haz clic en <strong>'Siguiente reactivo'</strong>.");
     }
 
     function loadQuestion(index) {
@@ -3683,7 +3709,6 @@
       const activePill = document.getElementById(`pill-q-${index + 1}`);
       if (activePill) activePill.classList.add('active');
 
-      // Solo número de pregunta, sin título del módulo
       document.getElementById('exam-q-title').innerText = `Pregunta ${index + 1} de 6`;
       document.getElementById('exam-q-body').innerText = qData.q;
       document.getElementById('exam-footer-count').innerText = `Reactivo ${index + 1} de 6`;
@@ -3747,7 +3772,7 @@
     function triggerSystemSuspension() {
       isSuspended = true;
       document.getElementById('exam-suspended-screen').classList.remove('hidden');
-      updateTutor("⚠️ Examen Suspendido", "Tu examen se suspendió por el sistema. Cambia a la pestaña de <strong>Google Meet</strong>, activa tu micrófono y avísale verbalmente al aplicador.");
+      updateTutor("Paso 24: Examen Suspendido", "Tu examen se suspendió por seguridad. Cambia a <strong>Google Meet</strong>, activa tu micrófono y avísale al aplicador.");
     }
 
     function setupMeetSuspensionPrompt() {
@@ -3787,7 +3812,7 @@
     }
 
     function speakSuspensionToTeacher() {
-      const firstName = studentName.trim().split(/\s+/)[0]; // Solo primer nombre
+      const firstName = studentName.trim().split(/\s+/)[0];
       const chatBox = document.getElementById('chat-messages-box');
       chatBox.innerHTML += `
         <div class="chat-msg-bubble" style="background:#f0fdf4;">
@@ -3820,7 +3845,7 @@
       isCallSwitchTriggered = true;
       showTutorAlert("⏱️ CONTINGENCIA DE TIEMPO (40 MINUTOS):\n\nSi te tardas más de 40 minutos en tu examen, la sala de Meet expira.\n\nEl aplicador mandará un enlace a una segunda sala en el chat. Debes cambiarte de llamada inmediatamente sin cerrar SIPAG para no cancelar tu prueba.", "⏱️");
       
-      updateTutor("Cambio de Videollamada (Fase 5)", "La llamada expiró por límite de 40 min. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.");
+      updateTutor("Paso 26: Cambio de Videollamada (40 min)", "La sala de Meet expiró por tiempo. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.");
 
       const chatBox = document.getElementById('chat-messages-box');
       chatBox.innerHTML += `
@@ -3834,7 +3859,7 @@
     }
 
     function openMeet2Tab() {
-      // 1. Marcar Meet 1 como "Saliste de la reunión" (Imagen 8)
+      // 1. Marcar Meet 1 como "Saliste de la reunión"
       switchMeetSubView('view-meet-left');
       document.querySelector('#tab-meet .tab-title-text').innerText = "⚪ Meet: Llamada finalizada";
 
@@ -3853,7 +3878,7 @@
         tabsContainer.insertBefore(newTab, mainNewTabBtn);
       }
 
-      // Configurar Sala 2
+      // Configurar datos de la Sala 2
       document.getElementById('meet2-code-header').innerText = newMeetCode;
       document.getElementById('meet2-teacher-label').innerText = currentAplicador.name;
       document.getElementById('meet2-my-label').innerText = `${studentName} (Tú)`;
@@ -3870,7 +3895,7 @@
       document.querySelectorAll('#tab-view-meet2 .view-sub').forEach(v => v.classList.add('hidden'));
       document.getElementById('view-meet2-lobby').classList.remove('hidden');
 
-      updateTutor("Paso 23: Sala previa Sala 2", "Haz clic en el botón azul <strong>'Cambiar aquí'</strong> para ingresar a la segunda videollamada.");
+      updateTutor("Paso 27: Sala previa Sala 2", "Haz clic en el botón azul <strong>'Cambiar aquí'</strong> para ingresar a la segunda videollamada.");
     }
 
     function confirmSwitchToMeet2Live() {
@@ -3899,7 +3924,7 @@
         `;
         chat2.scrollTop = chat2.scrollHeight;
 
-        updateTutor("Paso 24: Abrir Chat en Sala 2", "Haz clic en el botón de <strong>Chat (💬)</strong> en la Sala 2 y luego regresa a <strong>SIPAG</strong> para continuar respondiendo.");
+        updateTutor("Paso 28: Continuar en Sala 2", "Abre el chat en Sala 2 y luego regresa a <strong>SIPAG</strong> para continuar respondiendo tu examen.");
         loadQuestion(4); // Cargar Pregunta 5
       }, 2000);
     }
@@ -3929,7 +3954,7 @@
           document.getElementById('final-score-display').innerText = `${finalScore} / 10`;
           document.getElementById('exam-score-modal').classList.remove('hidden');
 
-          updateTutor("Avisar en Google Meet (Sala 2) 📢", "Ya tienes tu calificación. Cambia a la pestaña de <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador.");
+          updateTutor("Paso 30: Reportar Calificación", "Ya tienes tu calificación. Cambia a <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador.");
         }, 2500);
       });
     }
@@ -4012,11 +4037,10 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         isExamFinishedAndAuthorized = true;
-        updateTutor("Protocolo Finalizado 🏆", "El aplicador autorizó tu salida. Haz clic en el botón rojo de <strong>colgar llamada (📞)</strong> para concluir.");
+        updateTutor("Paso 31: Concluir Simulación", "El aplicador autorizó tu salida. Haz clic en el botón rojo de <strong>colgar llamada (📞)</strong> para concluir.");
       }, 1800);
     }
 
-    // PANTALLA COMPLETA FINAL
     function hangupExamCall() {
       try {
         if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
