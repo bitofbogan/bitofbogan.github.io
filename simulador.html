@@ -1663,10 +1663,20 @@
       <h2>🎓 Simulador de Examen Virtual</h2>
       <p>Ingresa tu nombre y apellidos completos para comenzar el entrenamiento oficial:</p>
       
-      <input type="text" id="student-name-input" class="setup-input" placeholder="Ej. Rodrigo Aguilar Meneses" autocomplete="off" onkeydown="if(event.key==='Enter') initializeSimulation()" autofocus>
+      <input type="text" id="student-name-input" class="setup-input" placeholder="Ej. Rodrigo Aguilar Meneses" autocomplete="off" onkeydown="if(event.key==='Enter') initializeSimulation('guided')" autofocus>
       
       <div class="fullscreen-tip">
         💡 <strong>Recomendación visual:</strong> Para una experiencia inmersiva y evitar confundir las pestañas del simulador con tu navegador real, al iniciar activaremos la pantalla completa (también puedes presionar <strong>F11</strong> en cualquier momento).
+      </div>
+
+      <!-- Dos modos de inicio -->
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="btn-start-sim" onclick="initializeSimulation('guided')">
+          🧭 MODO GUIADO (CON INSTRUCCIONES)
+        </button>
+        <button class="btn-start-sim" style="background:#475569;" onclick="initializeSimulation('exam')">
+          📝 MODO EXAMEN (PRÁCTICA LIBRE / SIN AYUDA)
+        </button>
       </div>
 
       <button class="btn-start-sim" onclick="initializeSimulation()">COMENZAR SIMULACIÓN (PANTALLA COMPLETA) 🚀</button>
@@ -2927,6 +2937,7 @@
       }
     ];
 
+    let simulationMode = 'guided'; // 'guided' | 'exam'
     let currentQIndex = 0;
     let studentName = "";
     let enteredEmail = "";
@@ -2941,10 +2952,50 @@
     let isExamFinishedAndAuthorized = false;
     let finalScore = 9;
 
+    function initializeSimulation(mode = 'guided') {
+      const input = document.getElementById('student-name-input');
+      const val = input.value.trim();
+
+      if (!val) {
+        showTutorAlert("⚠️ Por favor ingresa tu nombre y apellidos para iniciar la simulación.");
+        input.focus();
+        return;
+      }
+
+      simulationMode = mode;
+      studentName = val;
+      enteredEmail = studentName.toLowerCase().replace(/\s+/g, '.') + "@gmail.com";
+
+      try {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+      } catch (e) {}
+
+      document.getElementById('setup-modal').classList.add('hidden');
+      
+      if (simulationMode === 'exam') {
+        document.getElementById('tutor-panel').classList.add('hidden');
+      } else {
+        document.getElementById('tutor-panel').classList.remove('hidden');
+        updateTutor("Paso 1: Abrir Google Chrome", "Da <strong>doble clic</strong> sobre el icono de <strong>Google Chrome</strong> en el escritorio para abrir el navegador.");
+      }
+    }
+
+    function updateTutor(title, text) {
+      if (simulationMode === 'exam') {
+        document.getElementById('tutor-panel').classList.add('hidden');
+        return;
+      }
+      document.getElementById('tutor-panel').classList.remove('hidden');
+      document.querySelector('.tutor-title').innerHTML = `💡 ${title}`;
+      document.getElementById('tutor-text').innerHTML = text;
+    }
+
     const APLICADORES_LIST = [
-      { name: "APLICADOR: Lic. Fernando Morales Ríos", email: "fmoralesprepa@gmail.com" },
-      { name: "APLICADOR: Mtra. Patricia Villarreal Solís", email: "pvillarrealprepa@gmail.com" },
-      { name: "APLICADOR: Lic. Carlos Mendoza Ramos", email: "cmendozaprepa@gmail.com" }
+      { name: "APLICADOR: Fernando Morales Ríos", email: "fmoralesprepa@gmail.com" },
+      { name: "APLICADOR: Patricia Villarreal Solís", email: "pvillarrealprepa@gmail.com" },
+      { name: "APLICADOR: Carlos Mendoza Ramos", email: "cmendozaprepa@gmail.com" }
     ];
 
     let currentAplicador = APLICADORES_LIST[Math.floor(Math.random() * APLICADORES_LIST.length)];
@@ -3113,6 +3164,14 @@
         if (isSuspended && !isReactivated) {
           setupMeetSuspensionPrompt();
         }
+
+        // Auto-scroll al regresar a Meet si el chat ya estaba abierto
+        const chatBox = document.getElementById('chat-messages-box');
+        if (chatBox) {
+          setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 100);
+        }
+
+        
       } else if (tabId === 'sipag') {
         const sipagTab = document.getElementById('tab-sipag');
         if (sipagTab) sipagTab.classList.add('active');
@@ -3426,6 +3485,12 @@
       flyout.classList.toggle('hidden');
       chatBtn.classList.remove('chat-btn-alert');
       badge.classList.add('hidden');
+
+      // Scroll forzado al abrir el chat
+      const chatBox = document.getElementById('chat-messages-box');
+      if (chatBox) {
+        setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 50);
+      }
 
       if (!flyout.classList.contains('hidden') && !document.getElementById('roll-call-done-badge')) {
         updateTutor("Paso 13: Mostrar Identificación", "Haz clic en el botón <strong>'📸 Mostrar credencial a la cámara'</strong> dentro del chat.");
@@ -3854,8 +3919,15 @@
           👉 <a href="#" style="color:#1a73e8; font-weight:700; text-decoration:underline;" onclick="openMeet2Tab(); return false;">https://meet.google.com/${newMeetCode}</a>
         </div>
       `;
-      chatBox.scrollTop = chatBox.scrollHeight;
-      setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 60);
+
+      // Si el chat está cerrado, activa la alerta para que lo abran
+      const flyout = document.getElementById('meet-chat-flyout');
+      if (flyout && flyout.classList.contains('hidden')) {
+        const chatBtn = document.getElementById('meet-chat-toggle-btn');
+        const badge = document.getElementById('chat-badge-count');
+        if (chatBtn) chatBtn.classList.add('chat-btn-alert');
+        if (badge) badge.classList.remove('hidden');
+      }
     }
 
     function openMeet2Tab() {
