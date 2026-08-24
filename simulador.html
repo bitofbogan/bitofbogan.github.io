@@ -1679,7 +1679,6 @@
         </button>
       </div>
 
-      <button class="btn-start-sim" onclick="initializeSimulation()">COMENZAR SIMULACIÓN (PANTALLA COMPLETA) 🚀</button>
     </div>
   </div>
 
@@ -3069,28 +3068,6 @@
     // ========================================================
     // 1. INICIALIZACIÓN
     // ========================================================
-    function initializeSimulation() {
-      const input = document.getElementById('student-name-input');
-      const val = input.value.trim();
-
-      if (!val) {
-        showTutorAlert("⚠️ Por favor ingresa tu nombre y apellidos para iniciar la simulación.");
-        input.focus();
-        return;
-      }
-
-      studentName = val;
-      enteredEmail = studentName.toLowerCase().replace(/\s+/g, '.') + "@gmail.com";
-
-      try {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => {});
-        }
-      } catch (e) {}
-
-      document.getElementById('setup-modal').classList.add('hidden');
-      updateTutor("Paso 1: Abrir Google Chrome", "Da <strong>doble clic</strong> sobre el icono de <strong>Google Chrome</strong> en el escritorio para abrir el navegador.");
-    }
 
     function selectDesktopIcon(elem) {
       document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
