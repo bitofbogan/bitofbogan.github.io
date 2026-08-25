@@ -1588,6 +1588,43 @@
       gap: 12px;
     }
 
+    /* Globo indicador de arrastre */
+    #tutor-drag-hint {
+      position: absolute;
+      left: -245px;
+      top: 14px;
+      background: #38bdf8;
+      color: #0f172a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: hintPointPulse 1.2s infinite alternate ease-in-out;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Flechita que apunta al panel */
+    #tutor-drag-hint::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 6px 0 6px 6px;
+      border-style: solid;
+      border-color: transparent transparent transparent #38bdf8;
+    }
+
+    @keyframes hintPointPulse {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(6px); }
+    }
+
     .tutor-title { 
       font-weight: 700; 
       color: #38bdf8; 
@@ -1717,7 +1754,7 @@
 
       <div style="font-weight:700; font-size:0.88rem; color:#334155; text-align:left;">Resumen de pasos a seguir para la aplicación:</div>
       <div class="milestone-grid">
-        <div class="milestone-item"><span>1️⃣</span> <span><strong>Ingreso a Gmail</strong> abriendo tu navegador para buscar la invitación al examen.</span></div>
+        <div class="milestone-item"><span>1️⃣</span> <span><strong>Ingreso a Gmail:</strong> Abrir tu navegador y buscar la invitación al examen en tu correo (revisando spam si no aparece).</span></div>
         <div class="milestone-item"><span>2️⃣</span> <span><strong>Sala de Meet:</strong> Dar permisos de cámara y micrófono, pasar lista y mostrar identificación oficial.</span></div>
         <div class="milestone-item"><span>3️⃣</span> <span><strong>Pestañas múltiples:</strong> Abrir segunda pestaña para SIPAG sin colgar la videollamada en Meet.</span></div>
         <div class="milestone-item"><span>4️⃣</span> <span><strong>Ingreso a SIPAG:</strong> Ingreso de matrícula iniciando con '20' (14 números totales) y contraseña (primeros 10 caracteres de la CURP en mayúsculas).</span></div>
@@ -1976,7 +2013,7 @@
             </div>
 
             <div class="privacy-disclaimer">
-              🔒 <strong>Aviso de Privacidad Didáctica:</strong> Ninguno de los datos ingresados en este simulador se guardan en servidores externos.
+              🔒 <strong>Aviso de privacidad:</strong> Ninguno de los datos ingresados en este simulador se guardan en ningún servidor. Es una herramienta 100% didáctica, segura y libre de rastreo.
             </div>
           </div>
         </div>
@@ -2480,7 +2517,7 @@
               </div>
 
               <div class="privacy-disclaimer">
-                🔒 <strong>Aviso de Privacidad Didáctica:</strong> Ninguno de los datos ingresados se almacena en servidores externos.
+                🔒 <strong>Aviso de privacidad:</strong> Ninguno de los datos ingresados en este simulador se guardan en ningún servidor. Es una herramienta 100% didáctica, segura y libre de rastreo.
               </div>
             </div>
           </div>
@@ -2854,6 +2891,10 @@
 
   <!-- 3. GUÍA DEL TUTOR DIDÁCTICO -->
   <div id="tutor-panel" class="hidden">
+    <!-- Globo indicador flotante -->
+    <div id="tutor-drag-hint">
+      <span>✋ Arrastra desde aquí si te estorba 👉</span>
+    </div>
     <div class="tutor-title">💡 Guía del Entrenamiento</div>
     <div id="tutor-text">Ingresa tu nombre en el formulario para comenzar.</div>
     <button class="btn-tutor-restart" onclick="confirmRestartSimulation()">🔄 Reiniciar Simulación</button>
@@ -3033,7 +3074,7 @@
 
     function showTutorAlert(msg, icon = "💡") {
       document.getElementById('custom-dialog-icon').innerText = icon;
-      document.getElementById('custom-dialog-text').innerText = msg;
+      document.getElementById('custom-dialog-text').innerHTML = msg; // <-- Acepta <strong>, <b>, <br>, etc.
       document.getElementById('custom-dialog-actions').innerHTML = `
         <button class="btn-start-sim" style="padding:8px 24px; width:auto;" onclick="closeCustomAlert()">Aceptar</button>
       `;
@@ -3085,6 +3126,11 @@
     }
 
     function launchBrowser() {
+
+      // 1. Oculta el aviso de arrastre en cuanto se abre el navegador
+      const hint = document.getElementById('tutor-drag-hint');
+      if (hint) hint.style.opacity = '0';
+      
       document.getElementById('google-input').value = "";
       document.getElementById('glight-search-input').value = "gmail";
       document.getElementById('omnibox').value = "";
@@ -4125,6 +4171,11 @@
 
       handle.addEventListener('pointerdown', (e) => {
         isDragging = true;
+
+        // Ocultar el aviso suavemente al primer arrastre
+        const hint = document.getElementById('tutor-drag-hint');
+        if (hint) hint.style.opacity = '0';
+        
         const rect = panel.getBoundingClientRect();
 
         // Convertir posición fija de right a coordenadas absolutas left/top
