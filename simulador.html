@@ -2334,17 +2334,6 @@
                 <button class="meet-btn-circle" onclick="showTutorAlert('Detalles de seguridad de la reunión.')"><span class="material-symbols-outlined">lock</span></button>
               </div>
             </div>
-
-              <div class="meet-right-dock">
-                <button class="meet-btn-circle" id="meet-chat-toggle-btn" onclick="toggleChatFlyout()">
-                  💬
-                  <span class="chat-badge hidden" id="chat-badge-count">1</span>
-                </button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Vista en cuadrícula.')">🪟</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Detalles de seguridad.')">🔒</button>
-              </div>
-            </div>
-
           </div>
         </div>
 
@@ -2363,7 +2352,7 @@
               <button class="btn-return-home-blue" onclick="showTutorAlert('Permanece en la segunda videollamada para continuar con tu prueba.')">Volver a la pantalla de inicio</button>
             </div>
 
-            <<div style="font-size:0.85rem; color:#0b57d0; cursor:pointer;">Enviar comentarios</div>
+            <div style="font-size:0.85rem; color:#0b57d0; cursor:pointer;">Enviar comentarios</div>
           </div>
         </div>
       </div> <!-- ✅ Este cierra la Pestaña 2 (tab-view-meet) -->
@@ -2911,10 +2900,11 @@
                 <div class="tile-mic-status"><span class="material-symbols-outlined" style="color:var(--google-red);">mic_off</span></div>
               </div>
 
-              <div class="meet-tile-user" style="background:radial-gradient(circle at 50% 40%, #5d311e 0%, #30170b 100%);">
+             <div class="meet-tile-user" style="background:radial-gradient(circle at 50% 40%, #5d311e 0%, #30170b 100%);">
                 <div class="tile-avatar-circle" id="meet2-my-avatar" style="background:#ea580c;">R</div>
                 <div class="tile-label" id="meet2-my-label">Estudiante (Tú)</div>
                 <div class="tile-mic-status" id="tile-user2-mic-status"><span class="material-symbols-outlined" style="color:var(--google-red);">mic_off</span></div>
+              </div>
 
               <!-- Ventana de Chat Sala 2 -->
               <div id="meet2-chat-flyout" class="meet-chat-flyout hidden">
@@ -2941,6 +2931,16 @@
                 <button class="meet-btn-circle" onclick="showTutorAlert('Más opciones.')"><span class="material-symbols-outlined">more_vert</span></button>
                 <button class="meet-btn-circle meet-btn-hangup" onclick="attemptHangupEarly()"><span class="material-symbols-outlined">call_end</span></button>
               </div>
+
+              <div class="meet-right-dock">
+                <button class="meet-btn-circle" id="meet2-chat-toggle-btn" onclick="toggleChatFlyout2()">
+                  <span class="material-symbols-outlined">chat</span>
+                  <span class="chat-badge hidden" id="chat2-badge-count">1</span>
+                </button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Vista en cuadrícula.')"><span class="material-symbols-outlined">grid_view</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Detalles de seguridad de la reunión.')"><span class="material-symbols-outlined">lock</span></button>
+              </div>
+            </div>
 
               <div class="meet-right-dock">
                 <button class="meet-btn-circle" id="meet2-chat-toggle-btn" onclick="toggleChatFlyout2()">
