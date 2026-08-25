@@ -1588,7 +1588,16 @@
       gap: 12px;
     }
 
-    .tutor-title { font-weight: 700; color: #38bdf8; font-size: 0.98rem; }
+    .tutor-title { 
+      font-weight: 700; 
+      color: #38bdf8; 
+      font-size: 0.98rem; 
+      cursor: grab; /* Muestra la manita para arrastrar */
+      user-select: none;
+    }
+    .tutor-title:active {
+      cursor: grabbing; /* Muestra la manita cerrada al hacer clic */
+    }
     
     /* Botón pastel suave para reiniciar */
     .btn-tutor-restart {
@@ -1661,12 +1670,12 @@
   <div id="setup-modal">
     <div class="setup-card">
       <h2>🎓 Simulador de Examen Virtual</h2>
-      <p>Ingresa tu nombre y apellidos completos para comenzar el entrenamiento oficial:</p>
+      <p>Ingresa tu nombre y apellidos completos para comenzar la simulación:</p>
       
-      <input type="text" id="student-name-input" class="setup-input" placeholder="Ej. Rodrigo Aguilar Meneses" autocomplete="off" onkeydown="if(event.key==='Enter') initializeSimulation('guided')" autofocus>
+      <input type="text" id="student-name-input" class="setup-input" placeholder="Ej. Julián Valdez Ramos" autocomplete="off" onkeydown="if(event.key==='Enter') initializeSimulation('guided')" autofocus>
       
       <div class="fullscreen-tip">
-        💡 <strong>Recomendación visual:</strong> Para una experiencia inmersiva y evitar confundir las pestañas del simulador con tu navegador real, al iniciar activaremos la pantalla completa (también puedes presionar <strong>F11</strong> en cualquier momento).
+        💡 <strong>Aviso:</strong> Para una experiencia inmersiva y evitar confundir las pestañas del simulador con tu navegador real, al iniciar la simulación se activará la pantalla completa (también puedes presionar <strong>F11</strong> en cualquier momento para salir de este modo).
       </div>
 
       <!-- Dos modos de inicio -->
@@ -1675,7 +1684,7 @@
           🧭 MODO GUIADO (CON INSTRUCCIONES)
         </button>
         <button class="btn-start-sim" style="background:#475569;" onclick="initializeSimulation('exam')">
-          📝 MODO EXAMEN (PRÁCTICA LIBRE / SIN AYUDA)
+          📝 MODO EXAMEN (ESCENARIO REAL SIN AYUDA)
         </button>
       </div>
 
@@ -1697,26 +1706,26 @@
   <div id="final-congratulations-screen" class="hidden">
     <div class="diploma-card">
       <div style="font-size:3.5rem; margin-bottom:6px;">🏆</div>
-      <h1 style="font-size:1.8rem; color:#0369a1; font-weight:800; margin-bottom:6px;">¡ENTRENAMIENTO OFICIAL COMPLETADO!</h1>
-      <p style="font-size:0.9rem; color:#64748b;">Preparatoria Abierta Guanajuato - Sistema de Evaluación Modular (SIPAG / SPA)</p>
+      <h1 style="font-size:1.8rem; color:#0369a1; font-weight:800; margin-bottom:6px;">¡SIMULACIÓN COMPLETADA!</h1>
+      <p style="font-size:0.9rem; color:#64748b;">Prepa Abierta GTO </p>
       
       <div style="background:#f0fdf4; border:2px solid #16a34a; border-radius:12px; padding:16px; margin:20px 0 16px 0;">
-        <span style="font-size:0.85rem; color:#15803d; font-weight:700;">ESTUDIANTE PREPARADO:</span>
+        <span style="font-size:0.85rem; color:#15803d; font-weight:700;">ESTUDIANTE:</span>
         <div style="font-size:1.4rem; font-weight:800; color:#1e293b;" id="diploma-student-name">Rodrigo Aguilar Meneses</div>
         <span style="font-size:0.82rem; color:#166534; font-weight:600;" id="diploma-grade-tag">Calificación Obtenida: 9.0 / 10 • ESTATUS: ACREDITADO ✅</span>
       </div>
 
-      <div style="font-weight:700; font-size:0.88rem; color:#334155; text-align:left;">Resumen del Protocolo Oficial de Aplicación:</div>
+      <div style="font-weight:700; font-size:0.88rem; color:#334155; text-align:left;">Resumen de pasos a seguir para la aplicación:</div>
       <div class="milestone-grid">
-        <div class="milestone-item"><span>1️⃣</span> <span><strong>Ingreso a Gmail:</strong> Localización del correo del examen emitido por el aplicador.</span></div>
-        <div class="milestone-item"><span>2️⃣</span> <span><strong>Sala de Meet:</strong> Permisos de cámara/micrófono, pase de lista y muestra de credencial oficial.</span></div>
-        <div class="milestone-item"><span>3️⃣</span> <span><strong>Multitarea Segura:</strong> Apertura de pestaña para SIPAG con micrófono silenciado sin colgar Meet.</span></div>
-        <div class="milestone-item"><span>4️⃣</span> <span><strong>Autenticación:</strong> Ingreso de matrícula con prefijo '20' y contraseña (CURP en mayúsculas).</span></div>
-        <div class="milestone-item"><span>5️⃣</span> <span><strong>Atención a Incidencias:</strong> Solución a suspensión de examen y migración a Sala 2 (límite de 40 min).</span></div>
-        <div class="milestone-item"><span>6️⃣</span> <span><strong>Cierre y Calificación:</strong> Verificación de promedio y reporte verbal obligatorio antes de colgar.</span></div>
+        <div class="milestone-item"><span>1️⃣</span> <span><strong>Ingreso a Gmail</strong> abriendo tu navegador para buscar la invitación al examen.</span></div>
+        <div class="milestone-item"><span>2️⃣</span> <span><strong>Sala de Meet:</strong> Dar permisos de cámara y micrófono, pasar lista y mostrar identificación oficial.</span></div>
+        <div class="milestone-item"><span>3️⃣</span> <span><strong>Pestañas múltiples:</strong> Abrir segunda pestaña para SIPAG sin colgar la videollamada en Meet.</span></div>
+        <div class="milestone-item"><span>4️⃣</span> <span><strong>Ingreso a SIPAG:</strong> Ingreso de matrícula iniciando con '20' (14 números totales) y contraseña (primeros 10 caracteres de la CURP en mayúsculas).</span></div>
+        <div class="milestone-item"><span>5️⃣</span> <span><strong>Suspensión de examen y cambio de llamada:</strong> Estar pendiente al cumplirse los primeros 40 minutos de examen tras la hora de inicio y atender el enlace a la segunda videollamda en el chat.</span></div>
+        <div class="milestone-item"><span>6️⃣</span> <span><strong>Cierre:</strong> Verificar calificación, anotarla y avisar al aplicador antes de colgar.</span></div>
       </div>
 
-      <button class="btn-start-sim" style="background:#0284c7; padding:14px;" onclick="location.reload()">🔄 REINICIAR SIMULACIÓN / VOLVER AL INICIO</button>
+      <button class="btn-start-sim" style="background:#0284c7; padding:14px;" onclick="location.reload()">🔄 REINICIAR SIMULACIÓN</button>
     </div>
   </div>
 
@@ -1922,7 +1931,7 @@
             </div>
 
             <div class="privacy-disclaimer">
-              🔒 <strong>Aviso de Privacidad Didáctica:</strong> Ninguno de los datos ingresados en este simulador se guardan en ningún servidor. Es una herramienta 100% didáctica, segura y libre de rastreo.
+              🔒 <strong>Aviso de privacidad:</strong> Ninguno de los datos ingresados en este simulador se guardan en ningún servidor. Es una herramienta 100% didáctica, segura y libre de rastreo.
             </div>
           </div>
         </div>
@@ -1940,14 +1949,14 @@
               <input type="text" id="email-input" class="input-google" placeholder="Correo electrónico o teléfono" oninput="checkEmailAt(this)" onkeydown="if(event.key==='Enter') goToPassword()">
               
               <div id="email-tip" class="pedagogical-tip">
-                💡 <strong>Nota útil:</strong> En Gmail no es necesario escribir <code>@gmail.com</code>, con escribir tu usuario es suficiente.
+                💡 <strong>Nota:</strong> En Gmail no es necesario escribir <code>@gmail.com</code>; con escribir tu usuario es suficiente.
               </div>
 
               <button class="btn-google" onclick="goToPassword()">Siguiente</button>
             </div>
 
             <div class="privacy-disclaimer">
-              🔒 <strong>Aviso de Privacidad Didáctica:</strong> Ninguno de los datos ingresados en este simulador se guardan en servidores externos.
+              🔒 <strong>Aviso de privacidad:</strong> Ninguno de los datos ingresados en este simulador se guardan en ningún servidor. Es una herramienta 100% didáctica, segura y libre de rastreo.
             </div>
           </div>
         </div>
@@ -2242,8 +2251,8 @@
             <h1 style="font-size:2.4rem; font-weight:400; color:#1f1f1f; margin-bottom:30px;">Saliste de la reunión</h1>
             
             <div style="display:flex; gap:16px; justify-content:center; margin-bottom:24px;">
-              <button class="btn-rejoin-outline" onclick="showTutorAlert('Esta llamada finalizó su tiempo de 40 min. Permanece en la Sala 2.')">Volver a unirse</button>
-              <button class="btn-return-home-blue" onclick="showTutorAlert('Permanece en la Sala 2 para continuar con tu prueba.')">Volver a la pantalla de inicio</button>
+              <button class="btn-rejoin-outline" onclick="showTutorAlert('Esta llamada finalizó su tiempo de 40 min. Permanece en la segunda videollamada.')">Volver a unirse</button>
+              <button class="btn-return-home-blue" onclick="showTutorAlert('Permanece en la segunda videollamada para continuar con tu prueba.')">Volver a la pantalla de inicio</button>
             </div>
 
             <div style="font-size:0.85rem; color:#0b57d0; cursor:pointer;">Enviar comentarios</div>
@@ -2660,15 +2669,15 @@
               <div style="font-size:3.5rem; margin-bottom:12px;">⚠️</div>
               <h2 style="font-size:1.6rem; font-weight:700; color:#f8fafc; margin-bottom:8px;">Tu examen ha sido suspendido, contacta a tu aplicador</h2>
               <p style="font-size:0.92rem; color:#cbd5e1; max-width:480px; line-height:1.5;">
-                Ocurrió una pausa de seguridad en el sistema. Cambia a la pestaña de <strong>Google Meet</strong>, activa tu micrófono y avísale verbalmente al aplicador para que reactive tu examen.
+                Ocurrió una pausa de seguridad en el sistema. Cambia a la pestaña de <strong>Google Meet</strong>, activa tu micrófono y pídele verbalmente al aplicador que reactive tu examen.
               </p>
             </div>
 
             <div id="exam-score-modal" class="exam-loading-modal hidden">
               <div style="background:#ffffff; color:#0f172a; padding:36px; border-radius:16px; text-align:center; max-width:440px;">
                 <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
-                <h2 style="font-size:1.6rem; color:#1e293b; margin-bottom:6px;">¡Evaluación Finalizada!</h2>
-                <p style="font-size:0.88rem; color:#64748b; margin-bottom:20px;">Tu examen ha sido procesado por el sistema.</p>
+                <h2 style="font-size:1.6rem; color:#1e293b; margin-bottom:6px;">¡Evaluación finalizada!</h2>
+                <p style="font-size:0.88rem; color:#64748b; margin-bottom:20px;">Tu examen ha sido procesado en el sistema.</p>
                 
                 <div style="background:#f0fdf4; border:2px solid #16a34a; padding:16px; border-radius:8px; margin-bottom:24px;">
                   <span style="font-size:0.85rem; color:#15803d; font-weight:700;">CALIFICACIÓN OFICIAL:</span>
@@ -2677,7 +2686,7 @@
                 </div>
 
                 <div style="background:#f1f5f9; padding:12px; border-radius:8px; font-size:0.85rem; color:#334155; line-height:1.4;">
-                  📢 <strong>Instrucción obligatoria:</strong> Regresa manualmente a la pestaña de <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador que ya obtuviste tu calificación antes de salirte.
+                  📢 <strong>Instrucción final:</strong> Regresa manualmente a la pestaña de <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador que ya obtuviste tu calificación antes de colgar.
                 </div>
               </div>
             </div>
@@ -2994,7 +3003,8 @@
     const APLICADORES_LIST = [
       { name: "APLICADOR: Fernando Morales Ríos", email: "fmoralesprepa@gmail.com" },
       { name: "APLICADOR: Patricia Villarreal Solís", email: "pvillarrealprepa@gmail.com" },
-      { name: "APLICADOR: Carlos Mendoza Ramos", email: "cmendozaprepa@gmail.com" }
+      { name: "APLICADOR: Carlos Mendoza Ramos", email: "cmendozaprepa@gmail.com" },
+      { name: "APLICADOR: Camila García Martínez", email: "garcia.pa@gmail.com" }
     ];
 
     let currentAplicador = APLICADORES_LIST[Math.floor(Math.random() * APLICADORES_LIST.length)];
@@ -3160,7 +3170,7 @@
           const loadScreen = document.getElementById('exam-loading-screen');
           loadScreen.classList.remove('hidden');
           document.getElementById('exam-loading-title').innerText = "Sincronizando y reactivando evaluación...";
-          document.getElementById('exam-loading-desc').innerText = "Reanudando reactivos oficiales desde el servidor.";
+          document.getElementById('exam-loading-desc').innerText = "Reanudando evaluación...";
 
           updateTutor("Reanudando Examen...", "Sincronizando reactivos... el examen se reanudará en unos segundos.");
 
@@ -3168,7 +3178,7 @@
             loadScreen.classList.add('hidden');
             isSuspended = false;
             loadQuestion(1); // Regresa a la Pregunta 2
-            updateTutor("Paso 25: Examen Reanudado", "Continúa respondiendo la Pregunta 2. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
+            updateTutor("Paso 25: Examen Reanudado", "Continúa respondiendo las preguntas. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
           }, 2000);
         }
       } else if (tabId === 'meet2') {
@@ -3260,7 +3270,7 @@
         return;
       }
       enteredEmail = emailEntered.includes('@') ? emailEntered : `${emailEntered}@gmail.com`;
-      document.getElementById('user-display').innerText = `Hola, ${emailEntered}`;
+      document.getElementById('user-display').innerText = `Hola, ${studentName.trim().split(/\s+/)[0]}`;
       switchGmailSubView('view-login-pass');
       document.getElementById('pass-input').value = "";
       updateTutor("Paso 6: Contraseña", "Introduce tu contraseña y presiona <strong>Enter</strong> o haz clic en <strong>'Iniciar sesión'</strong>.");
@@ -3448,7 +3458,7 @@
       chatBox.innerHTML = `
         <div class="chat-msg-bubble">
           <strong style="color:var(--google-blue);">${currentAplicador.name}:</strong><br>
-          📢 <strong>${studentName}</strong>, por favor muestra tu identificación a la cámara y responde 'Presente'.
+          📢 <strong>${studentName}</strong>, por favor muestra tu identificación a la cámara.
         </div>
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -3482,7 +3492,7 @@
       chatBox.innerHTML += `
         <div class="chat-msg-bubble" style="background:#f0fdf4;">
           <strong style="color:var(--google-blue);">${studentName} (Por voz):</strong><br>
-          ¡Presente, profesor! Aquí muestro mi credencial.
+          ¡Presente! Aquí muestro mi credencial.
         </div>
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -3496,7 +3506,7 @@
         chatBox.innerHTML += `
           <div class="chat-msg-bubble" style="background:#e0f2fe;">
             <strong style="color:var(--google-blue);">${currentAplicador.name}:</strong><br>
-            ✅ Identificación verificada, ${studentName}. Ahora silencia tu micrófono (🎤) y abre una nueva pestaña con el botón <strong>[+]</strong> arriba para buscar SIPAG sin cerrar la videollamada.
+            ✅ Identificación verificada, ${studentName.trim().split(/\s+/)[0]}. Ahora silencia tu micrófono (🎤) y abre una nueva pestaña con el botón <strong>[+]</strong> arriba para ingresar al SIPAG <strong>sin cerrar la videollamada</strong>.
           </div>
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -3620,18 +3630,18 @@
 
       const matRegex = /^20\d{12}$/;
       if (!matRegex.test(mat)) {
-        showTutorAlert(`❌ Error en Matrícula: Debe ser un número exacto de 14 dígitos. Actualmente ingresaste ${mat.length} caracteres.`);
+        showTutorAlert(`❌ Error en matrícula: Debe ser un número exacto de 14 dígitos. Actualmente ingresaste ${mat.length} caracteres.`);
         return;
       }
 
       const curpRegex = /^[A-Z]{4}\d{6}$/;
       if (!curpRegex.test(pass)) {
         if (pass.length !== 10) {
-          showTutorAlert(`❌ Error en Contraseña: La contraseña deben ser únicamente los primeros 10 caracteres de tu CURP (ingresaste ${pass.length}).`);
+          showTutorAlert(`❌ Error en contraseña: La contraseña deben ser únicamente los primeros 10 caracteres de tu CURP (ingresaste ${pass.length}).`);
         } else if (pass !== pass.toUpperCase()) {
-          showTutorAlert("❌ Error en Contraseña: Los primeros 10 caracteres de tu CURP deben estar totalmente en MAYÚSCULAS.");
+          showTutorAlert("❌ Error en contraseña: Los primeros 10 caracteres de tu CURP deben estar totalmente en MAYÚSCULAS.");
         } else {
-          showTutorAlert("❌ Error en Contraseña: El formato debe ser 4 letras mayúsculas seguidas de 6 números (ej. ABCD970427).");
+          showTutorAlert("❌ Error en contraseña: El formato debe ser 4 letras mayúsculas seguidas de 6 números (ej. ABCD970427).");
         }
         return;
       }
@@ -3705,7 +3715,7 @@
       const loadScreen = document.getElementById('exam-loading-screen');
       loadScreen.classList.remove('hidden');
       document.getElementById('exam-loading-title').innerText = "Esperando activación del examen...";
-      document.getElementById('exam-loading-desc').innerText = "Sincronizando reactivos oficiales con el servidor de evaluación.";
+      document.getElementById('exam-loading-desc').innerText = "Sincronizando con el servidor de evaluación.";
 
       updateTutor("Cargando reactivos...", "Espera unos segundos mientras el sistema sincroniza tus preguntas oficiales...");
 
@@ -3885,7 +3895,7 @@
     // --- CONTINGENCIA 2: CAMBIO DE LLAMADA (FASE 5) ---
     function triggerCallSwitchContingency() {
       isCallSwitchTriggered = true;
-      showTutorAlert("⏱️ CONTINGENCIA DE TIEMPO (40 MINUTOS):\n\nSi te tardas más de 40 minutos en tu examen, la sala de Meet expira.\n\nEl aplicador mandará un enlace a una segunda sala en el chat. Debes cambiarte de llamada inmediatamente sin cerrar SIPAG para no cancelar tu prueba.", "⏱️");
+      showTutorAlert("⚠️  <strong>CONTINGENCIA DE TIEMPO (40 MINUTOS):</strong>\n\nSi te tardas más de 40 minutos en tu examen, la videollamada se cerrará.\n\nEl aplicador mandará un enlace a una segunda llamada en el chat. Si necesitas más tiempo, debes cambiarte de llamada inmediatamente sin cerrar SIPAG para no perder tu examen.", "⚠️");
       
       updateTutor("Paso 26: Cambio de Videollamada (40 min)", "La sala de Meet expiró por tiempo. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.");
 
@@ -3973,7 +3983,7 @@
         `;
         chat2.scrollTop = chat2.scrollHeight;
 
-        updateTutor("Paso 28: Continuar en Sala 2", "Abre el chat en Sala 2 y luego regresa a <strong>SIPAG</strong> para continuar respondiendo tu examen.");
+        updateTutor("Paso 28: Continuar en la Segunda Videollamada", "Abre el chat en la segunda videollamada y luego regresa a <strong>SIPAG</strong> para continuar respondiendo tu examen.");
         loadQuestion(4); // Cargar Pregunta 5
       }, 2000);
     }
@@ -3993,7 +4003,7 @@
       showCustomConfirm("¿Estás seguro de que deseas finalizar tu examen?", () => {
         const loadScreen = document.getElementById('exam-loading-screen');
         loadScreen.classList.remove('hidden');
-        document.getElementById('exam-loading-title').innerText = "Generando calificación oficial...";
+        document.getElementById('exam-loading-title').innerText = "Generando calificación...";
         document.getElementById('exam-loading-desc').innerText = "Calculando aciertos e integrando expediente académico.";
 
         finalScore = Math.floor(Math.random() * 4) + 7;
@@ -4013,7 +4023,7 @@
     // ========================================================
     function attemptHangupEarly() {
       if (!isExamFinishedAndAuthorized) {
-        showTutorAlert("🚫 ¡ALERTA DE SEGURIDAD!\n\nNo puedes colgar la videollamada mientras el examen esté en curso o serás descalificado.\n\nDebes finalizar tu prueba en SIPAG y recibir la autorización verbal del aplicador antes de colgar.");
+        showTutorAlert("🚫 <strong>¡ALERTA!</strong>\n\nNo puedes colgar la videollamada mientras el examen esté en curso o serás descalificado.\n\nDebes finalizar tu examen en SIPAG y recibir la autorización verbal del aplicador antes de colgar.");
         return;
       }
       hangupExamCall();
@@ -4054,7 +4064,7 @@
       } else {
         actionContainer.innerHTML = `
           <button class="btn-start-sim" style="background:#16a34a; font-size:0.82rem; padding:10px;" onclick="speakFinalScoreToTeacher2()">
-            🗣️ Hablar: "Profesor, ya finalicé mi examen con calificación de ${finalScore}"
+            🗣️ Hablar: "Profesor, ya finalicé mi examen y me generó calificación."
           </button>
         `;
         updateTutor("Reportar Calificación", "Haz clic en el botón verde de abajo en el chat para avisarle al aplicador.");
@@ -4067,7 +4077,7 @@
       chatBox.innerHTML += `
         <div class="chat-msg-bubble" style="background:#f0fdf4; border-left:4px solid #16a34a;">
           <strong style="color:var(--google-blue);">${firstName} (Por voz):</strong><br>
-          Profesor, ya finalicé mi examen y obtuve calificación de ${finalScore}.
+          Profesor, ya finalicé mi examen y me generó calificación.
         </div>
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -4080,7 +4090,7 @@
         chatBox.innerHTML += `
           <div class="chat-msg-bubble" style="background:#e0f2fe;">
             <strong style="color:var(--google-blue);">${currentAplicador.name}:</strong><br>
-            ✅ Calificación de ${finalScore} confirmada en el sistema, ${firstName}. Excelente trabajo superando todas las contingencias técnicas. Ya puedes colgar la llamada. ¡Felicidades!
+            ✅ Calificación confirmada en el sistema, ${firstName}. Excelente trabajo, ya puedes colgar la llamada. ¡Felicidades!
           </div>
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -4099,6 +4109,69 @@
       document.getElementById('diploma-grade-tag').innerText = `Módulo: ${NOMBRE_MODULO_ACTUAL} • Calificación: ${finalScore}.0 / 10 • ESTATUS: ACREDITADO ✅`;
       document.getElementById('final-congratulations-screen').classList.remove('hidden');
     }
+
+
+    // ========================================================
+    // ARRASTRE LIBRE DEL PANEL DEL TUTOR (DRAGGABLE)
+    // ========================================================
+    function makeTutorPanelDraggable() {
+      const panel = document.getElementById('tutor-panel');
+      const handle = panel ? panel.querySelector('.tutor-title') : null;
+      if (!panel || !handle) return;
+
+      let isDragging = false;
+      let startX = 0, startY = 0;
+      let initialLeft = 0, initialTop = 0;
+
+      handle.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        const rect = panel.getBoundingClientRect();
+
+        // Convertir posición fija de right a coordenadas absolutas left/top
+        panel.style.right = 'auto';
+        panel.style.left = `${rect.left}px`;
+        panel.style.top = `${rect.top}px`;
+
+        startX = e.clientX;
+        startY = e.clientY;
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        handle.setPointerCapture(e.pointerId);
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+
+        let newX = initialLeft + deltaX;
+        let newY = initialTop + deltaY;
+
+        // Topes para que nunca se salga de la pantalla
+        const maxX = window.innerWidth - panel.offsetWidth - 10;
+        const maxY = window.innerHeight - panel.offsetHeight - 10;
+
+        newX = Math.max(10, Math.min(newX, maxX));
+        newY = Math.max(10, Math.min(newY, maxY));
+
+        panel.style.left = `${newX}px`;
+        panel.style.top = `${newY}px`;
+      });
+
+      const stopDrag = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        try { handle.releasePointerCapture(e.pointerId); } catch(err) {}
+      };
+
+      window.addEventListener('pointerup', stopDrag);
+      window.addEventListener('pointercancel', stopDrag);
+    }
+
+    // Inicializar el evento de arrastre al cargar la página
+    makeTutorPanelDraggable();
   </script>
 </body>
 </html>
