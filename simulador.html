@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simulador de Examen - Preparatoria Abierta (v1.3.1)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
     :root {
       --chrome-bg: #dee1e6;
@@ -871,6 +872,18 @@
       font-size: 1.1rem;
       cursor: pointer;
     }
+    
+    .meet-btn-circle .material-symbols-outlined,
+    .meet-round-ctrl .material-symbols-outlined,
+    .tile-mic-status .material-symbols-outlined {
+      font-size: 20px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    
     .meet-btn-circle.off { background: var(--google-red) !important; }
     .meet-btn-hangup { background: var(--google-red); width: 54px; border-radius: 20px; }
 
@@ -2252,17 +2265,27 @@
             <!-- BARRA DE HERRAMIENTAS MEET 1 -->
             <div class="meet-bottom-dock">
               <div class="meet-pill-controls">
-                <button class="meet-btn-circle" onclick="showTutorAlert('Opciones adicionales.')">···</button>
-                <button class="meet-btn-circle" id="room-mic-btn" onclick="toggleRoomMic()">🎤</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Selector de micrófono.')">^</button>
-                <button class="meet-btn-circle" id="room-cam-btn" onclick="showTutorAlert('❌ La cámara debe permanecer activa.')">📹</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Presentar pantalla.')">📤</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Reacciones.')">😊</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Subtítulos.')">CC</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Levantar la mano.')">✋</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Más opciones.')">⋮</button>
-                <button class="meet-btn-circle meet-btn-hangup" onclick="attemptHangupEarly()">📞</button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Opciones de audio y video.')"><span class="material-symbols-outlined">tune</span></button>
+                <button class="meet-btn-circle" id="room-mic-btn" onclick="toggleRoomMic()"><span class="material-symbols-outlined" id="room-mic-icon">mic</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Selector de micrófono.')"><span class="material-symbols-outlined">expand_less</span></button>
+                <button class="meet-btn-circle" id="room-cam-btn" onclick="showTutorAlert('❌ La cámara debe permanecer activa durante toda la sesión.')"><span class="material-symbols-outlined">videocam</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Presentar pantalla.')"><span class="material-symbols-outlined">present_to_all</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Reacciones.')"><span class="material-symbols-outlined">mood</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Subtítulos.')"><span class="material-symbols-outlined">closed_caption</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Levantar la mano.')"><span class="material-symbols-outlined">back_hand</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Más opciones.')"><span class="material-symbols-outlined">more_vert</span></button>
+                <button class="meet-btn-circle meet-btn-hangup" onclick="attemptHangupEarly()"><span class="material-symbols-outlined">call_end</span></button>
               </div>
+
+              <div class="meet-right-dock">
+                <button class="meet-btn-circle" id="meet-chat-toggle-btn" onclick="toggleChatFlyout()">
+                  <span class="material-symbols-outlined">chat</span>
+                  <span class="chat-badge hidden" id="chat-badge-count">1</span>
+                </button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Vista en cuadrícula.')"><span class="material-symbols-outlined">grid_view</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Detalles de seguridad de la reunión.')"><span class="material-symbols-outlined">lock</span></button>
+              </div>
+            </div>
 
               <div class="meet-right-dock">
                 <button class="meet-btn-circle" id="meet-chat-toggle-btn" onclick="toggleChatFlyout()">
@@ -2861,17 +2884,27 @@
             <!-- BARRA DE HERRAMIENTAS MEET 2 -->
             <div class="meet-bottom-dock">
               <div class="meet-pill-controls">
-                <button class="meet-btn-circle" onclick="showTutorAlert('Opciones adicionales.')">···</button>
-                <button class="meet-btn-circle off" id="room2-mic-btn" onclick="toggleRoom2Mic()">🎤</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Selector de micrófono.')">^</button>
-                <button class="meet-btn-circle" id="room2-cam-btn" onclick="showTutorAlert('❌ La cámara debe permanecer activa.')">📹</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Presentar pantalla.')">📤</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Reacciones.')">😊</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Subtítulos.')">CC</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Levantar la mano.')">✋</button>
-                <button class="meet-btn-circle" onclick="showTutorAlert('Más opciones.')">⋮</button>
-                <button class="meet-btn-circle meet-btn-hangup" onclick="attemptHangupEarly()">📞</button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Opciones de audio y video.')"><span class="material-symbols-outlined">tune</span></button>
+                <button class="meet-btn-circle off" id="room2-mic-btn" onclick="toggleRoom2Mic()"><span class="material-symbols-outlined" id="room2-mic-icon">mic_off</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Selector de micrófono.')"><span class="material-symbols-outlined">expand_less</span></button>
+                <button class="meet-btn-circle" id="room2-cam-btn" onclick="showTutorAlert('❌ La cámara debe permanecer activa durante toda la sesión.')"><span class="material-symbols-outlined">videocam</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Presentar pantalla.')"><span class="material-symbols-outlined">present_to_all</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Reacciones.')"><span class="material-symbols-outlined">mood</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Subtítulos.')"><span class="material-symbols-outlined">closed_caption</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Levantar la mano.')"><span class="material-symbols-outlined">back_hand</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Más opciones.')"><span class="material-symbols-outlined">more_vert</span></button>
+                <button class="meet-btn-circle meet-btn-hangup" onclick="attemptHangupEarly()"><span class="material-symbols-outlined">call_end</span></button>
               </div>
+
+              <div class="meet-right-dock">
+                <button class="meet-btn-circle" id="meet2-chat-toggle-btn" onclick="toggleChatFlyout2()">
+                  <span class="material-symbols-outlined">chat</span>
+                  <span class="chat-badge hidden" id="chat2-badge-count">1</span>
+                </button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Vista en cuadrícula.')"><span class="material-symbols-outlined">grid_view</span></button>
+                <button class="meet-btn-circle" onclick="showTutorAlert('Detalles de seguridad de la reunión.')"><span class="material-symbols-outlined">lock</span></button>
+              </div>
+            </div>
 
               <div class="meet-right-dock">
                 <button class="meet-btn-circle" id="meet2-chat-toggle-btn" onclick="toggleChatFlyout2()">
@@ -4079,7 +4112,16 @@
       const micBtn = document.getElementById('room-mic-btn');
       micBtn.classList.toggle('off');
       const isMuted = micBtn.classList.contains('off');
-      document.getElementById('tile-user-mic-status').innerText = isMuted ? "🔇" : "🎤";
+      
+      const icon = document.getElementById('room-mic-icon');
+      if (icon) icon.innerText = isMuted ? "mic_off" : "mic";
+      
+      const statusBadge = document.getElementById('tile-user-mic-status');
+      if (statusBadge) {
+        statusBadge.innerHTML = isMuted 
+          ? `<span class="material-symbols-outlined" style="color:var(--google-red);">mic_off</span>` 
+          : `<span class="material-symbols-outlined">mic</span>`;
+      }
 
       if (isSuspended && !isReactivated) {
         updateMeetSpeechButton();
@@ -4090,7 +4132,16 @@
       const micBtn = document.getElementById('room2-mic-btn');
       micBtn.classList.toggle('off');
       const isMuted = micBtn.classList.contains('off');
-      document.getElementById('tile-user2-mic-status').innerText = isMuted ? "🔇" : "🎤";
+      
+      const icon = document.getElementById('room2-mic-icon');
+      if (icon) icon.innerText = isMuted ? "mic_off" : "mic";
+      
+      const statusBadge = document.getElementById('tile-user2-mic-status');
+      if (statusBadge) {
+        statusBadge.innerHTML = isMuted 
+          ? `<span class="material-symbols-outlined" style="color:var(--google-red);">mic_off</span>` 
+          : `<span class="material-symbols-outlined">mic</span>`;
+      }
 
       if (!document.getElementById('exam-score-modal').classList.contains('hidden')) {
         setupMeet2FinalScorePrompt();
