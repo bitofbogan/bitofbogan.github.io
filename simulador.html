@@ -1021,6 +1021,27 @@
       animation: msgSlideIn 0.35s ease-out forwards, latestMsgGlow 1.5s infinite alternate ease-in-out;
     }
 
+    /* Anuncio tenue de estado de espera en el chat */
+    .chat-waiting-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 0.78rem;
+      font-style: italic;
+      animation: subtlePulseFade 1.4s infinite alternate ease-in-out;
+    }
+
+    @keyframes subtlePulseFade {
+      0% { opacity: 0.45; }
+      100% { opacity: 0.95; }
+    }
+
     /* PANTALLA "SALISTE DE LA REUNIÓN" */
     .left-meeting-layout {
       height: 100%;
@@ -1584,6 +1605,16 @@
       justify-content: center;
       padding: 20px;
       color: #fff;
+      overflow: hidden;
+    }
+
+    #fireworks-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .diploma-card {
@@ -1597,6 +1628,7 @@
       text-align: center;
       border: 3px solid #0284c7;
       position: relative;
+      z-index: 10;
     }
 
     .milestone-grid {
@@ -1797,6 +1829,7 @@
 
   <!-- PANTALLA FINAL COMPLETA -->
   <div id="final-congratulations-screen" class="hidden">
+    <canvas id="fireworks-canvas"></canvas>
     <div class="diploma-card">
       <div style="font-size:3.5rem; margin-bottom:6px;">🏆</div>
       <h1 style="font-size:1.8rem; color:#0369a1; font-weight:800; margin-bottom:6px;">¡SIMULACIÓN COMPLETADA!</h1>
@@ -3332,6 +3365,18 @@
         if (!isExamTeacherActivated && !isActivationPending && document.getElementById('view-sipag-solicitudes') && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
           isActivationPending = true;
           updateTutor("Paso 21: Esperando al Aplicador", "Espera unos segundos en la videollamada mientras el aplicador activa los exámenes...");
+          
+          // Inyectar anuncio tenue de espera en el chat
+          const chatBox = document.getElementById('chat-messages-box');
+          if (chatBox && !document.getElementById('chat-waiting-indicator')) {
+            const waitingDiv = document.createElement('div');
+            waitingDiv.id = 'chat-waiting-indicator';
+            waitingDiv.className = 'chat-waiting-chip';
+            waitingDiv.innerHTML = `<span>⏳</span> Esperando indicación de inicio del aplicador...`;
+            chatBox.appendChild(waitingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+          }
+
           setTimeout(() => {
             triggerExamActivationInMeet();
           }, 2500);
@@ -3959,6 +4004,11 @@
 
     function triggerExamActivationInMeet() {
       isExamTeacherActivated = true;
+
+      // Remover el indicador tenue de espera
+      const waiting = document.getElementById('chat-waiting-indicator');
+      if (waiting) waiting.remove();
+      
       const chatBox = document.getElementById('chat-messages-box');
       chatBox.innerHTML += `
         <div class="chat-msg-bubble" style="background:#fef3c7; border-left:4px solid #f59e0b;">
@@ -4401,6 +4451,9 @@
       document.getElementById('diploma-student-name').innerText = studentName;
       document.getElementById('diploma-grade-tag').innerText = `Módulo: ${NOMBRE_MODULO_ACTUAL} • Calificación: ${finalScore}.0 / 10 • ESTATUS: ACREDITADO ✅`;
       document.getElementById('final-congratulations-screen').classList.remove('hidden');
+
+      // Detonar animación de fuegos artificiales
+      startFireworks();
     }
 
 
@@ -4470,6 +4523,93 @@
 
     // Inicializar el evento de arrastre al cargar la página
     makeTutorPanelDraggable();
+
+    // ========================================================
+    // ANIMACIÓN DE FUEGOS ARTIFICIALES (CANVAS PARTICLES)
+    // ========================================================
+    function startFireworks() {
+      const canvas = document.getElementById('fireworks-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const particles = [];
+      const colors = ['#38bdf8', '#facc15', '#f43f5e', '#4ade80', '#c084fc', '#fb923c', '#ffffff'];
+
+      function createFirework(x, y) {
+        const count = 45;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 6 + 2;
+          particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            decay: Math.random() * 0.015 + 0.01,
+            size: Math.random() * 3 + 1.5,
+            color
+          });
+        }
+      }
+
+      // Detonar fuegos artificiales periódicamente en posiciones aleatorias
+      const interval = setInterval(() => {
+        if (document.getElementById('final-congratulations-screen').classList.contains('hidden')) {
+          clearInterval(interval);
+          return;
+        }
+        createFirework(
+          Math.random() * (width * 0.8) + (width * 0.1),
+          Math.random() * (height * 0.5) + (height * 0.1)
+        );
+      }, 500);
+
+      function loop() {
+        if (document.getElementById('final-congratulations-screen').classList.contains('hidden')) return;
+        
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.08; // Gravedad suave
+          p.vx *= 0.98; // Resistencia al aire
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      // Primeros 3 estallidos inmediatos
+      createFirework(width * 0.25, height * 0.25);
+      createFirework(width * 0.75, height * 0.25);
+      setTimeout(() => createFirework(width * 0.5, height * 0.2), 200);
+
+      loop();
+    }
   </script>
 </body>
 </html>
