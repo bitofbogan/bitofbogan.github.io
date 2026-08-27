@@ -454,10 +454,10 @@
 
     .glight-sitelinks {
       margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 14px;
     }
     .glight-sitelink-item a {
       color: #1a0dab;
@@ -478,20 +478,21 @@
       color: #3c4043;
     }
 
-    .kp-images { display: flex; gap: 6px; margin-bottom: 12px; }
+    .kp-images { display: flex; gap: 8px; margin-bottom: 12px; }
     .kp-img {
       flex: 1;
-      height: 90px;
-      background: #cbd5e1;
-      border-radius: 4px;
+      height: 92px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #475569;
     }
-
+    .kp-img svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
     /* =========================================
        4. LOGIN GOOGLE & GMAIL
        ========================================= */
@@ -1980,8 +1981,17 @@
                     <div class="glight-favicon">❓</div>
                     <div><div class="glight-url">https://support.google.com › mail</div></div>
                   </div>
-                  <div class="glight-title">Ayuda de Gmail - Centro de asistencia de Google</div>
+                  <div class="glight-title" onclick="showTutorAlert('Para el examen en computadora entra al enlace web principal de Gmail.')">Ayuda de Gmail - Centro de asistencia de Google</div>
                   <div class="glight-desc">Encuentra respuestas a preguntas frecuentes sobre configuración de contraseñas, sincronización en navegadores y recuperación de cuentas.</div>
+                </div>
+
+                <div class="glight-result-item">
+                  <div class="glight-site-info">
+                    <div class="glight-favicon">📖</div>
+                    <div><div class="glight-url">https://es.wikipedia.org › wiki › Gmail</div></div>
+                  </div>
+                  <div class="glight-title" onclick="showTutorAlert('Para el examen en computadora entra al enlace web principal de Gmail.')">Gmail - Wikipedia, la enciclopedia libre</div>
+                  <div class="glight-desc">Gmail (abreviación de Google Mail) es un servicio de correo electrónico proporcionado por la empresa estadounidense Google desde el 1 de abril de 2004.</div>
                 </div>
               </div>
             </div>
@@ -2468,9 +2478,82 @@
               </div>
 
               <div class="glight-knowledge-panel">
+                <div class="glight-knowledge-panel">
                 <div class="kp-images">
-                  <div class="kp-img">Sede Guanajuato</div>
-                  <div class="kp-img">Fachada Prepa</div>
+                  
+                  <!-- ILUSTRACIÓN 1: FACHADA COLONIAL GUANAJUATO -->
+                  <div class="kp-img" title="Sede Guanajuato">
+                    <svg viewBox="0 0 160 92" preserveAspectRatio="none">
+                      <!-- Cielo y Sol -->
+                      <rect width="160" height="92" fill="#bae6fd"/>
+                      <circle cx="138" cy="22" r="11" fill="#fde047"/>
+                      
+                      <!-- Cerros de Guanajuato -->
+                      <path d="M-10 65 Q 45 35, 95 58 T 170 52 L 170 92 L -10 92 Z" fill="#94a3b8"/>
+                      <path d="M10 68 Q 65 48, 120 64 T 175 60 L 175 92 L 10 92 Z" fill="#64748b"/>
+
+                      <!-- Fachada Colonial Amarilla -->
+                      <rect x="25" y="38" width="110" height="48" fill="#facc15"/>
+                      <rect x="20" y="34" width="120" height="5" fill="#b91c1c"/>
+                      
+                      <!-- Campanario / Torre Central -->
+                      <rect x="66" y="18" width="28" height="18" fill="#facc15"/>
+                      <path d="M63 18 Q 80 6, 97 18 Z" fill="#b91c1c"/>
+                      <rect x="76" y="24" width="8" height="10" rx="4" fill="#78350f"/>
+                      <circle cx="80" cy="14" r="2.5" fill="#b91c1c"/>
+
+                      <!-- Arcos y Puerta Principal -->
+                      <rect x="68" y="52" width="24" height="34" rx="12" fill="#78350f"/>
+                      <rect x="71" y="55" width="18" height="31" rx="9" fill="#451a03"/>
+                      
+                      <!-- Ventanales con Arcos -->
+                      <rect x="36" y="48" width="16" height="22" rx="8" fill="#0284c7"/>
+                      <rect x="108" y="48" width="16" height="22" rx="8" fill="#0284c7"/>
+
+                      <!-- Banqueta y vegetación -->
+                      <rect x="0" y="86" width="160" height="6" fill="#475569"/>
+                      <circle cx="18" cy="74" r="10" fill="#15803d"/>
+                      <circle cx="142" cy="74" r="10" fill="#16a34a"/>
+                    </svg>
+                  </div>
+
+                  <!-- ILUSTRACIÓN 2: CAMPUS Y ENTORNO EDUCATIVO -->
+                  <div class="kp-img" title="Fachada Prepa">
+                    <svg viewBox="0 0 160 92" preserveAspectRatio="none">
+                      <!-- Fondo interior iluminado -->
+                      <rect width="160" height="92" fill="#f8fafc"/>
+                      
+                      <!-- Muro institucional azul -->
+                      <rect x="15" y="22" width="130" height="64" rx="4" fill="#0369a1"/>
+                      <rect x="20" y="26" width="120" height="56" rx="3" fill="#0284c7"/>
+
+                      <!-- Panel de cristaleras / Ventanales superiores -->
+                      <g fill="#e0f2fe" opacity="0.9">
+                        <rect x="26" y="32" width="22" height="18" rx="2"/>
+                        <rect x="52" y="32" width="22" height="18" rx="2"/>
+                        <rect x="86" y="32" width="22" height="18" rx="2"/>
+                        <rect x="112" y="32" width="22" height="18" rx="2"/>
+                      </g>
+
+                      <!-- Letrero institucional -->
+                      <rect x="56" y="16" width="48" height="10" rx="3" fill="#0f172a"/>
+                      <rect x="62" y="20" width="36" height="2.5" fill="#38bdf8"/>
+
+                      <!-- Puerta de acceso con rampa -->
+                      <rect x="65" y="56" width="30" height="30" fill="#0f172a"/>
+                      <rect x="68" y="58" width="11" height="28" fill="#38bdf8" opacity="0.8"/>
+                      <rect x="81" y="58" width="11" height="28" fill="#38bdf8" opacity="0.8"/>
+
+                      <!-- Escudo vectorial miniature en fachada -->
+                      <path d="M37 60 L45 56 L45 67 C45 72 37 76 37 76 C37 76 29 72 29 67 L29 56 Z" fill="#38bdf8"/>
+
+                      <!-- Suelo y jardineras -->
+                      <rect x="0" y="86" width="160" height="6" fill="#cbd5e1"/>
+                      <rect x="110" y="68" width="24" height="18" rx="3" fill="#16a34a"/>
+                      <rect x="113" y="64" width="18" height="6" rx="3" fill="#22c55e"/>
+                    </svg>
+                  </div>
+
                 </div>
                 <h3 style="font-size:1.3rem; margin-bottom:4px; color:#202124;">Preparatoria Abierta</h3>
                 <p style="color:#70757a; font-size:0.85rem; margin-bottom:14px;">Escuela preparatoria en Guanajuato</p>
@@ -2876,7 +2959,7 @@
             <div style="padding:12px 20px; display:flex; justify-content:space-between;">
               <div style="display:flex; align-items:center; gap:10px;">
                 <span>7:26 PM</span> <span>|</span> <span id="meet2-code-header">dsy-nwmr-fzv</span>
-                <span style="background:#059669; font-size:0.72rem; padding:2px 8px; border-radius:10px; font-weight:700;">SALA 2 (REACTIVADA)</span>
+                <span style="background:#059669; font-size:0.72rem; padding:2px 8px; border-radius:10px; font-weight:700;">SALA 2</span>
               </div>
               <div style="background:#3c4043; padding:4px 10px; border-radius:14px; font-size:0.8rem;">👥 4</div>
             </div>
@@ -3070,6 +3153,7 @@
     let studentName = "";
     let enteredEmail = "";
     let studentMatricula = "20261105017760";
+    let isRollCallDone = false;
     let isSuspended = false;
     let isReactivated = false;
     let hasNotifiedSuspensionInMeet = false;
@@ -3324,11 +3408,19 @@
 
     function handleNewTabClick() {
       if (activeTabId === 'meet') {
+        // Bloqueo 1: Obligatorio haber mostrado la credencial
+        if (!isRollCallDone) {
+          showTutorAlert("⚠️ <strong>Pase de lista pendiente:</strong>\n\nPrimero debes abrir el chat (💬) y mostrar tu credencial oficial a la cámara antes de abrir una nueva pestaña.", "⚠️");
+          return;
+        }
+
+        // Bloqueo 2: Obligatorio haber silenciado el micrófono
         const micBtn = document.getElementById('room-mic-btn');
         if (micBtn && !micBtn.classList.contains('off')) {
           showTutorAlert("⚠️ Debes silenciar tu micrófono (🎤) en Google Meet antes de abrir una pestaña nueva.");
           return;
         }
+
         openSipagNewTab();
       } else {
         showTutorAlert("Primero completa el acceso a la videollamada de Google Meet antes de abrir nuevas pestañas.");
@@ -3362,8 +3454,40 @@
     function handleOmniboxKey(e) {
       if (e.key === 'Enter') {
         const val = e.target.value.trim().toLowerCase();
-        if (val.includes('gmail')) handleGoogleSearch({ key: 'Enter', target: e.target });
-        else if (val.includes('sipag')) handleSipagGoogleSearch({ key: 'Enter', target: e.target });
+
+        // 1. Pestañas de Google Meet: Barra bloqueada para evitar salir de la llamada
+        if (activeTabId === 'meet' || activeTabId === 'meet2') {
+          showTutorAlert("⚠️ Estás en la videollamada de Google Meet. No debes modificar la dirección en esta pestaña.");
+          document.getElementById('omnibox').value = tabUrls[activeTabId] || "";
+          return;
+        }
+
+        // 2. Pestaña de Gmail: Solo permite buscar si está en la nueva pestaña o resultados
+        if (activeTabId === 'gmail') {
+          const isInitialView = !document.getElementById('view-newtab').classList.contains('hidden') ||
+                                !document.getElementById('view-search-results').classList.contains('hidden');
+          if (isInitialView && val.includes('gmail')) {
+            handleGoogleSearch({ key: 'Enter', target: e.target });
+          } else {
+            showTutorAlert("⚠️ Ya te encuentras dentro del flujo de Gmail. No navegues fuera de esta página.");
+            document.getElementById('omnibox').value = tabUrls['gmail'] || "";
+          }
+          return;
+        }
+
+        // 3. Pestaña de SIPAG: Solo utilizable en la fase inicial de búsqueda
+        if (activeTabId === 'sipag') {
+          const isInitialSearch = !document.getElementById('view-sipag-newtab').classList.contains('hidden') ||
+                                  !document.getElementById('view-sipag-search').classList.contains('hidden');
+
+          if (isInitialSearch && val.includes('sipag')) {
+            handleSipagGoogleSearch({ key: 'Enter', target: e.target });
+          } else {
+            showTutorAlert("⚠️ No puedes usar la barra de direcciones mientras estás dentro del portal o respondiendo tu examen.");
+            document.getElementById('omnibox').value = tabUrls['sipag'] || "";
+          }
+          return;
+        }
       }
     }
 
@@ -3664,6 +3788,7 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       setTimeout(() => {
+        isRollCallDone = true;
         card.classList.add('hidden');
         document.getElementById('chat-action-container').innerHTML = `
           <span id="roll-call-done-badge" style="color:var(--google-green); font-size:0.85rem; font-weight:700;">✅ Asistencia e Identificación Registrada</span>
@@ -4060,26 +4185,30 @@
 
     // --- CONTINGENCIA 2: CAMBIO DE LLAMADA (FASE 5) ---
     function triggerCallSwitchContingency() {
-      isCallSwitchTriggered = true;
       showTutorAlert("⚠️  <strong>CONTINGENCIA DE TIEMPO (40 MINUTOS):</strong>\n\nSi te tardas más de 40 minutos en tu examen, la videollamada se cerrará.\n\nEl aplicador mandará un enlace a una segunda llamada en el chat. Si necesitas más tiempo, debes cambiarte de llamada inmediatamente sin cerrar SIPAG para no perder tu examen.", "⚠️");
       
       updateTutor("Paso 26: Cambio de Videollamada (40 min)", "La sala de Meet expiró por tiempo. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.");
 
-      const chatBox = document.getElementById('chat-messages-box');
-      chatBox.innerHTML += `
-        <div class="chat-msg-bubble" style="background:#fef3c7; border:2px solid #f59e0b;">
-          <strong style="color:var(--google-red);">⚠️ AVISO URGENTE:</strong> La llamada de 40 min está por expirar. Entren inmediatamente a la nueva sala para continuar su examen:<br><br>
-          👉 <a href="#" style="color:#1a73e8; font-weight:700; text-decoration:underline;" onclick="openMeet2Tab(); return false;">https://meet.google.com/${newMeetCode}</a>
-        </div>
-      `;
+      // Solo inyectar el mensaje en el chat la primera vez que se activa la contingencia
+      if (!isCallSwitchTriggered) {
+        isCallSwitchTriggered = true;
 
-      // Si el chat está cerrado, activa la alerta para que lo abran
-      const flyout = document.getElementById('meet-chat-flyout');
-      if (flyout && flyout.classList.contains('hidden')) {
-        const chatBtn = document.getElementById('meet-chat-toggle-btn');
-        const badge = document.getElementById('chat-badge-count');
-        if (chatBtn) chatBtn.classList.add('chat-btn-alert');
-        if (badge) badge.classList.remove('hidden');
+        const chatBox = document.getElementById('chat-messages-box');
+        chatBox.innerHTML += `
+          <div class="chat-msg-bubble" style="background:#fef3c7; border:2px solid #f59e0b;">
+            <strong style="color:var(--google-red);">⚠️ AVISO URGENTE:</strong> La llamada de 40 min está por expirar. Entren inmediatamente a la nueva sala para continuar su examen:<br><br>
+            👉 <a href="#" style="color:#1a73e8; font-weight:700; text-decoration:underline;" onclick="openMeet2Tab(); return false;">https://meet.google.com/${newMeetCode}</a>
+          </div>
+        `;
+
+        // Si el chat está cerrado, activa la alerta para que lo abran
+        const flyout = document.getElementById('meet-chat-flyout');
+        if (flyout && flyout.classList.contains('hidden')) {
+          const chatBtn = document.getElementById('meet-chat-toggle-btn');
+          const badge = document.getElementById('chat-badge-count');
+          if (chatBtn) chatBtn.classList.add('chat-btn-alert');
+          if (badge) badge.classList.remove('hidden');
+        }
       }
     }
 
