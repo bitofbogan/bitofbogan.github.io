@@ -3330,23 +3330,30 @@
         elem = document.querySelector(currentStepTarget);
       }
 
-      if (!elem || elem.offsetParent === null) {
+      if (!elem) {
         showTutorAlert("⚠️ El elemento a presionar está en otra pestaña o aún no es visible. Revisa la indicación.");
         return;
       }
 
       const rect = elem.getBoundingClientRect();
+
+      // Si el elemento mide 0 de alto o ancho, está oculto o en otra pestaña
+      if (rect.width === 0 || rect.height === 0) {
+        showTutorAlert("⚠️ El elemento a presionar está en otra pestaña o aún no es visible. Revisa la indicación.");
+        return;
+      }
+
       const beacon = document.getElementById('tutor-beacon');
       if (!beacon) return;
 
-      // Posicionar el reflector alrededor del elemento con margen
-      beacon.style.top = `${rect.top - 5}px`;
-      beacon.style.left = `${rect.left - 5}px`;
-      beacon.style.width = `${rect.width + 10}px`;
-      beacon.style.height = `${rect.height + 10}px`;
+      // Posicionar el reflector alrededor del elemento
+      beacon.style.top = `${rect.top - 4}px`;
+      beacon.style.left = `${rect.left - 4}px`;
+      beacon.style.width = `${rect.width + 8}px`;
+      beacon.style.height = `${rect.height + 8}px`;
       beacon.classList.remove('hidden');
 
-      // Auto-ocultar después de 4 segundos para no estorbar
+      // Auto-ocultar tras 4 segundos
       if (beaconTimeout) clearTimeout(beaconTimeout);
       beaconTimeout = setTimeout(() => {
         beacon.classList.add('hidden');
@@ -3459,11 +3466,6 @@
       
       updateTutor("Paso 2: Buscar Gmail", "Haz clic en la barra de búsqueda de Google, escribe <strong>Gmail</strong> y presiona <strong>Enter</strong>.", "#google-input");
       setTimeout(() => document.getElementById('google-input').focus(), 100);
-    }
-
-    function updateTutor(title, text) {
-      document.querySelector('.tutor-title').innerHTML = `💡 ${title}`;
-      document.getElementById('tutor-text').innerHTML = text;
     }
 
     // ========================================================
