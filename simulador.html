@@ -1740,6 +1740,86 @@
       gap: 6px;
       transition: all 0.15s;
     }
+
+    /* Contenedor de botones en el panel del tutor */
+    .tutor-buttons-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    /* Botón llamativo "¿Dónde doy clic?" */
+    .btn-tutor-spotlight {
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #facc15;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    .btn-tutor-spotlight:hover {
+      background: #fde047;
+      color: #713f12;
+      transform: translateY(-1px);
+    }
+
+    /* ========================================================
+       REFLECTOR / BALIZA VISUAL (SPOTLIGHT BEACON)
+       ======================================================== */
+    #tutor-beacon {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999999;
+      border: 3px solid #ef4444;
+      border-radius: 8px;
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      animation: beaconPulse 1.2s infinite cubic-bezier(0.66, 0, 0, 1);
+      transition: all 0.25s ease-out;
+    }
+
+    /* Etiqueta flotante que apunta directamente */
+    #tutor-beacon::after {
+      content: '👉 ¡DA CLIC AQUÍ!';
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      animation: beaconBounce 0.8s infinite alternate ease-in-out;
+    }
+
+    @keyframes beaconPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.9), 0 0 15px rgba(239, 68, 68, 0.5);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(239, 68, 68, 0), 0 0 25px rgba(239, 68, 68, 0.8);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0), 0 0 0 rgba(239, 68, 68, 0);
+      }
+    }
+
+    @keyframes beaconBounce {
+      0% { transform: translate(-50%, 0); }
+      100% { transform: translate(-50%, -6px); }
+    }
+    
     .btn-tutor-restart:hover {
       background: #fecaca;
       color: #7f1d1d;
@@ -3064,6 +3144,9 @@
     </div>
   </div>
 
+  <!-- REFLECTOR VISUAL FLOTANTE -->
+  <div id="tutor-beacon" class="hidden"></div>
+
   <!-- 3. GUÍA DEL TUTOR DIDÁCTICO -->
   <div id="tutor-panel" class="hidden">
     <!-- Globo indicador flotante -->
@@ -3072,7 +3155,11 @@
     </div>
     <div class="tutor-title">💡 Guía del Entrenamiento</div>
     <div id="tutor-text">Ingresa tu nombre en el formulario para comenzar.</div>
-    <button class="btn-tutor-restart" onclick="confirmRestartSimulation()">🔄 Reiniciar Simulación</button>
+    
+    <div class="tutor-buttons-row">
+      <button class="btn-tutor-spotlight" id="btn-tutor-help" onclick="highlightCurrentStepTarget()">🎯 ¿Dónde doy clic?</button>
+      <button class="btn-tutor-restart" onclick="confirmRestartSimulation()">🔄 Reiniciar</button>
+    </div>
   </div>
 
   <script>
@@ -3203,11 +3290,17 @@
         document.getElementById('tutor-panel').classList.add('hidden');
       } else {
         document.getElementById('tutor-panel').classList.remove('hidden');
-        updateTutor("Paso 1: Abrir Google Chrome", "Da <strong>doble clic</strong> sobre el icono de <strong>Google Chrome</strong> en el escritorio para abrir el navegador.");
+        updateTutor("Paso 1: Abrir Google Chrome", "Da <strong>doble clic</strong> sobre el icono de <strong>Google Chrome</strong> en el escritorio para abrir el navegador.", "#chrome-icon");
       }
     }
 
-    function updateTutor(title, text) {
+    // ========================================================
+    // SISTEMA DE SEÑALIZACIÓN VISUAL (SPOTLIGHT)
+    // ========================================================
+    let currentStepTarget = null;
+    let beaconTimeout = null;
+
+    function updateTutor(title, text, targetSelector = null) {
       if (simulationMode === 'exam') {
         document.getElementById('tutor-panel').classList.add('hidden');
         return;
@@ -3215,6 +3308,49 @@
       document.getElementById('tutor-panel').classList.remove('hidden');
       document.querySelector('.tutor-title').innerHTML = `💡 ${title}`;
       document.getElementById('tutor-text').innerHTML = text;
+
+      // Guardar el elemento que debe ser pulsado en este paso
+      currentStepTarget = targetSelector;
+
+      // Ocultar baliza previa si cambió de paso
+      const beacon = document.getElementById('tutor-beacon');
+      if (beacon) beacon.classList.add('hidden');
+    }
+
+    function highlightCurrentStepTarget() {
+      if (!currentStepTarget) {
+        showTutorAlert("En este paso no hay un elemento específico que pulsar o debes esperar una acción del sistema.");
+        return;
+      }
+
+      let elem = null;
+      if (typeof currentStepTarget === 'function') {
+        elem = currentStepTarget();
+      } else {
+        elem = document.querySelector(currentStepTarget);
+      }
+
+      if (!elem || elem.offsetParent === null) {
+        showTutorAlert("⚠️ El elemento a presionar está en otra pestaña o aún no es visible. Revisa la indicación.");
+        return;
+      }
+
+      const rect = elem.getBoundingClientRect();
+      const beacon = document.getElementById('tutor-beacon');
+      if (!beacon) return;
+
+      // Posicionar el reflector alrededor del elemento con margen
+      beacon.style.top = `${rect.top - 5}px`;
+      beacon.style.left = `${rect.left - 5}px`;
+      beacon.style.width = `${rect.width + 10}px`;
+      beacon.style.height = `${rect.height + 10}px`;
+      beacon.classList.remove('hidden');
+
+      // Auto-ocultar después de 4 segundos para no estorbar
+      if (beaconTimeout) clearTimeout(beaconTimeout);
+      beaconTimeout = setTimeout(() => {
+        beacon.classList.add('hidden');
+      }, 4000);
     }
 
     const APLICADORES_LIST = [
@@ -3321,7 +3457,7 @@
       switchGmailSubView('view-newtab');
       document.querySelector('#tab-gmail .tab-title-text').innerText = "🌐 Nueva pestaña";
       
-      updateTutor("Paso 2: Buscar Gmail", "Haz clic en la barra de búsqueda de Google, escribe <strong>Gmail</strong> y presiona <strong>Enter</strong>.");
+      updateTutor("Paso 2: Buscar Gmail", "Haz clic en la barra de búsqueda de Google, escribe <strong>Gmail</strong> y presiona <strong>Enter</strong>.", "#google-input");
       setTimeout(() => document.getElementById('google-input').focus(), 100);
     }
 
@@ -3412,7 +3548,7 @@
             loadScreen.classList.add('hidden');
             isSuspended = false;
             loadQuestion(1); // Regresa a la Pregunta 2
-            updateTutor("Paso 25: Examen Reanudado", "Continúa respondiendo las preguntas. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.");
+            updateTutor("Paso 25: Examen Reanudado", "Continúa respondiendo las preguntas. Selecciona una opción y presiona <strong>'Siguiente reactivo'</strong>.", "#btn-next-question");
           }, 2000);
         }
       } else if (tabId === 'meet2') {
@@ -3469,7 +3605,7 @@
           tabUrls['gmail'] = "https://www.google.com/search?q=" + query;
           document.getElementById('omnibox').value = tabUrls['gmail'];
           document.querySelector('#tab-gmail .tab-title-text').innerText = `🔍 ${query} - Buscar con Google`;
-          updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail: Correo electrónico...'</strong>");
+          updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail: Correo electrónico...'</strong>", "#view-search-results .glight-title");
         } else {
           showTutorAlert("Escribe 'Gmail' para continuar con el entrenamiento.");
         }
@@ -3521,14 +3657,14 @@
       tabUrls['gmail'] = "https://accounts.google.com/signin/v2/identifier";
       document.getElementById('omnibox').value = tabUrls['gmail'];
       document.querySelector('#tab-gmail .tab-title-text').innerText = "👤 Iniciar sesión: Cuentas de Google";
-      updateTutor("Paso 4: Seleccionar Cuenta", "Las cuentas mostradas no son tuyas. Haz clic en <strong>'Usar otra cuenta'</strong>.");
+      updateTutor("Paso 4: Seleccionar Cuenta", "Las cuentas mostradas no son tuyas. Haz clic en <strong>'Usar otra cuenta'</strong>.", ".account-item:last-child");
     }
 
     function goToEmailInput(val) {
       switchGmailSubView('view-login-email');
       const inp = document.getElementById('email-input');
       inp.value = "";
-      updateTutor("Paso 5: Escribir tu correo", "Escribe tu correo electrónico en el campo y presiona <strong>Enter</strong> o haz clic en <strong>'Siguiente'</strong>.");
+      updateTutor("Paso 5: Escribir tu correo", "Escribe tu correo electrónico en el campo y presiona <strong>Enter</strong> o haz clic en <strong>'Siguiente'</strong>.", "#view-login-email .btn-google");
       setTimeout(() => inp.focus(), 100);
     }
 
@@ -3547,7 +3683,7 @@
       document.getElementById('user-display').innerText = `Hola, ${studentName.trim().split(/\s+/)[0]}`;
       switchGmailSubView('view-login-pass');
       document.getElementById('pass-input').value = "";
-      updateTutor("Paso 6: Contraseña", "Introduce tu contraseña y presiona <strong>Enter</strong> o haz clic en <strong>'Iniciar sesión'</strong>.");
+      updateTutor("Paso 6: Contraseña", "Introduce tu contraseña y presiona <strong>Enter</strong> o haz clic en <strong>'Iniciar sesión'</strong>.", "#view-login-pass .btn-google");
       setTimeout(() => document.getElementById('pass-input').focus(), 100);
     }
 
@@ -3628,7 +3764,7 @@
       document.getElementById('detail-fwd-subject').innerText = EXAM_SUBJECT;
       document.getElementById('detail-fwd-to').innerText = enteredEmail;
 
-      updateTutor("Paso 8: Unirse a la llamada", "Haz clic en el botón azul <strong>'Join with Google Meet'</strong>.");
+      updateTutor("Paso 8: Unirse a la llamada", "Haz clic en el botón azul <strong>'Join with Google Meet'</strong>.", ".btn-join-meet");
     }
 
     function backToInbox() { goToInbox(); }
@@ -3670,7 +3806,7 @@
       document.getElementById('lobby-header-avatar').innerText = studentName.charAt(0).toUpperCase();
       document.getElementById('lobby-center-avatar').innerText = studentName.charAt(0).toUpperCase();
 
-      updateTutor("Paso 9: Permisos de Meet", "Haz clic en el botón azul <strong>'Permitir'</strong> en el cuadro superior izquierdo.");
+      updateTutor("Paso 9: Permisos de Meet", "Haz clic en el botón azul <strong>'Permitir'</strong> en el cuadro superior izquierdo.", "#browser-perm-dialog button:first-child");
     }
 
     function grantWebcamPermissions() {
@@ -3681,7 +3817,7 @@
       document.getElementById('lobby-mic-btn').classList.remove('off');
       document.getElementById('lobby-cam-btn').classList.remove('off');
 
-      updateTutor("Paso 10: Solicitar Unirse", "Verifica que tu cámara y micrófono estén activos y haz clic en <strong>'Solicitar unirse'</strong>.");
+      updateTutor("Paso 10: Solicitar Unirse", "Verifica que tu cámara y micrófono estén activos y haz clic en <strong>'Solicitar unirse'</strong>.", "#view-meet-lobby .btn-start-sim");
     }
 
     function toggleLobbyMic() {
@@ -3752,7 +3888,7 @@
 
       // Paso 3: Señalar Chat y detonar pase de lista (a los 5s)
       setTimeout(() => {
-        updateTutor("Paso 12: Pase de Lista", "Haz clic en el <strong>botón de Chat (💬)</strong> para ver los mensajes del aplicador y mostrar tu credencial.");
+        updateTutor("Paso 12: Pase de Lista", "Haz clic en el <strong>botón de Chat (💬)</strong> para ver los mensajes del aplicador y mostrar tu credencial.", "#meet-chat-toggle-btn");
         pointTo(chatBtn, "💬 Abrir Chat del Examen 👇");
         triggerInitialRollCallChat();
       }, 5000);
@@ -3795,7 +3931,7 @@
       }
 
       if (!flyout.classList.contains('hidden') && !document.getElementById('roll-call-done-badge')) {
-        updateTutor("Paso 13: Mostrar Identificación", "Haz clic en el botón <strong>'📸 Mostrar credencial a la cámara'</strong> dentro del chat.");
+        updateTutor("Paso 13: Mostrar Identificación", "Haz clic en el botón <strong>'📸 Mostrar credencial a la cámara'</strong> dentro del chat.", "#chat-action-container button");
       }
     }
 
@@ -3827,7 +3963,7 @@
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        updateTutor("Paso 14: Silenciar Micrófono y Abrir Pestaña", "Haz clic en el botón del micrófono (🎤) para silenciarte y luego presiona el botón <strong>'+'</strong> arriba para buscar SIPAG.");
+        updateTutor("Paso 14: Silenciar Micrófono y Abrir Pestaña", "Haz clic en el botón del micrófono (🎤) para silenciarte y luego presiona el botón <strong>'+'</strong> arriba para buscar SIPAG.", "#room-mic-btn");
       }, 2500);
     }
 
@@ -3863,7 +3999,7 @@
       document.getElementById('omnibox').value = "";
       document.getElementById('sipag-google-input').value = "";
 
-      updateTutor("Paso 15: Buscar SIPAG", "En la nueva pestaña, escribe <strong>sipag</strong> en la barra de búsqueda y presiona <strong>Enter</strong>.");
+      updateTutor("Paso 15: Buscar SIPAG", "En la nueva pestaña, escribe <strong>sipag</strong> en la barra de búsqueda y presiona <strong>Enter</strong>.", "#sipag-google-input");
       setTimeout(() => document.getElementById('sipag-google-input').focus(), 100);
     }
 
@@ -3876,7 +4012,7 @@
           tabUrls['sipag'] = "https://www.google.com/search?q=" + query;
           document.getElementById('omnibox').value = tabUrls['sipag'];
           document.querySelector('#tab-sipag .tab-title-text').innerText = `🔍 ${query} - Buscar con Google`;
-          updateTutor("Paso 16: Entrar a SIPAG", "Haz clic en el primer resultado: <strong>'SIPAG'</strong> (https://www.sipag.tech).");
+          updateTutor("Paso 16: Entrar a SIPAG", "Haz clic en el primer resultado: <strong>'SIPAG'</strong> (https://www.sipag.tech).", "#view-sipag-search .glight-title");
         } else {
           showTutorAlert("⚠️ En esta barra debes escribir únicamente 'sipag' para ingresar a la plataforma de evaluación.");
         }
@@ -3896,13 +4032,13 @@
 
       setTimeout(() => {
         document.getElementById('popup-close-x').classList.remove('hidden');
-        updateTutor("Paso 17: Cerrar el Aviso", "Haz clic en la <strong>✕</strong> en la esquina del aviso para acceder al portal.");
+        updateTutor("Paso 17: Cerrar el Aviso", "Haz clic en la <strong>✕</strong> en la esquina del aviso para acceder al portal.", "#popup-close-x");
       }, 2000);
     }
 
     function closeSipagPopup() {
       document.getElementById('sipag-popup-modal').classList.add('hidden');
-      updateTutor("Paso 18: Acceso a SIPAG", "En la página principal, haz clic en el botón gris: <strong>'Acceso a SIPAG'</strong>.");
+      updateTutor("Paso 18: Acceso a SIPAG", "En la página principal, haz clic en el botón gris: <strong>'Acceso a SIPAG'</strong>.", ".btn-sipag-gray:first-child");
     }
 
     function goToSipagLoginScreen() {
@@ -3913,7 +4049,7 @@
       document.getElementById('sipag-matricula-input').value = "";
       document.getElementById('sipag-password-input').value = "";
 
-      updateTutor("Paso 19: Ingresar Credenciales", "Ingresa tu <strong>matrícula</strong> (14 dígitos con prefijo 20) y tu <strong>contraseña</strong> (CURP en mayúsculas).");
+      updateTutor("Paso 19: Ingresar Credenciales", "Ingresa tu <strong>matrícula</strong> (14 dígitos con prefijo 20) y tu <strong>contraseña</strong> (CURP en mayúsculas).", ".btn-sipag-submit");
     }
 
     function handleMatriculaInput(input) {
@@ -3979,7 +4115,7 @@
       document.getElementById('dash-user-badge').innerText = studentName.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
       document.getElementById('dash-user-email-tag').innerText = `${studentMatricula}@sipag.com`;
 
-      updateTutor("Paso 20: Ir a Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.");
+      updateTutor("Paso 20: Ir a Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.", ".sipag-menu-item:nth-child(2)");
     }
 
     function handleDashboardMenuClick() {
@@ -3999,7 +4135,7 @@
       document.getElementById('table-active-mod-num').innerText = XX;
       document.getElementById('table-active-mod-title').innerText = NOMBRE_MODULO_ACTUAL;
 
-      updateTutor("Paso 21: Esperar activación", "Aún no des clic en iniciar. Cambia a la pestaña de <strong>Google Meet</strong> y espera a que el aplicador active los exámenes.");
+      updateTutor("Paso 21: Esperar activación", "Aún no des clic en iniciar. Cambia a la pestaña de <strong>Google Meet</strong> y espera a que el aplicador active los exámenes.", "#tab-meet");
     }
 
     function triggerExamActivationInMeet() {
@@ -4018,7 +4154,7 @@
       `;
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      updateTutor("Paso 22: Iniciar Examen", "El aplicador activó los exámenes en el chat. Regresa a la pestaña de <strong>SIPAG</strong> y presiona <strong>'Iniciar'</strong>.");
+      updateTutor("Paso 22: Iniciar Examen", "El aplicador activó los exámenes en el chat. Regresa a la pestaña de <strong>SIPAG</strong> y presiona <strong>'Iniciar'</strong>.", "#tab-sipag");
     }
 
     function handleStartExamButtonClick() {
@@ -4068,7 +4204,7 @@
       }
 
       loadQuestion(0);
-      updateTutor("Paso 23: Responder Examen", "Selecciona tu respuesta y haz clic en <strong>'Siguiente reactivo'</strong>.");
+      updateTutor("Paso 23: Responder Examen", "Selecciona tu respuesta y haz clic en <strong>'Siguiente reactivo'</strong>.", "#btn-next-question");
     }
 
     function loadQuestion(index) {
@@ -4145,7 +4281,7 @@
     function triggerSystemSuspension() {
       isSuspended = true;
       document.getElementById('exam-suspended-screen').classList.remove('hidden');
-      updateTutor("Paso 24: Examen Suspendido", "Tu examen se suspendió por seguridad. Cambia a <strong>Google Meet</strong>, activa tu micrófono y avísale al aplicador.");
+      updateTutor("Paso 24: Examen Suspendido", "Tu examen se suspendió por seguridad. Cambia a <strong>Google Meet</strong>, activa tu micrófono y avísale al aplicador.", "#tab-meet");
     }
 
     function setupMeetSuspensionPrompt() {
@@ -4217,7 +4353,7 @@
     function triggerCallSwitchContingency() {
       showTutorAlert("⚠️  <strong>CONTINGENCIA DE TIEMPO (40 MINUTOS):</strong>\n\nSi te tardas más de 40 minutos en tu examen, la videollamada se cerrará.\n\nEl aplicador mandará un enlace a una segunda llamada en el chat. Si necesitas más tiempo, debes cambiarte de llamada inmediatamente sin cerrar SIPAG para no perder tu examen.", "⚠️");
       
-      updateTutor("Paso 26: Cambio de Videollamada (40 min)", "La sala de Meet expiró por tiempo. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.");
+      updateTutor("Paso 26: Cambio de Videollamada (40 min)", "La sala de Meet expiró por tiempo. Cambia a <strong>Google Meet</strong> y entra al nuevo enlace en el chat.", "#tab-meet");
 
       // Solo inyectar el mensaje en el chat la primera vez que se activa la contingencia
       if (!isCallSwitchTriggered) {
@@ -4279,7 +4415,7 @@
       document.querySelectorAll('#tab-view-meet2 .view-sub').forEach(v => v.classList.add('hidden'));
       document.getElementById('view-meet2-lobby').classList.remove('hidden');
 
-      updateTutor("Paso 27: Sala previa Sala 2", "Haz clic en el botón azul <strong>'Cambiar aquí'</strong> para ingresar a la segunda videollamada.");
+      updateTutor("Paso 27: Sala previa Sala 2", "Haz clic en el botón azul <strong>'Cambiar aquí'</strong> para ingresar a la segunda videollamada.", "#view-meet2-lobby .btn-start-sim");
     }
 
     function confirmSwitchToMeet2Live() {
@@ -4308,7 +4444,7 @@
         `;
         chat2.scrollTop = chat2.scrollHeight;
 
-        updateTutor("Paso 28: Continuar en la Segunda Videollamada", "Abre el chat en la segunda videollamada y luego regresa a <strong>SIPAG</strong> para continuar respondiendo tu examen.");
+        updateTutor("Paso 28: Continuar en la Segunda Videollamada", "Abre el chat en la segunda videollamada y luego regresa a <strong>SIPAG</strong> para continuar respondiendo tu examen.", "#tab-sipag");
         loadQuestion(4); // Cargar Pregunta 5
       }, 2000);
     }
@@ -4338,7 +4474,7 @@
           document.getElementById('final-score-display').innerText = `${finalScore} / 10`;
           document.getElementById('exam-score-modal').classList.remove('hidden');
 
-          updateTutor("Paso 30: Reportar Calificación", "Ya tienes tu calificación. Cambia a <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador.");
+          updateTutor("Paso 30: Reportar Calificación", "Ya tienes tu calificación. Cambia a <strong>Google Meet (Sala 2)</strong>, activa tu micrófono y avísale verbalmente al aplicador.", "#tab-meet2");
         }, 2500);
       });
     }
@@ -4439,7 +4575,7 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         isExamFinishedAndAuthorized = true;
-        updateTutor("Paso 31: Concluir Simulación", "El aplicador autorizó tu salida. Haz clic en el botón rojo de <strong>colgar llamada (📞)</strong> para concluir.");
+        updateTutor("Paso 31: Concluir Simulación", "El aplicador autorizó tu salida. Haz clic en el botón rojo de <strong>colgar llamada (📞)</strong> para concluir.", "#tab-view-meet2 .meet-btn-hangup");
       }, 1800);
     }
 
