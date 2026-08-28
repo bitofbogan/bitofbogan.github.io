@@ -3499,6 +3499,16 @@
         if (meetTab) meetTab.classList.add('active');
         document.getElementById('tab-view-meet').classList.add('active');
 
+        // Si estamos en la contingencia de cambio de llamada, apuntar al enlace del chat
+        if (isCallSwitchTriggered && !isCallSwitched) {
+          const flyout = document.getElementById('meet-chat-flyout');
+          if (flyout && !flyout.classList.contains('hidden')) {
+            updateTutor("Paso 26: Cambio de Videollamada", "Haz clic en el <strong>enlace azul</strong> enviado por el aplicador en el chat.", "#chat-messages-box a");
+          } else {
+            updateTutor("Paso 26: Abrir Chat", "Abre el <strong>Chat (💬)</strong> para ver el enlace de la segunda videollamada.", "#meet-chat-toggle-btn");
+          }
+        }
+
         // Espera de 2.5s para activación oficial al volver a Meet
         if (!isExamTeacherActivated && !isActivationPending && document.getElementById('view-sipag-solicitudes') && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
           isActivationPending = true;
@@ -3535,6 +3545,11 @@
         const sipagTab = document.getElementById('tab-sipag');
         if (sipagTab) sipagTab.classList.add('active');
         document.getElementById('tab-view-sipag').classList.add('active');
+
+        // Si el aplicador ya activó los exámenes y está en la tabla de solicitudes, señalar 'Iniciar'
+        if (isExamTeacherActivated && !document.getElementById('view-sipag-solicitudes').classList.contains('hidden')) {
+          updateTutor("Paso 22: Iniciar Examen", "Presiona el botón azul <strong>'▶ Iniciar'</strong> para comenzar a responder tu evaluación.", ".btn-action-iniciar");
+        }
 
         // REACTIVACIÓN TRAS SUSPENSIÓN AL REGRESAR A SIPAG
         if (isSuspended && isReactivated) {
@@ -3704,7 +3719,7 @@
       document.getElementById('avatar-initial').innerText = studentName.charAt(0).toUpperCase();
 
       render11UnreadEmailsRandomPos();
-      updateTutor("Paso 7: Buscar el correo del examen", `Lee los correos y localiza la invitación enviada por <strong>${currentAplicador.name}</strong>.`);
+      updateTutor("Paso 7: Buscar el correo del examen", `Lee los correos y localiza la invitación enviada por <strong>${currentAplicador.name}</strong>.`, "#exam-mail-row");
     }
 
     function render11UnreadEmailsRandomPos() {
@@ -3735,6 +3750,9 @@
       dummyMails.forEach(mail => {
         const row = document.createElement('div');
         row.className = 'mail-row';
+        if (mail.isExam) {
+          row.id = 'exam-mail-row'; // <-- Añadir este ID
+        }
         row.innerHTML = `
           <input type="checkbox" onclick="event.stopPropagation()">
           <span class="mail-sender">${mail.sender}</span>
@@ -3935,6 +3953,15 @@
       if (!flyout.classList.contains('hidden') && !document.getElementById('roll-call-done-badge')) {
         updateTutor("Paso 13: Mostrar Identificación", "Haz clic en el botón <strong>'📸 Mostrar credencial a la cámara'</strong> dentro del chat.", "#chat-action-container button");
       }
+
+      // Si el chat se abre durante la contingencia de 40 min, apuntar de inmediato al link
+      if (isCallSwitchTriggered && !isCallSwitched) {
+        if (!flyout.classList.contains('hidden')) {
+          updateTutor("Paso 26: Cambio de Videollamada", "Haz clic en el <strong>enlace azul</strong> enviado por el aplicador en el chat.", "#chat-messages-box a");
+        } else {
+          updateTutor("Paso 26: Abrir Chat", "Abre el <strong>Chat (💬)</strong> para ver el enlace de la segunda videollamada.", "#meet-chat-toggle-btn");
+        }
+      }
     }
 
     function showIdToCameraAction() {
@@ -4117,7 +4144,7 @@
       document.getElementById('dash-user-badge').innerText = studentName.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
       document.getElementById('dash-user-email-tag').innerText = `${studentMatricula}@sipag.com`;
 
-      updateTutor("Paso 20: Ir a Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.", ".sipag-menu-item:nth-child(2)");
+      updateTutor("Paso 20: Ir a Examen", "En el menú lateral izquierdo, haz clic en la opción <strong>'Examen'</strong>.", ".sipag-menu-item[onclick*='goToSipagSolicitudes']");
     }
 
     function handleDashboardMenuClick() {
@@ -4492,7 +4519,7 @@
       hangupExamCall();
     }
 
-    function toggleRoomMic() {
+   function toggleRoomMic() {
       const micBtn = document.getElementById('room-mic-btn');
       micBtn.classList.toggle('off');
       const isMuted = micBtn.classList.contains('off');
@@ -4505,6 +4532,15 @@
         statusBadge.innerHTML = isMuted 
           ? `<span class="material-symbols-outlined" style="color:var(--google-red);">mic_off</span>` 
           : `<span class="material-symbols-outlined">mic</span>`;
+      }
+
+      // Actualizar el foco del tutor si estamos en el paso de abrir pestaña para SIPAG
+      if (isRollCallDone && !document.getElementById('tab-sipag')) {
+        if (isMuted) {
+          updateTutor("Paso 14: Abrir Pestaña", "Ahora presiona el botón <strong>'+'</strong> arriba para buscar SIPAG.", "#main-new-tab-btn");
+        } else {
+          updateTutor("Paso 14: Silenciar Micrófono", "Haz clic en el micrófono (🎤) para silenciarte antes de abrir la nueva pestaña.", "#room-mic-btn");
+        }
       }
 
       if (isSuspended && !isReactivated) {
