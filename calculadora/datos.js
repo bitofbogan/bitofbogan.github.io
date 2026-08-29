@@ -1,34 +1,35 @@
 // Base de datos de Módulos (Plan 22)
 const modulosData = [
-  { id: 1, nombre: "Módulo 1: De la información al conocimiento" },
-  { id: 2, nombre: "Módulo 2: El lenguaje en relación del hombre con el mundo" },
-  { id: 3, nombre: "Módulo 3: Representaciones simbólicas y algoritmos" },
-  { id: 4, nombre: "Módulo 4: Ser social y sociedad" },
-  { id: 5, nombre: "Módulo 5: Mi mundo en otra lengua" },
-  { id: 6, nombre: "Módulo 6: Tecnología de información y comunicación" },
-  { id: 7, nombre: "Módulo 7: Textos y visiones del mundo" },
-  { id: 8, nombre: "Módulo 8: Matemáticas y representaciones del sistema natural" },
-  { id: 9, nombre: "Módulo 9: Universo natural" },
-  { id: 10, nombre: "Módulo 10: Sociedad mexicana contemporánea" },
-  { id: 11, nombre: "Módulo 11: Transformaciones en el mundo contemporáneo" },
-  { id: 12, nombre: "Módulo 12: Mi vida en otra lengua" },
-  { id: 13, nombre: "Módulo 13: Argumentación" },
-  { id: 14, nombre: "Módulo 14: Variación en procesos sociales" },
-  { id: 15, nombre: "Módulo 15: Cálculo en fenómenos naturales y procesos sociales" },
-  { id: 16, nombre: "Módulo 16: Hacia un desarrollo sustentable" },
-  { id: 17, nombre: "Módulo 17: Evolución y sus repercusiones sociales" },
-  { id: 18, nombre: "Módulo 18: Estadística en fenómenos naturales y procesos sociales" },
-  { id: 19, nombre: "Módulo 19: Dinámica en la naturaleza: el movimiento" },
-  { id: 20, nombre: "Módulo 20: Optimización en sistemas naturales y sociales" },
-  { id: 21, nombre: "Módulo 21: Impacto en la ciencia y la tecnología" },
-  { id: 22, nombre: "Módulo 22: Informática" }
+  { id: 1, nombre: "De la información al conocimiento" },
+  { id: 2, nombre: "El lenguaje en relación del hombre con el mundo" },
+  { id: 3, nombre: "Representaciones simbólicas y algoritmos" },
+  { id: 4, nombre: "Ser social y sociedad" },
+  { id: 5, nombre: "Mi mundo en otra lengua" },
+  { id: 6, nombre: "Tecnología de información y comunicación" },
+  { id: 7, nombre: "Textos y visiones del mundo" },
+  { id: 8, nombre: "Matemáticas y representaciones del sistema natural" },
+  { id: 9, nombre: "Universo natural" },
+  { id: 10, nombre: "Sociedad mexicana contemporánea" },
+  { id: 11, nombre: "Transformaciones en el mundo contemporáneo" },
+  { id: 12, nombre: "Mi vida en otra lengua" },
+  { id: 13, nombre: "Argumentación" },
+  { id: 14, nombre: "Variación en procesos sociales" },
+  { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales" },
+  { id: 16, nombre: "Hacia un desarrollo sustentable" },
+  { id: 17, nombre: "Evolución y sus repercusiones sociales" },
+  { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales" },
+  { id: 19, nombre: "Dinámica en la naturaleza: el movimiento" },
+  { id: 20, nombre: "Optimización en sistemas naturales y sociales" },
+  { id: 21, nombre: "Impacto en la ciencia y la tecnología" },
+  { id: 22, nombre: "Informática" }
 ];
+
 
 // Base de datos de Calendarios
 // (Puedes acumular etapas de 2 calendarios aquí; se listan en orden automático)
 const calendarioData = {
   "2609A": {
-    label: "Etapa 2609A (Solicitud: 10 al 14 Ago | Aplicación: Ago/Sep)",
+    label: "Etapa 2609A",
     periodo: "Periodo de aplicación: 31 de agosto al 05 de septiembre",
     horarios: {
       1: { dia: "Miércoles 2 de Septiembre", hora: "09:00" },
@@ -56,7 +57,7 @@ const calendarioData = {
     }
   },
   "2609B": {
-    label: "Etapa 2609B (Solicitud: 24 al 28 Ago | Aplicación: Septiembre)",
+    label: "Etapa 2609B",
     periodo: "Periodo de aplicación: 14 al 21 de septiembre",
     horarios: {
       1: { dia: "Jueves 17 de Septiembre", hora: "11:00" },
@@ -84,7 +85,7 @@ const calendarioData = {
     }
   },
   "2610A": {
-    label: "Etapa 2610A (Solicitud: 07 al 11 Sep | Aplicación: Sep/Oct)",
+    label: "Etapa 2610A",
     periodo: "Periodo de aplicación: 28 de septiembre al 03 de octubre",
     horarios: {
       1: { dia: "Viernes 2 de Octubre", hora: "13:00" },
@@ -112,7 +113,7 @@ const calendarioData = {
     }
   },
   "2610B": {
-    label: "Etapa 2610B (Solicitud: 21 al 25 Sep | Aplicación: Octubre)",
+    label: "Etapa 2610B",
     periodo: "Periodo de aplicación: 12 al 17 de octubre",
     horarios: {
       1: { dia: "Lunes 12 de Octubre", hora: "15:00" },
