@@ -190,9 +190,9 @@
       <h3 id="resModulo"></h3>
       
       <div class="info-row">
-        <span class="icon">📅</span>
-        <div><strong>Día de aplicación:</strong><br><span id="resDia"></span></div>
-      </div>
+				 		<span class="icon">⏰</span>
+  					<div><strong>Inicio de examen:</strong> <span id="resHora"></span></div>
+					</div>
 
       <div class="info-row">
         <span class="icon">⏰</span>
@@ -218,16 +218,28 @@
     const selectModulo = document.getElementById("selectModulo");
     const cardResultado = document.getElementById("resultado");
 
-    // Función auxiliar para calcular 15 minutos antes (ej: "11:00" -> "10:45")
-    function calcularHoraConexion(horaStr) {
-      const [horas, minutos] = horaStr.split(':').map(Number);
-      let totalMinutos = horas * 60 + minutos - 15;
-      if (totalMinutos < 0) totalMinutos += 24 * 60; // Protección ciclo día
+			function formatearHora(horaStr) {
+  				const [h, m] = horaStr.split(':').map(Number);
+ 					const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+			 		const h12 = h % 12 === 0 ? 12 : h % 12;
+			 		const minStr = m.toString().padStart(2, '0');
+		 return `${horaStr} hrs (${h12}:${minStr} ${periodo})`;
+			}
 
-      const h = Math.floor(totalMinutos / 60).toString().padStart(2, '0');
-      const m = (totalMinutos % 60).toString().padStart(2, '0');
-      return `${h}:${m}`;
-    }
+    function calcularHoraConexion(horaStr) {
+  const [horas, minutos] = horaStr.split(':').map(Number);
+  let totalMinutos = horas * 60 + minutos - 15;
+  if (totalMinutos < 0) totalMinutos += 24 * 60;
+
+  const h = Math.floor(totalMinutos / 60);
+  const m = (totalMinutos % 60).toString().padStart(2, '0');
+  const hStr = h.toString().padStart(2, '0');
+  
+  const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
+}
+
 
     // 1. Cargar Etapas dinámicamente desde datos.js
     Object.keys(calendarioData).forEach(clave => {
@@ -237,38 +249,39 @@
       selectEtapa.appendChild(option);
     });
 
-    // 2. Cargar lista de Módulos
     function cargarModulos() {
-      selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
-      modulosData.forEach(m => {
-        const option = document.createElement("option");
-        option.value = m.id;
-        option.textContent = m.nombre;
-        selectModulo.appendChild(option);
-      });
-      selectModulo.disabled = false;
-    }
+  selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
+  modulosData.forEach(m => {
+    const option = document.createElement("option");
+    option.value = m.id;
+    option.textContent = `Módulo ${m.id}`;
+    selectModulo.appendChild(option);
+  });
+  selectModulo.disabled = false;
+}
+
 
     // 3. Renderizar resultado en tiempo real
     function calcularFecha() {
-      const etapaKey = selectEtapa.value;
-      const modId = selectModulo.value;
+  const etapaKey = selectEtapa.value;
+  const modId = selectModulo.value;
 
-      if (!etapaKey || !modId) return;
+  if (!etapaKey || !modId) return;
 
-      const etapa = calendarioData[etapaKey];
-      const horario = etapa?.horarios[modId];
-      const moduloObj = modulosData.find(m => m.id == modId);
+  const etapa = calendarioData[etapaKey];
+  const horario = etapa?.horarios[modId];
+  const moduloObj = modulosData.find(m => m.id == modId);
 
-      if (horario) {
-        document.getElementById("resModulo").textContent = moduloObj.nombre;
-        document.getElementById("resDia").textContent = horario.dia;
-        document.getElementById("resHora").textContent = horario.hora;
-        document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
-        document.getElementById("resRango").textContent = etapa.periodo;
-        cardResultado.style.display = "block";
-      }
-    }
+  if (horario) {
+    document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
+    document.getElementById("resDia").textContent = horario.dia;
+    document.getElementById("resHora").textContent = formatearHora(horario.hora);
+    document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
+    document.getElementById("resRango").textContent = etapa.periodo;
+    cardResultado.style.display = "block";
+  }
+}
+
 
     selectEtapa.addEventListener("change", () => {
       if (selectModulo.disabled) {
