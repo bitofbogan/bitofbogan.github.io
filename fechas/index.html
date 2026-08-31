@@ -213,7 +213,7 @@
       <div class="alerta-conexion">
         <strong>⚠️ Conexión obligatoria 15 minutos antes:</strong>
         <p style="margin: 0.35rem 0 0.5rem 0;">Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> puntuales.</p>
-        <p style="margin: 0;">🪪 Recuerda tener a la mano tu <span style="white-space: nowrap;"><strong>credencial oficial / identificación</strong>.</span></p>
+		<p style="margin: 0.35rem 0 0.5rem 0;">Recuerda tener a la mano tu <strong>credencial o identificación</strong>.</p>
       </div>
 
       <div class="badge-rango" id="resRango"></div>
@@ -273,7 +273,7 @@
       const option = document.createElement("option");
       option.value = clave;
       if (clave === etapaActivaClave) {
-        option.textContent = `${calendarioData[clave].label} (En curso / Próxima)`;
+        option.textContent = `${calendarioData[clave].label} (En curso/próxima)`;
         option.style.fontWeight = "bold";
       } else {
         option.textContent = calendarioData[clave].label;
