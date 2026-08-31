@@ -190,19 +190,19 @@
       <h3 id="resModulo"></h3>
       
       <div class="info-row">
-				 		<span class="icon">⏰</span>
-  					<div><strong>Inicio de examen:</strong> <span id="resHora"></span></div>
-					</div>
+        <span class="icon">📅</span>
+        <div><strong>Día de aplicación:</strong><br><span id="resDia"></span></div>
+      </div>
 
       <div class="info-row">
         <span class="icon">⏰</span>
-        <div><strong>Inicio de examen:</strong> <span id="resHora"></span> hrs</div>
+        <div><strong>Inicio de examen:</strong> <span id="resHora"></span></div>
       </div>
 
       <!-- Alerta dinámica con hora de conexión -15 min -->
       <div class="alerta-conexion">
         <strong>⚠️ Conexión obligatoria 15 minutos antes:</strong>
-        Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> hrs puntuales.<br>
+        Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> puntuales.<br>
         🪪 Recuerda tener a la mano tu <strong>credencial oficial / identificación</strong>.
       </div>
 
@@ -211,7 +211,7 @@
   </div>
 
   <!-- Carga de datos -->
-  <script src="datos.js"></script>
+  <script src="data.js"></script>
 
   <script>
     const selectEtapa = document.getElementById("selectEtapa");
