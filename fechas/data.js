@@ -30,6 +30,7 @@ const calendarioData = {
   "2609A": {
     label: "Etapa 2609A",
     periodo: "Periodo de aplicación: 31 de agosto al 05 de septiembre",
+    fechaFin: "2026-09-05",
     horarios: {
       1: { dia: "Miércoles 2 de Septiembre", hora: "09:00" },
       2: { dia: "Jueves 3 de Septiembre", hora: "09:00" },
@@ -58,6 +59,7 @@ const calendarioData = {
   "2609B": {
     label: "Etapa 2609B",
     periodo: "Periodo de aplicación: 14 al 21 de septiembre",
+    fechaFin: "2026-09-21",
     horarios: {
       1: { dia: "Jueves 17 de Septiembre", hora: "11:00" },
       2: { dia: "Viernes 18 de Septiembre", hora: "11:00" },
@@ -86,6 +88,7 @@ const calendarioData = {
   "2610A": {
     label: "Etapa 2610A",
     periodo: "Periodo de aplicación: 28 de septiembre al 03 de octubre",
+    fechaFin: "2026-10-03",
     horarios: {
       1: { dia: "Viernes 2 de Octubre", hora: "13:00" },
       2: { dia: "Lunes 28 de Septiembre", hora: "09:00" },
@@ -114,6 +117,7 @@ const calendarioData = {
   "2610B": {
     label: "Etapa 2610B",
     periodo: "Periodo de aplicación: 12 al 17 de octubre",
+    fechaFin: "2026-10-17",
     horarios: {
       1: { dia: "Lunes 12 de Octubre", hora: "15:00" },
       2: { dia: "Martes 13 de Octubre", hora: "11:00" },
