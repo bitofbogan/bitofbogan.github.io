@@ -1,0 +1,143 @@
+// Base de datos de Módulos (Plan 22)
+const modulosData = [
+  { id: 1, nombre: "De la información al conocimiento" },
+  { id: 2, nombre: "El lenguaje en relación del hombre con el mundo" },
+  { id: 3, nombre: "Representaciones simbólicas y algoritmos" },
+  { id: 4, nombre: "Ser social y sociedad" },
+  { id: 5, nombre: "Mi mundo en otra lengua" },
+  { id: 6, nombre: "Tecnología de información y comunicación" },
+  { id: 7, nombre: "Textos y visiones del mundo" },
+  { id: 8, nombre: "Matemáticas y representaciones del sistema natural" },
+  { id: 9, nombre: "Universo natural" },
+  { id: 10, nombre: "Sociedad mexicana contemporánea" },
+  { id: 11, nombre: "Transformaciones en el mundo contemporáneo" },
+  { id: 12, nombre: "Mi vida en otra lengua" },
+  { id: 13, nombre: "Argumentación" },
+  { id: 14, nombre: "Variación en procesos sociales" },
+  { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales" },
+  { id: 16, nombre: "Hacia un desarrollo sustentable" },
+  { id: 17, nombre: "Evolución y sus repercusiones sociales" },
+  { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales" },
+  { id: 19, nombre: "Dinámica en la naturaleza: el movimiento" },
+  { id: 20, nombre: "Optimización en sistemas naturales y sociales" },
+  { id: 21, nombre: "Impacto en la ciencia y la tecnología" },
+  { id: 22, nombre: "Informática" }
+];
+
+
+// Base de datos de Calendarios
+// (Puedes acumular etapas de 2 calendarios aquí; se listan en orden automático)
+const calendarioData = {
+  "2609A": {
+    label: "Etapa 2609A",
+    periodo: "Periodo de aplicación: 31 de agosto al 05 de septiembre",
+    horarios: {
+      1: { dia: "Miércoles 2 de Septiembre", hora: "09:00" },
+      2: { dia: "Jueves 3 de Septiembre", hora: "09:00" },
+      3: { dia: "Sábado 5 de Septiembre", hora: "09:00" },
+      4: { dia: "Lunes 31 de Agosto", hora: "13:00" },
+      5: { dia: "Martes 1 de Septiembre", hora: "09:00" },
+      6: { dia: "Miércoles 2 de Septiembre", hora: "13:00" },
+      7: { dia: "Jueves 3 de Septiembre", hora: "15:00" },
+      8: { dia: "Jueves 3 de Septiembre", hora: "11:00" },
+      9: { dia: "Viernes 4 de Septiembre", hora: "11:00" },
+      10: { dia: "Lunes 31 de Agosto", hora: "11:00" },
+      11: { dia: "Martes 1 de Septiembre", hora: "15:00" },
+      12: { dia: "Miércoles 2 de Septiembre", hora: "11:00" },
+      13: { dia: "Jueves 3 de Septiembre", hora: "13:00" },
+      14: { dia: "Viernes 4 de Septiembre", hora: "09:00" },
+      15: { dia: "Viernes 4 de Septiembre", hora: "13:00" },
+      16: { dia: "Lunes 31 de Agosto", hora: "09:00" },
+      17: { dia: "Martes 1 de Septiembre", hora: "13:00" },
+      18: { dia: "Miércoles 2 de Septiembre", hora: "15:00" },
+      19: { dia: "Viernes 4 de Septiembre", hora: "15:00" },
+      20: { dia: "Sábado 5 de Septiembre", hora: "11:00" },
+      21: { dia: "Lunes 31 de Agosto", hora: "15:00" },
+      22: { dia: "Martes 1 de Septiembre", hora: "11:00" }
+    }
+  },
+  "2609B": {
+    label: "Etapa 2609B",
+    periodo: "Periodo de aplicación: 14 al 21 de septiembre",
+    horarios: {
+      1: { dia: "Jueves 17 de Septiembre", hora: "11:00" },
+      2: { dia: "Viernes 18 de Septiembre", hora: "11:00" },
+      3: { dia: "Lunes 14 de Septiembre", hora: "11:00" },
+      4: { dia: "Lunes 21 de Septiembre", hora: "15:00" },
+      5: { dia: "Martes 15 de Septiembre", hora: "11:00" },
+      6: { dia: "Jueves 17 de Septiembre", hora: "15:00" },
+      7: { dia: "Viernes 18 de Septiembre", hora: "09:00" },
+      8: { dia: "Viernes 18 de Septiembre", hora: "13:00" },
+      9: { dia: "Lunes 14 de Septiembre", hora: "09:00" },
+      10: { dia: "Lunes 21 de Septiembre", hora: "13:00" },
+      11: { dia: "Martes 15 de Septiembre", hora: "09:00" },
+      12: { dia: "Jueves 17 de Septiembre", hora: "13:00" },
+      13: { dia: "Viernes 18 de Septiembre", hora: "15:00" },
+      14: { dia: "Sábado 19 de Septiembre", hora: "11:00" },
+      15: { dia: "Lunes 14 de Septiembre", hora: "15:00" },
+      16: { dia: "Lunes 21 de Septiembre", hora: "11:00" },
+      17: { dia: "Martes 15 de Septiembre", hora: "15:00" },
+      18: { dia: "Jueves 17 de Septiembre", hora: "09:00" },
+      19: { dia: "Sábado 19 de Septiembre", hora: "09:00" },
+      20: { dia: "Lunes 14 de Septiembre", hora: "13:00" },
+      21: { dia: "Lunes 21 de Septiembre", hora: "09:00" },
+      22: { dia: "Martes 15 de Septiembre", hora: "13:00" }
+    }
+  },
+  "2610A": {
+    label: "Etapa 2610A",
+    periodo: "Periodo de aplicación: 28 de septiembre al 03 de octubre",
+    horarios: {
+      1: { dia: "Viernes 2 de Octubre", hora: "13:00" },
+      2: { dia: "Lunes 28 de Septiembre", hora: "09:00" },
+      3: { dia: "Martes 29 de Septiembre", hora: "13:00" },
+      4: { dia: "Miércoles 30 de Septiembre", hora: "09:00" },
+      5: { dia: "Jueves 1 de Octubre", hora: "13:00" },
+      6: { dia: "Viernes 2 de Octubre", hora: "09:00" },
+      7: { dia: "Sábado 3 de Octubre", hora: "11:00" },
+      8: { dia: "Lunes 28 de Septiembre", hora: "15:00" },
+      9: { dia: "Martes 29 de Septiembre", hora: "11:00" },
+      10: { dia: "Miércoles 30 de Septiembre", hora: "15:00" },
+      11: { dia: "Jueves 1 de Octubre", hora: "11:00" },
+      12: { dia: "Viernes 2 de Octubre", hora: "15:00" },
+      13: { dia: "Sábado 3 de Octubre", hora: "09:00" },
+      14: { dia: "Lunes 28 de Septiembre", hora: "13:00" },
+      15: { dia: "Martes 29 de Septiembre", hora: "09:00" },
+      16: { dia: "Miércoles 30 de Septiembre", hora: "13:00" },
+      17: { dia: "Jueves 1 de Octubre", hora: "09:00" },
+      18: { dia: "Viernes 2 de Octubre", hora: "11:00" },
+      19: { dia: "Lunes 28 de Septiembre", hora: "11:00" },
+      20: { dia: "Martes 29 de Septiembre", hora: "15:00" },
+      21: { dia: "Miércoles 30 de Septiembre", hora: "11:00" },
+      22: { dia: "Jueves 1 de Octubre", hora: "15:00" }
+    }
+  },
+  "2610B": {
+    label: "Etapa 2610B",
+    periodo: "Periodo de aplicación: 12 al 17 de octubre",
+    horarios: {
+      1: { dia: "Lunes 12 de Octubre", hora: "15:00" },
+      2: { dia: "Martes 13 de Octubre", hora: "11:00" },
+      3: { dia: "Miércoles 14 de Octubre", hora: "15:00" },
+      4: { dia: "Jueves 15 de Octubre", hora: "11:00" },
+      5: { dia: "Viernes 16 de Octubre", hora: "15:00" },
+      6: { dia: "Sábado 17 de Octubre", hora: "11:00" },
+      7: { dia: "Lunes 12 de Octubre", hora: "13:00" },
+      8: { dia: "Martes 13 de Octubre", hora: "09:00" },
+      9: { dia: "Miércoles 14 de Octubre", hora: "13:00" },
+      10: { dia: "Jueves 15 de Octubre", hora: "09:00" },
+      11: { dia: "Viernes 16 de Octubre", hora: "13:00" },
+      12: { dia: "Sábado 17 de Octubre", hora: "09:00" },
+      13: { dia: "Lunes 12 de Octubre", hora: "11:00" },
+      14: { dia: "Martes 13 de Octubre", hora: "15:00" },
+      15: { dia: "Miércoles 14 de Octubre", hora: "11:00" },
+      16: { dia: "Jueves 15 de Octubre", hora: "15:00" },
+      17: { dia: "Viernes 16 de Octubre", hora: "11:00" },
+      18: { dia: "Lunes 12 de Octubre", hora: "09:00" },
+      19: { dia: "Martes 13 de Octubre", hora: "13:00" },
+      20: { dia: "Miércoles 14 de Octubre", hora: "09:00" },
+      21: { dia: "Jueves 15 de Octubre", hora: "13:00" },
+      22: { dia: "Viernes 16 de Octubre", hora: "09:00" }
+    }
+  }
+};
