@@ -213,7 +213,7 @@
       <div class="alerta-conexion">
         <strong>⚠️ Conexión obligatoria 15 minutos antes:</strong>
         <p style="margin: 0.35rem 0 0.5rem 0;">Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> puntuales.</p>
-        <p style="margin: 0;">🪪 Recuerda tener a la mano tu <strong>credencial oficial / identificación</strong>.</p>
+        <p style="margin: 0;">🪪 Recuerda tener a la mano tu <span style="white-space: nowrap;"><strong>credencial oficial / identificación</strong>.</span></p>
       </div>
 
       <div class="badge-rango" id="resRango"></div>
@@ -251,11 +251,33 @@
 }
 
 
-    // 1. Cargar Etapas dinámicamente desde datos.js
-    Object.keys(calendarioData).forEach(clave => {
+ // 1. Detectar etapa activa/próxima y cargar desplegable con resaltado
+    const hoy = new Date().toISOString().split('T')[0];
+    let etapaActivaClave = null;
+
+    const clavesOrdenadas = Object.keys(calendarioData).sort((a, b) => {
+      return (calendarioData[a].fechaFin || "").localeCompare(calendarioData[b].fechaFin || "");
+    });
+
+    for (const clave of clavesOrdenadas) {
+      if (calendarioData[clave].fechaFin && calendarioData[clave].fechaFin >= hoy) {
+        etapaActivaClave = clave;
+        break;
+      }
+    }
+    if (!etapaActivaClave && clavesOrdenadas.length > 0) {
+      etapaActivaClave = clavesOrdenadas[clavesOrdenadas.length - 1];
+    }
+
+    clavesOrdenadas.forEach(clave => {
       const option = document.createElement("option");
       option.value = clave;
-      option.textContent = calendarioData[clave].label;
+      if (clave === etapaActivaClave) {
+        option.textContent = `${calendarioData[clave].label} (En curso / Próxima)`;
+        option.style.fontWeight = "bold";
+      } else {
+        option.textContent = calendarioData[clave].label;
+      }
       selectEtapa.appendChild(option);
     });
 
