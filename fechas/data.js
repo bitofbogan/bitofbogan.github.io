@@ -1,29 +1,28 @@
 // Base de datos de Módulos (Plan 22)
 const modulosData = [
-  { id: 1, nombre: "De la información al conocimiento" },
-  { id: 2, nombre: "El lenguaje en relación del hombre con el mundo" },
-  { id: 3, nombre: "Representaciones simbólicas y algoritmos" },
-  { id: 4, nombre: "Ser social y sociedad" },
-  { id: 5, nombre: "Mi mundo en otra lengua" },
-  { id: 6, nombre: "Tecnología de información y comunicación" },
-  { id: 7, nombre: "Textos y visiones del mundo" },
-  { id: 8, nombre: "Matemáticas y representaciones del sistema natural" },
-  { id: 9, nombre: "Universo natural" },
-  { id: 10, nombre: "Sociedad mexicana contemporánea" },
-  { id: 11, nombre: "Transformaciones en el mundo contemporáneo" },
-  { id: 12, nombre: "Mi vida en otra lengua" },
-  { id: 13, nombre: "Argumentación" },
-  { id: 14, nombre: "Variación en procesos sociales" },
-  { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales" },
-  { id: 16, nombre: "Hacia un desarrollo sustentable" },
-  { id: 17, nombre: "Evolución y sus repercusiones sociales" },
-  { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales" },
-  { id: 19, nombre: "Dinámica en la naturaleza: el movimiento" },
-  { id: 20, nombre: "Optimización en sistemas naturales y sociales" },
-  { id: 21, nombre: "Impacto en la ciencia y la tecnología" },
-  { id: 22, nombre: "Informática" }
+  { id: 1, nombre: "De la información al conocimiento", tema: "Técnicas de estudio & aprendizaje" },
+  { id: 2, nombre: "El lenguaje en relación del hombre con el mundo", tema: "Lectura & redacción I" },
+  { id: 3, nombre: "Representaciones simbólicas y algoritmos", tema: "Aritmética & álgebra" },
+  { id: 4, nombre: "Ser social y sociedad", tema: "Sociología" },
+  { id: 5, nombre: "Mi mundo en otra lengua", tema: "Inglés I" },
+  { id: 6, nombre: "Tecnología de información y comunicación", tema: "Informática I" },
+  { id: 7, nombre: "Textos y visiones del mundo", tema: "Lectura & redacción II" },
+  { id: 8, nombre: "Matemáticas y representaciones del sistema natural", tema: "Física I" },
+  { id: 9, nombre: "Universo natural", tema: "Ciencias naturales" },
+  { id: 10, nombre: "Sociedad mexicana contemporánea", tema: "Estructura social mexicana" },
+  { id: 11, nombre: "Transformaciones en el mundo contemporáneo", tema: "Historia contemporánea" },
+  { id: 12, nombre: "Mi vida en otra lengua", tema: "Inglés II" },
+  { id: 13, nombre: "Argumentación", tema: "Lógica argumentativa" },
+  { id: 14, nombre: "Variación en procesos sociales", tema: "Economía & sociedad" },
+  { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales", tema: "Cálculo diferencial & integral" },
+  { id: 16, nombre: "Hacia un desarrollo sustentable", tema: "Ciencias ambientales II" },
+  { id: 17, nombre: "Evolución y sus repercusiones sociales", tema: "Biología" },
+  { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales", tema: "Probabilidad & estadística" },
+  { id: 19, nombre: "Dinámica en la naturaleza: el movimiento", tema: "Física II" },
+  { id: 20, nombre: "Optimización en sistemas naturales y sociales", tema: "Ciencias ambientales I" },
+  { id: 21, nombre: "Impacto en la ciencia y la tecnología", tema: "Filosofía de la ciencia" },
+  { id: 22, nombre: "Informática", tema: "Informática II" }
 ];
-
 
 // Base de datos de Calendarios
 // (Puedes acumular etapas de 2 calendarios aquí; se listan en orden automático)
