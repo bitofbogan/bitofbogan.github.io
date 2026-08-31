@@ -95,11 +95,11 @@
     }
 
 	.modulo-tema {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: #475569;
       font-weight: 500;
-      margin: -0.5rem 0 0.8rem 0;
-      padding-bottom: 0.5rem;
+      margin: 0.5rem 0 1rem 0;
+      padding-bottom: 0.6rem;
       border-bottom: 1px solid #dbeafe;
     }
 
@@ -212,8 +212,8 @@
       <!-- Alerta dinámica con hora de conexión -15 min -->
       <div class="alerta-conexion">
         <strong>⚠️ Conexión obligatoria 15 minutos antes:</strong>
-        Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> puntuales.<br>
-        🪪 Recuerda tener a la mano tu <strong>credencial oficial / identificación</strong>.
+        <p style="margin: 0.35rem 0 0.5rem 0;">Debes estar en la videollamada a las <strong id="resHoraConexion" style="display:inline; color:#78350f;"></strong> puntuales.</p>
+        <p style="margin: 0;">🪪 Recuerda tener a la mano tu <strong>credencial oficial / identificación</strong>.</p>
       </div>
 
       <div class="badge-rango" id="resRango"></div>
@@ -284,7 +284,7 @@
 
       if (horario) {
         document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
-        document.getElementById("resTema").textContent = `Tema: ${moduloObj.tema}`;
+        document.getElementById("resTema").textContent = `Área del conocimiento: ${moduloObj.tema}`;
         document.getElementById("resDia").textContent = horario.dia;
         document.getElementById("resHora").textContent = formatearHora(horario.hora);
         document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
