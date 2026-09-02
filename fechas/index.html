@@ -161,6 +161,31 @@
       text-align: center;
     }
 
+	.tab-container {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.65rem 0.5rem;
+      border: 1.5px solid #cbd5e1;
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
@@ -187,11 +212,37 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="selectModulo">2. Selecciona tu <strong>módulo</strong>:</label>
-      <select id="selectModulo" disabled>
-        <option value="" disabled selected>Primero selecciona una etapa...</option>
-      </select>
+    <!-- Selector de Modo / Pestañas -->
+    <div class="tab-container">
+      <button type="button" class="tab-btn active" id="btnModoModulo" onclick="cambiarModo('modulo')">Por Módulo</button>
+      <button type="button" class="tab-btn" id="btnModoHorario" onclick="cambiarModo('horario')">Por Día y Hora</button>
+    </div>
+
+    <!-- MODO A: Por Módulo -->
+    <div id="panelModulo">
+      <div class="form-group">
+        <label for="selectModulo">2. Selecciona tu <strong>módulo</strong>:</label>
+        <select id="selectModulo" disabled>
+          <option value="" disabled selected>Primero selecciona una etapa...</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- MODO B: Por Día y Hora -->
+    <div id="panelHorario" style="display: none;">
+      <div class="form-group">
+        <label for="selectDia">2. Selecciona tu <strong>día disponible</strong>:</label>
+        <select id="selectDia" disabled>
+          <option value="" disabled selected>Primero selecciona una etapa...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="selectHora">3. Selecciona tu <strong>hora disponible</strong>:</label>
+        <select id="selectHora" disabled>
+          <option value="" disabled selected>Primero selecciona un día...</option>
+        </select>
+      </div>
     </div>
 
     <!-- Contenedor del Resultado -->
@@ -237,18 +288,18 @@
 			}
 
     function calcularHoraConexion(horaStr) {
-  const [horas, minutos] = horaStr.split(':').map(Number);
-  let totalMinutos = horas * 60 + minutos - 15;
-  if (totalMinutos < 0) totalMinutos += 24 * 60;
-
-  const h = Math.floor(totalMinutos / 60);
-  const m = (totalMinutos % 60).toString().padStart(2, '0');
-  const hStr = h.toString().padStart(2, '0');
-  
-  const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
-  const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
-}
+	  const [horas, minutos] = horaStr.split(':').map(Number);
+	  let totalMinutos = horas * 60 + minutos - 15;
+	  if (totalMinutos < 0) totalMinutos += 24 * 60;
+	
+	  const h = Math.floor(totalMinutos / 60);
+	  const m = (totalMinutos % 60).toString().padStart(2, '0');
+	  const hStr = h.toString().padStart(2, '0');
+	  
+	  const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+	  const h12 = h % 12 === 0 ? 12 : h % 12;
+	  return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
+		}
 
 
  // 1. Detectar etapa activa/próxima y cargar desplegable con resaltado
@@ -281,57 +332,182 @@
       selectEtapa.appendChild(option);
     });
 
+    let modoActual = "modulo";
+    const selectModulo = document.getElementById("selectModulo");
+    const selectDia = document.getElementById("selectDia");
+    const selectHora = document.getElementById("selectHora");
+    const panelModulo = document.getElementById("panelModulo");
+    const panelHorario = document.getElementById("panelHorario");
+    const btnModoModulo = document.getElementById("btnModoModulo");
+    const btnModoHorario = document.getElementById("btnModoHorario");
+
+    function cambiarModo(modo) {
+      modoActual = modo;
+      cardResultado.style.display = "none";
+
+      if (modo === 'modulo') {
+        btnModoModulo.classList.add("active");
+        btnModoHorario.classList.remove("active");
+        panelModulo.style.display = "block";
+        panelHorario.style.display = "none";
+        calcularFechaPorModulo();
+      } else {
+        btnModoHorario.classList.add("active");
+        btnModoModulo.classList.remove("active");
+        panelHorario.style.display = "block";
+        panelModulo.style.display = "none";
+        if (selectEtapa.value && selectDia.disabled) {
+          cargarDias();
+        }
+        calcularFechaPorHorario();
+      }
+    }
+
     function cargarModulos() {
-  selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
-  modulosData.forEach(m => {
-    const option = document.createElement("option");
-    option.value = m.id;
-    option.textContent = `Módulo ${m.id}`;
-    selectModulo.appendChild(option);
-  });
-  selectModulo.disabled = false;
-}
+      selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
+      modulosData.forEach(m => {
+        const option = document.createElement("option");
+        option.value = m.id;
+        option.textContent = `Módulo ${m.id}`;
+        selectModulo.appendChild(option);
+      });
+      selectModulo.disabled = false;
+    }
 
+    function cargarDias() {
+      const etapa = calendarioData[selectEtapa.value];
+      if (!etapa) return;
 
-    // 3. Renderizar resultado en tiempo real
-    function calcularFecha() {
+      const diasUnicos = [];
+      Object.values(etapa.horarios).forEach(h => {
+        if (!diasUnicos.includes(h.dia)) diasUnicos.push(h.dia);
+      });
+
+      selectDia.innerHTML = '<option value="" disabled selected>Elige un día...</option>';
+      diasUnicos.forEach(dia => {
+        const option = document.createElement("option");
+        option.value = dia;
+        option.textContent = dia;
+        selectDia.appendChild(option);
+      });
+      selectDia.disabled = false;
+
+      selectHora.innerHTML = '<option value="" disabled selected>Primero selecciona un día...</option>';
+      selectHora.disabled = true;
+    }
+
+    function cargarHoras() {
+      const etapa = calendarioData[selectEtapa.value];
+      const diaSeleccionado = selectDia.value;
+      if (!etapa || !diaSeleccionado) return;
+
+      const horasUnicas = [];
+      Object.values(etapa.horarios).forEach(h => {
+        if (h.dia === diaSeleccionado && !horasUnicas.includes(h.hora)) {
+          horasUnicas.push(h.hora);
+        }
+      });
+      horasUnicas.sort();
+
+      selectHora.innerHTML = '<option value="" disabled selected>Elige una hora...</option>';
+      horasUnicas.forEach(hora => {
+        const [h, m] = hora.split(':').map(Number);
+        const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+        const h12 = h % 12 === 0 ? 12 : h % 12;
+        const minStr = m.toString().padStart(2, '0');
+
+        const option = document.createElement("option");
+        option.value = hora;
+        option.textContent = `${hora} hrs (${h12}:${minStr} ${periodo})`;
+        selectHora.appendChild(option);
+      });
+      selectHora.disabled = false;
+    }
+
+    function mostrarResultado(moduloObj, horario, etapa) {
+      document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
+      document.getElementById("resTema").textContent = `Área del conocimiento: ${moduloObj.tema}`;
+      document.getElementById("resDia").textContent = horario.dia;
+      document.getElementById("resHora").textContent = formatearHora(horario.hora);
+      document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
+      document.getElementById("resRango").textContent = etapa.periodo;
+      cardResultado.style.display = "block";
+    }
+
+    function calcularFechaPorModulo() {
       const etapaKey = selectEtapa.value;
       const modId = selectModulo.value;
-
       if (!etapaKey || !modId) return;
 
       const etapa = calendarioData[etapaKey];
       const horario = etapa?.horarios[modId];
       const moduloObj = modulosData.find(m => m.id == modId);
 
-      if (horario) {
-        document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
-        document.getElementById("resTema").textContent = `Área del conocimiento: ${moduloObj.tema}`;
-        document.getElementById("resDia").textContent = horario.dia;
-        document.getElementById("resHora").textContent = formatearHora(horario.hora);
-        document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
-        document.getElementById("resRango").textContent = etapa.periodo;
-        cardResultado.style.display = "block";
+      if (horario && moduloObj) {
+        mostrarResultado(moduloObj, horario, etapa);
       }
     }
 
+    function calcularFechaPorHorario() {
+      const etapaKey = selectEtapa.value;
+      const dia = selectDia.value;
+      const hora = selectHora.value;
+      if (!etapaKey || !dia || !hora) return;
 
-    selectEtapa.addEventListener("change", () => {
-      if (selectModulo.disabled) {
-        cargarModulos();
+      const etapa = calendarioData[etapaKey];
+      let modEncontradoId = null;
+
+      for (const [id, h] of Object.entries(etapa.horarios)) {
+        if (h.dia === dia && h.hora === hora) {
+          modEncontradoId = id;
+          break;
+        }
       }
-      calcularFecha();
+
+      if (modEncontradoId) {
+        const moduloObj = modulosData.find(m => m.id == modEncontradoId);
+        mostrarResultado(moduloObj, etapa.horarios[modEncontradoId], etapa);
+      }
+    }
+
+    // Eventos
+    selectEtapa.addEventListener("change", () => {
+      cardResultado.style.display = "none";
+      cargarModulos();
+      cargarDias();
+      if (modoActual === 'modulo') {
+        calcularFechaPorModulo();
+      } else {
+        calcularFechaPorHorario();
+      }
     });
 
-    selectModulo.addEventListener("change", calcularFecha);
+    selectModulo.addEventListener("change", calcularFechaPorModulo);
 
-	// Forzar reseteo al recargar la página (evita caché del navegador)
+    selectDia.addEventListener("change", () => {
+      cardResultado.style.display = "none";
+      cargarHoras();
+    });
+
+    selectHora.addEventListener("change", calcularFechaPorHorario);
+
+    // Reseteo limpio en recarga de página
     window.addEventListener("pageshow", () => {
       selectEtapa.value = "";
       selectModulo.value = "";
       selectModulo.disabled = true;
       selectModulo.innerHTML = '<option value="" disabled selected>Primero selecciona una etapa...</option>';
+
+      selectDia.value = "";
+      selectDia.disabled = true;
+      selectDia.innerHTML = '<option value="" disabled selected>Primero selecciona una etapa...</option>';
+
+      selectHora.value = "";
+      selectHora.disabled = true;
+      selectHora.innerHTML = '<option value="" disabled selected>Primero selecciona un día...</option>';
+
       cardResultado.style.display = "none";
+      cambiarModo('modulo');
     });
   </script>
 </body>
