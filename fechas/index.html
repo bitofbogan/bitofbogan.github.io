@@ -355,6 +355,31 @@
         if (!diasUnicos.includes(h.dia)) diasUnicos.push(h.dia);
       });
 
+      // Mapeo de meses para ordenamiento cronológico
+      const meses = {
+        "enero": 0, "febrero": 1, "marzo": 2, "abril": 3,
+        "mayo": 4, "junio": 5, "julio": 6, "agosto": 7,
+        "septiembre": 8, "octubre": 9, "noviembre": 10, "diciembre": 11
+      };
+
+      // Ordenar cronológicamente por mes y día
+      diasUnicos.sort((a, b) => {
+        const regex = /(\d+)\s+de\s+([a-zA-Z]+)/i;
+        const matchA = a.match(regex);
+        const matchB = b.match(regex);
+
+        if (matchA && matchB) {
+          const diaA = parseInt(matchA[1], 10);
+          const mesA = meses[matchA[2].toLowerCase()] ?? 0;
+          const diaB = parseInt(matchB[1], 10);
+          const mesB = meses[matchB[2].toLowerCase()] ?? 0;
+
+          if (mesA !== mesB) return mesA - mesB;
+          return diaA - diaB;
+        }
+        return a.localeCompare(b);
+      });
+
       selectDia.innerHTML = '<option value="" disabled selected>Elige un día...</option>';
       diasUnicos.forEach(dia => {
         const option = document.createElement("option");
