@@ -186,6 +186,28 @@
       border-color: var(--primary);
     }
 
+	.footer-creditos {
+      margin-top: 1.8rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-creditos img {
+      opacity: 0.7;
+      filter: grayscale(100%);
+      transition: opacity 0.2s, filter 0.2s;
+    }
+
+    .footer-creditos img:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
@@ -268,6 +290,14 @@
       </div>
 
       <div class="badge-rango" id="resRango"></div>
+    </div>
+
+    <!-- Pie de página discreto (Siempre al final) -->
+    <div class="footer-creditos">
+      <div>
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fbitofbogan.github.io%2Ffechas&count_bg=%2394A3B8&title_bg=%2364748B&icon=&icon_color=%23E7E7E7&title=Visitas&edge_flat=true" alt="Contador de visitas" />
+      </div>
+      <div>Elaborado por: Rodrigo Aguilar Meneses</div>
     </div>
   </div>
 
