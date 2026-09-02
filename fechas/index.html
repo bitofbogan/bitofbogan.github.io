@@ -336,6 +336,8 @@
 
     // 4. Llenado dinámico de selects
     function cargarModulos() {
+      const moduloPrevio = selectModulo.value;
+
       selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
       modulosData.forEach(m => {
         const option = document.createElement("option");
@@ -344,6 +346,10 @@
         selectModulo.appendChild(option);
       });
       selectModulo.disabled = false;
+
+      if (moduloPrevio) {
+        selectModulo.value = moduloPrevio;
+      }
     }
 
     function cargarDias() {
@@ -500,12 +506,17 @@
 
     // 7. Event listeners
     selectEtapa.addEventListener("change", () => {
-      cardResultado.style.display = "none";
       cargarModulos();
       cargarDias();
+
       if (modoActual === 'modulo') {
-        calcularFechaPorModulo();
+        if (selectModulo.value) {
+          calcularFechaPorModulo();
+        } else {
+          cardResultado.style.display = "none";
+        }
       } else {
+        cardResultado.style.display = "none";
         calcularFechaPorHorario();
       }
     });
