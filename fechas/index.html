@@ -214,8 +214,8 @@
 
     <!-- Selector de Modo / Pestañas -->
     <div class="tab-container">
-      <button type="button" class="tab-btn active" id="btnModoModulo" onclick="cambiarModo('modulo')">Por Módulo</button>
-      <button type="button" class="tab-btn" id="btnModoHorario" onclick="cambiarModo('horario')">Por Día y Hora</button>
+      <button type="button" class="tab-btn active" id="btnModoModulo" onclick="cambiarModo('modulo')">Por módulo</button>
+      <button type="button" class="tab-btn" id="btnModoHorario" onclick="cambiarModo('horario')">Por día y hora</button>
     </div>
 
     <!-- MODO A: Por Módulo -->
@@ -275,64 +275,8 @@
   <script src="data.js"></script>
 
   <script>
+    // 1. Declaración de elementos del DOM (Primero que todo)
     const selectEtapa = document.getElementById("selectEtapa");
-    const selectModulo = document.getElementById("selectModulo");
-    const cardResultado = document.getElementById("resultado");
-
-			function formatearHora(horaStr) {
-  				const [h, m] = horaStr.split(':').map(Number);
- 					const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
-			 		const h12 = h % 12 === 0 ? 12 : h % 12;
-			 		const minStr = m.toString().padStart(2, '0');
-		 return `${horaStr} hrs (${h12}:${minStr} ${periodo})`;
-			}
-
-    function calcularHoraConexion(horaStr) {
-	  const [horas, minutos] = horaStr.split(':').map(Number);
-	  let totalMinutos = horas * 60 + minutos - 15;
-	  if (totalMinutos < 0) totalMinutos += 24 * 60;
-	
-	  const h = Math.floor(totalMinutos / 60);
-	  const m = (totalMinutos % 60).toString().padStart(2, '0');
-	  const hStr = h.toString().padStart(2, '0');
-	  
-	  const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
-	  const h12 = h % 12 === 0 ? 12 : h % 12;
-	  return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
-		}
-
-
- // 1. Detectar etapa activa/próxima y cargar desplegable con resaltado
-    const hoy = new Date().toISOString().split('T')[0];
-    let etapaActivaClave = null;
-
-    const clavesOrdenadas = Object.keys(calendarioData).sort((a, b) => {
-      return (calendarioData[a].fechaFin || "").localeCompare(calendarioData[b].fechaFin || "");
-    });
-
-    for (const clave of clavesOrdenadas) {
-      if (calendarioData[clave].fechaFin && calendarioData[clave].fechaFin >= hoy) {
-        etapaActivaClave = clave;
-        break;
-      }
-    }
-    if (!etapaActivaClave && clavesOrdenadas.length > 0) {
-      etapaActivaClave = clavesOrdenadas[clavesOrdenadas.length - 1];
-    }
-
-    clavesOrdenadas.forEach(clave => {
-      const option = document.createElement("option");
-      option.value = clave;
-      if (clave === etapaActivaClave) {
-        option.textContent = `${calendarioData[clave].label} (En curso/próxima)`;
-        option.style.fontWeight = "bold";
-      } else {
-        option.textContent = calendarioData[clave].label;
-      }
-      selectEtapa.appendChild(option);
-    });
-
-    let modoActual = "modulo";
     const selectModulo = document.getElementById("selectModulo");
     const selectDia = document.getElementById("selectDia");
     const selectHora = document.getElementById("selectHora");
@@ -340,10 +284,37 @@
     const panelHorario = document.getElementById("panelHorario");
     const btnModoModulo = document.getElementById("btnModoModulo");
     const btnModoHorario = document.getElementById("btnModoHorario");
+    const cardResultado = document.getElementById("resultado");
 
+    let modoActual = "modulo";
+
+    // 2. Funciones de formato de horas
+    function formatearHora(horaStr) {
+      const [h, m] = horaStr.split(':').map(Number);
+      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      const minStr = m.toString().padStart(2, '0');
+      return `${horaStr} hrs (${h12}:${minStr} ${periodo})`;
+    }
+
+    function calcularHoraConexion(horaStr) {
+      const [horas, minutos] = horaStr.split(':').map(Number);
+      let totalMinutos = horas * 60 + minutos - 15;
+      if (totalMinutos < 0) totalMinutos += 24 * 60;
+
+      const h = Math.floor(totalMinutos / 60);
+      const m = (totalMinutos % 60).toString().padStart(2, '0');
+      const hStr = h.toString().padStart(2, '0');
+      
+      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
+    }
+
+    // 3. Control de pestañas
     function cambiarModo(modo) {
       modoActual = modo;
-      cardResultado.style.display = "none";
+      if (cardResultado) cardResultado.style.display = "none";
 
       if (modo === 'modulo') {
         btnModoModulo.classList.add("active");
@@ -363,6 +334,7 @@
       }
     }
 
+    // 4. Llenado dinámico de selects
     function cargarModulos() {
       selectModulo.innerHTML = '<option value="" disabled selected>Elige tu módulo...</option>';
       modulosData.forEach(m => {
@@ -424,6 +396,7 @@
       selectHora.disabled = false;
     }
 
+    // 5. Mostrar resultados
     function mostrarResultado(moduloObj, horario, etapa) {
       document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
       document.getElementById("resTema").textContent = `Área del conocimiento: ${moduloObj.tema}`;
@@ -470,7 +443,37 @@
       }
     }
 
-    // Eventos
+    // 6. Carga inicial de Etapas y cálculo de la vigente
+    const hoy = new Date().toISOString().split('T')[0];
+    let etapaActivaClave = null;
+
+    const clavesOrdenadas = Object.keys(calendarioData).sort((a, b) => {
+      return (calendarioData[a].fechaFin || "").localeCompare(calendarioData[b].fechaFin || "");
+    });
+
+    for (const clave of clavesOrdenadas) {
+      if (calendarioData[clave].fechaFin && calendarioData[clave].fechaFin >= hoy) {
+        etapaActivaClave = clave;
+        break;
+      }
+    }
+    if (!etapaActivaClave && clavesOrdenadas.length > 0) {
+      etapaActivaClave = clavesOrdenadas[clavesOrdenadas.length - 1];
+    }
+
+    clavesOrdenadas.forEach(clave => {
+      const option = document.createElement("option");
+      option.value = clave;
+      if (clave === etapaActivaClave) {
+        option.textContent = `${calendarioData[clave].label} (En curso/próxima)`;
+        option.style.fontWeight = "bold";
+      } else {
+        option.textContent = calendarioData[clave].label;
+      }
+      selectEtapa.appendChild(option);
+    });
+
+    // 7. Event listeners
     selectEtapa.addEventListener("change", () => {
       cardResultado.style.display = "none";
       cargarModulos();
@@ -491,7 +494,7 @@
 
     selectHora.addEventListener("change", calcularFechaPorHorario);
 
-    // Reseteo limpio en recarga de página
+    // 8. Reseteo en recarga
     window.addEventListener("pageshow", () => {
       selectEtapa.value = "";
       selectModulo.value = "";
