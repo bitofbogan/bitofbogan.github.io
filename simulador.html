@@ -1911,11 +1911,11 @@
 </head>
 <body>
 
-  <!-- ETIQUETA DE VERSIÓN Y CONTADOR GLOBAL DE VISITAS -->
+  <!-- ETIQUETA DE VERSIÓN Y CONTADOR GLOBAL DE INICIOS -->
   <div class="app-version-tag">
-    <span>v1.4.2 (Build 2026)</span>
+    <span>v1.4.3 (Build 2026)</span>
     <span style="opacity:0.3;">•</span>
-    <img src="https://hits.sh/prepaabierta-simulador.app/hits.svg?style=flat-square&label=Usos&color=0284c7&labelColor=1e293b" alt="Usos" style="height:15px; border-radius:3px; opacity:0.85; vertical-align:middle;">
+    <img id="sim-counter-badge" class="hidden" alt="Simulaciones" style="height:15px; border-radius:3px; opacity:0.85; vertical-align:middle;">
   </div>
 
   <!-- MODAL INICIAL DE REGISTRO -->
@@ -3324,6 +3324,13 @@
       simulationMode = mode;
       studentName = val;
       enteredEmail = studentName.toLowerCase().replace(/\s+/g, '.') + "@gmail.com";
+
+      // Disparar el contador global en tu URL real al arrancar la prueba
+      const counterBadge = document.getElementById('sim-counter-badge');
+      if (counterBadge) {
+        counterBadge.src = `https://hits.sh/bitofbogan.github.io/simulador/inicios/hits.svg?style=flat-square&label=Simulaciones&color=0284c7&labelColor=1e293b&_t=${Date.now()}`;
+        counterBadge.classList.remove('hidden');
+      }
 
       try {
         if (document.documentElement.requestFullscreen) {
