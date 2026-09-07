@@ -43,13 +43,16 @@
     /* Etiqueta de versión reubicada */
     .app-version-tag {
       position: absolute;
-      bottom: 13px;
+      bottom: 12px;
       left: 64px;
       font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.45);
       z-index: 15;
       font-family: monospace;
       pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* =========================================
@@ -1868,8 +1871,12 @@
 </head>
 <body>
 
-  <!-- ETIQUETA DE VERSIÓN REUBICADA -->
-  <div class="app-version-tag">v1.3.1 (Build 2026)</div>
+  <!-- ETIQUETA DE VERSIÓN Y CONTADOR GLOBAL DE VISITAS -->
+  <div class="app-version-tag">
+    <span>v1.4.2 (Build 2026)</span>
+    <span style="opacity:0.3;">•</span>
+    <img src="https://hits.sh/prepaabierta-simulador.app/hits.svg?style=flat-square&label=Usos&color=0284c7&labelColor=1e293b" alt="Usos" style="height:15px; border-radius:3px; opacity:0.85; vertical-align:middle;">
+  </div>
 
   <!-- MODAL INICIAL DE REGISTRO -->
   <div id="setup-modal">
@@ -3409,11 +3416,16 @@
       }
     }
 
+    function cancelCustomConfirm() {
+      customDialogCallback = null;
+      document.getElementById('custom-dialog-backdrop').classList.add('hidden');
+    }
+
     function showCustomConfirm(msg, onConfirm) {
       document.getElementById('custom-dialog-icon').innerText = "⚠️";
       document.getElementById('custom-dialog-text').innerText = msg;
       document.getElementById('custom-dialog-actions').innerHTML = `
-        <button style="background:#64748b; color:#fff; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;" onclick="closeCustomAlert()">Cancelar</button>
+        <button style="background:#64748b; color:#fff; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;" onclick="cancelCustomConfirm()">Cancelar</button>
         <button class="btn-start-sim" style="background:#ef4444; padding:8px 18px; width:auto;" onclick="executeConfirmCallback()">Aceptar</button>
       `;
       customDialogCallback = onConfirm;
@@ -3992,7 +4004,15 @@
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        updateTutor("Paso 14: Silenciar Micrófono y Abrir Pestaña", "Haz clic en el botón del micrófono (🎤) para silenciarte y luego presiona el botón <strong>'+'</strong> arriba para buscar SIPAG.", "#room-mic-btn");
+        // Comprobar estado del micrófono para asignar el objetivo correcto al spotlight
+        const micBtn = document.getElementById('room-mic-btn');
+        const isMuted = micBtn && micBtn.classList.contains('off');
+
+        if (isMuted) {
+          updateTutor("Paso 14: Abrir Pestaña", "Tu micrófono ya está apagado. Presiona el botón <strong>'+'</strong> arriba para buscar SIPAG.", "#main-new-tab-btn");
+        } else {
+          updateTutor("Paso 14: Silenciar Micrófono", "Haz clic en el botón del micrófono (🎤) para silenciarte antes de abrir la nueva pestaña.", "#room-mic-btn");
+        }
       }, 2500);
     }
 
