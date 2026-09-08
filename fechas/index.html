@@ -186,6 +186,32 @@
       border-color: var(--primary);
     }
 
+	.btn-copiar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      margin: 0.8rem 0 0.4rem 0;
+      padding: 0.6rem;
+      border: 1.5px solid #bfdbfe;
+      background-color: #ffffff;
+      color: var(--accent);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copiar:hover {
+      background-color: #dbeafe;
+    }
+
+    .btn-copiar:active {
+      transform: scale(0.98);
+    }
+
 	.footer-creditos {
       margin-top: 1.8rem;
       text-align: center;
@@ -282,6 +308,11 @@
         <div><strong>Inicio de examen:</strong> <span id="resHora"></span></div>
       </div>
 
+      <!-- Botón para copiar resumen -->
+      <button type="button" class="btn-copiar" id="btnCopiar" onclick="copiarHorario()">
+        📋 Copiar horario
+      </button>
+		
       <!-- Alerta dinámica con hora de conexión -15 min -->
       <div class="alerta-conexion" style="display: flex; flex-direction: column; gap: 0.4rem;">
         <div><strong>⚠️ Conexión obligatoria 15 minutos antes:</strong></div>
@@ -299,6 +330,7 @@
       </div>
       <div>Elaborado por: Rodrigo Aguilar Meneses</div>
     </div>
+  </div>
 
   <!-- Carga de datos -->
   <script src="data.js"></script>
@@ -316,6 +348,43 @@
     const cardResultado = document.getElementById("resultado");
 
     let modoActual = "modulo";
+
+	// Variable global para guardar los datos del resultado actual
+    let datosCopiaActual = null;
+
+    function copiarHorario() {
+      if (!datosCopiaActual) return;
+
+      const mesesMap = {
+        "enero": "01", "febrero": "02", "marzo": "03", "abril": "04",
+        "mayo": "05", "junio": "06", "julio": "07", "agosto": "08",
+        "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
+      };
+
+      const match = datosCopiaActual.dia.match(/(\d+)\s+de\s+([a-zA-Z]+)/i);
+      let diaStr = "";
+      let mesStr = "";
+
+      if (match) {
+        diaStr = match[1].padStart(2, "0");
+        mesStr = mesesMap[match[2].toLowerCase()] || "00";
+      }
+
+      // Quitar ceros sobrantes al inicio de la hora si aplica (ej. 09:00 -> 9:00)
+      const [h, m] = datosCopiaActual.hora.split(":");
+      const horaLimpia = `${parseInt(h, 10)}:${m}`;
+
+      const texto = `M${datosCopiaActual.moduloId}: ${diaStr}/${mesStr} ${horaLimpia}`;
+
+      navigator.clipboard.writeText(texto).then(() => {
+        const btn = document.getElementById("btnCopiar");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ ¡Copiado!";
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 1500);
+      });
+    }
 
     // 2. Funciones de formato de horas
     function formatearHora(horaStr) {
@@ -458,6 +527,13 @@
 
     // 5. Mostrar resultados
     function mostrarResultado(moduloObj, horario, etapa) {
+      // Guardar datos para el botón de copiado
+      datosCopiaActual = {
+        moduloId: moduloObj.id,
+        dia: horario.dia,
+        hora: horario.hora
+      };
+
       document.getElementById("resModulo").textContent = `Módulo ${moduloObj.id}: ${moduloObj.nombre}`;
       document.getElementById("resTema").textContent = `Área del conocimiento: ${moduloObj.tema}`;
       document.getElementById("resDia").textContent = horario.dia;
