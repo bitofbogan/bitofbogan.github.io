@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brota | Repaso Auge</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            auge: {
+              orange: '#F17D4B',
+              darkOrange: '#D96534',
+              gray: '#5A5D5E',
+              dark: '#2D3134',
+              canvas: '#FDFBF7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX para fórmulas matemáticas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- SortableJS para Drag & Drop amigable en móviles -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+  <style>
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.96) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop {
+      animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-auge-canvas text-auge-dark min-h-screen flex flex-col font-sans selection:bg-orange-100">
+
+  <!-- Header -->
+  <header class="w-full max-w-xl mx-auto px-4 py-4 flex items-center justify-between border-b border-stone-200">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-auge-orange flex items-center justify-center text-white font-bold text-lg shadow-sm">
+        🌱
+      </div>
+      <span class="font-black text-xl tracking-tight text-auge-dark">brota</span>
+    </div>
+    <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
+      Repaso General
+    </span>
+  </header>
+
+  <!-- Contenedor dinámico -->
+  <main id="app" class="flex-1 w-full max-w-xl mx-auto px-4 py-6 flex flex-col justify-center"></main>
+
+  <script>
+    const questionBank = [
+      {
+        id: 1,
+        type: "choice",
+        prompt: "¿Cuál es el vértice de la parábola $f(x) = x^2 - 4x + 3$?",
+        image: null,
+        correct: "$(2, -1)$",
+        distractors: ["$(-2, 1)$", "$(0, 3)$", "$(4, 3)$"],
+        explanation: "Con $x = -\\frac{b}{2a} = 2$, calculamos $f(2) = 2^2 - 4(2) + 3 = -1$."
+      },
+      {
+        id: 2,
+        type: "choice",
+        prompt: "En un modelo de autogestión, la comunidad define sus propias metas y recursos sin depender de imposiciones verticales.",
+        image: null,
+        correct: "Verdadero",
+        distractors: ["Falso"],
+        explanation: "La autogestión transfiere el poder de decisión y responsabilidad directamente al grupo colectivo."
+      },
+      {
+        id: 3,
+        type: "drag_order",
+        prompt: "Ordena los pasos para la resolución comunitaria de problemas:",
+        image: null,
+        correctOrder: [
+          "1. Diagnóstico colectivo",
+          "2. Planificación participativa",
+          "3. Ejecución de la acción",
+          "4. Evaluación en asamblea"
+        ],
+        explanation: "La secuencia parte de detectar la necesidad en común y concluye valorando los resultados en conjunto."
+      }
+    ];
+
+    let currentQueue = [];
+    let pendingQueue = [];
+    let currentIndex = 0;
+    let isReinforcementPhase = false;
+
+    const app = document.getElementById("app");
+    const phaseBadge = document.getElementById("phaseBadge");
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function initQuiz() {
+      currentQueue = shuffle(questionBank);
+      pendingQueue = [];
+      currentIndex = 0;
+      isReinforcementPhase = false;
+      phaseBadge.textContent = "Repaso General";
+      renderQuestion();
+    }
+
+    function renderMath() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function renderQuestion() {
+      if (currentIndex >= currentQueue.length) {
+        handlePhaseCompletion();
+        return;
+      }
+
+      const q = currentQueue[currentIndex];
+      const progressPercent = Math.round(((currentIndex) / currentQueue.length) * 100);
+
+      let contentHTML = `
+        <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+          <!-- Barra progreso -->
+          <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-auge-orange h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
+          </div>
+
+          <!-- Prompt -->
+          <div>
+            <span class="text-xs uppercase font-bold tracking-wider text-auge-orange">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
+            <h2 class="text-xl font-bold text-auge-dark mt-1 leading-snug">${q.prompt}</h2>
+          </div>
+
+          ${q.image ? `<img src="${q.image}" class="w-full max-h-48 object-cover rounded-xl border border-stone-100" />` : ''}
+
+          <!-- Opciones según tipo -->
+          <div id="optionsContainer" class="flex flex-col gap-2.5 pt-2"></div>
+
+          <!-- Feedback & Botón siguiente -->
+          <div id="feedbackContainer" class="hidden flex-col gap-3 border-t border-stone-100 pt-4 mt-2">
+            <div id="feedbackBox" class="p-3.5 rounded-xl text-sm leading-relaxed"></div>
+            <button id="nextBtn" class="w-full py-3 rounded-xl bg-auge-orange hover:bg-auge-darkOrange font-bold text-white transition-colors shadow-sm">
+              Continuar
+            </button>
+          </div>
+        </div>
+      `;
+
+      app.innerHTML = contentHTML;
+      const optionsContainer = document.getElementById("optionsContainer");
+
+      if (q.type === "choice") {
+        const options = shuffle([q.correct, ...q.distractors]);
+        options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.className = "choice-btn w-full p-3.5 text-left border-2 border-stone-200 hover:border-auge-orange rounded-xl font-medium transition-all text-sm sm:text-base active:scale-[0.99]";
+          btn.innerHTML = opt;
+          btn.onclick = () => handleChoiceAnswer(btn, opt, q);
+          optionsContainer.appendChild(btn);
+        });
+      } else if (q.type === "drag_order") {
+        const scrambled = shuffle(q.correctOrder);
+        const list = document.createElement("div");
+        list.id = "sortableList";
+        list.className = "flex flex-col gap-2 cursor-grab";
+
+        scrambled.forEach(item => {
+          const el = document.createElement("div");
+          el.className = "drag-item p-3.5 bg-stone-50 border border-stone-200 rounded-xl font-medium text-sm flex items-center justify-between";
+          el.innerHTML = `<span>${item}</span><span class="text-stone-400">☰</span>`;
+          el.dataset.value = item;
+          list.appendChild(el);
+        });
+
+        optionsContainer.appendChild(list);
+
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide";
+        checkBtn.textContent = "Comprobar orden";
+        checkBtn.onclick = () => handleDragAnswer(list, q, checkBtn);
+        optionsContainer.appendChild(checkBtn);
+
+        new Sortable(list, {
+          animation: 150,
+          ghostClass: 'opacity-40'
+        });
+      }
+
+      renderMath();
+    }
+
+    function handleChoiceAnswer(selectedBtn, selectedText, question) {
+      const buttons = document.querySelectorAll(".choice-btn");
+      buttons.forEach(btn => btn.disabled = true);
+
+      const isCorrect = selectedText === question.correct;
+
+      if (isCorrect) {
+        selectedBtn.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900");
+      } else {
+        selectedBtn.classList.add("bg-red-50", "border-red-400", "text-red-900");
+        buttons.forEach(btn => {
+          if (btn.innerHTML === question.correct) {
+            btn.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900");
+          }
+        });
+        queueForReinforcement(question);
+      }
+
+      showFeedback(isCorrect, question.explanation);
+    }
+
+    function handleDragAnswer(listElement, question, triggerBtn) {
+      triggerBtn.disabled = true;
+      triggerBtn.classList.add("hidden");
+
+      const items = Array.from(listElement.children).map(child => child.dataset.value);
+      const isCorrect = items.every((val, idx) => val === question.correctOrder[idx]);
+
+      if (isCorrect) {
+        listElement.classList.add("pointer-events-none");
+        Array.from(listElement.children).forEach(c => c.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900"));
+      } else {
+        listElement.classList.add("pointer-events-none");
+        Array.from(listElement.children).forEach(c => c.classList.add("bg-red-50", "border-red-300", "text-red-900"));
+        queueForReinforcement(question);
+      }
+
+      showFeedback(isCorrect, question.explanation);
+    }
+
+    function queueForReinforcement(question) {
+      if (!pendingQueue.some(item => item.id === question.id)) {
+        pendingQueue.push(question);
+      }
+    }
+
+    function showFeedback(isCorrect, explanation) {
+      const container = document.getElementById("feedbackContainer");
+      const box = document.getElementById("feedbackBox");
+      const nextBtn = document.getElementById("nextBtn");
+
+      container.classList.remove("hidden");
+      container.classList.add("flex");
+
+      if (isCorrect) {
+        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
+        box.innerHTML = `<span class="font-bold">¡Bien deducido!</span><br>${explanation}`;
+      } else {
+        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
+        box.innerHTML = `<span class="font-bold text-auge-orange">Punto a reforzar:</span><br>${explanation}`;
+      }
+
+      nextBtn.onclick = () => {
+        currentIndex++;
+        renderQuestion();
+      };
+
+      renderMath();
+    }
+
+    function handlePhaseCompletion() {
+      if (pendingQueue.length > 0) {
+        currentQueue = shuffle(pendingQueue);
+        pendingQueue = [];
+        currentIndex = 0;
+        isReinforcementPhase = true;
+
+        phaseBadge.textContent = "Puntos por asegurar";
+        phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+
+        app.innerHTML = `
+          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
+              ✎
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-auge-dark">Preguntas por asegurar</h2>
+              <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
+                Vamos a darle otra pasada a los puntos que tuvieron detalle para consolidar el tema por completo.
+              </p>
+            </div>
+            <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors">
+              Iniciar repaso (${currentQueue.length})
+            </button>
+          </div>
+        `;
+      } else {
+        phaseBadge.textContent = "Completado";
+        app.innerHTML = `
+          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-8 text-center shadow-sm flex flex-col items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl font-bold">
+              ✓
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-auge-dark">¡Módulo concluido!</h2>
+              <p class="text-sm text-auge-gray mt-2 max-w-sm mx-auto">
+                Has resuelto y repasado todos los reactivos de esta sesión con éxito.
+              </p>
+            </div>
+            <button onclick="initQuiz()" class="w-full py-3 mt-4 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors">
+              Volver a empezar
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Arranque
+    window.addEventListener("DOMContentLoaded", initQuiz);
+  </script>
+</body>
+</html>
