@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brota | Repaso Auge</title>
+  <title>Auki | Repaso Auge</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -35,7 +35,7 @@
 
   <style>
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.96) translateY(6px); }
+      from { opacity: 0; transform: scale(0.97) translateY(6px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
     .animate-pop {
@@ -52,25 +52,38 @@
       <div class="w-8 h-8 rounded-lg bg-auge-orange flex items-center justify-center text-white font-bold text-lg shadow-sm">
         🌱
       </div>
-      <span class="font-black text-xl tracking-tight text-auge-dark">brota</span>
+      <span class="font-black text-xl tracking-tight text-auge-dark">auki</span>
     </div>
     <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
-      Repaso General
+      Repaso Inicial
     </span>
   </header>
 
   <!-- Contenedor dinámico -->
   <main id="app" class="flex-1 w-full max-w-xl mx-auto px-4 py-6 flex flex-col justify-center"></main>
 
-  <script src="questions.js"></script>
-  
-  <script>
-    
+  <!-- Footer con Contador de visitas -->
+  <footer class="w-full max-w-xl mx-auto px-4 py-4 text-center border-t border-stone-200 text-xs text-stone-500 flex items-center justify-between">
+    <span>Autogestión y Educación Comunitaria</span>
+    <span class="flex items-center gap-1.5 font-medium bg-stone-100 px-2.5 py-1 rounded-full border border-stone-200">
+      👁️ Visitas: <span id="visitCounter" class="text-auge-dark font-bold">...</span>
+    </span>
+  </footer>
 
+  <!-- Carga del banco de preguntas -->
+  <script src="questions.js"></script>
+
+  <!-- Motor principal de la aplicación -->
+  <script>
     let currentQueue = [];
     let pendingQueue = [];
     let currentIndex = 0;
     let isReinforcementPhase = false;
+
+    // Métricas para calificación
+    let totalQuestions = 0;
+    let firstRoundCorrect = 0;
+    let secondRoundResolved = 0;
 
     const app = document.getElementById("app");
     const phaseBadge = document.getElementById("phaseBadge");
@@ -84,12 +97,28 @@
       return arr;
     }
 
+    // Generador de sombra con tono sutil aleatorio
+    function getRandomTonedStyle() {
+      // Tonos cálidos/amigables (naranjas, ámbar, verdes, azules, violetas suaves)
+      const hue = Math.floor(Math.random() * 360);
+      return {
+        style: `box-shadow: 0 4px 14px -2px hsla(${hue}, 45%, 55%, 0.16); border-color: hsla(${hue}, 30%, 82%, 1);`,
+        activeStyle: `hsla(${hue}, 40%, 96%, 1)`
+      };
+    }
+
     function initQuiz() {
-      currentQueue = shuffle(questionBank);
+      totalQuestions = questionBank.length;
+      firstRoundCorrect = 0;
+      secondRoundResolved = 0;
       pendingQueue = [];
       currentIndex = 0;
       isReinforcementPhase = false;
-      phaseBadge.textContent = "Repaso General";
+
+      currentQueue = shuffle(questionBank);
+      phaseBadge.textContent = "Repaso Inicial";
+      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200";
+      
       renderQuestion();
     }
 
@@ -130,7 +159,7 @@
           ${q.image ? `<img src="${q.image}" class="w-full max-h-48 object-cover rounded-xl border border-stone-100" />` : ''}
 
           <!-- Opciones según tipo -->
-          <div id="optionsContainer" class="flex flex-col gap-2.5 pt-2"></div>
+          <div id="optionsContainer" class="flex flex-col gap-3 pt-1"></div>
 
           <!-- Feedback & Botón siguiente -->
           <div id="feedbackContainer" class="hidden flex-col gap-3 border-t border-stone-100 pt-4 mt-2">
@@ -148,8 +177,10 @@
       if (q.type === "choice") {
         const options = shuffle([q.correct, ...q.distractors]);
         options.forEach(opt => {
+          const tone = getRandomTonedStyle();
           const btn = document.createElement("button");
-          btn.className = "choice-btn w-full p-3.5 text-left border-2 border-stone-200 hover:border-auge-orange rounded-xl font-medium transition-all text-sm sm:text-base active:scale-[0.99]";
+          btn.className = "choice-btn w-full p-3.5 text-left bg-white border-2 rounded-xl font-medium transition-all text-sm sm:text-base active:scale-[0.99]";
+          btn.style.cssText = tone.style;
           btn.innerHTML = opt;
           btn.onclick = () => handleChoiceAnswer(btn, opt, q);
           optionsContainer.appendChild(btn);
@@ -158,11 +189,13 @@
         const scrambled = shuffle(q.correctOrder);
         const list = document.createElement("div");
         list.id = "sortableList";
-        list.className = "flex flex-col gap-2 cursor-grab";
+        list.className = "flex flex-col gap-2.5 cursor-grab";
 
         scrambled.forEach(item => {
+          const tone = getRandomTonedStyle();
           const el = document.createElement("div");
-          el.className = "drag-item p-3.5 bg-stone-50 border border-stone-200 rounded-xl font-medium text-sm flex items-center justify-between";
+          el.className = "drag-item p-3.5 bg-white border rounded-xl font-medium text-sm flex items-center justify-between";
+          el.style.cssText = tone.style;
           el.innerHTML = `<span>${item}</span><span class="text-stone-400">☰</span>`;
           el.dataset.value = item;
           list.appendChild(el);
@@ -171,7 +204,7 @@
         optionsContainer.appendChild(list);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide";
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
         checkBtn.textContent = "Comprobar orden";
         checkBtn.onclick = () => handleDragAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
@@ -192,12 +225,19 @@
       const isCorrect = selectedText === question.correct;
 
       if (isCorrect) {
-        selectedBtn.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900");
+        selectedBtn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+        selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(16, 185, 129, 0.3)";
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
       } else {
-        selectedBtn.classList.add("bg-red-50", "border-red-400", "text-red-900");
+        selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900");
+        selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
         buttons.forEach(btn => {
           if (btn.innerHTML === question.correct) {
-            btn.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900");
+            btn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
           }
         });
         queueForReinforcement(question);
@@ -215,10 +255,19 @@
 
       if (isCorrect) {
         listElement.classList.add("pointer-events-none");
-        Array.from(listElement.children).forEach(c => c.classList.add("bg-emerald-50", "border-emerald-500", "text-emerald-900"));
+        Array.from(listElement.children).forEach(c => {
+          c.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+        });
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
       } else {
         listElement.classList.add("pointer-events-none");
-        Array.from(listElement.children).forEach(c => c.classList.add("bg-red-50", "border-red-300", "text-red-900"));
+        Array.from(listElement.children).forEach(c => {
+          c.classList.add("!bg-red-50", "!border-red-300", "!text-red-900");
+        });
         queueForReinforcement(question);
       }
 
@@ -262,48 +311,98 @@
         currentIndex = 0;
         isReinforcementPhase = true;
 
-        phaseBadge.textContent = "Puntos por asegurar";
+        phaseBadge.textContent = "Segunda vuelta";
         phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
 
         app.innerHTML = `
           <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
             <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
-              ✎
+              🌱
             </div>
             <div>
-              <h2 class="text-xl font-bold text-auge-dark">Preguntas por asegurar</h2>
+              <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
               <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
-                Vamos a darle otra pasada a los puntos que tuvieron detalle para consolidar el tema por completo.
+                Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
               </p>
             </div>
-            <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors">
+            <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
               Iniciar repaso (${currentQueue.length})
             </button>
           </div>
         `;
       } else {
-        phaseBadge.textContent = "Completado";
-        app.innerHTML = `
-          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-8 text-center shadow-sm flex flex-col items-center gap-4">
-            <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl font-bold">
-              ✓
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-auge-dark">¡Módulo concluido!</h2>
-              <p class="text-sm text-auge-gray mt-2 max-w-sm mx-auto">
-                Has resuelto y repasado todos los reactivos de esta sesión con éxito.
-              </p>
-            </div>
-            <button onclick="initQuiz()" class="w-full py-3 mt-4 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors">
-              Volver a empezar
-            </button>
-          </div>
-        `;
+        renderFinalScore();
       }
     }
 
+    function renderFinalScore() {
+      phaseBadge.textContent = "Completado";
+      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200";
+
+      // Cálculo de calificación preliminar sobre 10.0 (basada en el primer intento)
+      const prelimGrade = totalQuestions > 0 ? ((firstRoundCorrect / totalQuestions) * 10).toFixed(1) : "0.0";
+
+      app.innerHTML = `
+        <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm flex flex-col items-center gap-5">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl font-bold">
+            ✓
+          </div>
+          
+          <div>
+            <h2 class="text-2xl font-bold text-auge-dark">¡Módulo concluido!</h2>
+            <p class="text-sm text-auge-gray mt-1">Has asegurado el 100% de los reactivos de esta sesión.</p>
+          </div>
+
+          <!-- Tarjetas de calificación preliminar y desglose -->
+          <div class="w-full grid grid-cols-2 gap-3 mt-1">
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-3.5 flex flex-col items-center justify-center">
+              <span class="text-xs text-stone-500 font-medium">Aciertos (1ª ronda)</span>
+              <span class="text-2xl font-black text-auge-dark mt-0.5">${firstRoundCorrect} / ${totalQuestions}</span>
+            </div>
+
+            <div class="bg-orange-50/60 border border-orange-200/80 rounded-xl p-3.5 flex flex-col items-center justify-center">
+              <span class="text-xs text-auge-orange font-bold uppercase tracking-wider">Calificación Inicial</span>
+              <span class="text-2xl font-black text-auge-dark mt-0.5">${prelimGrade} <span class="text-sm font-semibold text-stone-500">/ 10</span></span>
+            </div>
+          </div>
+
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-600 text-left leading-relaxed">
+            • <b>Preguntas aseguradas en segunda vuelta:</b> ${totalQuestions - firstRoundCorrect} reactivos.<br>
+            • <b>Estado final de dominio:</b> 100% de conceptos afianzados.
+          </div>
+
+          <button onclick="initQuiz()" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+            Volver a empezar sesión
+          </button>
+        </div>
+      `;
+    }
+
+    // Inicialización del Contador de Visitas estático
+    function initCounter() {
+      // Usa CountAPI para sitios estáticos; usa el hostname o un fallback seguro
+      const namespace = window.location.hostname || "auki-local";
+      const key = "repaso-visitas";
+      fetch(`https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${key}/up`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.count) {
+            document.getElementById("visitCounter").textContent = data.count;
+          } else {
+            document.getElementById("visitCounter").textContent = "1";
+          }
+        })
+        .catch(() => {
+          // Fallback silencioso por si se abre de forma local sin conexión
+          document.getElementById("visitCounter").textContent = "+";
+        });
+    }
+
     // Arranque
-    window.addEventListener("DOMContentLoaded", initQuiz);
+    window.addEventListener("DOMContentLoaded", () => {
+      initQuiz();
+      initCounter();
+    });
   </script>
 </body>
 </html>
