@@ -134,6 +134,16 @@
       }
     }
 
+    function toggleHint() {
+      const box = document.getElementById("hintBox");
+      const btn = document.getElementById("hintBtn");
+      if (box && btn) {
+        box.classList.toggle("hidden");
+        btn.classList.add("opacity-50", "pointer-events-none");
+        renderMath();
+      }
+    }
+
     function renderQuestion() {
       if (currentIndex >= currentQueue.length) {
         handlePhaseCompletion();
@@ -157,6 +167,18 @@
           </div>
 
           ${q.image ? `<img src="${q.image}" class="w-full max-h-48 object-cover rounded-xl border border-stone-100" />` : ''}
+
+          <!-- Botón y Caja de Pista -->
+          ${q.hint ? `
+            <div class="flex flex-col items-start gap-2">
+              <button type="button" onclick="toggleHint()" id="hintBtn" class="text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
+                <span>💡</span> ¿Necesitas una pista?
+              </button>
+              <div id="hintBox" class="hidden w-full p-3 bg-amber-50/80 border border-amber-200/90 rounded-xl text-xs text-amber-900 leading-relaxed animate-pop">
+                <span class="font-bold">Pista orientativa:</span> ${q.hint}
+              </div>
+            </div>
+          ` : ''}
 
           <!-- Opciones según tipo -->
           <div id="optionsContainer" class="flex flex-col gap-3 pt-1"></div>
