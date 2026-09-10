@@ -5,6 +5,7 @@ const questionBank = [
     type: "choice",
     prompt: "Stephen Hawking y Roger Penrose forman parte de la ________ al trabajar con un equipo interdisciplinario en Cambridge. Sus teorías se difunden a nivel internacional tanto en el ámbito científico como en el divulgativo por medio de ________ y ________ de alto nivel.",
     image: null,
+    hint: "Piensa en el modelo de investigación a escala industrial que requiere equipos masivos y cuyos hallazgos se debaten en congresos internacionales[cite: 2].",
     correct: "Gran ciencia - publicaciones - congresos",
     distractors: [
       "Gran ciencia - registros de autor - patentes",
