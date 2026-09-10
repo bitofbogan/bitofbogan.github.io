@@ -275,7 +275,8 @@
     }
 
     function queueForReinforcement(question) {
-      if (!pendingQueue.some(item => item.id === question.id)) {
+      // Solo encola errores durante la primera ronda
+      if (!isReinforcementPhase && !pendingQueue.some(item => item.id === question.id)) {
         pendingQueue.push(question);
       }
     }
@@ -305,35 +306,36 @@
     }
 
     function handlePhaseCompletion() {
-      if (pendingQueue.length > 0) {
-        currentQueue = shuffle(pendingQueue);
-        pendingQueue = [];
-        currentIndex = 0;
-        isReinforcementPhase = true;
+  // Pasa a segunda vuelta únicamente si venimos de la primera y hubo errores
+  if (!isReinforcementPhase && pendingQueue.length > 0) {
+    currentQueue = shuffle(pendingQueue);
+    pendingQueue = [];
+    currentIndex = 0;
+    isReinforcementPhase = true;
 
-        phaseBadge.textContent = "Segunda vuelta";
-        phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+    phaseBadge.textContent = "Segunda vuelta";
+    phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
 
-        app.innerHTML = `
-          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
-              🌱
-            </div>
-            <div>
-              <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
-              <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
-                Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
-              </p>
-            </div>
-            <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
-              Iniciar repaso (${currentQueue.length})
-            </button>
-          </div>
-        `;
-      } else {
-        renderFinalScore();
-      }
-    }
+    app.innerHTML = `
+      <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
+          🌱
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
+          <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
+            Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
+          </p>
+        </div>
+        <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+          Iniciar repaso (${currentQueue.length})
+        </button>
+      </div>
+    `;
+  } else {
+    renderFinalScore();
+  }
+}
 
     function renderFinalScore() {
       phaseBadge.textContent = "Completado";
@@ -367,8 +369,8 @@
           </div>
 
           <div class="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-600 text-left leading-relaxed">
-            • <b>Preguntas aseguradas en segunda vuelta:</b> ${totalQuestions - firstRoundCorrect} reactivos.<br>
-            • <b>Estado final de dominio:</b> 100% de conceptos afianzados.
+            • <b>Aciertos rescatados en segunda vuelta:</b> ${secondRoundResolved} de ${totalQuestions - firstRoundCorrect} pendientes.<br>
+            • <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.
           </div>
 
           <button onclick="initQuiz()" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
