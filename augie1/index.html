@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auki | Repaso Auge</title>
+  <title>Aureka | Módulo 21: Filosofía de la ciencia</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -52,7 +52,7 @@
       <div class="w-8 h-8 rounded-lg bg-auge-orange flex items-center justify-center text-white font-bold text-lg shadow-sm">
         🌱
       </div>
-      <span class="font-black text-xl tracking-tight text-auge-dark">auki</span>
+      <span class="font-black text-xl tracking-tight text-auge-dark">aureka</span>
     </div>
     <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
       Repaso Inicial
@@ -590,7 +590,7 @@
     }
 
     function initCounter() {
-      const namespace = window.location.hostname || "auki-local";
+      const namespace = window.location.hostname || "aureka-local";
       const key = "repaso-visitas";
       fetch(`https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${key}/up`)
         .then(res => res.json())
