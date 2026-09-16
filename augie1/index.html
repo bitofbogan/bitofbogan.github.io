@@ -278,6 +278,55 @@
         checkBtn.textContent = `Confirmar respuestas (${q.correctAnswers.length})`;
         checkBtn.onclick = () => handleMultiSelectAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
+      } else if (q.type === "classification") {
+        const list = document.createElement("div");
+        list.className = "flex flex-col gap-3";
+
+        // Barajar los enunciados para evitar memorización de posición
+        const shuffledItems = shuffle(q.items);
+
+        shuffledItems.forEach((item, idx) => {
+          const tone = getRandomTonedStyle();
+          const row = document.createElement("div");
+          row.className = "classification-item p-3.5 bg-white border-2 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+          row.style.cssText = tone.style;
+          row.dataset.correct = item.correct;
+          row.dataset.selected = "";
+
+          row.innerHTML = `
+            <span class="text-sm font-medium leading-snug flex-1">${item.text}</span>
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${q.categories.map(cat => `
+                <button type="button" class="tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-600 transition-all">
+                  ${cat}
+                </button>
+              `).join('')}
+            </div>
+          `;
+
+          const tagButtons = row.querySelectorAll(".tag-btn");
+          tagButtons.forEach(btn => {
+            btn.onclick = () => {
+              tagButtons.forEach(b => {
+                b.classList.remove("bg-auge-orange", "text-white", "border-auge-orange");
+                b.classList.add("bg-stone-50", "text-stone-600", "border-stone-300");
+              });
+              btn.classList.remove("bg-stone-50", "text-stone-600", "border-stone-300");
+              btn.classList.add("bg-auge-orange", "text-white", "border-auge-orange");
+              row.dataset.selected = btn.textContent.trim();
+            };
+          });
+
+          list.appendChild(row);
+        });
+
+        optionsContainer.appendChild(list);
+
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.textContent = "Comprobar clasificación";
+        checkBtn.onclick = () => handleClassificationAnswer(list, q, checkBtn);
+        optionsContainer.appendChild(checkBtn);
       }
 
       renderMath();
@@ -389,8 +438,56 @@
       showFeedback(isCorrect, question.explanation);
     }
 
+    function handleClassificationAnswer(listElement, question, triggerBtn) {
+      const rows = Array.from(listElement.children);
+      const allSelected = rows.every(r => r.dataset.selected !== "");
+
+      if (!allSelected) {
+        alert("Por favor clasifica todos los enunciados antes de continuar.");
+        return;
+      }
+
+      triggerBtn.disabled = true;
+      triggerBtn.classList.add("hidden");
+      listElement.classList.add("pointer-events-none");
+
+      let isAllCorrect = true;
+
+      rows.forEach(r => {
+        const isMatch = r.dataset.selected === r.dataset.correct;
+        const buttons = r.querySelectorAll(".tag-btn");
+
+        if (!isMatch) {
+          isAllCorrect = false;
+          r.classList.add("!bg-red-50/60", "!border-red-400");
+        } else {
+          r.classList.add("!bg-emerald-50/60", "!border-emerald-500");
+        }
+
+        buttons.forEach(btn => {
+          const val = btn.textContent.trim();
+          if (val === r.dataset.correct) {
+            btn.classList.add("!bg-emerald-600", "!border-emerald-600", "!text-white");
+          } else if (val === r.dataset.selected && !isMatch) {
+            btn.classList.add("!bg-red-500", "!border-red-500", "!text-white");
+          }
+        });
+      });
+
+      if (isAllCorrect) {
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
+      } else {
+        queueForReinforcement(question);
+      }
+
+      showFeedback(isAllCorrect, question.explanation);
+    }
+
     function queueForReinforcement(question) {
-      // Solo encola errores durante la primera ronda
       if (!isReinforcementPhase && !pendingQueue.some(item => item.id === question.id)) {
         pendingQueue.push(question);
       }
@@ -421,42 +518,40 @@
     }
 
     function handlePhaseCompletion() {
-  // Pasa a segunda vuelta únicamente si venimos de la primera y hubo errores
-  if (!isReinforcementPhase && pendingQueue.length > 0) {
-    currentQueue = shuffle(pendingQueue);
-    pendingQueue = [];
-    currentIndex = 0;
-    isReinforcementPhase = true;
+      if (!isReinforcementPhase && pendingQueue.length > 0) {
+        currentQueue = shuffle(pendingQueue);
+        pendingQueue = [];
+        currentIndex = 0;
+        isReinforcementPhase = true;
 
-    phaseBadge.textContent = "Segunda vuelta";
-    phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+        phaseBadge.textContent = "Segunda vuelta";
+        phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
 
-    app.innerHTML = `
-      <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
-          🌱
-        </div>
-        <div>
-          <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
-          <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
-            Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
-          </p>
-        </div>
-        <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
-          Iniciar repaso (${currentQueue.length})
-        </button>
-      </div>
-    `;
-  } else {
-    renderFinalScore();
-  }
-}
+        app.innerHTML = `
+          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
+              🌱
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
+              <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
+                Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
+              </p>
+            </div>
+            <button onclick="renderQuestion()" class="w-full py-3 mt-2 rounded-xl bg-auge-orange hover:bg-auge-darkOrange text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+              Iniciar repaso (${currentQueue.length})
+            </button>
+          </div>
+        `;
+      } else {
+        renderFinalScore();
+      }
+    }
 
     function renderFinalScore() {
       phaseBadge.textContent = "Completado";
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200";
 
-      // Cálculo de calificación preliminar sobre 10.0 (basada en el primer intento)
       const prelimGrade = totalQuestions > 0 ? ((firstRoundCorrect / totalQuestions) * 10).toFixed(1) : "0.0";
 
       app.innerHTML = `
@@ -470,7 +565,6 @@
             <p class="text-sm text-auge-gray mt-1">Has asegurado el 100% de los reactivos de esta sesión.</p>
           </div>
 
-          <!-- Tarjetas de calificación preliminar y desglose -->
           <div class="w-full grid grid-cols-2 gap-3 mt-1">
             <div class="bg-stone-50 border border-stone-200 rounded-xl p-3.5 flex flex-col items-center justify-center">
               <span class="text-xs text-stone-500 font-medium">Aciertos (1ª ronda)</span>
@@ -495,9 +589,7 @@
       `;
     }
 
-    // Inicialización del Contador de Visitas estático
     function initCounter() {
-      // Usa CountAPI para sitios estáticos; usa el hostname o un fallback seguro
       const namespace = window.location.hostname || "auki-local";
       const key = "repaso-visitas";
       fetch(`https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${key}/up`)
@@ -510,12 +602,10 @@
           }
         })
         .catch(() => {
-          // Fallback silencioso por si se abre de forma local sin conexión
           document.getElementById("visitCounter").textContent = "+";
         });
     }
 
-    // Arranque
     window.addEventListener("DOMContentLoaded", () => {
       initQuiz();
       initCounter();
