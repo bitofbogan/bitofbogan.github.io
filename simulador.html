@@ -3675,7 +3675,9 @@
     function handleGoogleSearch(e) {
       if (e.key === 'Enter') {
         const query = (e.target.value || '').trim().toLowerCase();
-        if (query.includes('gmail')) {
+        
+        // Validación estricta: solo acepta 'gmail' o 'gmail.com'
+        if (query === 'gmail' || query === 'gmail.com') {
           switchGmailSubView('view-search-results');
           document.getElementById('glight-search-input').value = query;
           tabUrls['gmail'] = "https://www.google.com/search?q=" + query;
@@ -3683,7 +3685,10 @@
           document.querySelector('#tab-gmail .tab-title-text').innerText = `🔍 ${query} - Buscar con Google`;
           updateTutor("Paso 3: Entrar a Gmail", "Haz clic en el enlace principal: <strong>'Gmail: Correo electrónico...'</strong>", "#view-search-results .glight-title");
         } else {
-          showTutorAlert("Escribe 'Gmail' para continuar con el entrenamiento.");
+          showTutorAlert("⚠️ Debes escribir únicamente <strong>'Gmail'</strong> para continuar con el entrenamiento.");
+          // Si estaba en la barra de resultados, restaura el valor correcto
+          const searchInput = document.getElementById('glight-search-input');
+          if (searchInput) searchInput.value = "gmail";
         }
       }
     }
@@ -3692,19 +3697,26 @@
       if (e.key === 'Enter') {
         const val = e.target.value.trim().toLowerCase();
 
-        // 1. Pestañas de Google Meet: Barra bloqueada para evitar salir de la llamada
+        // 1. Pestañas de Google Meet: bloqueadas para evitar salir de la llamada
         if (activeTabId === 'meet' || activeTabId === 'meet2') {
           showTutorAlert("⚠️ Estás en la videollamada de Google Meet. No debes modificar la dirección en esta pestaña.");
           document.getElementById('omnibox').value = tabUrls[activeTabId] || "";
           return;
         }
 
-        // 2. Pestaña de Gmail: Solo permite buscar si está en la nueva pestaña o resultados
+        // 2. Pestaña de Gmail
         if (activeTabId === 'gmail') {
           const isInitialView = !document.getElementById('view-newtab').classList.contains('hidden') ||
                                 !document.getElementById('view-search-results').classList.contains('hidden');
-          if (isInitialView && val.includes('gmail')) {
-            handleGoogleSearch({ key: 'Enter', target: e.target });
+
+          if (isInitialView) {
+            // Validación estricta: solo 'gmail' o 'gmail.com'
+            if (val === 'gmail' || val === 'gmail.com') {
+              handleGoogleSearch({ key: 'Enter', target: e.target });
+            } else {
+              showTutorAlert("⚠️ Debes escribir únicamente <strong>'Gmail'</strong> en la búsqueda.");
+              document.getElementById('omnibox').value = tabUrls['gmail'] || "";
+            }
           } else {
             showTutorAlert("⚠️ Ya te encuentras dentro del flujo de Gmail. No navegues fuera de esta página.");
             document.getElementById('omnibox').value = tabUrls['gmail'] || "";
@@ -3712,13 +3724,19 @@
           return;
         }
 
-        // 3. Pestaña de SIPAG: Solo utilizable en la fase inicial de búsqueda
+        // 3. Pestaña de SIPAG
         if (activeTabId === 'sipag') {
           const isInitialSearch = !document.getElementById('view-sipag-newtab').classList.contains('hidden') ||
                                   !document.getElementById('view-sipag-search').classList.contains('hidden');
 
-          if (isInitialSearch && val.includes('sipag')) {
-            handleSipagGoogleSearch({ key: 'Enter', target: e.target });
+          if (isInitialSearch) {
+            // Validación estricta: solo 'sipag'
+            if (val === 'sipag') {
+              handleSipagGoogleSearch({ key: 'Enter', target: e.target });
+            } else {
+              showTutorAlert("⚠️ En esta barra debes escribir únicamente <strong>'sipag'</strong> para ingresar a la plataforma.");
+              document.getElementById('omnibox').value = tabUrls['sipag'] || "";
+            }
           } else {
             showTutorAlert("⚠️ No puedes usar la barra de direcciones mientras estás dentro del portal o respondiendo tu examen.");
             document.getElementById('omnibox').value = tabUrls['sipag'] || "";
