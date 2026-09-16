@@ -3951,11 +3951,34 @@
         micStatus.innerHTML = `<span class="material-symbols-outlined">mic</span>`;
       }
 
+      // Dejar listo el mensaje del aplicador en el chat desde el inicio
+      const chatBox = document.getElementById('chat-messages-box');
+      if (chatBox && !chatBox.innerHTML.includes(studentName)) {
+        chatBox.innerHTML = `
+          <div class="chat-msg-bubble">
+            <strong style="color:var(--google-blue);">${currentAplicador.name}:</strong><br>
+            📢 <strong>${studentName}</strong>, por favor muestra tu identificación a la cámara.
+          </div>
+        `;
+      }
+
       // Iniciar el tour guiado por los controles
       startMeetControlsTour();
     }
 
+    // Variable para rastrear y cancelar temporizadores del tour de Meet
+    let meetTourTimeouts = [];
+
+    function clearMeetTour() {
+      meetTourTimeouts.forEach(t => clearTimeout(t));
+      meetTourTimeouts = [];
+      const hint = document.getElementById('meet-tour-hint');
+      if (hint) hint.classList.add('hidden');
+      document.querySelectorAll('.meet-btn-circle').forEach(b => b.classList.remove('btn-tour-active'));
+    }
+
     function startMeetControlsTour() {
+      clearMeetTour();
       const hint = document.getElementById('meet-tour-hint');
       const micBtn = document.getElementById('room-mic-btn');
       const camBtn = document.getElementById('room-cam-btn');
@@ -3973,22 +3996,27 @@
         hint.style.top = `${rect.top - 46}px`;
       }
 
+      // Si el alumno ya pasó lista, no hacer nada
+      if (isRollCallDone) return;
+
       // Paso 1: Señalar Micrófono
       updateTutor("Conociendo los controles: Micrófono", "Este botón te permite <strong>activar o silenciar tu micrófono</strong> cuando el aplicador te lo pida.");
       pointTo(micBtn, "🎤 Activar / Silenciar Micrófono");
 
       // Paso 2: Señalar Cámara (a los 2.5s)
-      setTimeout(() => {
+      meetTourTimeouts.push(setTimeout(() => {
+        if (isRollCallDone) return;
         updateTutor("Conociendo los controles: Cámara", "Este botón es tu cámara. <strong>Debe permanecer siempre encendida</strong> durante toda tu evaluación.");
         pointTo(camBtn, "📹 Cámara (Mantener encendida)");
-      }, 2500);
+      }, 2500));
 
       // Paso 3: Señalar Chat y detonar pase de lista (a los 5s)
-      setTimeout(() => {
+      meetTourTimeouts.push(setTimeout(() => {
+        if (isRollCallDone) return;
         updateTutor("Paso 12: Pase de Lista", "Haz clic en el <strong>botón de Chat (💬)</strong> para ver los mensajes del aplicador y mostrar tu credencial.", "#meet-chat-toggle-btn");
         pointTo(chatBtn, "💬 Abrir Chat del Examen 👇");
         triggerInitialRollCallChat();
-      }, 5000);
+      }, 5000));
     }
 
     function triggerInitialRollCallChat() {
@@ -4008,10 +4036,8 @@
     }
 
     function toggleChatFlyout() {
-      // Ocultar el globo y quitar el resaltado al abrir el chat
-      const hint = document.getElementById('meet-tour-hint');
-      if (hint) hint.classList.add('hidden');
-      document.querySelectorAll('.meet-btn-circle').forEach(b => b.classList.remove('btn-tour-active'));
+      // Cancelar el tour y ocultar globos inmediatamente
+      clearMeetTour();
       
       const flyout = document.getElementById('meet-chat-flyout');
       const chatBtn = document.getElementById('meet-chat-toggle-btn');
@@ -4027,11 +4053,12 @@
         setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 50);
       }
 
-      if (!flyout.classList.contains('hidden') && !document.getElementById('roll-call-done-badge')) {
+      // Solo actualizar al Paso 13 si aún no ha mostrado la credencial
+      if (!flyout.classList.contains('hidden') && !isRollCallDone) {
         updateTutor("Paso 13: Mostrar Identificación", "Haz clic en el botón <strong>'📸 Mostrar credencial a la cámara'</strong> dentro del chat.", "#chat-action-container button");
       }
 
-      // Si el chat se abre durante la contingencia de 40 min, apuntar de inmediato al link
+      // Si el chat se abre durante la contingencia de 40 min, apuntar al link
       if (isCallSwitchTriggered && !isCallSwitched) {
         if (!flyout.classList.contains('hidden')) {
           updateTutor("Paso 26: Cambio de Videollamada", "Haz clic en el <strong>enlace azul</strong> enviado por el aplicador en el chat.", "#chat-messages-box a");
