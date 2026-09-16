@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Examen - Preparatoria Abierta (v1.4.2)</title>
+  <title>Simulador de Examen - Preparatoria Abierta (v1.4.3)</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
     :root {
@@ -3444,14 +3444,22 @@
     // SISTEMA DE ALERTAS Y CONFIRMACIONES PERSONALIZADAS
     // ========================================================
     let customDialogCallback = null;
+    let dialogJustOpened = false; // Evita que el Enter que detonó el error cierre el modal en el mismo instante
 
     function showTutorAlert(msg, icon = "💡") {
       document.getElementById('custom-dialog-icon').innerText = icon;
-      document.getElementById('custom-dialog-text').innerHTML = msg; // <-- Acepta <strong>, <b>, <br>, etc.
+      document.getElementById('custom-dialog-text').innerHTML = msg;
       document.getElementById('custom-dialog-actions').innerHTML = `
-        <button class="btn-start-sim" style="padding:8px 24px; width:auto;" onclick="closeCustomAlert()">Aceptar</button>
+        <button id="custom-dialog-ok-btn" class="btn-start-sim" style="padding:8px 24px; width:auto;" onclick="closeCustomAlert()">Aceptar</button>
       `;
       document.getElementById('custom-dialog-backdrop').classList.remove('hidden');
+
+      // Bloquear cierre accidental por 120ms y enfocar el botón para recibir Enter
+      dialogJustOpened = true;
+      setTimeout(() => {
+        dialogJustOpened = false;
+        document.getElementById('custom-dialog-ok-btn')?.focus();
+      }, 120);
     }
 
     function closeCustomAlert() {
@@ -3472,11 +3480,17 @@
       document.getElementById('custom-dialog-icon').innerText = "⚠️";
       document.getElementById('custom-dialog-text').innerText = msg;
       document.getElementById('custom-dialog-actions').innerHTML = `
-        <button style="background:#64748b; color:#fff; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;" onclick="cancelCustomConfirm()">Cancelar</button>
-        <button class="btn-start-sim" style="background:#ef4444; padding:8px 18px; width:auto;" onclick="executeConfirmCallback()">Aceptar</button>
+        <button id="custom-dialog-cancel-btn" style="background:#64748b; color:#fff; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;" onclick="cancelCustomConfirm()">Cancelar</button>
+        <button id="custom-dialog-ok-btn" class="btn-start-sim" style="background:#ef4444; padding:8px 18px; width:auto;" onclick="executeConfirmCallback()">Aceptar</button>
       `;
       customDialogCallback = onConfirm;
       document.getElementById('custom-dialog-backdrop').classList.remove('hidden');
+
+      dialogJustOpened = true;
+      setTimeout(() => {
+        dialogJustOpened = false;
+        document.getElementById('custom-dialog-ok-btn')?.focus();
+      }, 120);
     }
 
     function executeConfirmCallback() {
@@ -3488,6 +3502,20 @@
       }
     }
 
+    // Escucha global de teclado: ÚNICAMENTE Enter (protege la pantalla completa)
+    window.addEventListener('keydown', (e) => {
+      const dialog = document.getElementById('custom-dialog-backdrop');
+      if (dialog && !dialog.classList.contains('hidden')) {
+        if (e.key === 'Enter') {
+          if (dialogJustOpened) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const okBtn = document.getElementById('custom-dialog-ok-btn');
+          if (okBtn) okBtn.click();
+        }
+      }
+    });
+    
     function confirmRestartSimulation() {
       showCustomConfirm("¿Estás seguro de que deseas reiniciar la simulación desde cero?\n\nSe perderá todo el progreso actual.", () => {
         location.reload();
