@@ -166,7 +166,11 @@
             <h2 class="text-xl font-bold text-auge-dark mt-1 leading-snug">${q.prompt}</h2>
           </div>
 
-          ${q.image ? `<img src="${q.image}" class="w-full max-h-48 object-cover rounded-xl border border-stone-100" />` : ''}
+          ${q.image ? `
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl overflow-hidden flex justify-center p-2">
+            <img src="${q.image}" alt="Material gráfico de apoyo" class="w-full max-h-64 object-contain rounded-lg" loading="lazy" />
+          </div>
+        ` : ''}
 
           <!-- Botón y Caja de Pista -->
           ${q.hint ? `
@@ -235,6 +239,45 @@
           animation: 150,
           ghostClass: 'opacity-40'
         });
+      } else if (q.type === "multi_select") {
+        const allOptions = shuffle([...q.correctAnswers, ...q.distractors]);
+        const list = document.createElement("div");
+        list.className = "flex flex-col gap-2.5";
+
+        allOptions.forEach(opt => {
+          const tone = getRandomTonedStyle();
+          const item = document.createElement("div");
+          item.className = "multi-select-item p-3.5 bg-white border-2 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between cursor-pointer transition-all active:scale-[0.99]";
+          item.style.cssText = tone.style;
+          item.dataset.value = opt;
+          item.dataset.selected = "false";
+          item.innerHTML = `<span>${opt}</span><span class="checkbox-indicator w-5 h-5 rounded-md border-2 border-stone-300 flex items-center justify-center text-xs text-white font-bold transition-all"></span>`;
+
+          item.onclick = () => {
+            const isSel = item.dataset.selected === "true";
+            item.dataset.selected = isSel ? "false" : "true";
+            const indicator = item.querySelector(".checkbox-indicator");
+            if (!isSel) {
+              item.classList.add("!border-auge-orange", "!bg-orange-50/50");
+              indicator.classList.add("bg-auge-orange", "border-auge-orange");
+              indicator.textContent = "✓";
+            } else {
+              item.classList.remove("!border-auge-orange", "!bg-orange-50/50");
+              indicator.classList.remove("bg-auge-orange", "border-auge-orange");
+              indicator.textContent = "";
+            }
+          };
+
+          list.appendChild(item);
+        });
+
+        optionsContainer.appendChild(list);
+
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.textContent = `Confirmar respuestas (${q.correctAnswers.length})`;
+        checkBtn.onclick = () => handleMultiSelectAnswer(list, q, checkBtn);
+        optionsContainer.appendChild(checkBtn);
       }
 
       renderMath();
@@ -290,6 +333,56 @@
         Array.from(listElement.children).forEach(c => {
           c.classList.add("!bg-red-50", "!border-red-300", "!text-red-900");
         });
+        queueForReinforcement(question);
+      }
+
+      showFeedback(isCorrect, question.explanation);
+    }
+
+    function handleMultiSelectAnswer(listElement, question, triggerBtn) {
+      const items = Array.from(listElement.children);
+      const selectedValues = items
+        .filter(el => el.dataset.selected === "true")
+        .map(el => el.dataset.value);
+
+      if (selectedValues.length === 0) {
+        alert("Por favor selecciona al menos una opción.");
+        return;
+      }
+
+      triggerBtn.disabled = true;
+      triggerBtn.classList.add("hidden");
+      listElement.classList.add("pointer-events-none");
+
+      // Validar: deben coincidir exactamente todas las correctas y ninguna distractora
+      const correctSet = new Set(question.correctAnswers);
+      const hasAllCorrect = question.correctAnswers.every(ans => selectedValues.includes(ans));
+      const hasNoExtras = selectedValues.every(ans => correctSet.has(ans));
+      const isCorrect = hasAllCorrect && hasNoExtras;
+
+      items.forEach(el => {
+        const val = el.dataset.value;
+        const isAnswer = correctSet.has(val);
+        const wasSelected = el.dataset.selected === "true";
+
+        if (isAnswer && wasSelected) {
+          el.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+        } else if (isAnswer && !wasSelected) {
+          // No la seleccionó, pero era correcta (se resalta en verde punteado)
+          el.classList.add("!bg-emerald-50/50", "!border-dashed", "!border-emerald-400", "!text-emerald-900");
+        } else if (!isAnswer && wasSelected) {
+          // La seleccionó, pero era incorrecta
+          el.classList.add("!bg-red-50", "!border-red-400", "!text-red-900");
+        }
+      });
+
+      if (isCorrect) {
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
+      } else {
         queueForReinforcement(question);
       }
 
