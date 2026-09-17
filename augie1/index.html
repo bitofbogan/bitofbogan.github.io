@@ -41,22 +41,57 @@
     .animate-pop {
       animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+
+  /* Transición elástica de barra de avance */
+    .progress-bar-fill {
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Animación de error (sacudida horizontal sutil) */
+    @keyframes shakeSoft {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    .animate-shake {
+      animation: shakeSoft 0.35s ease-in-out;
+    }
+
+    /* Animación de acierto (salto de confirmación) */
+    @keyframes bounceShort {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.025) translateY(-2px); }
+    }
+    .animate-success {
+      animation: bounceShort 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
   </style>
 </head>
 
 <body class="bg-auge-canvas text-auge-dark min-h-screen flex flex-col font-sans selection:bg-orange-100">
 
-  <!-- Header -->
-  <header class="w-full max-w-xl mx-auto px-4 py-4 flex items-center justify-between border-b border-stone-200">
+  <!-- Header Fijo -->
+  <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 backdrop-blur-md border-b border-stone-200">
+    <div class="max-w-xl mx-auto px-4 py-3.5 flex items-center justify-between">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 rounded-lg bg-auge-orange flex items-center justify-center text-white font-bold text-lg shadow-sm">
         🌱
       </div>
       <span class="font-black text-xl tracking-tight text-auge-dark">aureka</span>
     </div>
-    <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
-      Repaso Inicial
-    </span>
+    <div class="flex items-center gap-2">
+      <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
+        Módulo 21
+      </span>
+      <button 
+        type="button" 
+        onclick="confirmResetQuiz()" 
+        title="Reiniciar sesión" 
+        class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+        <span>🔄</span> Reiniciar
+        </button>
+      </div>
+    </div>
   </header>
 
   <!-- Contenedor dinámico -->
@@ -116,10 +151,17 @@
       isReinforcementPhase = false;
 
       currentQueue = shuffle(questionBank);
-      phaseBadge.textContent = "Repaso Inicial";
+      phaseBadge.textContent = "Módulo 21";
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200";
       
       renderQuestion();
+    }
+
+    function confirmResetQuiz() {
+      if (confirm("¿Quieres reiniciar Aureka desde cero?")) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        initQuiz();
+      }
     }
 
     function renderMath() {
@@ -157,7 +199,7 @@
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
           <!-- Barra progreso -->
           <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-auge-orange h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
+            <div class="bg-auge-orange h-full progress-bar-fill" style="width: ${progressPercent}%"></div>
           </div>
 
           <!-- Prompt -->
@@ -179,7 +221,7 @@
                 <span>💡</span> ¿Necesitas una pista?
               </button>
               <div id="hintBox" class="hidden w-full p-3 bg-amber-50/80 border border-amber-200/90 rounded-xl text-xs text-amber-900 leading-relaxed animate-pop">
-                <span class="font-bold">Pista orientativa:</span> ${q.hint}
+                <span class="font-bold">Pista:</span> ${q.hint}
               </div>
             </div>
           ` : ''}
@@ -308,11 +350,9 @@
           tagButtons.forEach(btn => {
             btn.onclick = () => {
               tagButtons.forEach(b => {
-                b.classList.remove("bg-auge-orange", "text-white", "border-auge-orange");
-                b.classList.add("bg-stone-50", "text-stone-600", "border-stone-300");
+                b.className = "tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-stone-300 bg-stone-50 text-stone-600 hover:bg-stone-100 transition-all";
               });
-              btn.classList.remove("bg-stone-50", "text-stone-600", "border-stone-300");
-              btn.classList.add("bg-auge-orange", "text-white", "border-auge-orange");
+              btn.className = "tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border-2 border-auge-orange bg-auge-orange text-white shadow-sm transition-all";
               row.dataset.selected = btn.textContent.trim();
             };
           });
@@ -339,7 +379,7 @@
       const isCorrect = selectedText === question.correct;
 
       if (isCorrect) {
-        selectedBtn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+        selectedBtn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900", "animate-success");
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(16, 185, 129, 0.3)";
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
@@ -347,7 +387,7 @@
           secondRoundResolved++;
         }
       } else {
-        selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900");
+        selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900", "animate-shake");  
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
         buttons.forEach(btn => {
           if (btn.innerHTML === question.correct) {
@@ -413,15 +453,31 @@
         const val = el.dataset.value;
         const isAnswer = correctSet.has(val);
         const wasSelected = el.dataset.selected === "true";
+        const indicator = el.querySelector(".checkbox-indicator");
+
+        // Limpia estilos en línea de color y sombra
+        el.style.boxShadow = "none";
 
         if (isAnswer && wasSelected) {
-          el.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
-        } else if (isAnswer && !wasSelected) {
-          // No la seleccionó, pero era correcta (se resalta en verde punteado)
-          el.classList.add("!bg-emerald-50/50", "!border-dashed", "!border-emerald-400", "!text-emerald-900");
+          // 1. Acierto: era correcta y la seleccionó (Verde sólido)
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-emerald-500 bg-emerald-50 text-emerald-950";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white font-black shrink-0";
+          indicator.textContent = "✓";
         } else if (!isAnswer && wasSelected) {
-          // La seleccionó, pero era incorrecta
-          el.classList.add("!bg-red-50", "!border-red-400", "!text-red-900");
+          // 2. Error: no era correcta pero la seleccionó (Rojo marcado)
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-400";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-red-600 border border-red-600 flex items-center justify-center text-xs text-white font-black shrink-0";
+          indicator.textContent = "✕";
+        } else if (isAnswer && !wasSelected) {
+          // 3. Olvido: era correcta pero no la seleccionó (Verde punteado de advertencia)
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-dashed border-emerald-500 bg-emerald-50/50 text-emerald-900";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white flex items-center justify-center text-xs text-emerald-600 font-bold shrink-0";
+          indicator.textContent = "✓";
+        } else {
+          // 4. Distractor neutral no seleccionado (Atenuado)
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border border-stone-200 bg-stone-50 text-stone-400 opacity-60";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 bg-stone-100 flex items-center justify-center shrink-0";
+          indicator.textContent = "";
         }
       });
 
@@ -433,6 +489,7 @@
         }
       } else {
         queueForReinforcement(question);
+        listElement.classList.add("animate-shake");
       }
 
       showFeedback(isCorrect, question.explanation);
@@ -483,6 +540,9 @@
       } else {
         queueForReinforcement(question);
       }
+      if (!isAllCorrect) {
+        listElement.classList.add("animate-shake");
+      }
 
       showFeedback(isAllCorrect, question.explanation);
     }
@@ -503,7 +563,7 @@
 
       if (isCorrect) {
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
-        box.innerHTML = `<span class="font-bold">¡Bien deducido!</span><br>${explanation}`;
+        box.innerHTML = `<span class="font-bold">¡Bien!</span><br>${explanation}`;
       } else {
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
         box.innerHTML = `<span class="font-bold text-auge-orange">Punto a reforzar:</span><br>${explanation}`;
@@ -512,9 +572,16 @@
       nextBtn.onclick = () => {
         currentIndex++;
         renderQuestion();
+        // Regresa la vista suavemente arriba para la siguiente pregunta
+        window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
       renderMath();
+
+      // Desplaza suavemente hacia el cuadro de retroalimentación y el botón
+      setTimeout(() => {
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
     }
 
     function handlePhaseCompletion() {
@@ -562,7 +629,7 @@
           
           <div>
             <h2 class="text-2xl font-bold text-auge-dark">¡Módulo concluido!</h2>
-            <p class="text-sm text-auge-gray mt-1">Has asegurado el 100% de los reactivos de esta sesión.</p>
+            <p class="text-sm text-auge-gray mt-1">Has respondido el 100% de los reactivos de esta sesión.</p>
           </div>
 
           <div class="w-full grid grid-cols-2 gap-3 mt-1">
@@ -583,7 +650,7 @@
           </div>
 
           <button onclick="initQuiz()" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
-            Volver a empezar sesión
+            ¡Reintentar!
           </button>
         </div>
       `;
