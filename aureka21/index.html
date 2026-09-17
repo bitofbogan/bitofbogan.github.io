@@ -325,7 +325,7 @@
 
         const checkBtn = document.createElement("button");
         checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
-        checkBtn.textContent = `Confirmar respuestas (${q.correctAnswers.length})`;
+        checkBtn.textContent = "Confirmar respuestas";
         checkBtn.onclick = () => handleMultiSelectAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
       } else if (q.type === "classification") {
@@ -666,19 +666,24 @@
     }
 
     function initCounter() {
-      const namespace = window.location.hostname || "aureka-local";
-      const key = "repaso-visitas";
-      fetch(`https://api.counterapi.dev/v1/${encodeURIComponent(namespace)}/${key}/up`)
+      // Clave fija para el proyecto en GitHub Pages
+      const namespace = "aureka-auge-m21";
+      const key = "visitas";
+
+      fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
         .then(res => res.json())
         .then(data => {
-          if (data && data.count) {
-            document.getElementById("visitCounter").textContent = data.count;
+          if (data && typeof data.value !== "undefined") {
+            document.getElementById("visitCounter").textContent = data.value;
           } else {
             document.getElementById("visitCounter").textContent = "1";
           }
         })
         .catch(() => {
-          document.getElementById("visitCounter").textContent = "+";
+          // Si estás en local (file://) o sin red, simula contador en sesión
+          let localCount = parseInt(localStorage.getItem("aureka_visitas") || "0", 10) + 1;
+          localStorage.setItem("aureka_visitas", localCount);
+          document.getElementById("visitCounter").textContent = localCount;
         });
     }
 
