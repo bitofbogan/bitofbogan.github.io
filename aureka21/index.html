@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🟠🌱Aureka | Módulo 21: Filosofía de la ciencia</title>
+  <title>Aureka | Módulo 21: Filosofía de la ciencia</title>
+  <link rel="icon" type="image/png" href="augeicon.png">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -112,22 +113,20 @@
   <!-- Header Fijo -->
   <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 backdrop-blur-md border-b border-stone-200">
     <div class="max-w-xl mx-auto px-4 py-3.5 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-auge-orange flex items-center justify-center text-white font-bold text-lg shadow-sm">
-        🌱
+      <div class="flex items-center gap-2">
+        <img src="augeicon.png" alt="Logo Auge" class="w-8 h-8 object-contain rounded-lg shadow-sm" />
+        <span class="font-black text-xl tracking-tight text-auge-dark">aureka</span>
       </div>
-      <span class="font-black text-xl tracking-tight text-auge-dark">aureka</span>
-    </div>
-    <div class="flex items-center gap-2">
-      <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
-        Módulo 21
-      </span>
-      <button 
-        type="button" 
-        onclick="confirmResetQuiz()" 
-        title="Reiniciar sesión" 
-        class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-        <span>🔄</span> Reiniciar
+      <div class="flex items-center gap-2">
+        <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
+          Módulo 21
+        </span>
+        <button 
+          type="button" 
+          onclick="confirmResetQuiz()" 
+          title="Reiniciar sesión" 
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+          <span>🔄</span> Reiniciar
         </button>
       </div>
     </div>
@@ -679,9 +678,7 @@
 
         app.innerHTML = `
           <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-auge-orange font-bold text-xl">
-              🌱
-            </div>
+            <img src="augeicon.png" alt="Logo Auge" class="w-12 h-12 object-contain" />
             <div>
               <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
               <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
