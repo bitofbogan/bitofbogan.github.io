@@ -462,7 +462,7 @@ const questionBank = [
       "Debe construirse por medio del diálogo y el acuerdo entre la comunidad científica y el público en general.",
       "Debe constituirse por conocimientos nuevos y desechar los saberes actuales."
     ],
-    explanation: "La ciencia es objetiva y falsable: observa regularidades en la naturaleza y somete sus explicaciones a contrastación empírica, sin depender de opiniones populares o dogmas estáticos."
+    explanation: "La ciencia es objetiva y falseable: observa regularidades en la naturaleza y somete sus explicaciones a contrastación empírica, sin depender de opiniones populares o dogmas estáticos."
   },
   {
     id: 33,
