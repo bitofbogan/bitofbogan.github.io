@@ -169,6 +169,7 @@
       if (confirm("¿Quieres reiniciar Aureka desde cero?")) {
         window.scrollTo({ top: 0, behavior: "smooth" });
         initQuiz();
+        initCounter(); // Incrementa visita al reiniciar voluntariamente
       }
     }
 
@@ -658,33 +659,37 @@
             • <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.
           </div>
 
-          <button onclick="initQuiz()" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+          <button onclick="initQuiz(); initCounter();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
             ¡Reintentar!
           </button>
         </div>
       `;
     }
 
-    function initCounter() {
-      // Clave fija para el proyecto en GitHub Pages
-      const namespace = "aureka-auge-m21";
-      const key = "visitas";
+    async function initCounter() {
+      const counterEl = document.getElementById("visitCounter");
+      const namespace = "aureka_m21_global_visitas";
 
-      fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data && typeof data.value !== "undefined") {
-            document.getElementById("visitCounter").textContent = data.value;
-          } else {
-            document.getElementById("visitCounter").textContent = "1";
-          }
-        })
-        .catch(() => {
-          // Si estás en local (file://) o sin red, simula contador en sesión
-          let localCount = parseInt(localStorage.getItem("aureka_visitas") || "0", 10) + 1;
-          localStorage.setItem("aureka_visitas", localCount);
-          document.getElementById("visitCounter").textContent = localCount;
-        });
+      try {
+        // Usamos api.codetabs.com o counterapi con hit directo sin CORS
+        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/hit`);
+        const data = await res.json();
+        
+        if (data && typeof data.count !== "undefined") {
+          counterEl.textContent = data.count;
+          return;
+        }
+        throw new Error("Respuesta inválida");
+      } catch (err) {
+        // Segundo intento con servicio espejo de respaldo
+        try {
+          const fallbackRes = await fetch(`https://api.moesif.com/count/up?key=${namespace}`);
+          // Si falla ambos, solo muestra un indicador limpio sin desincronizar
+          counterEl.textContent = "•";
+        } catch (e) {
+          counterEl.textContent = "—";
+        }
+      }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
