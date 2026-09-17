@@ -33,6 +33,9 @@
   <!-- SortableJS para Drag & Drop amigable en móviles -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
   <style>
     @keyframes popIn {
       from { opacity: 0; transform: scale(0.97) translateY(6px); }
@@ -64,6 +67,42 @@
     }
     .animate-success {
       animation: bounceShort 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Efecto fuego estilo Balatro */
+    @keyframes flameShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes flamePulse {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6)); }
+      50% { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.9)); }
+    }
+
+    /* Racha baja (2 a 3) */
+    .fire-streak-1 {
+      background: linear-gradient(90deg, #f97316, #eab308, #f97316) !important;
+      background-size: 200% 200% !important;
+      animation: flameShift 1.8s ease infinite;
+      box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Racha media (4 a 5) */
+    .fire-streak-2 {
+      background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #ef4444) !important;
+      background-size: 250% 250% !important;
+      animation: flameShift 1.2s ease infinite, flamePulse 1s ease-in-out infinite;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
+    }
+
+    /* Racha infernal (6+) */
+    .fire-streak-3 {
+      background: linear-gradient(90deg, #dc2626, #ea580c, #facc15, #f43f5e) !important;
+      background-size: 300% 300% !important;
+      animation: flameShift 0.8s linear infinite, flamePulse 0.6s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.95), 0 0 30px rgba(250, 204, 21, 0.5);
     }
   </style>
 </head>
@@ -123,10 +162,12 @@
     let currentIndex = 0;
     let isReinforcementPhase = false;
 
-    // Métricas para calificación
+    // Métricas para calificación y gamificación
     let totalQuestions = 0;
     let firstRoundCorrect = 0;
     let secondRoundResolved = 0;
+    let streakCount = 0;
+    let maxStreak = 0;
 
     const app = document.getElementById("app");
     const phaseBadge = document.getElementById("phaseBadge");
@@ -154,6 +195,8 @@
       totalQuestions = questionBank.length;
       firstRoundCorrect = 0;
       secondRoundResolved = 0;
+      streakCount = 0;
+      maxStreak = 0;
       pendingQueue = [];
       currentIndex = 0;
       isReinforcementPhase = false;
@@ -195,6 +238,13 @@
       }
     }
 
+    function getStreakFireClass(streak) {
+      if (streak >= 6) return "fire-streak-3";
+      if (streak >= 4) return "fire-streak-2";
+      if (streak >= 2) return "fire-streak-1";
+      return "";
+    }
+
     function renderQuestion() {
       if (currentIndex >= currentQueue.length) {
         handlePhaseCompletion();
@@ -203,18 +253,28 @@
 
       const q = currentQueue[currentIndex];
       const progressPercent = Math.round(((currentIndex) / currentQueue.length) * 100);
+      const fireClass = getStreakFireClass(streakCount);
 
       let contentHTML = `
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
-          <!-- Barra progreso -->
-          <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-auge-orange h-full progress-bar-fill" style="width: ${progressPercent}%"></div>
+          <!-- Barra progreso y racha -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between text-xs font-bold">
+              <span class="text-auge-orange uppercase tracking-wider">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
+              ${streakCount > 1 ? `
+                <span class="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 animate-pop">
+                  🔥 <span class="font-black">${streakCount}</span> en racha
+                </span>
+              ` : ''}
+            </div>
+            <div class="w-full bg-stone-100 h-2.5 rounded-full overflow-hidden transition-all">
+              <div class="bg-auge-orange h-full progress-bar-fill ${fireClass}" style="width: ${progressPercent}%"></div>
+            </div>
           </div>
 
           <!-- Prompt -->
           <div>
-            <span class="text-xs uppercase font-bold tracking-wider text-auge-orange">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
-            <h2 class="text-xl font-bold text-auge-dark mt-1 leading-snug">${q.prompt}</h2>
+            <h2 class="text-xl font-bold text-auge-dark mt-0.5 leading-snug">${q.prompt}</h2>
           </div>
 
           ${q.image ? `
@@ -395,6 +455,8 @@
         } else {
           secondRoundResolved++;
         }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900", "animate-shake");  
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
@@ -404,6 +466,7 @@
           }
         });
         queueForReinforcement(question);
+        streakCount = 0;
       }
 
       showFeedback(isCorrect, question.explanation);
@@ -426,11 +489,14 @@
         } else {
           secondRoundResolved++;
         }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         listElement.classList.add("pointer-events-none");
         Array.from(listElement.children).forEach(c => {
           c.classList.add("!bg-red-50", "!border-red-300", "!text-red-900");
         });
+        streakCount = 0;
         queueForReinforcement(question);
       }
 
@@ -496,9 +562,12 @@
         } else {
           secondRoundResolved++;
         }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
         listElement.classList.add("animate-shake");
+        streakCount = 0;
       }
 
       showFeedback(isCorrect, question.explanation);
@@ -546,8 +615,11 @@
         } else {
           secondRoundResolved++;
         }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
+        streakCount = 0;
       }
       if (!isAllCorrect) {
         listElement.classList.add("animate-shake");
@@ -574,7 +646,8 @@
         const randomPhrase = successPhrases[Math.floor(Math.random() * successPhrases.length)];
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
         box.innerHTML = `<span class="font-bold text-emerald-700">${randomPhrase}</span><br>${explanation}`;
-      } else {
+      } 
+      else {
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
         box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${explanation}`;
       }
@@ -629,6 +702,16 @@
       phaseBadge.textContent = "Completado";
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200";
 
+      // Disparo de confeti festivo con tonos Auge
+      if (window.confetti) {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.65 },
+          colors: ['#F17D4B', '#D96534', '#10B981', '#FBBF24']
+        });
+      }
+
       const prelimGrade = totalQuestions > 0 ? ((firstRoundCorrect / totalQuestions) * 10).toFixed(1) : "0.0";
 
       app.innerHTML = `
@@ -654,9 +737,10 @@
             </div>
           </div>
 
-          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-600 text-left leading-relaxed">
-            • <b>Aciertos rescatados en segunda vuelta:</b> ${secondRoundResolved} de ${totalQuestions - firstRoundCorrect} pendientes.<br>
-            • <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-600 text-left leading-relaxed flex flex-col gap-1">
+            <div>• <b>Aciertos rescatados en segunda vuelta:</b> ${secondRoundResolved} de ${totalQuestions - firstRoundCorrect} pendientes.</div>
+            <div>• <b>Mejor racha consecutiva:</b> 🔥 ${maxStreak} reactivos seguidos.</div>
+            <div>• <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.</div>
           </div>
 
           <button onclick="initQuiz(); initCounter();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
@@ -665,7 +749,6 @@
         </div>
       `;
     }
-
     async function initCounter() {
       const counterEl = document.getElementById("visitCounter");
       const namespace = "aureka_m21_global_visitas";
