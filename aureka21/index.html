@@ -435,6 +435,112 @@
         checkBtn.textContent = "Comprobar clasificación";
         checkBtn.onclick = () => handleClassificationAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
+      } else if (q.type === "fill_blanks") {
+        // Estructura: q.sentence con marcadores tipo {0}, {1}
+        // q.correctOrder: array con las respuestas en orden de huecos
+        // q.distractors: palabras extra para despistar
+
+        const blanksContainer = document.createElement("div");
+        blanksContainer.className = "flex flex-col gap-5";
+
+        // Preparar banco de fichas barajadas con ID único para cada una
+        const allTokens = shuffle([...q.correctOrder, ...(q.distractors || [])]).map((text, i) => ({
+          id: `token_${i}_${Math.random().toString(36).substr(2, 4)}`,
+          text: text
+        }));
+
+        // Estado local de los huecos: array con null o el token colocado
+        const slotsState = new Array(q.correctOrder.length).fill(null);
+
+        // 1. Área del texto con los huecos interactivos
+        const sentenceBox = document.createElement("div");
+        sentenceBox.className = "p-4 bg-stone-50 border border-stone-200 rounded-xl leading-loose text-base font-medium text-auge-dark select-none";
+
+        // Reemplazar {0}, {1}, etc. por botones de ranura
+        let formattedSentence = q.sentence;
+        q.correctOrder.forEach((_, idx) => {
+          formattedSentence = formattedSentence.replace(
+            `{${idx}}`,
+            `<span class="blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-dashed border-stone-300 bg-white rounded-lg text-sm font-bold text-auge-orange cursor-pointer transition-all hover:border-auge-orange align-middle" data-slot="${idx}">[ ___ ]</span>`
+          );
+        });
+        sentenceBox.innerHTML = formattedSentence;
+        blanksContainer.appendChild(sentenceBox);
+
+        // 2. Banco de fichas disponibles
+        const poolTitle = document.createElement("div");
+        poolTitle.className = "text-xs font-bold uppercase tracking-wider text-stone-400 -mb-2";
+        poolTitle.textContent = "Fichas disponibles:";
+        blanksContainer.appendChild(poolTitle);
+
+        const poolContainer = document.createElement("div");
+        poolContainer.id = "tokensPool";
+        poolContainer.className = "flex flex-wrap gap-2 p-3 bg-white border border-stone-200 rounded-xl min-h-[56px] items-center";
+        blanksContainer.appendChild(poolContainer);
+
+        // 3. Botón de comprobación
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.textContent = "Comprobar respuesta";
+        checkBtn.onclick = () => handleFillBlanksAnswer(slotsState, q, checkBtn, blanksContainer);
+        blanksContainer.appendChild(checkBtn);
+
+        optionsContainer.appendChild(blanksContainer);
+
+        // Funciones para manipular fichas y huecos
+        function renderPool() {
+          poolContainer.innerHTML = "";
+          allTokens.forEach(token => {
+            const isUsed = slotsState.some(s => s && s.id === token.id);
+            if (!isUsed) {
+              const chip = document.createElement("button");
+              chip.type = "button";
+              chip.className = "token-chip px-3 py-1.5 bg-white hover:bg-orange-50 border-2 border-stone-200 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark shadow-sm active:scale-95 transition-all";
+              chip.innerHTML = token.text;
+              chip.onclick = () => assignTokenToNextFreeSlot(token);
+              poolContainer.appendChild(chip);
+            }
+          });
+          renderMath();
+        }
+
+        function updateSlotsDisplay() {
+          const slotElements = sentenceBox.querySelectorAll(".blank-slot");
+          slotElements.forEach(el => {
+            const slotIdx = parseInt(el.dataset.slot, 10);
+            const currentToken = slotsState[slotIdx];
+
+            if (currentToken) {
+              el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-auge-orange bg-orange-50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle";
+              el.innerHTML = `${currentToken.text} <span class="ml-1.5 text-xs text-stone-400 font-normal">✕</span>`;
+              el.onclick = () => removeTokenFromSlot(slotIdx);
+            } else {
+              el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-dashed border-stone-300 bg-white rounded-lg text-sm font-bold text-stone-400 cursor-pointer transition-all hover:border-auge-orange align-middle";
+              el.textContent = "[ ___ ]";
+              el.onclick = null;
+            }
+          });
+          renderMath();
+        }
+
+        function assignTokenToNextFreeSlot(token) {
+          const freeIndex = slotsState.findIndex(s => s === null);
+          if (freeIndex !== -1) {
+            slotsState[freeIndex] = token;
+            updateSlotsDisplay();
+            renderPool();
+          }
+        }
+
+        function removeTokenFromSlot(slotIdx) {
+          slotsState[slotIdx] = null;
+          updateSlotsDisplay();
+          renderPool();
+        }
+
+        // Renderizado inicial
+        renderPool();
+        updateSlotsDisplay();
       }
 
       renderMath();
@@ -622,6 +728,50 @@
       }
       if (!isAllCorrect) {
         listElement.classList.add("animate-shake");
+      }
+
+      showFeedback(isAllCorrect, question.explanation);
+    }
+
+    function handleFillBlanksAnswer(slotsState, question, triggerBtn, containerElement) {
+      // Validar que todos los huecos estén llenos
+      const hasEmpty = slotsState.some(s => s === null);
+      if (hasEmpty) {
+        alert("Por favor completa todos los espacios antes de comprobar.");
+        return;
+      }
+
+      triggerBtn.disabled = true;
+      triggerBtn.classList.add("hidden");
+      containerElement.classList.add("pointer-events-none");
+
+      // Comprobar si cada ficha coincide con el orden correcto
+      const isAllCorrect = slotsState.every((token, idx) => token.text === question.correctOrder[idx]);
+
+      const slotElements = containerElement.querySelectorAll(".blank-slot");
+      slotElements.forEach((el, idx) => {
+        const isSlotCorrect = slotsState[idx].text === question.correctOrder[idx];
+        if (isSlotCorrect) {
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-emerald-600">✓</span>`;
+        } else {
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-500 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-red-600">✕</span>`;
+        }
+      });
+
+      if (isAllCorrect) {
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
+      } else {
+        queueForReinforcement(question);
+        containerElement.classList.add("animate-shake");
+        streakCount = 0;
       }
 
       showFeedback(isAllCorrect, question.explanation);
