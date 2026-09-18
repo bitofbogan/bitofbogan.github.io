@@ -2,14 +2,17 @@
 const questionBank = [
   {
     id: 1,
-    type: "choice",
-    prompt: "Científicos como Stephen Hawking y Roger Penrose forman parte de la ________________ al trabajar con un equipo interdisciplinario e internacional en proyectos de física gravitacional.",
+    type: "fill_blanks",
+    prompt: "Completa:",
+    sentence: "Científicos como Stephen Hawking y Roger Penrose forman parte de la {0} al trabajar con un equipo interdisciplinario e internacional en proyectos de física gravitacional.",
     image: null,
     hint: "Piensa en el modelo de investigación científica de proyectos como el LHC o el Genoma Humano.",
-    correct: "Gran Ciencia.",
+    correctOrder: [
+      "Gran Ciencia"
+    ],
     distractors: [
-      "Pequeña Ciencia.",
-      "Tecnociencia."
+      "Pequeña Ciencia",
+      "Tecnociencia"
     ],
     explanation: "La Gran Ciencia se define por proyectos a gran escala donde colaboran equipos interdisciplinarios difundiendo sus hallazgos en publicaciones y congresos internacionales."
   },
@@ -466,41 +469,50 @@ const questionBank = [
   },
   {
     id: 33,
-    type: "choice",
-    prompt: "La reacción de ________ nuclear permite que los núcleos de dos átomos formen un núcleo nuevo con un átomo más pesado.",
+    type: "fill_blanks",
+    prompt: "Completa:",
+    sentence: "La reacción de {0} nuclear permite que los núcleos de dos átomos formen un núcleo nuevo con un átomo más pesado.",
     image: null,
     hint: "Recuerda la palabra que alude a 'fundir' elementos.",
-    correct: "Fusión.",
+    correctOrder: [
+      "fusión"
+    ],
     distractors: [
-      "Energía.",
-      "Fisión.",
-      "Atomización."
+      "energía",
+      "fisión",
+      "atomización"
     ],
     explanation: "La fusión nuclear es el proceso físico en el que dos núcleos atómicos se integran para dar origen a un nuevo elemento de mayor masa."
   },
   {
     id: 34,
-    type: "choice",
-    prompt: "En la fusión nuclear se unen dos átomos para formar un núcleo nuevo _______ pesado.",
+    type: "fill_blanks",
+    prompt: "Completa:",
+    sentence: "En la fusión nuclear se unen dos átomos para formar un núcleo nuevo {0} pesado.",
     image: null,
     hint: null,
-    correct: "Más.",
+    correctOrder: [
+      "más"
+    ],
     distractors: [
-      "Menos."
+      "menos"
     ],
     explanation: "Al integrarse dos núcleos ligeros, la masa atómica resultante es mayor que la de los componentes individuales de partida."
   },
   {
     id: 35,
-    type: "choice",
-    prompt: "Los isótopos de ________________ son los más utilizados para las reacciones de fusión nuclear.",
+    type: "fill_blanks",
+    prompt: "Completa la afirmación sobre los combustibles nucleares:",
+    sentence: "Los isótopos de {0} son los más utilizados para las reacciones de fusión nuclear.",
     image: null,
     hint: "Es el elemento químico más ligero y abundante del cosmos (utilizando deuterio y tritio).",
-    correct: "Hidrógeno.",
+    correctOrder: [
+      "hidrógeno"
+    ],
     distractors: [
-      "Helio.",
-      "Plutonio.",
-      "Uranio."
+      "helio",
+      "plutonio",
+      "uranio"
     ],
     explanation: "Los isótopos de hidrógeno (deuterio y tritio) son los candidatos preferidos para la fusión debido a su ligereza y a la energía que liberan al fusionarse en helio."
   }
