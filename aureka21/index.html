@@ -436,14 +436,10 @@
         checkBtn.onclick = () => handleClassificationAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
       } else if (q.type === "fill_blanks") {
-        // Estructura: q.sentence con marcadores tipo {0}, {1}
-        // q.correctOrder: array con las respuestas en orden de huecos
-        // q.distractors: palabras extra para despistar
-
         const blanksContainer = document.createElement("div");
         blanksContainer.className = "flex flex-col gap-5";
 
-        // Preparar banco de fichas barajadas con ID único para cada una
+        // Preparar banco de fichas barajadas con ID único
         const allTokens = shuffle([...q.correctOrder, ...(q.distractors || [])]).map((text, i) => ({
           id: `token_${i}_${Math.random().toString(36).substr(2, 4)}`,
           text: text
@@ -451,17 +447,18 @@
 
         // Estado local de los huecos: array con null o el token colocado
         const slotsState = new Array(q.correctOrder.length).fill(null);
+        let activeSlotIndex = 0; // Hueco enfocado para sustitución directa
 
-        // 1. Área del texto con los huecos interactivos
+        // 1. Área del texto con los huecos limpios (sin "[ ___ ]")
         const sentenceBox = document.createElement("div");
-        sentenceBox.className = "p-4 bg-stone-50 border border-stone-200 rounded-xl leading-loose text-base font-medium text-auge-dark select-none";
+        sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 border border-stone-200 rounded-xl leading-loose text-base font-medium text-auge-dark select-none";
 
-        // Reemplazar {0}, {1}, etc. por botones de ranura
+        // Reemplazar {0}, {1}, etc. por ranuras estilizadas
         let formattedSentence = q.sentence;
         q.correctOrder.forEach((_, idx) => {
           formattedSentence = formattedSentence.replace(
             `{${idx}}`,
-            `<span class="blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-dashed border-stone-300 bg-white rounded-lg text-sm font-bold text-auge-orange cursor-pointer transition-all hover:border-auge-orange align-middle" data-slot="${idx}">[ ___ ]</span>`
+            `<span class="blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed border-stone-300 bg-white/80 rounded-lg text-sm font-semibold align-middle cursor-pointer transition-all hover:border-auge-orange" data-slot="${idx}"></span>`
           );
         });
         sentenceBox.innerHTML = formattedSentence;
@@ -470,7 +467,7 @@
         // 2. Banco de fichas disponibles
         const poolTitle = document.createElement("div");
         poolTitle.className = "text-xs font-bold uppercase tracking-wider text-stone-400 -mb-2";
-        poolTitle.textContent = "Fichas disponibles:";
+        poolTitle.textContent = "Opciones:";
         blanksContainer.appendChild(poolTitle);
 
         const poolContainer = document.createElement("div");
@@ -487,7 +484,7 @@
 
         optionsContainer.appendChild(blanksContainer);
 
-        // Funciones para manipular fichas y huecos
+        // Funciones de renderizado e interacción
         function renderPool() {
           poolContainer.innerHTML = "";
           allTokens.forEach(token => {
@@ -495,9 +492,9 @@
             if (!isUsed) {
               const chip = document.createElement("button");
               chip.type = "button";
-              chip.className = "token-chip px-3 py-1.5 bg-white hover:bg-orange-50 border-2 border-stone-200 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark shadow-sm active:scale-95 transition-all";
+              chip.className = "token-chip px-3.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-stone-200 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark shadow-sm active:scale-95 transition-all";
               chip.innerHTML = token.text;
-              chip.onclick = () => assignTokenToNextFreeSlot(token);
+              chip.onclick = () => placeOrReplaceToken(token);
               poolContainer.appendChild(chip);
             }
           });
@@ -509,36 +506,64 @@
           slotElements.forEach(el => {
             const slotIdx = parseInt(el.dataset.slot, 10);
             const currentToken = slotsState[slotIdx];
+            const isActive = slotIdx === activeSlotIndex;
 
             if (currentToken) {
-              el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-auge-orange bg-orange-50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle";
-              el.innerHTML = `${currentToken.text} <span class="ml-1.5 text-xs text-stone-400 font-normal">✕</span>`;
-              el.onclick = () => removeTokenFromSlot(slotIdx);
+              // Hueco con ficha colocada
+              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-auge-orange bg-orange-50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
+              el.innerHTML = `<span>${currentToken.text}</span>`;
+              el.onclick = () => {
+                // Tocar la ficha colocada la quita y enfoca este espacio
+                slotsState[slotIdx] = null;
+                activeSlotIndex = slotIdx;
+                updateSlotsDisplay();
+                renderPool();
+              };
             } else {
-              el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-dashed border-stone-300 bg-white rounded-lg text-sm font-bold text-stone-400 cursor-pointer transition-all hover:border-auge-orange align-middle";
-              el.textContent = "[ ___ ]";
-              el.onclick = null;
+              // Hueco vacío: borde punteado limpio con indicador sutil de foco
+              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed rounded-lg text-sm align-middle cursor-pointer transition-all ${
+                isActive 
+                  ? 'border-auge-orange bg-orange-50/40 ring-2 ring-orange-200 shadow-sm' 
+                  : 'border-stone-300 bg-white/90 hover:border-stone-400'
+              }`;
+              // Línea tenue minimalista en lugar de texto feo
+              el.innerHTML = `<span class="w-6 h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200'}"></span>`;
+              el.onclick = () => {
+                activeSlotIndex = slotIdx;
+                updateSlotsDisplay();
+              };
             }
           });
           renderMath();
         }
 
-        function assignTokenToNextFreeSlot(token) {
-          const freeIndex = slotsState.findIndex(s => s === null);
-          if (freeIndex !== -1) {
-            slotsState[freeIndex] = token;
-            updateSlotsDisplay();
-            renderPool();
+        function placeOrReplaceToken(token) {
+          // 1. Si el hueco activo está libre, colocarlo ahí
+          if (slotsState[activeSlotIndex] === null) {
+            slotsState[activeSlotIndex] = token;
+          } else {
+            // 2. Si ya tenía ficha, busca si hay otro hueco libre primero
+            const freeIdx = slotsState.findIndex(s => s === null);
+            if (freeIdx !== -1) {
+              slotsState[freeIdx] = token;
+              activeSlotIndex = freeIdx;
+            } else {
+              // 3. Sustitución directa: reemplaza la ficha del hueco activo
+              slotsState[activeSlotIndex] = token;
+            }
           }
-        }
 
-        function removeTokenFromSlot(slotIdx) {
-          slotsState[slotIdx] = null;
+          // Avanza el foco al siguiente hueco vacío disponible
+          const nextFree = slotsState.findIndex(s => s === null);
+          if (nextFree !== -1) {
+            activeSlotIndex = nextFree;
+          }
+
           updateSlotsDisplay();
           renderPool();
         }
 
-        // Renderizado inicial
+        // Render inicial
         renderPool();
         updateSlotsDisplay();
       }
