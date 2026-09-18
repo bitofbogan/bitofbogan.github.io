@@ -1117,40 +1117,44 @@
     }
     async function initCounter() {
       const counterEl = document.getElementById("visitCounter");
-      const namespace = "aureka-m21-filosofia";
+      if (!counterEl) return;
+
+      const namespace = "aureka_m21_prepa";
       const key = "visitas";
 
-      // 1. Carga inmediata desde caché local (cero espera visual)
-      const cachedVisits = localStorage.getItem("aureka_cached_visits");
-      if (cachedVisits) {
-        counterEl.textContent = Number(cachedVisits).toLocaleString();
+      // 1. Lectura inmediata de caché local para evitar cualquier retraso
+      let localCount = parseInt(localStorage.getItem("aureka_visitas_count") || "0", 10);
+      if (localCount > 0) {
+        counterEl.textContent = localCount.toLocaleString();
       }
 
       try {
-        // 2. Consulta en segundo plano con límite estricto de 2.5s para no congelar la UI
+        // 2. Llamada directa con timeout estricto de 2s
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2500);
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`, {
+        // Agregamos parámetro único de tiempo para saltar la caché del navegador
+        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up?t=${Date.now()}`, {
+          method: "GET",
+          mode: "cors",
           signal: controller.signal
         });
         clearTimeout(timeoutId);
 
-        if (!res.ok) throw new Error("Status " + res.status);
-        const data = await res.json();
-
-        if (data && typeof data.count !== "undefined") {
-          localStorage.setItem("aureka_cached_visits", data.count);
-          counterEl.textContent = data.count.toLocaleString();
-          return;
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.count !== "undefined") {
+            localStorage.setItem("aureka_visitas_count", data.count);
+            counterEl.textContent = Number(data.count).toLocaleString();
+            return;
+          }
         }
+        throw new Error("Fallo en API externa");
       } catch (err) {
-        // 3. Si no había caché previa y la red falló, muestra una cifra base decorosa
-        if (!cachedVisits) {
-          const fallback = 120;
-          localStorage.setItem("aureka_cached_visits", fallback);
-          counterEl.textContent = fallback.toLocaleString();
-        }
+        // 3. Respaldo local activo: si la API externa falla o bloquea, sumamos 1 en local
+        localCount = localCount > 0 ? localCount + 1 : 125;
+        localStorage.setItem("aureka_visitas_count", localCount);
+        counterEl.textContent = localCount.toLocaleString();
       }
     }
 
