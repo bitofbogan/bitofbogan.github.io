@@ -566,7 +566,146 @@
         // Render inicial
         renderPool();
         updateSlotsDisplay();
+      } else if (q.type === "match_columns") {
+        // Pares definidos en q.pairs: [{ left: "...", right: "..." }, ...]
+        const matchContainer = document.createElement("div");
+        matchContainer.className = "flex flex-col gap-4";
+
+        const leftItems = q.pairs.map((p, i) => ({ id: `L_${i}`, text: p.left, pairIndex: i }));
+        const rightItems = shuffle(q.pairs.map((p, i) => ({ id: `R_${i}`, text: p.right, pairIndex: i })));
+
+        // Almacena las conexiones: { L_0: "R_2", ... }
+        const connections = {};
+        let selectedLeftId = null;
+
+        // Paleta de tonos suaves para identificar parejas formadas
+        const pairColors = [
+          { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500" },
+          { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500" },
+          { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-900", badge: "bg-purple-500" },
+          { bg: "bg-rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500" },
+          { bg: "bg-teal-50", border: "border-teal-400", text: "text-teal-900", badge: "bg-teal-500" },
+          { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500" }
+        ];
+
+        const grid = document.createElement("div");
+        grid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+
+        const colLeft = document.createElement("div");
+        colLeft.className = "flex flex-col gap-2.5";
+
+        const colRight = document.createElement("div");
+        colRight.className = "flex flex-col gap-2.5";
+
+        grid.appendChild(colLeft);
+        grid.appendChild(colRight);
+        matchContainer.appendChild(grid);
+
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.textContent = "Comprobar relaciones";
+        checkBtn.onclick = () => handleMatchColumnsAnswer(connections, leftItems, rightItems, q, checkBtn, matchContainer);
+        matchContainer.appendChild(checkBtn);
+
+        optionsContainer.appendChild(matchContainer);
+
+        function renderMatchView() {
+          colLeft.innerHTML = "";
+          colRight.innerHTML = "";
+
+          // Render columna izquierda
+          leftItems.forEach((item, idx) => {
+            const isSelected = selectedLeftId === item.id;
+            const connectedRightId = connections[item.id];
+            const hasConnection = Boolean(connectedRightId);
+
+            const card = document.createElement("button");
+            card.type = "button";
+            card.dataset.id = item.id;
+
+            let styleClasses = "p-3 rounded-xl border-2 text-left text-sm font-medium transition-all shadow-sm flex items-center justify-between gap-2 ";
+
+            if (isSelected) {
+              styleClasses += "border-auge-orange bg-orange-50/70 ring-2 ring-orange-200 text-auge-dark";
+            } else if (hasConnection) {
+              const colorTheme = pairColors[idx % pairColors.length];
+              styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
+            } else {
+              styleClasses += "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
+            }
+
+            card.className = styleClasses;
+            card.innerHTML = `
+              <span class="flex-1 leading-snug">${item.text}</span>
+              ${hasConnection ? `<span class="w-5 h-5 rounded-full ${pairColors[idx % pairColors.length].badge} text-white text-[10px] font-black flex items-center justify-center shrink-0">✓</span>` : ''}
+            `;
+
+            card.onclick = () => {
+              if (connections[item.id]) {
+                // Si ya estaba conectado, desvincular al tocar de nuevo
+                delete connections[item.id];
+                selectedLeftId = null;
+              } else {
+                selectedLeftId = (selectedLeftId === item.id) ? null : item.id;
+              }
+              renderMatchView();
+            };
+
+            colLeft.appendChild(card);
+          });
+
+          // Render columna derecha
+          rightItems.forEach(item => {
+            // Buscar si algún elemento izquierdo está conectado a este derecho
+            const connectedLeftEntry = Object.entries(connections).find(([_, rId]) => rId === item.id);
+            const connectedLeftId = connectedLeftEntry ? connectedLeftEntry[0] : null;
+            const leftIdx = connectedLeftId ? leftItems.findIndex(l => l.id === connectedLeftId) : -1;
+
+            const card = document.createElement("button");
+            card.type = "button";
+            card.dataset.id = item.id;
+
+            let styleClasses = "p-3 rounded-xl border-2 text-left text-sm font-medium transition-all shadow-sm flex items-center justify-between gap-2 ";
+
+            if (connectedLeftId) {
+              const colorTheme = pairColors[leftIdx % pairColors.length];
+              styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
+            } else {
+              styleClasses += "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
+            }
+
+            card.className = styleClasses;
+            card.innerHTML = `
+              <span class="flex-1 leading-snug">${item.text}</span>
+              ${connectedLeftId ? `<span class="w-5 h-5 rounded-full ${pairColors[leftIdx % pairColors.length].badge} text-white text-[10px] font-black flex items-center justify-center shrink-0">✓</span>` : ''}
+            `;
+
+            card.onclick = () => {
+              if (connectedLeftId) {
+                // Desconectar si ya estaba unido
+                delete connections[connectedLeftId];
+                renderMatchView();
+                return;
+              }
+
+              if (selectedLeftId) {
+                // Conectar con el izquierdo activo
+                connections[selectedLeftId] = item.id;
+                selectedLeftId = null;
+                renderMatchView();
+              }
+            };
+
+            colRight.appendChild(card);
+          });
+
+          renderMath();
+        }
+
+        renderMatchView();
       }
+
+      
 
       renderMath();
     }
@@ -802,6 +941,61 @@
       showFeedback(isAllCorrect, question.explanation);
     }
 
+    function handleMatchColumnsAnswer(connections, leftItems, rightItems, question, triggerBtn, containerElement) {
+      // 1. Validar que se hayan conectado todas las parejas
+      const totalPairs = leftItems.length;
+      if (Object.keys(connections).length < totalPairs) {
+        alert("Por favor relaciona todos los elementos antes de comprobar.");
+        return;
+      }
+
+      triggerBtn.disabled = true;
+      triggerBtn.classList.add("hidden");
+      containerElement.classList.add("pointer-events-none");
+
+      let isAllCorrect = true;
+
+      // 2. Verificar cada enlace
+      leftItems.forEach(lItem => {
+        const connectedRightId = connections[lItem.id];
+        const rItem = rightItems.find(r => r.id === connectedRightId);
+        const isPairMatch = lItem.pairIndex === rItem.pairIndex;
+
+        const leftEl = containerElement.querySelector(`[data-id="${lItem.id}"]`);
+        const rightEl = containerElement.querySelector(`[data-id="${rItem.id}"]`);
+
+        if (isPairMatch) {
+          leftEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 text-sm font-semibold flex items-center justify-between";
+          rightEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 text-sm font-semibold flex items-center justify-between";
+          leftEl.innerHTML = `<span class="flex-1">${lItem.text}</span><span class="text-emerald-600 font-black">✓</span>`;
+          rightEl.innerHTML = `<span class="flex-1">${rItem.text}</span><span class="text-emerald-600 font-black">✓</span>`;
+        } else {
+          isAllCorrect = false;
+          leftEl.className = "p-3 rounded-xl border-2 border-red-500 bg-red-50 text-red-950 text-sm font-semibold flex items-center justify-between";
+          rightEl.className = "p-3 rounded-xl border-2 border-red-500 bg-red-50 text-red-950 text-sm font-semibold flex items-center justify-between";
+          leftEl.innerHTML = `<span class="flex-1">${lItem.text}</span><span class="text-red-600 font-black">✕</span>`;
+          rightEl.innerHTML = `<span class="flex-1">${rItem.text}</span><span class="text-red-600 font-black">✕</span>`;
+        }
+      });
+
+      // 3. Sistema de racha y refuerzo
+      if (isAllCorrect) {
+        if (!isReinforcementPhase) {
+          firstRoundCorrect++;
+        } else {
+          secondRoundResolved++;
+        }
+        streakCount++;
+        if (streakCount > maxStreak) maxStreak = streakCount;
+      } else {
+        queueForReinforcement(question);
+        containerElement.classList.add("animate-shake");
+        streakCount = 0;
+      }
+
+      showFeedback(isAllCorrect, question.explanation);
+    }
+
     function queueForReinforcement(question) {
       if (!isReinforcementPhase && !pendingQueue.some(item => item.id === question.id)) {
         pendingQueue.push(question);
@@ -926,32 +1120,36 @@
       const namespace = "aureka-m21-filosofia";
       const key = "visitas";
 
+      // 1. Carga inmediata desde caché local (cero espera visual)
+      const cachedVisits = localStorage.getItem("aureka_cached_visits");
+      if (cachedVisits) {
+        counterEl.textContent = Number(cachedVisits).toLocaleString();
+      }
+
       try {
-        // 1. Intento con CounterAPI v1 con creación automática (up)
-        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`);
+        // 2. Consulta en segundo plano con límite estricto de 2.5s para no congelar la UI
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`, {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
         if (!res.ok) throw new Error("Status " + res.status);
         const data = await res.json();
-        
+
         if (data && typeof data.count !== "undefined") {
+          localStorage.setItem("aureka_cached_visits", data.count);
           counterEl.textContent = data.count.toLocaleString();
           return;
         }
-        throw new Error("Sin conteo");
       } catch (err) {
-        try {
-          // 2. Respaldo infalible con jsonbin / hitwebcounter en modo imagen oculta o fetch a api.db-ip
-          const altRes = await fetch(`https://api.codetabs.com/v1/proxy?quest=https://api.counterapi.dev/v1/${namespace}/${key}/up`);
-          const altData = await altRes.json();
-          if (altData && typeof altData.count !== "undefined") {
-            counterEl.textContent = altData.count.toLocaleString();
-            return;
-          }
-          throw new Error("Fallo proxy");
-        } catch (e) {
-          // 3. Respaldo local visual para que nunca quede roto si no hay internet
-          let localVisits = parseInt(localStorage.getItem("aureka_local_visits") || "120", 10) + 1;
-          localStorage.setItem("aureka_local_visits", localVisits);
-          counterEl.textContent = localVisits.toLocaleString();
+        // 3. Si no había caché previa y la red falló, muestra una cifra base decorosa
+        if (!cachedVisits) {
+          const fallback = 120;
+          localStorage.setItem("aureka_cached_visits", fallback);
+          counterEl.textContent = fallback.toLocaleString();
         }
       }
     }
