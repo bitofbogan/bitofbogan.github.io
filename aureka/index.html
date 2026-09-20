@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aureka | Módulo 21: Filosofía de la ciencia</title>
+  <title>Aureka | Preparatoria Abierta</title>
   <link rel="icon" type="image/png" href="augeicon.png">
   
   <!-- Tailwind CSS -->
@@ -46,7 +46,7 @@
       animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-  /* Transición elástica de barra de avance */
+    /* Transición elástica de barra de avance */
     .progress-bar-fill {
       transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -119,7 +119,7 @@
       </div>
       <div class="flex items-center gap-2">
         <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
-          Módulo 21
+          Cargando...
         </span>
         <button 
           type="button" 
@@ -143,11 +143,34 @@
     </span>
   </footer>
 
-  <!-- Carga del banco de preguntas -->
-  <script src="questions.js"></script>
-
-  <!-- Motor principal de la aplicación -->
+  <!-- Motor principal con cargador modular -->
   <script>
+    // 1. Diccionario de metadatos de los 22 módulos
+    const MODULES_MAP = {
+      1:  { name: "De la información al conocimiento", file: "data/m1.js" },
+      2:  { name: "El lenguaje en la relación del hombre con el mundo", file: "data/m2.js" },
+      3:  { name: "Representaciones simbólicas y algoritmos", file: "data/m3.js" },
+      4:  { name: "Ser social y sociedad", file: "data/m4.js" },
+      5:  { name: "Mi mundo en otra lengua", file: "data/m5.js" },
+      6:  { name: "Tecnología de información y comunicación", file: "data/m6.js" },
+      7:  { name: "Textos y visiones del mundo", file: "data/m7.js" },
+      8:  { name: "Matemáticas y representaciones del sistema natural", file: "data/m8.js" },
+      9:  { name: "Universo natural", file: "data/m9.js" },
+      10: { name: "Sociedad mexicana contemporánea", file: "data/m10.js" },
+      11: { name: "Transformaciones en el mundo contemporáneo", file: "data/m11.js" },
+      12: { name: "Mi vida en otra lengua", file: "data/m12.js" },
+      13: { name: "Argumentación", file: "data/m13.js" },
+      14: { name: "Variación en procesos sociales", file: "data/m14.js" },
+      15: { name: "Cálculo en fenómenos naturales y procesos sociales", file: "data/m15.js" },
+      16: { name: "Hacia un desarrollo sustentable", file: "data/m16.js" },
+      17: { name: "Evolución y sus repercusiones sociales", file: "data/m17.js" },
+      18: { name: "Estadística en fenómenos naturales y procesos sociales", file: "data/m18.js" },
+      19: { name: "Dinámica en la naturaleza: El movimiento", file: "data/m19.js" },
+      20: { name: "Optimización en sistemas naturales y sociales", file: "data/m20.js" },
+      21: { name: "Impacto de la ciencia y la tecnología", file: "data/m21.js" },
+      22: { name: "Informática", file: "data/m22.js" }
+    };
+
     const successPhrases = [
       "¡Excelente!",
       "¡Muy bien!",
@@ -156,6 +179,8 @@
       "¡Perfecto!",
       "¡Crack!"
     ];
+
+    let currentModuleId = "21";
     let currentQueue = [];
     let pendingQueue = [];
     let currentIndex = 0;
@@ -180,9 +205,7 @@
       return arr;
     }
 
-    // Generador de sombra con tono sutil aleatorio
     function getRandomTonedStyle() {
-      // Tonos cálidos/amigables (naranjas, ámbar, verdes, azules, violetas suaves)
       const hue = Math.floor(Math.random() * 360);
       return {
         style: `box-shadow: 0 4px 14px -2px hsla(${hue}, 45%, 55%, 0.16); border-color: hsla(${hue}, 30%, 82%, 1);`,
@@ -191,6 +214,16 @@
     }
 
     function initQuiz() {
+      if (typeof questionBank === "undefined" || !Array.isArray(questionBank)) {
+        app.innerHTML = `
+          <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-red-600">Error de datos</h2>
+            <p class="text-sm text-stone-500 mt-2">No se encontró un banco de preguntas válido.</p>
+          </div>
+        `;
+        return;
+      }
+
       totalQuestions = questionBank.length;
       firstRoundCorrect = 0;
       secondRoundResolved = 0;
@@ -201,7 +234,12 @@
       isReinforcementPhase = false;
 
       currentQueue = shuffle(questionBank);
-      phaseBadge.textContent = "Módulo 21";
+
+      const defaultBadge = (typeof moduleInfo !== "undefined" && moduleInfo.badge) 
+        ? moduleInfo.badge 
+        : `Módulo ${currentModuleId}`;
+
+      phaseBadge.textContent = defaultBadge;
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200";
       
       renderQuestion();
@@ -211,7 +249,7 @@
       if (confirm("¿Quieres reiniciar Aureka desde cero?")) {
         window.scrollTo({ top: 0, behavior: "smooth" });
         initQuiz();
-        initCounter(); // Incrementa visita al reiniciar voluntariamente
+        initCounter(currentModuleId);
       }
     }
 
@@ -392,10 +430,9 @@
         const list = document.createElement("div");
         list.className = "flex flex-col gap-3";
 
-        // Barajar los enunciados para evitar memorización de posición
         const shuffledItems = shuffle(q.items);
 
-        shuffledItems.forEach((item, idx) => {
+        shuffledItems.forEach(item => {
           const tone = getRandomTonedStyle();
           const row = document.createElement("div");
           row.className = "classification-item p-3.5 bg-white border-2 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3";
@@ -439,21 +476,17 @@
         const blanksContainer = document.createElement("div");
         blanksContainer.className = "flex flex-col gap-5";
 
-        // Preparar banco de fichas barajadas con ID único
         const allTokens = shuffle([...q.correctOrder, ...(q.distractors || [])]).map((text, i) => ({
           id: `token_${i}_${Math.random().toString(36).substr(2, 4)}`,
           text: text
         }));
 
-        // Estado local de los huecos: array con null o el token colocado
         const slotsState = new Array(q.correctOrder.length).fill(null);
-        let activeSlotIndex = 0; // Hueco enfocado para sustitución directa
+        let activeSlotIndex = 0;
 
-        // 1. Área del texto con los huecos limpios (sin "[ ___ ]")
         const sentenceBox = document.createElement("div");
         sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 border border-stone-200 rounded-xl leading-loose text-base font-medium text-auge-dark select-none";
 
-        // Reemplazar {0}, {1}, etc. por ranuras estilizadas
         let formattedSentence = q.sentence;
         q.correctOrder.forEach((_, idx) => {
           formattedSentence = formattedSentence.replace(
@@ -464,7 +497,6 @@
         sentenceBox.innerHTML = formattedSentence;
         blanksContainer.appendChild(sentenceBox);
 
-        // 2. Banco de fichas disponibles
         const poolTitle = document.createElement("div");
         poolTitle.className = "text-xs font-bold uppercase tracking-wider text-stone-400 -mb-2";
         poolTitle.textContent = "Opciones:";
@@ -475,7 +507,6 @@
         poolContainer.className = "flex flex-wrap gap-2 p-3 bg-white border border-stone-200 rounded-xl min-h-[56px] items-center";
         blanksContainer.appendChild(poolContainer);
 
-        // 3. Botón de comprobación
         const checkBtn = document.createElement("button");
         checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
         checkBtn.textContent = "Comprobar respuesta";
@@ -484,7 +515,6 @@
 
         optionsContainer.appendChild(blanksContainer);
 
-        // Funciones de renderizado e interacción
         function renderPool() {
           poolContainer.innerHTML = "";
           allTokens.forEach(token => {
@@ -509,24 +539,20 @@
             const isActive = slotIdx === activeSlotIndex;
 
             if (currentToken) {
-              // Hueco con ficha colocada
               el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-auge-orange bg-orange-50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
               el.innerHTML = `<span>${currentToken.text}</span>`;
               el.onclick = () => {
-                // Tocar la ficha colocada la quita y enfoca este espacio
                 slotsState[slotIdx] = null;
                 activeSlotIndex = slotIdx;
                 updateSlotsDisplay();
                 renderPool();
               };
             } else {
-              // Hueco vacío: borde punteado limpio con indicador sutil de foco
               el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed rounded-lg text-sm align-middle cursor-pointer transition-all ${
                 isActive 
                   ? 'border-auge-orange bg-orange-50/40 ring-2 ring-orange-200 shadow-sm' 
                   : 'border-stone-300 bg-white/90 hover:border-stone-400'
               }`;
-              // Línea tenue minimalista en lugar de texto feo
               el.innerHTML = `<span class="w-6 h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200'}"></span>`;
               el.onclick = () => {
                 activeSlotIndex = slotIdx;
@@ -538,22 +564,18 @@
         }
 
         function placeOrReplaceToken(token) {
-          // 1. Si el hueco activo está libre, colocarlo ahí
           if (slotsState[activeSlotIndex] === null) {
             slotsState[activeSlotIndex] = token;
           } else {
-            // 2. Si ya tenía ficha, busca si hay otro hueco libre primero
             const freeIdx = slotsState.findIndex(s => s === null);
             if (freeIdx !== -1) {
               slotsState[freeIdx] = token;
               activeSlotIndex = freeIdx;
             } else {
-              // 3. Sustitución directa: reemplaza la ficha del hueco activo
               slotsState[activeSlotIndex] = token;
             }
           }
 
-          // Avanza el foco al siguiente hueco vacío disponible
           const nextFree = slotsState.findIndex(s => s === null);
           if (nextFree !== -1) {
             activeSlotIndex = nextFree;
@@ -563,22 +585,18 @@
           renderPool();
         }
 
-        // Render inicial
         renderPool();
         updateSlotsDisplay();
       } else if (q.type === "match_columns") {
-        // Pares definidos en q.pairs: [{ left: "...", right: "..." }, ...]
         const matchContainer = document.createElement("div");
         matchContainer.className = "flex flex-col gap-4";
 
         const leftItems = q.pairs.map((p, i) => ({ id: `L_${i}`, text: p.left, pairIndex: i }));
         const rightItems = shuffle(q.pairs.map((p, i) => ({ id: `R_${i}`, text: p.right, pairIndex: i })));
 
-        // Almacena las conexiones: { L_0: "R_2", ... }
         const connections = {};
         let selectedLeftId = null;
 
-        // Paleta de tonos suaves para identificar parejas formadas
         const pairColors = [
           { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500" },
           { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500" },
@@ -613,7 +631,6 @@
           colLeft.innerHTML = "";
           colRight.innerHTML = "";
 
-          // Render columna izquierda
           leftItems.forEach((item, idx) => {
             const isSelected = selectedLeftId === item.id;
             const connectedRightId = connections[item.id];
@@ -642,7 +659,6 @@
 
             card.onclick = () => {
               if (connections[item.id]) {
-                // Si ya estaba conectado, desvincular al tocar de nuevo
                 delete connections[item.id];
                 selectedLeftId = null;
               } else {
@@ -654,9 +670,7 @@
             colLeft.appendChild(card);
           });
 
-          // Render columna derecha
           rightItems.forEach(item => {
-            // Buscar si algún elemento izquierdo está conectado a este derecho
             const connectedLeftEntry = Object.entries(connections).find(([_, rId]) => rId === item.id);
             const connectedLeftId = connectedLeftEntry ? connectedLeftEntry[0] : null;
             const leftIdx = connectedLeftId ? leftItems.findIndex(l => l.id === connectedLeftId) : -1;
@@ -682,14 +696,12 @@
 
             card.onclick = () => {
               if (connectedLeftId) {
-                // Desconectar si ya estaba unido
                 delete connections[connectedLeftId];
                 renderMatchView();
                 return;
               }
 
               if (selectedLeftId) {
-                // Conectar con el izquierdo activo
                 connections[selectedLeftId] = item.id;
                 selectedLeftId = null;
                 renderMatchView();
@@ -704,8 +716,6 @@
 
         renderMatchView();
       }
-
-      
 
       renderMath();
     }
@@ -787,7 +797,6 @@
       triggerBtn.classList.add("hidden");
       listElement.classList.add("pointer-events-none");
 
-      // Validar: deben coincidir exactamente todas las correctas y ninguna distractora
       const correctSet = new Set(question.correctAnswers);
       const hasAllCorrect = question.correctAnswers.every(ans => selectedValues.includes(ans));
       const hasNoExtras = selectedValues.every(ans => correctSet.has(ans));
@@ -799,26 +808,21 @@
         const wasSelected = el.dataset.selected === "true";
         const indicator = el.querySelector(".checkbox-indicator");
 
-        // Limpia estilos en línea de color y sombra
         el.style.boxShadow = "none";
 
         if (isAnswer && wasSelected) {
-          // 1. Acierto: era correcta y la seleccionó (Verde sólido)
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-emerald-500 bg-emerald-50 text-emerald-950";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white font-black shrink-0";
           indicator.textContent = "✓";
         } else if (!isAnswer && wasSelected) {
-          // 2. Error: no era correcta pero la seleccionó (Rojo marcado)
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-400";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-red-600 border border-red-600 flex items-center justify-center text-xs text-white font-black shrink-0";
           indicator.textContent = "✕";
         } else if (isAnswer && !wasSelected) {
-          // 3. Olvido: era correcta pero no la seleccionó (Verde punteado de advertencia)
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-dashed border-emerald-500 bg-emerald-50/50 text-emerald-900";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white flex items-center justify-center text-xs text-emerald-600 font-bold shrink-0";
           indicator.textContent = "✓";
         } else {
-          // 4. Distractor neutral no seleccionado (Atenuado)
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border border-stone-200 bg-stone-50 text-stone-400 opacity-60";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 bg-stone-100 flex items-center justify-center shrink-0";
           indicator.textContent = "";
@@ -898,7 +902,6 @@
     }
 
     function handleFillBlanksAnswer(slotsState, question, triggerBtn, containerElement) {
-      // Validar que todos los huecos estén llenos
       const hasEmpty = slotsState.some(s => s === null);
       if (hasEmpty) {
         alert("Por favor completa todos los espacios antes de comprobar.");
@@ -909,7 +912,6 @@
       triggerBtn.classList.add("hidden");
       containerElement.classList.add("pointer-events-none");
 
-      // Comprobar si cada ficha coincide con el orden correcto
       const isAllCorrect = slotsState.every((token, idx) => token.text === question.correctOrder[idx]);
 
       const slotElements = containerElement.querySelectorAll(".blank-slot");
@@ -942,7 +944,6 @@
     }
 
     function handleMatchColumnsAnswer(connections, leftItems, rightItems, question, triggerBtn, containerElement) {
-      // 1. Validar que se hayan conectado todas las parejas
       const totalPairs = leftItems.length;
       if (Object.keys(connections).length < totalPairs) {
         alert("Por favor relaciona todos los elementos antes de comprobar.");
@@ -955,7 +956,6 @@
 
       let isAllCorrect = true;
 
-      // 2. Verificar cada enlace
       leftItems.forEach(lItem => {
         const connectedRightId = connections[lItem.id];
         const rItem = rightItems.find(r => r.id === connectedRightId);
@@ -978,7 +978,6 @@
         }
       });
 
-      // 3. Sistema de racha y refuerzo
       if (isAllCorrect) {
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
@@ -1014,8 +1013,7 @@
         const randomPhrase = successPhrases[Math.floor(Math.random() * successPhrases.length)];
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
         box.innerHTML = `<span class="font-bold text-emerald-700">${randomPhrase}</span><br>${explanation}`;
-      } 
-      else {
+      } else {
         box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
         box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${explanation}`;
       }
@@ -1023,13 +1021,11 @@
       nextBtn.onclick = () => {
         currentIndex++;
         renderQuestion();
-        // Regresa la vista suavemente arriba para la siguiente pregunta
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
       renderMath();
 
-      // Desplaza suavemente hacia el cuadro de retroalimentación y el botón
       setTimeout(() => {
         container.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 80);
@@ -1068,7 +1064,6 @@
       phaseBadge.textContent = "Completado";
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200";
 
-      // Disparo de confeti festivo con tonos Auge
       if (window.confetti) {
         confetti({
           particleCount: 80,
@@ -1109,31 +1104,72 @@
             <div>• <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.</div>
           </div>
 
-          <button onclick="initQuiz(); initCounter();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+          <button onclick="initQuiz(); initCounter(currentModuleId);" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
             ¡Reintentar!
           </button>
         </div>
       `;
     }
-    async function initCounter() {
+
+    // 2. Cargador dinámico por URL (?m=X)
+    function loadCurrentModule() {
+      const urlParams = new URLSearchParams(window.location.search);
+      currentModuleId = urlParams.get('m') || '21';
+      const moduleConfig = MODULES_MAP[currentModuleId];
+
+      if (!moduleConfig) {
+        app.innerHTML = `
+          <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-red-600">Módulo no encontrado</h2>
+            <p class="text-sm text-stone-500 mt-2">El módulo solicitado (${currentModuleId}) no existe.</p>
+          </div>
+        `;
+        phaseBadge.textContent = "Error";
+        return;
+      }
+
+      document.title = `Aureka | Módulo ${currentModuleId}: ${moduleConfig.name}`;
+      phaseBadge.textContent = `Módulo ${currentModuleId}`;
+
+      const script = document.createElement("script");
+      script.src = moduleConfig.file;
+      script.onload = () => {
+        if (typeof moduleInfo !== "undefined") {
+          document.title = `Aureka | ${moduleInfo.badge}: ${moduleInfo.title}`;
+          phaseBadge.textContent = moduleInfo.badge;
+        }
+        initQuiz();
+        initCounter(currentModuleId);
+      };
+      script.onerror = () => {
+        app.innerHTML = `
+          <div class="p-6 bg-white border border-amber-200 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-amber-700">Contenido en preparación</h2>
+            <p class="text-sm text-stone-500 mt-2">El archivo <b>${moduleConfig.file}</b> aún no ha sido cargado en el servidor.</p>
+          </div>
+        `;
+        phaseBadge.textContent = `Módulo ${currentModuleId}`;
+      };
+      document.body.appendChild(script);
+    }
+
+    // 3. Contador de visitas independiente con bypass de caché
+    async function initCounter(moduleId = "global") {
       const counterEl = document.getElementById("visitCounter");
       if (!counterEl) return;
 
-      const namespace = "aureka_m21_prepa";
+      const namespace = `aureka_m${moduleId}_prepa`;
       const key = "visitas";
 
-      // 1. Lectura inmediata de caché local para evitar cualquier retraso
-      let localCount = parseInt(localStorage.getItem("aureka_visitas_count") || "0", 10);
+      let localCount = parseInt(localStorage.getItem(`count_${namespace}`) || "0", 10);
       if (localCount > 0) {
         counterEl.textContent = localCount.toLocaleString();
       }
 
       try {
-        // 2. Llamada directa con timeout estricto de 2s
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-        // Agregamos parámetro único de tiempo para saltar la caché del navegador
         const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up?t=${Date.now()}`, {
           method: "GET",
           mode: "cors",
@@ -1144,24 +1180,20 @@
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.count !== "undefined") {
-            localStorage.setItem("aureka_visitas_count", data.count);
+            localStorage.setItem(`count_${namespace}`, data.count);
             counterEl.textContent = Number(data.count).toLocaleString();
             return;
           }
         }
-        throw new Error("Fallo en API externa");
+        throw new Error("Fallo en API");
       } catch (err) {
-        // 3. Respaldo local activo: si la API externa falla o bloquea, sumamos 1 en local
         localCount = localCount > 0 ? localCount + 1 : 125;
-        localStorage.setItem("aureka_visitas_count", localCount);
+        localStorage.setItem(`count_${namespace}`, localCount);
         counterEl.textContent = localCount.toLocaleString();
       }
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      initQuiz();
-      initCounter();
-    });
+    window.addEventListener("DOMContentLoaded", loadCurrentModule);
   </script>
 </body>
 </html>
