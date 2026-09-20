@@ -1,9 +1,15 @@
-// questions.js
+// data/m21.js
+const moduleInfo = {
+  id: 21,
+  title: "Impacto de la ciencia y la tecnología",
+  badge: "Módulo 21"
+};
+
 const questionBank = [
   {
     id: 1,
     type: "fill_blanks",
-    prompt: "Completa:",
+    prompt: "Completa la afirmación sobre el modelo de investigación científica:",
     sentence: "Científicos como Stephen Hawking y Roger Penrose forman parte de la {0} al trabajar con un equipo interdisciplinario e internacional en proyectos de física gravitacional.",
     image: null,
     hint: "Piensa en el modelo de investigación científica de proyectos como el LHC o el Genoma Humano.",
@@ -470,7 +476,7 @@ const questionBank = [
   {
     id: 33,
     type: "fill_blanks",
-    prompt: "Completa:",
+    prompt: "Completa la afirmación sobre las reacciones atómicas:",
     sentence: "La reacción de {0} nuclear permite que los núcleos de dos átomos formen un núcleo nuevo con un átomo más pesado.",
     image: null,
     hint: "Recuerda la palabra que alude a 'fundir' elementos.",
@@ -487,7 +493,7 @@ const questionBank = [
   {
     id: 34,
     type: "fill_blanks",
-    prompt: "Completa:",
+    prompt: "Completa la afirmación sobre la masa en la fusión:",
     sentence: "En la fusión nuclear se unen dos átomos para formar un núcleo nuevo {0} pesado.",
     image: null,
     hint: null,
