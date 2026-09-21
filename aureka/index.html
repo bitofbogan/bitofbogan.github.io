@@ -598,16 +598,26 @@
         let selectedLeftId = null;
 
         const pairColors = [
-          { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500" },
-          { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500" },
-          { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-900", badge: "bg-purple-500" },
-          { bg: "bg-rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500" },
-          { bg: "bg-teal-50", border: "border-teal-400", text: "text-teal-900", badge: "bg-teal-500" },
-          { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500" }
+          { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500", dot: "bg-amber-400" },
+          { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500", dot: "bg-blue-400" },
+          { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-900", badge: "bg-purple-500", dot: "bg-purple-400" },
+          { bg: "bg-rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500", dot: "bg-rose-400" },
+          { bg: "bg-teal-50", border: "border-teal-400", text: "text-teal-900", badge: "bg-teal-500", dot: "bg-teal-400" },
+          { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500", dot: "bg-indigo-400" }
         ];
 
+        // 1. Cabecera visual que indica explícitamente las dos columnas
+        const headerGrid = document.createElement("div");
+        headerGrid.className = "grid grid-cols-2 gap-2 text-xs font-bold uppercase tracking-wider text-stone-400 px-1 select-none";
+        headerGrid.innerHTML = `
+          <div class="flex items-center gap-1"><span>1.</span> Columna A</div>
+          <div class="flex items-center gap-1 justify-end sm:justify-start"><span>2.</span> Columna B</div>
+        `;
+        matchContainer.appendChild(headerGrid);
+
+        // 2. Grilla forzada a 2 columnas siempre (grid-cols-2 estricto)
         const grid = document.createElement("div");
-        grid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+        grid.className = "grid grid-cols-2 gap-2.5 sm:gap-3 items-stretch";
 
         const colLeft = document.createElement("div");
         colLeft.className = "flex flex-col gap-2.5";
@@ -619,8 +629,9 @@
         grid.appendChild(colRight);
         matchContainer.appendChild(grid);
 
+        // Botón de comprobación
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors mt-2";
         checkBtn.textContent = "Comprobar relaciones";
         checkBtn.onclick = () => handleMatchColumnsAnswer(connections, leftItems, rightItems, q, checkBtn, matchContainer);
         matchContainer.appendChild(checkBtn);
@@ -631,6 +642,7 @@
           colLeft.innerHTML = "";
           colRight.innerHTML = "";
 
+          // Render Columna Izquierda
           leftItems.forEach((item, idx) => {
             const isSelected = selectedLeftId === item.id;
             const connectedRightId = connections[item.id];
@@ -640,10 +652,10 @@
             card.type = "button";
             card.dataset.id = item.id;
 
-            let styleClasses = "p-3 rounded-xl border-2 text-left text-sm font-medium transition-all shadow-sm flex items-center justify-between gap-2 ";
+            let styleClasses = "relative p-3 rounded-xl border-2 text-left text-xs sm:text-sm font-semibold transition-all shadow-sm flex flex-col justify-between min-h-[76px] ";
 
             if (isSelected) {
-              styleClasses += "border-auge-orange bg-orange-50/70 ring-2 ring-orange-200 text-auge-dark";
+              styleClasses += "border-auge-orange bg-orange-50 ring-2 ring-orange-200 text-auge-dark scale-[1.02]";
             } else if (hasConnection) {
               const colorTheme = pairColors[idx % pairColors.length];
               styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
@@ -653,8 +665,15 @@
 
             card.className = styleClasses;
             card.innerHTML = `
-              <span class="flex-1 leading-snug">${item.text}</span>
-              ${hasConnection ? `<span class="w-5 h-5 rounded-full ${pairColors[idx % pairColors.length].badge} text-white text-[10px] font-black flex items-center justify-center shrink-0">✓</span>` : ''}
+              <span class="leading-snug pr-3">${item.text}</span>
+              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 text-[11px]">
+                ${hasConnection 
+                  ? `<span class="font-bold text-emerald-700 flex items-center gap-1">✓ Enlazado</span>` 
+                  : (isSelected ? `<span class="text-auge-orange animate-pulse font-bold">Unir con 👉</span>` : `<span class="text-stone-400 font-normal">Toca para unir</span>`)
+                }
+                <!-- Pin conector visual hacia la derecha -->
+                <span class="w-2.5 h-2.5 rounded-full ${hasConnection ? pairColors[idx % pairColors.length].badge : (isSelected ? 'bg-auge-orange animate-ping' : 'bg-stone-300')} shrink-0"></span>
+              </div>
             `;
 
             card.onclick = () => {
@@ -670,6 +689,7 @@
             colLeft.appendChild(card);
           });
 
+          // Render Columna Derecha
           rightItems.forEach(item => {
             const connectedLeftEntry = Object.entries(connections).find(([_, rId]) => rId === item.id);
             const connectedLeftId = connectedLeftEntry ? connectedLeftEntry[0] : null;
@@ -679,19 +699,28 @@
             card.type = "button";
             card.dataset.id = item.id;
 
-            let styleClasses = "p-3 rounded-xl border-2 text-left text-sm font-medium transition-all shadow-sm flex items-center justify-between gap-2 ";
+            let styleClasses = "relative p-3 rounded-xl border-2 text-left text-xs sm:text-sm font-medium transition-all shadow-sm flex flex-col justify-between min-h-[76px] ";
 
             if (connectedLeftId) {
               const colorTheme = pairColors[leftIdx % pairColors.length];
               styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
             } else {
-              styleClasses += "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
+              styleClasses += selectedLeftId 
+                ? "border-orange-200 bg-orange-50/40 hover:border-auge-orange text-stone-700 cursor-pointer" 
+                : "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
             }
 
             card.className = styleClasses;
             card.innerHTML = `
-              <span class="flex-1 leading-snug">${item.text}</span>
-              ${connectedLeftId ? `<span class="w-5 h-5 rounded-full ${pairColors[leftIdx % pairColors.length].badge} text-white text-[10px] font-black flex items-center justify-center shrink-0">✓</span>` : ''}
+              <span class="leading-snug pl-1">${item.text}</span>
+              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 text-[11px]">
+                <!-- Pin conector visual hacia la izquierda -->
+                <span class="w-2.5 h-2.5 rounded-full ${connectedLeftId ? pairColors[leftIdx % pairColors.length].badge : 'bg-stone-300'} shrink-0"></span>
+                ${connectedLeftId 
+                  ? `<span class="font-bold text-emerald-700">✓ Conectado</span>` 
+                  : `<span class="text-stone-400 font-normal">Destino</span>`
+                }
+              </div>
             `;
 
             card.onclick = () => {
