@@ -32,7 +32,7 @@ const questionBank = [
       "Financiera, gubernamental, social y religiosa.",
       "Social, eclesiástica, política y económica."
     ],
-    explanation: "Toda sociedad se organiza de acuerdo a su liderazo (política), gestión de recursos y actividades productivas (económica), expectativas del grupo (social) y creencias (religiosa)."
+    explanation: "Toda sociedad se organiza de acuerdo a su liderazgo (política), gestión de recursos y actividades productivas (económica), expectativas del grupo (social) y creencias (religiosa)."
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ const questionBank = [
     prompt: "¿A qué término se hace referencia cuando las normas morales se fundan en algo extraño a la persona humana?",
     image: null,
     hint: "Es el concepto que define cuando una persona rige su conducta siguiendo mandatos ajenos en lugar de su propia deliberación.",
-    correct: "Heterotomía.",
+    correct: "Heteronomía.",
     distractors: [
       "Autonomía.",
       "Obligación.",
@@ -96,7 +96,7 @@ const questionBank = [
     correctOrder: [
       "Espacio simbólico o geográfico donde intervienen las personas.",
       "Compartir creencias, representaciones, lenguaje y valores.",
-      "Poner en marcha realizaciones materiales (arte, religión, tradiciones).",
+      "Poner en marcha realizaciones materiales (arte, religión y tradiciones).",
       "Realizar manifestaciones humanas producto de interpretaciones comunes."
     ],
     explanation: "La cultura se construye de lo fundacional a lo visible: surge en un entorno geográfico compartido, madura mediante valores y lenguajes comunes, y se exterioriza en obras materiales y celebraciones colectivas."
@@ -171,7 +171,7 @@ const questionBank = [
   {
     id: 13,
     type: "multi_select",
-    prompt: "¿Qué fenómenos sociales se han propiciado por el concepto de <b>sociedad de conocimiento</b>?,
+    prompt: "¿Qué fenómenos sociales se han propiciado por el concepto de <b>sociedad de conocimiento</b>?",
     image: null,
     hint: "Elige las opciones vinculadas con la digitalización de datos, la comercialización de la información y la innovación constante.",
     correctAnswers: [
@@ -187,21 +187,21 @@ const questionBank = [
     explanation: "En la sociedad del conocimiento, el saber científico-tecnológico se convierte en el insumo productivo principal, impulsando el almacenamiento masivo de datos, la venta de información y la competencia basada en la innovación permanente."
   },
   {
-    id: 15,
+    id: 14,
     type: "choice",
-    prompt: "Nuria, joven estudiante de bachillerato de la ciudad de Toluca, capital del Estado de México, lee en el periódico la historia de Lucila:\n\"Lucila vive en una comunidad rural de la sierra de Oaxaca, donde los padres suelen concertar las bodas con amigos y compadres. Por ello Lucila quedó comprometida desde los 10 años con Abel, hijo de unos compadres, dos años mayor que ella. No estaba previsto que Lucila estudiara, por lo que solo trabajó en las labores del hogar preparándose para casarse, mientras los compadres reunían el dinero para la dote a pagar a los papás de Lucila.\nLucila se casó a los 18 años y la joven pareja se quedó viviendo en casa de Abel, compartiendo el único cuarto con el resto de la familia. Lucila y Abel ayudan en las labores del campo. Antes de un año nació Nicolás, el primer hijo.\"\nIndependientemente de que Nuria esté o no de acuerdo con la situación descrita, ¿qué tipo de componentes se distinguen en la historia de Lucila?",
+    prompt: "Lucía vive en una comunidad rural donde los padres suelen arreglar las bodas de los hijos. Por ello, quedó comprometida desde los 10 años. Se contempla que se dedique al hogar sin necesidad de estudios para casarse a los 18 años y vivir en casa de la familia de su pareja. ¿Con qué concepto se puede describir esta situación?",
     image: null,
     hint: "Enfócate en cómo se transmiten los acuerdos familiares y ritos comunitarios de generación en generación.",
-    correct: "Costumbres que forman parte de las tradiciones y cultura de donde vive Lucila.",
+    correct: "Contexto sociocultural de las familias de esa localidad.",
     distractors: [
-      "Contexto sociocultural en el que se desarrollan las familias en el estado de Oaxaca.",
+      "Costumbres que forman parte de las tradiciones y cultura de una localidad.",
       "Necesidades biológicas de alimentarse, casarse y tener hijos a temprana edad.",
-      "Particularidades propias de la región o comunidad donde viven Lucila y Abel."
+      "Particularidades propias de la región o comunidad donde vive Lucía."
     ],
-    explanation: "Los arreglos de matrimonio por dote y los roles asignados desde la niñez son costumbres arraigadas que se reproducen como parte de las tradiciones locales de la comunidad[cite: 13]."
+    explanation: "El matrimonio, los roles de género y las actividades económicas son prácticas sociales generalizadas que ocurren en muchos lugares. Las particularidades de esta comunidad en particular son el contexto sociocultural en el que ocurren esas prácticas."
   },
   {
-    id: 16,
+    id: 15,
     type: "choice",
     prompt: "¿Qué tienen en común Nelson Mandela, la Madre Teresa y Adolf Hitler?",
     image: null,
@@ -215,9 +215,9 @@ const questionBank = [
     explanation: "Se denomina agente a la persona que posee agencia: la capacidad de influir, desafiar o reconfigurar los valores e instituciones de su entorno."
   },
   {
-    id: 17,
+    id: 16,
     type: "choice",
-    prompt: "¿Cómo se llama la forma de organización donde el trabajador no es dueño de su propia tierra, sino del patrón, que considera al trabajador como de su propiedad y además le cobra renta de la tierra que trabaja?",
+    prompt: "¿Cómo se llama la forma de organización donde el trabajador no es dueño de su propia tierra, sino que es propiedad del patrón, quien considera al trabajador como de su propiedad y además le cobra renta de la tierra que trabaja?",
     image: null,
     hint: "Modo de producción medieval sustentado en la relación de vasallaje y la servidumbre campesina.",
     correct: "Feudalismo.",
@@ -229,35 +229,41 @@ const questionBank = [
     explanation: "El sistema feudal se basaba en la subordinación del campesino convertido en siervo, quien debía pagar tributos o renta en especie y trabajo al señor noble a cambio de protección y el uso precario de la tierra."
   },
   {
-    id: 18,
-    type: "choice",
-    prompt: "Desde el enfoque del Materialismo histórico, hay un elemento que encuadra en la práctica social y se le define como grandes grupos de personas que se diferencian entre sí, por su desempeño en un sistema de producción históricamente determinado y se le conoce como:",
+    id: 17,
+    type: "fill_blanks",
+    prompt: "Completa los espacios:",
+    sentence: "Desde el enfoque del materialismo histórico, se define una {0} como un grupo de personas que se diferencian entre sí por su desempeño en un sistema de producción.",
     image: null,
-    hint: "Concepto central de Carlos Marx para agrupar a las personas de acuerdo con su posición frente a los medios de producción.",
-    correct: "Clase",
-    distractors: [
-      "Papel",
-      "Ente",
-      "Dinámica"
+    hint: "Concepto central de Karl Marx para agrupar a las personas de acuerdo con su posición frente a los medios de producción.",
+    correctOrder: [
+        "clase social"
     ],
-    explanation: "Para el materialismo histórico, una clase social está formada por grupos que se diferencian según el papel que cumplen en la producción y si poseen o no los medios materiales para generar riqueza[cite: 13]."
+    distractors: [
+      "papel económico",
+      "rol socioeconómico",
+      "dinámica social"
+    ],
+    explanation: "Para el materialismo histórico, una clase social está formada por grupos que se diferencian según el papel que cumplen en la producción y si poseen o no los medios materiales para generar riqueza."
+  },
+  {
+    id: 18,
+    type: "fill_blanks",
+    prompt: "Completa los espacios:",
+    sentence: "El desarrollo de la vacuna antirrábica de Louis Pasteur es un ejemplo de {0}.",
+    image: null,
+    hint: null,
+    correctOrder: [
+        "tecnociencia"
+    ],
+    distractors: [
+      "tecnología",
+      "ciencia",
+      "progreso"
+    ],
+    explanation: "Puesto que la vacuna antirrábica conllevó la aplicación de la ciencia pura al desarrollo de una tecnología particular, se clasifica como tecnociencia."
   },
   {
     id: 19,
-    type: "choice",
-    prompt: "Lee los dos fragmentos siguientes y responde la pregunta que aparece más adelante.\n[Texto a] En la famosa Enciclopedia UTEHA se lee acerca de Louis Pasteur que fue un químico y bacteriólogo francés (1822-1895), cuya labor científica se inició con descubrimientos químicos que le llevaron a efectuar investigaciones biológicas. Combatió la teoría de Pouchet acerca de la generación espontánea. Descubrió el bacilo del cólera de las gallinas y descubrió la vacunación antirrábica.\n[Texto b] En el libro de texto del Módulo \"Ser social y sociedad\", se lee que una vacuna contra la influenza representa un avance tecnológico, esta ayuda al ser humano a mantenerse libre de la enfermedad y esto a su vez ayuda a la sociedad a evitar una epidemia.\nDe acuerdo con los Textos [a] y [b], junto con el criterio del libro de texto, ¿cómo se debe catalogar a Louis Pasteur con relación a la vacuna antirrábica?\n1.- Tecnólogo\n2.- Científico\n3.- Tecnocientífico",
-    image: null,
-    hint: "Pasteur investigó las leyes biológicas en el laboratorio y además creó una solución técnica aplicable para erradicar una enfermedad.",
-    correct: "1 y 2",
-    distractors: [
-      "2 y 3",
-      "Solo 3",
-      "Solo 1"
-    ],
-    explanation: "Pasteur reunió ambos perfiles: actuó como científico al investigar los principios biológicos de los microorganismos y como tecnólogo al diseñar la solución práctica de la vacuna antirrábica[cite: 13]."
-  },
-  {
-    id: 20,
     type: "choice",
     prompt: "¿Qué modo de producción tiene una empresa donde todos sus trabajadores son parte activa y copropietarios?",
     image: null,
@@ -271,21 +277,25 @@ const questionBank = [
     explanation: "En un modo de producción socialista los medios de trabajo no pertenecen a un capitalista particular, sino que los trabajadores gestionan cooperativamente la empresa y comparten los beneficios de su propia producción."
   },
   {
-    id: 21,
-    type: "choice",
-    prompt: "Analiza el siguiente caso:\nLupe acaba de ingresar a una pandilla llamado \"Los Panchitos\", en una zona cercana a Tacubaya, en la Ciudad de México, después de haber aprobado un ritual tomado de un códice azteca. Generalmente no tienen buenas relaciones con sus familias. Se visten con trajes regionales de zonas indígenas del sur de México y se maquillan como lo hacen los grupos autóctonos de Sonora. Hablan un dialecto tomado del Mazahua que solamente ellos entienden para poder comunicarse sin que los demás comprendan lo que dicen. Salen a caminar en grupo a partir de la 1 de la mañana hasta las 6 de la madrugada, no se meten con nadie, no toman alcohol ni se drogan, solo se sientan en los parques a discutir o cantar algunas canciones acompañados por armónica. Ninguno trabaja. Los que estudian obtienen calificaciones mínimas aprobatorias para no ser expulsados de la escuela.\n¿Qué tipo de organización social se describe en el caso presentado?",
+    id: 20,
+    type: "fill_blanks",
+    prompt: "Luis ingresa a una pandilla en la Ciudad de México tras un ritual de iniciación azteca. Los miembros no tienen buenas relaciones familiares, se visten con trajes y maquillaje indígena y hablan un dialecto especial entre ellos. Salen de madrugada a parques para discutir, cantar canciones y filosofar sin consumir sustancias ni agredir a nadie.",
+    sentence: "Esta es una {0} catalogada como {1}.",
     image: null,
-    hint: "Se trata de un agrupamiento juvenil que vive dentro de la ciudad pero construye símbolos, formas de vestir y lenguajes propios.",
-    correct: "Subcultura - Tribu urbana",
-    distractors: [
-      "Subcultura - Grupo antisocial",
-      "Cultura - Seres sociales",
-      "Cultura - Grupo indígena"
+    hint: null,
+    correctOrder: [
+        "subcultura",
+        "tribu urbana"
     ],
-    explanation: "Las tribus urbanas son subculturas que coexisten dentro del entorno urbano[cite: 13]; sus integrantes crean estilos distintivos y códigos de pertenencia para diferenciarse de la cultura dominante[cite: 13]."
+    distractors: [
+      "cultura",
+      "grupo antisocial",
+      "grupo autóctono"
+    ],
+    explanation: "Las tribus urbanas son subculturas que coexisten dentro del entorno urbano; sus integrantes crean estilos distintivos y códigos de pertenencia para diferenciarse de la cultura dominante."
   },
   {
-    id: 22,
+    id: 21,
     type: "choice",
     prompt: "¿Cuáles son los 4 tipos de organización pertenecientes a la sociedad primitiva?",
     image: null,
@@ -299,7 +309,7 @@ const questionBank = [
     explanation: "Las sociedades primitivas atravesaron una secuencia de organización basada en la ayuda mutua: iniciaron con la horda nómada, avanzaron hacia clanes y gens basados en el parentesco común y formaron tribus mediante la unión cooperativa de varios grupos."
   },
   {
-    id: 23,
+    id: 22,
     type: "match_columns",
     prompt: "Relaciona las ciencias sociales con su objeto de estudio.",
     pairs: [
@@ -310,21 +320,21 @@ const questionBank = [
     explanation: "Cada ciencia social aborda una faceta: la antropología estudia la evolución corporal y la cultura humana; la sociología se enfoca en las relaciones e instituciones grupales; y la economía en la administración del trabajo y los recursos materiales."
   },
   {
-    id: 24,
+    id: 23,
     type: "choice",
-    prompt: "Lee la siguiente escena tomada de la película \"Los tres huastecos\".\nEn la escena le cae encima a Cuco una cubeta de agua con cal.\nPadre Andrade: Corre a enjuagarte, la cal te va a despellejar.\nMari Toña: ¡Ja, ja, ja! No se apure Señor Cura la cal no le llega al cuero: ¡tiene una cáscarsa de mugre! (Dirigiéndose a Cuco) Hasta que te vas a bañar. No te vaya a dar pulmonía.\nCuco: No seas \"levanta-falsos\" Mari Toña. Me baño todos los meses aunque no me haga falta.\n¿Cómo se denomina el conjunto de acciones relacionadas con este diálogo?",
+    prompt: "En la película <i>Los Tres Huastecos</i> se escuchan términos como <i>cáscara de mugre</i> o <i>levantafalsos</i>. ¿Cómo se denomina el conjunto de acciones relacionadas con estos diálogos?",
     image: null,
     hint: "Abarca las conductas y hábitos cotidianos que las personas realizan de manera regular en su vida en comunidad.",
-    correct: "Prácticas sociales",
+    correct: "Contexto cultural.",
     distractors: [
-      "Contexto cultural",
-      "Agentes sociales",
-      "Subcultura"
+      "Prácticas sociales.",
+      "Agencia social.",
+      "Subcultura."
     ],
-    explanation: "Las rutinas de aseo personal, su periodicidad y las expresiones humorísticas compartidas son ejemplos de prácticas sociales: acciones cotidianas que reflejan las costumbres del entorno en el que se vive[cite: 13]."
+    explanation: "Las rutinas de aseo personal, su periodicidad y las expresiones humorísticas compartidas son ejemplos de contextos socioculturales: acciones cotidianas que reflejan las costumbres del entorno en el que se vive."
   },
   {
-    id: 25,
+    id: 24,
     type: "classification",
     prompt: "Clasifica las siguientes situaciones como características de un ser social o un ser biológico.",
     image: null,
@@ -341,9 +351,9 @@ const questionBank = [
     explanation: "Procesos como nutrir las células, conciliar el sueño y controlar la respiración responden a la supervivencia corporal (biológica); compartir festejos, competir en juegos lúdicos y procesar el duelo en familia son vivencias compartidas (social)."
   },
   {
-    id: 26,
+    id: 25,
     type: "choice",
-    prompt: "¿Qué autor explica que la sociedad mexicana se considera honesta y buena, pero al mismo tiempo descalifica a todo el orden institucional y estatal, rechazando partidos políticos, gobernantes y afirmando que todos los empleados de la burocracia son corruptos.",
+    prompt: "¿Qué autor explica que la sociedad mexicana se considera honesta y buena, pero al mismo tiempo descalifica a todo el orden institucional y estatal, rechazando partidos políticos, gobernantes y afirmando que todos los empleados de la burocracia son corruptos?",
     image: null,
     hint: "Sociólogo que estudió cómo las ideas individuales, la burocracia y la búsqueda de sentido explican el comportamiento social.",
     correct: "Max Weber.",
@@ -352,42 +362,42 @@ const questionBank = [
       "Augusto Comte.",
       "Karl Marx."
     ],
-    explanation: "Max Weber propuso la teoría comprensiva, la cual sostiene que la sociología debe interpretar los motivos y significados que los individuos le dan a sus acciones y a instituciones como la burocracia[cite: 13], permitiendo entender por qué la gente confía en lo personal pero desconfía de las estructuras públicas."
+    explanation: "Max Weber propuso la teoría comprensiva, la cual sostiene que la sociología debe interpretar los motivos y significados que los individuos le dan a sus acciones y a instituciones como la burocracia, permitiendo entender por qué la gente confía en lo personal pero desconfía de las estructuras públicas."
   },
   {
-    id: 27,
+    id: 26,
     type: "multi_select",
-    prompt: "Identifica todos los factores sociales de la siguiente lista que tienen implicaciones bioéticas:",
+    prompt: "¿Cuáles de los siguientes factores sociales tienen implicaciones bioéticas?",
     image: null,
     hint: "Busca problemas que amenacen la dignidad de las comunidades, la salud humana o la conservación de otras formas de vida.",
     correctAnswers: [
-      "Nuevas tecnologías para aprovechar productos residuales.",
+      "Uso de nuevas tecnologías para aprovechar productos residuales.",
       "Altos niveles de densidad poblacional en pueblos y municipios.",
       "Pérdida de la diversidad de flora y fauna por extensión de las zonas urbanas."
     ],
     distractors: [
       "Aplicación de nuevos métodos agrícolas sin uso de fertilizantes químicos."
     ],
-    explanation: "La bioética reflexiona sobre la responsabilidad moral ante la vida[cite: 13]; por ello, el manejo de desechos tecnológicos, la saturación urbana y el desplazamiento de especies por el crecimiento de las ciudades plantean dilemas éticos urgentes[cite: 13]."
+    explanation: "La bioética reflexiona sobre la responsabilidad moral ante la vida; por ello, el manejo de desechos tecnológicos, la saturación urbana y el desplazamiento de especies por el crecimiento de las ciudades plantean dilemas éticos."
   },
   {
-    id: 28,
+    id: 27,
     type: "choice",
-    prompt: "¿Cuál de las siguientes opciones guarda relación con el Positivismo?",
+    prompt: "¿Qué afirmación se relaciona con el positivismo?",
     image: null,
     hint: "Corriente que afirma que únicamente la ciencia y los hechos empíricos demostrables conducen a la humanidad al desarrollo.",
-    correct: "La Ciencia es la fuerza más poderosa de que dispone el ser humano para progresar.",
+    correct: "La ciencia es la fuerza más poderosa de que dispone el ser humano para progresar.",
     distractors: [
       "La salud física y mental del hombre depende de las fuerzas de la naturaleza.",
       "La realidad social sólo puede ser abordada de forma científica si se analiza tal como es.",
       "Los fenómenos se estudian por sus elementos genéricos cualitativos y cuantitativos."
     ],
-    explanation: "El positivismo fundado por Augusto Comte sostiene que el conocimiento científico (basado en la observación y experimentación de leyes naturales) es la herramienta fundamental e indispensable para guiar el orden y progreso social[cite: 13]."
+    explanation: "El positivismo fundado por Augusto Comte sostiene que el conocimiento científico (basado en la observación y experimentación de leyes naturales) es la herramienta fundamental e indispensable para guiar el orden y progreso social."
   },
   {
-    id: 29,
+    id: 28,
     type: "choice",
-    prompt: "Carlos inicia sus estudios de bachillerato en el Sistema Abierto en Ojuelos, Jalisco. Como resultado de la lectura de los libros de texto se percata de la necesidad de interactuar con las personas de su barrio. Se ha propuesto participar en la organización de un torneo deportivo y apoyar a las actividades que organizan en la iglesia y hasta decidió ir a la próxima ceremonia del Grito de Independencia. Piensa organizar un grupo de estudio con algunos compañeros que asisten a la biblioteca municipal.\n¿Qué puede afirmarse con relación al conjunto de decisiones de Carlos?",
+    prompt: "Al transcurrir su bachillerato, César entiende su necesidad de interactuar con otras personas, por lo que se propone colaborar en actividades de su iglesia, ayudar en un torneo deportivo y organizar un grupo de estudio con compañeros de la biblioteca. ¿Qué puede afirmarse respecto a sus decisiones?",
     image: null,
     hint: "Describe la experiencia continua mediante la cual un individuo se incorpora y participa activamente en su comunidad.",
     correct: "Se encuentra en un proceso de socialización.",
@@ -396,20 +406,20 @@ const questionBank = [
       "Se dio cuenta de que es un ser social.",
       "Se está integrando a una subcultura urbana."
     ],
-    explanation: "La socialización es el proceso dinámico en el que el individuo entra en contacto con otros, asume normas colectivas y participa activamente en espacios deportivos, cívicos y educativos de su entorno comunitario[cite: 13]."
+    explanation: "La socialización es el proceso dinámico en el que el individuo entra en contacto con otros, asume normas colectivas y participa activamente en espacios deportivos, cívicos y educativos de su entorno comunitario."
   },
   {
-    id: 30,
+    id: 29,
     type: "choice",
     prompt: "¿A qué término se hace referencia al afirmar que el sujeto moral se determina a sí mismo y su conducta se rige por su propia y libre decisión?",
     image: null,
     hint: "Facultad ética de dictarse a uno mismo las reglas de conducta con plena responsabilidad.",
-    correct: "Autonomía",
+    correct: "Autonomía.",
     distractors: [
-      "Heteronomía",
-      "Obligatoriedad",
-      "Obligación"
+      "Heteronomía.",
+      "Obligatoriedad.",
+      "Obligación."
     ],
-    explanation: "La autonomía ética es la capacidad del sujeto consciente para reflexionar, elegir y autodeterminar sus actos conforme a sus propios principios y valores de libertad[cite: 13]."
+    explanation: "La autonomía ética es la capacidad del sujeto consciente para reflexionar, elegir y autodeterminar sus actos conforme a sus propios principios y valores de libertad."
   }
 ];
