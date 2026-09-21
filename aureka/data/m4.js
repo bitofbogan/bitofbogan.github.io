@@ -155,36 +155,36 @@ const questionBank = [
     explanation: "Estas transiciones resumen las consecuencias fundamentales de la Revolución Industrial, cuando la mecanización y el vapor reorganizaron la mano de obra campesina en fábricas urbanas dominadas por el capital."
   },
   {
-    id: 13,
+    id: 12,
     type: "choice",
-    prompt: "Analiza el siguiente caso y responde lo que se pregunta más adelante:\n\"Al inicio de la colonia, la actividad económica en la Nueva España se dedicó a la minería y la agricultura, donde los indígenas y negros esclavos realizaban la producción en beneficio de los encomenderos y de la corona española. Al final de la colonia había un poco más de posibilidades para indios y mestizos, pudiendo dedicarse a labores productivas similares a las de los conquistadores, con la ayuda del comercio, la producción de artesanías y alimentos. Estos grupos hablaban español y podían competir en mejores condiciones cuando se vestían y actuaban como los conquistadores, compartiendo valores, costumbres y formas de trabajo, así como la posibilidad de estudiar en escuelas y universidades que se habían puesto a su disposición.\"\n¿A qué fenómeno social hace referencia esta situación?",
+    prompt: "¿Qué interacción cultural ocurrió cuando los indígenas y mestizos de la Nueva España se dedicaban a labores similares a las de los conquistadores además de imitar su lenguaje, vestimenta, valores y costumbres para accesar a mejores condiciones?",
     image: null,
-    hint: "Describe el proceso donde un sector de la población incorpora y asimila los elementos identitarios de la cultura dominante para integrarse.",
-    correct: "Aculturación",
+    hint: "Describe el proceso donde un sector de la población incorpora y asimila los elementos de una cultura que percibe dominante para llegar a un punto de equidad con ella.",
+    correct: "Transculturación.",
     distractors: [
-      "Multiculturalidad",
-      "Transculturación",
-      "Interculturalismo"
+      "Multiculturalidad.",
+      "Aculturación.",
+      "Interculturalidad."
     ],
-    explanation: "El caso ilustra la aculturación[cite: 4]: la asimilación paulatina de rasgos culturales (como el idioma, la vestimenta, las costumbres laborales y la religión) por parte de sectores subordinados para desenvolverse en el entorno colonial[cite: 13]."
+    explanation: "El caso ilustra la transculturación: la asimilación paulatina de rasgos culturales (como el idioma, la vestimenta, las costumbres laborales y la religión) por parte de sectores subordinados para desenvolverse de forma equitativa en el entorno colonial."
   },
   {
-    id: 14,
+    id: 13,
     type: "multi_select",
-    prompt: "¿Qué fenómenos sociales se han propiciado por el concepto de \"sociedad de conocimiento\"?",
+    prompt: "¿Qué fenómenos sociales se han propiciado por el concepto de <b>sociedad de conocimiento</b>?,
     image: null,
     hint: "Elige las opciones vinculadas con la digitalización de datos, la comercialización de la información y la innovación constante.",
     correctAnswers: [
-      "Codificación y almacenamiento de datos.",
+      "Surgimiento de la sociedad del riesgo.",
       "Conformación de los mercados de la información.",
       "Valoración de la innovación y la competitividad."
     ],
     distractors: [
       "Limitaciones para el desarrollo de destrezas de reflexión y de análisis.",
-      "Nuevos descubrimientos biotecnológicos, como el Proyecto Genoma Humano.",
-      "Surgimiento de la sociedad del riesgo."
+      "Nuevos descubrimientos biotecnológicos como el Proyecto Genoma Humano.",
+      "Codificación y almacenamiento de datos."
     ],
-    explanation: "En la sociedad del conocimiento, el saber científico-tecnológico se convierte en el insumo productivo principal, impulsando el almacenamiento masivo de datos, la venta de información y la competencia basada en la innovación permanente[cite: 13]."
+    explanation: "En la sociedad del conocimiento, el saber científico-tecnológico se convierte en el insumo productivo principal, impulsando el almacenamiento masivo de datos, la venta de información y la competencia basada en la innovación permanente."
   },
   {
     id: 15,
@@ -203,30 +203,30 @@ const questionBank = [
   {
     id: 16,
     type: "choice",
-    prompt: "Nelson Mandela, la Madre Teresa de Calcuta y Adolfo Hitler, tienen en común que fueron:",
+    prompt: "¿Qué tienen en común Nelson Mandela, la Madre Teresa y Adolf Hitler?",
     image: null,
     hint: "Indica la cualidad que tienen ciertas personas para romper inercias y reorientar el rumbo de las estructuras sociales.",
-    correct: "Agentes de cambio social",
+    correct: "Son agentes de cambio social.",
     distractors: [
-      "Representantes de diversidad cultural",
-      "Miembros de instituciones culturales",
-      "Agentes de prácticas sociales"
+      "Son representantes de diversidad cultural.",
+      "Son miembros de instituciones culturales.",
+      "Son agentes de prácticas sociales."
     ],
-    explanation: "Se denomina agente a la persona que posee 'agencia'[cite: 13]: la capacidad de influir, desafiar o reconfigurar los valores e instituciones de su entorno, independientemente del juicio ético que merezca el resultado de sus acciones[cite: 13]."
+    explanation: "Se denomina agente a la persona que posee agencia: la capacidad de influir, desafiar o reconfigurar los valores e instituciones de su entorno."
   },
   {
     id: 17,
     type: "choice",
-    prompt: "Forma de organización en donde el trabajador no es dueño de su propia tierra, sino del patrón que considera al trabajador como de su propiedad y además debe pagar renta de la tierra que trabaja. Es la sociedad:",
+    prompt: "¿Cómo se llama la forma de organización donde el trabajador no es dueño de su propia tierra, sino del patrón, que considera al trabajador como de su propiedad y además le cobra renta de la tierra que trabaja?",
     image: null,
     hint: "Modo de producción medieval sustentado en la relación de vasallaje y la servidumbre campesina.",
-    correct: "Feudal",
+    correct: "Feudalismo.",
     distractors: [
-      "Primitiva",
-      "Moderna",
-      "Esclavista"
+      "Sociedad primitiva.",
+      "Sociedad moderna.",
+      "Esclavismo."
     ],
-    explanation: "El sistema feudal se basaba en la subordinación del campesino convertido en siervo[cite: 13], quien debía pagar tributos o renta en especie y trabajo al señor noble a cambio de protección y el uso precario de la tierra[cite: 13]."
+    explanation: "El sistema feudal se basaba en la subordinación del campesino convertido en siervo, quien debía pagar tributos o renta en especie y trabajo al señor noble a cambio de protección y el uso precario de la tierra."
   },
   {
     id: 18,
@@ -259,16 +259,16 @@ const questionBank = [
   {
     id: 20,
     type: "choice",
-    prompt: "En Cuba se estableció una empresa refresquera, en donde todos sus trabajadores son parte activa de esta empresa. ¿A qué tipo de modo de producción se refiere?",
+    prompt: "¿Qué modo de producción tiene una empresa donde todos sus trabajadores son parte activa y copropietarios?",
     image: null,
-    hint: "Modelo económico que busca reemplazar el beneficio de accionistas privados por la gestión colectiva de los trabajadores.",
-    correct: "Socialista",
+    hint: "Modelo económico que busca reemplazar el beneficio de accionistas privados por la autogestión colectiva de los trabajadores.",
+    correct: "Socialista.",
     distractors: [
-      "Esclavista",
-      "Capitalista",
-      "Feudalista"
+      "Esclavista.",
+      "Capitalista.",
+      "Feudalista."
     ],
-    explanation: "En un modo de producción socialista los medios de trabajo no pertenecen a un capitalista particular, sino que los trabajadores gestionan cooperativamente la empresa y comparten los beneficios de su propia producción[cite: 13]."
+    explanation: "En un modo de producción socialista los medios de trabajo no pertenecen a un capitalista particular, sino que los trabajadores gestionan cooperativamente la empresa y comparten los beneficios de su propia producción."
   },
   {
     id: 21,
@@ -287,27 +287,27 @@ const questionBank = [
   {
     id: 22,
     type: "choice",
-    prompt: "Indica los tipos de organización pertenecientes a la sociedad primitiva.",
+    prompt: "¿Cuáles son los 4 tipos de organización pertenecientes a la sociedad primitiva?",
     image: null,
     hint: "Recuerda la evolución social temprana desde grupos errantes hasta comunidades unidas por linaje familiar.",
-    correct: "Horda, clan o gens y tribu",
+    correct: "Horda, clan, gens y tribu.",
     distractors: [
-      "Familia, pueblo y tribu",
-      "Horda, familia, clan o gens",
-      "Horda, tribu y parentesco"
+      "Familia, pueblo, comunidad y tribu.",
+      "Horda, familia, clan y gens.",
+      "Horda, tribu, clan y parentesco."
     ],
-    explanation: "Las sociedades primitivas atravesaron una secuencia de organización basada en la ayuda mutua: iniciaron con la horda nómada[cite: 13], avanzaron hacia clanes y gens basados en el parentesco común[cite: 13], y formaron tribus mediante la unión cooperativa de varios grupos[cite: 13]."
+    explanation: "Las sociedades primitivas atravesaron una secuencia de organización basada en la ayuda mutua: iniciaron con la horda nómada, avanzaron hacia clanes y gens basados en el parentesco común y formaron tribus mediante la unión cooperativa de varios grupos."
   },
   {
     id: 23,
     type: "match_columns",
-    prompt: "Relaciona los objetos de estudio con las ciencias sociales de la siguiente tabla (No todos los objetos se relacionan):",
+    prompt: "Relaciona las ciencias sociales con su objeto de estudio.",
     pairs: [
-      { left: "Antropología", right: "Forma física del ser humano y su comportamiento aprendido o actuar cultural" },
-      { left: "Sociología", right: "El ser humano en relación con sus semejantes e interacciones en grupos y organizaciones" },
-      { left: "Economía", right: "Medios empleados por las sociedades para organizar recursos materiales, producción y trabajo" }
+      { left: "Antropología", right: "Forma física del ser humano y su comportamiento aprendido o actuar cultural." },
+      { left: "Sociología", right: "El ser humano en relación con sus semejantes e interacciones en grupos y organizaciones." },
+      { left: "Economía", right: "Medios empleados por las sociedades para organizar recursos materiales, producción y trabajo." }
     ],
-    explanation: "Cada ciencia social aborda una faceta: la antropología estudia la evolución corporal y la cultura humana[cite: 13]; la sociología se enfoca en las relaciones e instituciones grupales[cite: 13]; y la economía en la administración del trabajo y los recursos materiales[cite: 13]."
+    explanation: "Cada ciencia social aborda una faceta: la antropología estudia la evolución corporal y la cultura humana; la sociología se enfoca en las relaciones e instituciones grupales; y la economía en la administración del trabajo y los recursos materiales."
   },
   {
     id: 24,
@@ -326,33 +326,33 @@ const questionBank = [
   {
     id: 25,
     type: "classification",
-    prompt: "Clasifica las siguientes situaciones como características sociales o biológicas según corresponda:",
+    prompt: "Clasifica las siguientes situaciones como características de un ser social o un ser biológico.",
     image: null,
     hint: "Lo biológico cubre funciones fisiológicas para mantenerse con vida; lo social abarca ritos, convivencia colectiva y juegos comunitarios.",
-    categories: ["Biológica", "Social"],
+    categories: ["Biológico", "Social"],
     items: [
-      { text: "Juan come una dieta balanceada para mantenerse sano.", correct: "Biológica" },
-      { text: "Lila invita a sus amigos a comer tamales, chocolate y rosca el día de Reyes.", correct: "Social" },
-      { text: "Tomás es velador y solo duerme 5 horas al día como máximo.", correct: "Biológica" },
-      { text: "El 'profe' Ruiz enseña la respiración pausadamente para relajar los músculos.", correct: "Biológica" },
-      { text: "Kike y Olga compiten a ver quién aguanta más tiempo sin respirar bajo el agua.", correct: "Social" },
-      { text: "Emma está muy triste por la muerte de su abuela, pero era algo que ya se esperaba.", correct: "Social" }
+      { text: "Jaime come una dieta balanceada para mantenerse sano.", correct: "Biológico" },
+      { text: "Liliana invita a sus amigos a una fiesta por el día de Reyes.", correct: "Social" },
+      { text: "Antonio duerme 5 horas al día.", correct: "Biológico" },
+      { text: "Un profesor enseña a respirar pausadamente para relajar los músculos.", correct: "Biológico" },
+      { text: "Dos hermanos compiten para ver quién aguanta más tiempo sin respirar.", correct: "Social" },
+      { text: "Erika está muy triste por la muerte de su abuela.", correct: "Social" }
     ],
-    explanation: "Procesos como nutrir las células, conciliar el sueño y controlar la respiración responden a la supervivencia corporal (biológica)[cite: 13]; compartir festejos, competir en juegos lúdicos y procesar el duelo en familia son vivencias compartidas (social)[cite: 13]."
+    explanation: "Procesos como nutrir las células, conciliar el sueño y controlar la respiración responden a la supervivencia corporal (biológica); compartir festejos, competir en juegos lúdicos y procesar el duelo en familia son vivencias compartidas (social)."
   },
   {
     id: 26,
     type: "choice",
-    prompt: "¿Cuál autor permite explicar esta opinión?\nNuestra sociedad se puede comprender porque el mexicano se considera honesto y bueno, pero descalifica a todo el orden institucional y del Estado. Por ello no cree en los partidos, desconfía de los políticos y los gobernantes, afirmando que todos los empleados de la burocracia son corruptos.",
+    prompt: "¿Qué autor explica que la sociedad mexicana se considera honesta y buena, pero al mismo tiempo descalifica a todo el orden institucional y estatal, rechazando partidos políticos, gobernantes y afirmando que todos los empleados de la burocracia son corruptos.",
     image: null,
     hint: "Sociólogo que estudió cómo las ideas individuales, la burocracia y la búsqueda de sentido explican el comportamiento social.",
-    correct: "Max Weber",
+    correct: "Max Weber.",
     distractors: [
-      "Emile Durkheim",
-      "Augusto Comte",
-      "Carlos Marx"
+      "Emile Durkheim.",
+      "Augusto Comte.",
+      "Karl Marx."
     ],
-    explanation: "Max Weber propuso la teoría comprensiva[cite: 13], la cual sostiene que la sociología debe interpretar los motivos y significados que los individuos le dan a sus acciones y a instituciones como la burocracia[cite: 13], permitiendo entender por qué la gente confía en lo personal pero desconfía de las estructuras públicas[cite: 13]."
+    explanation: "Max Weber propuso la teoría comprensiva, la cual sostiene que la sociología debe interpretar los motivos y significados que los individuos le dan a sus acciones y a instituciones como la burocracia[cite: 13], permitiendo entender por qué la gente confía en lo personal pero desconfía de las estructuras públicas."
   },
   {
     id: 27,
