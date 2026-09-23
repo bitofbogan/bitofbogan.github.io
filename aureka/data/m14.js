@@ -233,7 +233,7 @@ var questionBank = [
     id: 14, //READY
     topicId: "interes_simple_tiempo",
     type: "choice",
-    prompt: "¿En cuántos meses se obtendrá un monto final de &#36;120,000 a partir de una inversión de &#36;40,000 con una tasa de interés simple del 5% bimestral?",
+    prompt: "¿En cuántos meses se obtendrá un monto final de $\\$$120,000 a partir de una inversión de $\\$$40,000 con una tasa de interés simple del 5% bimestral?",
     image: null,
     hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $$t = \\frac{I}{C \\cdot i}$$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
@@ -295,23 +295,23 @@ var questionBank = [
       },
       {
         left: "Riesgo de precio o interés",
-        right: "<b>Mauricio:</b> Contrató un préstamo hipotecario a 15 años al $14\\%$ anual, pero tras el primer año la tasa pactada aumentó al $25\\%$."
+        right: "<b>Mauricio:</b> Contrató un préstamo hipotecario a 15 años al 14% anual, pero tras el primer año la tasa pactada aumentó al 25%."
       }
     ],
-    explanation: "Los riesgos financieros se clasifican según su origen:<br>• <b>Crédito:</b> Incumplimiento o retraso en las fechas de liquidación pactadas.<br>• <b>Volatilidad:</b> Fluctuaciones imprevistas en los precios de mercado.<br>• <b>Sistema:</b> Factores macroeconómicos, cambiarios o aduanales fuera del control de la empresa.<br>• <b>Precio/interés:</b> Alteraciones en las tasas activas que encarecen el costo del capital."
+    explanation: "Los riesgos financieros se clasifican según su origen:<br>• <b>Crédito:</b> No se realiza el pago de un interés o préstamo.<br>• <b>Volatilidad:</b> Fluctuaciones repentinas en los precios de mercado.<br>• <b>Sistema:</b> Factores macroeconómicos como la inflación, devaluaciones o políticas de gobierno.<br>• <b>Precio/interés:</b> Cambios en los porcentajes de la tasa de interés."
   },
   {
     id: 18,
     topicId: "interes_compuesto",
     type: "choice",
-    prompt: "Una familia invierte &#36;100,000 a 5 años con dos posibles ofertas:<br><br>• <b>Banco Andor:</b> 8% de tasa bruta anualizada a 120 días.<br>• <b>Banco Bix:</b> 6% de tasa bruta anualizada a 90 días.<br><br>¿Cuál alternativa ofrece mayor rendimiento final?",
+    prompt: "Una familia invierte $\$$100,000 a 5 años con dos posibles ofertas:<br><br>• <b>Banco Andor:</b> 8% de tasa bruta anualizada a 120 días.<br>• <b>Banco Bix:</b> 6% de tasa bruta anualizada a 90 días.<br><br>¿Cuál alternativa ofrece mayor rendimiento final?",
     image: null,
     hint: "Determina el número de capitalizaciones al año para cada opción (3 para 120 días, 4 para 90 días) y calcula el monto compuesto total al término de los 5 años.",
-    correct: "Banco Andor con un rendimiento de &#36;148,402.74.",
+    correct: "Banco Andor con un rendimiento de $\$$148,402.74.",
     distractors: [
-      "Banco Bix con un rendimiento de &#36;148,594.73.",
-      "Ambos bancos generan el mismo rendimiento de &#36;148,402.74.",
-      "Banco Andor con un rendimiento de &#36;148,594.73."
+      "Banco Bix con un rendimiento de $\$$148,594.73.",
+      "Ambos bancos generan el mismo rendimiento de $\$$148,402.74.",
+      "Banco Andor con un rendimiento de $\$$148,594.73."
     ],
     explanation: "Para el Banco A, con 3 plazos anuales ($n = 15$ periodos en 5 años) e $i = \\frac{0.08}{3}$: $$M_A = \\$100{,}000\\left(1 + \\frac{0.08}{3}\\right)^{15} \\approx \\$148{,}402.74$$ Para el Banco B, con 4 plazos anuales ($n = 20$ periodos en 5 años) e $i = \\frac{0.06}{4} = 0.015$: $$M_B = \\$100{,}000(1 + 0.015)^{20} \\approx \\$134{,}685.50$$"
   },
