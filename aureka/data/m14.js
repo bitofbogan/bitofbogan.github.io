@@ -1,5 +1,5 @@
 // data/m14.js
-const moduleInfo = {
+var moduleInfo = {
   id: 14,
   title: "Variación en procesos sociales",
   badge: "Módulo 14",
@@ -35,7 +35,7 @@ const moduleInfo = {
   }
 };
 
-const questionBank = [
+var questionBank = [
   {
     id: 1,
     topicId: "series",
@@ -180,7 +180,7 @@ const questionBank = [
       "$1,250.00",
       "$1,350.00"
     ],
-    explanation: "El interés simple generado es $$I = (\\$1,000)(0.05)(6) = \\$300$$. Al sumar este rendimiento al capital inicial, se obtiene un monto total de $1,300."
+    explanation: "El interés simple generado se obtiene calculando: $$I = (\\$1{,}000)(0.05)(6) = \\$300$$ Al sumar este rendimiento al capital inicial mediante $$M = C + I = \\$1{,}000 + \\$300$$, se obtiene un monto total de $1,300."
   },
   {
     id: 11,
@@ -188,14 +188,14 @@ const questionBank = [
     type: "choice",
     prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000, si la tasa de interés simple es del 5% bimestral?",
     image: null,
-    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $t = I / (C \\cdot i)$ y luego convierte los plazos a meses.",
+    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $t = \\frac{I}{C \\cdot i}$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
     distractors: [
       "40 meses.",
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de $$I = \\$120,000 - \\$40,000 = \\$80,000$$. Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{80,000}{40,000 \\cdot 0.05} = \\frac{80,000}{2,000} = 40$$ bimestres. Al multiplicar 40 bimestres por 2 meses, el tiempo total es de 80 meses."
+    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{I}{C \\cdot i} = \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} = \\frac{\\$80{,}000}{\\$2{,}000} = 40\\text{ bimestres}$$ Al multiplicar $40\\text{ bimestres} \\cdot 2\\text{ meses}$, el tiempo total es de 80 meses."
   },
   {
     id: 12,
@@ -210,7 +210,7 @@ const questionBank = [
       "Porque su comportamiento genera incrementos lineales idénticos en cada intervalo temporal.",
       "Porque depende estrictamente de las fluctuaciones de la paridad cambiaria de la moneda."
     ],
-    explanation: "En el interés compuesto, los rendimientos devengados se integran al capital en cada periodo de capitalización, formando una serie geométrica de crecimiento acumulativo acelerado M = C(1 + i)^n."
+    explanation: "En el interés compuesto, los rendimientos devengados se integran al capital en cada periodo de capitalización, formando una serie geométrica de crecimiento acumulativo acelerado dada por: $$M = C(1 + i)^n$$"
   },
   {
     id: 13,
@@ -225,7 +225,7 @@ const questionBank = [
       "$54,121.60",
       "$56,308.12"
     ],
-    explanation: "Calculando el factor de crecimiento: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$. Multiplicando por el capital inicial: $$M = \\$50,000 \\cdot 1.1040808 \\approx \\$55,204.04$$."
+    explanation: "Calculamos el factor de crecimiento geométrico: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$ Multiplicando por el capital inicial: $$M = \\$50{,}000 \\cdot 1.1040808 \\approx \\$55{,}204.04$$"
   },
   {
     id: 14,
@@ -240,7 +240,7 @@ const questionBank = [
       "Ambos instrumentos generan exactamente el mismo monto debido a la compensación por plazo.",
       "El Banco B, al acumular 20 periodos de capitalización contra 15 del Banco A."
     ],
-    explanation: "Para el Banco A: tasa por periodo i = 0.08 / 3, en 5 años n = 15 plazos, resultando M = $100,000(1 + 0.08/3)^15 ≈ $148,402.74. Para el Banco B: i = 0.06 / 4, con n = 20 plazos, arrojando M = $100,000(1 + 0.015)^20 ≈ $134,685.50."
+    explanation: "Para el Banco A, con 3 plazos anuales ($n = 15$ periodos en 5 años) e $i = \\frac{0.08}{3}$: $$M_A = \\$100{,}000\\left(1 + \\frac{0.08}{3}\\right)^{15} \\approx \\$148{,}402.74$$ Para el Banco B, con 4 plazos anuales ($n = 20$ periodos en 5 años) e $i = \\frac{0.06}{4} = 0.015$: $$M_B = \\$100{,}000(1 + 0.015)^{20} \\approx \\$134{,}685.50$$"
   },
   {
     id: 15,
@@ -318,7 +318,7 @@ const questionBank = [
       "Tasa impositiva del ISR y comisiones por administración del fondo.",
       "Tipo de cambio spot y tasa bruta anualizada de rendimiento."
     ],
-    explanation: "La tasa de interés real refleja la rentabilidad real de los recursos una vez descontada la inflación: r ≈ i - π (donde i es la tasa nominal pactada y π es la tasa de inflación registrada o proyectada)."
+    explanation: "La tasa de interés real refleja la rentabilidad neta de los recursos una vez descontada la inflación mediante la relación: $$r \\approx i - \\pi$$ donde $i$ representa la tasa nominal pactada y $\\pi$ es la tasa de inflación esperada."
   },
   {
     id: 20,
@@ -356,14 +356,14 @@ const questionBank = [
     type: "choice",
     prompt: "Un modelo demográfico lineal predice que una población de 50,000 habitantes aumenta de manera constante en 2,500 personas por año. ¿Cuántos habitantes habrá al transcurrir 8 años?",
     image: null,
-    hint: "Utiliza la estructura de una progresión aritmética a_n = a_1 + (n - 1)d o el cálculo lineal directo Población = Inicial + (incremento anual · años).",
+    hint: "Utiliza la estructura de una progresión aritmética $a_n = a_1 + (n - 1)d$ o el cálculo lineal directo de incremento por año.",
     correct: "70,000 habitantes.",
     distractors: [
       "65,000 habitantes.",
       "72,500 habitantes.",
       "67,500 habitantes."
     ],
-    explanation: "En una variación lineal el aumento anual es constante: Crecimiento total = 2,500 · 8 = 20,000 habitantes. Sumado a los 50,000 iniciales, se alcanzan 70,000 habitantes."
+    explanation: "En un modelo de variación lineal el incremento es constante en cada periodo: $$\\text{Crecimiento total} = 2{,}500 \\cdot 8 = 20{,}000\\text{ habitantes}$$ Sumando al censo original: $$P_8 = 50{,}000 + 20{,}000 = 70{,}000\\text{ habitantes}$$"
   },
   {
     id: 23,
@@ -371,14 +371,14 @@ const questionBank = [
     type: "choice",
     prompt: "Si una serie geométrica de crecimiento poblacional inicia con 2,000 individuos y su razón de crecimiento por periodo es r = 1.5, ¿cuál será el valor del cuarto término de la serie?",
     image: null,
-    hint: "Aplica la regla de las progresiones geométricas a_n = a_1 · r^(n - 1) para n = 4.",
+    hint: "Aplica la regla de las progresiones geométricas $a_n = a_1 \\cdot r^{n - 1}$ para $n = 4$.",
     correct: "6,750 individuos.",
     distractors: [
       "4,500 individuos.",
       "10,125 individuos.",
       "5,000 individuos."
     ],
-    explanation: "Aplicando la fórmula del enésimo término geométrico: a_4 = 2,000 · (1.5)^(4 - 1) = 2,000 · (1.5)^3 = 2,000 · 3.375 = 6,750."
+    explanation: "Aplicando la fórmula del enésimo término geométrico: $$a_4 = a_1 \\cdot r^{4 - 1} = 2{,}000 \\cdot (1.5)^3 = 2{,}000 \\cdot 3.375 = 6{,}750$$"
   },
   {
     id: 24,
@@ -393,7 +393,7 @@ const questionBank = [
       "$19,500.00",
       "$22,250.00"
     ],
-    explanation: "El plazo de 18 meses comprende 9 bimestres. El interés simple es I = ($15,000)(0.05)(9) = $6,750. El monto final asciende a $15,000 + $6,750 = $21,750."
+    explanation: "El plazo de 18 meses comprende $t = \\frac{18}{2} = 9\\text{ bimestres}$. El interés simple es: $$I = (\\$15{,}000)(0.05)(9) = \\$6{,}750$$ El monto final acumulado asciende a: $$M = C + I = \\$15{,}000 + \\$6{,}750 = \\$21{,}750$$"
   },
   {
     id: 25,
@@ -448,14 +448,14 @@ const questionBank = [
     type: "choice",
     prompt: "Un ahorrador coloca $20,000 en un depósito a 2 años con una tasa compuesta anual del 10% capitalizable anualmente. ¿Cuánto dinero retirará al finalizar los dos periodos?",
     image: null,
-    hint: "Calcula el primer año ($20,000 + 10%) y sobre ese nuevo saldo aplica nuevamente el 10%, o utiliza M = C(1 + i)^n.",
+    hint: "Calcula el primer año ($20,000 + 10%) y sobre ese nuevo saldo aplica nuevamente el 10%, o utiliza $M = C(1 + i)^n$.",
     correct: "$24,200.00",
     distractors: [
       "$24,000.00",
       "$22,000.00",
       "$25,100.00"
     ],
-    explanation: "Al primer año el capital suma $20,000 · 1.10 = $22,000. Al segundo año, el interés se calcula sobre la nueva base: $22,000 · 1.10 = $24,200. Mediante fórmula: M = 20,000 · (1.10)^2 = 20,000 · 1.21 = $24,200."
+    explanation: "Al primer año el capital suma: $$\\$20{,}000 \\cdot 1.10 = \\$22{,}000$$ Al segundo año, el rendimiento se devenga sobre el saldo acumulado: $$\\$22{,}000 \\cdot 1.10 = \\$24{,}200$$ Mediante fórmula de interés compuesto: $$M = \\$20{,}000(1 + 0.10)^2 = \\$20{,}000(1.21) = \\$24{,}200$$"
   },
   {
     id: 29,
@@ -463,14 +463,14 @@ const questionBank = [
     type: "choice",
     prompt: "Una familia destina $8,150 a una inversión a un plazo de 5 años bajo un esquema de interés simple con una tasa del 3.5% semestral. ¿Cuánto dinero acumulado obtendrá al término del contrato?",
     image: null,
-    hint: "En 5 años hay 10 semestres. Aplica I = C · i · t y suma el capital inicial.",
+    hint: "En 5 años hay 10 semestres. Aplica $I = C \\cdot i \\cdot t$ y suma el capital inicial.",
     correct: "$11,002.50",
     distractors: [
       "$9,576.25",
       "$12,429.75",
       "$10,850.00"
     ],
-    explanation: "El periodo de 5 años equivale a 10 semestres. El interés generado es I = ($8,150)(0.035)(10) = $2,852.50. El monto acumulado final es $8,150 + $2,852.50 = $11,002.50."
+    explanation: "El periodo de 5 años comprende $t = 5 \\cdot 2 = 10\\text{ semestres}$. El interés generado es: $$I = (\\$8{,}150)(0.035)(10) = \\$2{,}852.50$$ El monto acumulado final es: $$M = C + I = \\$8{,}150 + \\$2{,}852.50 = \\$11{,}002.50$$"
   },
   {
     id: 30,
