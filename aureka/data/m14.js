@@ -37,7 +37,7 @@ var moduleInfo = {
 
 var questionBank = [
   {
-    id: 1,
+    id: 1,  //READY
     topicId: "series",
     type: "choice",
     prompt: "¿Qué es un modelo matemático?",
@@ -52,7 +52,7 @@ var questionBank = [
     explanation: "Un modelo matemático es una construcción abstracta que expresa relaciones observables mediante símbolos y ecuaciones para simular fenómenos y realizar predicciones verificables."
   },
   {
-    id: 2,
+    id: 2,  //READY
     type: "choice",
     prompt: "Dadas las siguientes pirámides poblacionales del INEGI, ¿qué grupo de edad muestra una mayor disminución porcentual?",
     images: [
@@ -69,7 +69,7 @@ var questionBank = [
     explanation: "La reducción de la base piramidal refleja el descenso de la tasa de fecundidad; el estrato de 5 a 9 años presenta la caída porcentual más marcada entre 1980 y 2010, reflejando el progresivo envejecimiento poblacional."
   },
   {
-    id: 3,
+    id: 3,  //READY
     type: "choice",
     prompt: "¿Cuáles son las variables demográficas que determinan la forma y evolución de una pirámide poblacional?",
     image: null,
@@ -83,7 +83,7 @@ var questionBank = [
     explanation: "La estructura por edad y sexo de una población se transforma continuamente a partir del número de nacimientos (fecundidad), defunciones (mortalidad) y el saldo neto de desplazamientos hacia adentro o fuera del territorio (migración)."
   },
   {
-    id: 4,
+    id: 4,  //READY
     type: "choice",
     prompt: "¿Qué es la esperanza de vida?",
     image: null,
@@ -97,7 +97,7 @@ var questionBank = [
     explanation: "La esperanza de vida al nacer resume las condiciones sanitarias, alimentarias y sociales de un país, indicando la cantidad media de años que se espera que viva un recién nacido bajo las tasas de mortalidad vigentes."
   },
   {
-    id: 5,
+    id: 5,  //READY
     type: "choice",
     prompt: "¿Cómo se llamó el acuerdo entre México y Estados Unidos que reguló el flujo migratorio laboral entre 1942 y 1964?",
     image: null,
@@ -111,7 +111,7 @@ var questionBank = [
     explanation: "El Programa Bracero permitió la contratación legal y temporal de millones de trabajadores agrícolas y obreros mexicanos en territorio estadounidense para compensar la escasez laboral de la posguerra."
   },
   {
-    id: 6,
+    id: 6,  //READY
     type: "multi_select",
     prompt: "Selecciona las características que distinguen al patrón migratorio actual de mexicanos hacia Estados Unidos según el CONAPO:",
     image: null,
@@ -119,7 +119,7 @@ var questionBank = [
     correctAnswers: [
       "Disminución de los mecanismos de circularidad.",
       "Ampliación de las regiones de origen y destino de los emigrantes.",
-      "Mayor heterogeneidad en el perfil socioeconómico y educativo de los migrantes."
+      "Mayor heterogeneidad en el perfil de los migrantes."
     ],
     distractors: [
       "Predominio absoluto de trabajadores agrícolas temporales.",
@@ -129,12 +129,12 @@ var questionBank = [
     explanation: "El endurecimiento fronterizo redujo la circularidad (el retorno estacional), obligando a estancias permanentes; paralelamente, la migración se diversificó incorporando múltiples niveles educativos y destinos urbanos diversos en Estados Unidos."
   },
   {
-    id: 7,
+    id: 7,  //READY
     type: "choice",
-    prompt: "¿Cuál de las siguientes afirmaciones es <b>falsa</b> respecto a los efectos de la migración en sus lugares de origen?",
+    prompt: "¿Cuál de las siguientes afirmaciones es <b>falsa</b> respecto al fenómeno migratorio en sus lugares de origen?",
     image: null,
     hint: "Las remesas alivian carencias inmediatas, pero no resuelven automáticamente los problemas productivos ni erradican la pobreza estructural.",
-    correct: "Provoca transformaciones económicas que reducen de forma automática y estructural los niveles de pobreza.",
+    correct: "Provoca cambios económicos en el lugar de origen al incidir en la disminución de los índices de pobreza.",
     distractors: [
       "Genera envejecimiento demográfico por la salida preponderante de población joven.",
       "Propicia la feminización de la comunidad y la recomposición de roles familiares.",
@@ -143,9 +143,9 @@ var questionBank = [
     explanation: "Aunque las remesas mejoran el consumo básico, la migración no garantiza una disminución de la pobreza estructural en las regiones expulsoras; por el contrario, suele acarrear despoblamiento productivo, pérdida de mano de obra y desarticulación familiar."
   },
   {
-    id: 8,
+    id: 8,  //READY
     type: "choice",
-    prompt: "¿Cuál es la condición necesaria para decir que existe un crecimiento de riqueza en un país?",
+    prompt: "¿Cuál es la condición necesaria para decir que existe un crecimiento de riqueza económica en un país?",
     image: null,
     hint: "Compara el ritmo del Producto Interno Bruto frente a la tasa a la que se expande el número de habitantes.",
     correct: "Que la tasa de crecimiento del PIB sea superior a la tasa de crecimiento de la población.",
@@ -157,7 +157,24 @@ var questionBank = [
     explanation: "El PIB per cápita resulta de dividir el PIB entre el número total de habitantes. Si la población crece al mismo ritmo o más rápido que la producción, la riqueza promedio por individuo permanece estancada o disminuye."
   },
   {
-    id: 9,
+    id: 9,  //READY
+    type: "fill_blanks",
+    prompt: "Completa la oración:",
+    sentence: "Según el CONAPO, el primer patrón migratorio estableció las bases del fenómeno actual a partir de {0} en Estados Unidos a finales del siglo XIX.",
+    image: null,
+    hint: "Compara el ritmo del Producto Interno Bruto frente a la tasa a la que se expande el número de habitantes.",
+    correctOrder: [
+      "la demanda laboral"
+    ],
+    distractors: [
+      "el término del Programa Bracero",
+      "la expulsión de migrantes",
+      "los índices de desempleo"
+    ],
+    explanation: "De los 4 patrones migratorios identificados por el CONAPO, el primero se da a partir de la <b>demanda laboral en el vecino Estados Unidos</b> desde finales del siglo XIX hasta inicios del siglo XX."
+  },
+  {
+    id: 10,  //READY
     type: "match_columns",
     prompt: "Relaciona cada subíndice del Índice de Desarrollo Humano con su criterio de medición:",
     pairs: [
@@ -168,7 +185,37 @@ var questionBank = [
     explanation: "El IDH propuesto por la ONU integra tres pilares del bienestar: una vida larga y saludable (esperanza de vida), el acceso a la formación académica (escolaridad) y un estándar material de vida digno (ingreso per cápita ajustado)."
   },
   {
-    id: 10,
+    id: 11,  //READY
+    type: "choice",
+    prompt: "¿Qué se requiere para obtener el presupuesto mensual de un hogar?",
+    image: null,
+    hint: null,
+    correct: "Registrar el dinero que ingresa y egresa al hogar durante un periodo mensual.",
+    distractors: [
+      "Equilibrar necesidades y recursos disponibles con un margen de deuda.",
+      "Equilibrar necesidades y recursos disponibles con un margen de ahorro.",
+      "Solicitar asesoría contable para registrar ingresos y egresos durante un periodo mensual."
+    ],
+    explanation: "Para elaborar un presupuesto, se necesita <b>registrar el dinero que entra y sale del hogar durante un mes</b>."
+  },
+  {
+    id: 12,  //READY
+    type: "multi_select",
+    prompt: "¿Qué ventajas ofrece la elaboración de un presupuesto?",
+    image: null,
+    hint: null,
+    correctAnswers: [
+      "Aumentar los ingresos familiares.",
+      "Limitarse a los ingresos disponibles.",
+      "Lograr que el orden redunde en el ahorro."
+    ],
+    distractors: [
+      "Mantener las finanzas personales equilibradas."
+    ],
+    explanation: "Mantener las finanzas personales equilibradas es en sí la elaboración del presupuesto, no una ventaja que resulta de éste."
+  },
+  {
+    id: 13,  //READY
     topicId: "interes_simple_dinero",
     type: "choice",
     prompt: "Se invierten $1,000 a un plazo de 6 meses con una tasa de interés simple del 5% mensual. ¿Cuánto dinero se acumulará al término del plazo?",
@@ -180,40 +227,40 @@ var questionBank = [
       "$1,250.00",
       "$1,350.00"
     ],
-    explanation: "El interés simple generado se obtiene calculando: $$I = (\\$1{,}000)(0.05)(6) = \\$300$$ Al sumar este rendimiento al capital inicial mediante $$M = C + I = \\$1{,}000 + \\$300$$, se obtiene un monto total de $1,300."
+    explanation: "El interés simple generado se obtiene calculando: $$I = (\\$1{,}000)(0.05)(6) = \\$300$$ Al sumar este rendimiento al capital inicial mediante $$M = C + I = \\$1{,}000 + \\$300$$ se obtiene un monto total de $\\mathbf{\\$1,300}$."
   },
   {
-    id: 11,
+    id: 14, //READY
     topicId: "interes_simple_tiempo",
     type: "choice",
-    prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000, si la tasa de interés simple es del 5% bimestral?",
+    prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000 con una tasa de interés simple del 5% bimestral?",
     image: null,
-    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $t = \\frac{I}{C \\cdot i}$ y luego convierte los plazos a meses.",
+    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $$t = \\frac{I}{C \\cdot i}$$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
     distractors: [
       "40 meses.",
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{I}{C \\cdot i} = \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} = \\frac{\\$80{,}000}{\\$2{,}000} = 40\\text{ bimestres}$$ Al multiplicar $40\\text{ bimestres} \\cdot 2\\text{ meses}$, el tiempo total es de 80 meses."
+    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{I}{C \\cdot i} = \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} = \\frac{\\$80{,}000}{\\$2{,}000} = 40$$ plazos. Si cada plazo es bimestral, se multiplica $40 \\cdot 2$ y se tiene el tiempo total de \\textbf{80 meses}."
   },
   {
-    id: 12,
-    topicId: "interes_compuesto",
+    id: 15,
+    topicId: "riesgos_inversion",
     type: "choice",
-    prompt: "¿Por qué el interés compuesto corresponde a un modelo geométrico?",
+    prompt: "¿Qué tipo de riesgo se relaciona a eventos como la inflación, la devaluación y situaciones económicas que involucran a todo un país?",
     image: null,
-    hint: "Considera cómo se calculan los intereses de cada periodo y sobre qué saldo se acumulan.",
-    correct: "Porque los intereses se capitalizan periódicamente, sumándose al capital para generar nuevos intereses.",
+    hint: null,
+    correct: "Riesgo del sistema.",
     distractors: [
-      "Porque añade una cuota fija de ganancia sobre el depósito inicial sin variaciones de saldo.",
-      "Porque su comportamiento genera incrementos lineales idénticos en cada intervalo temporal.",
-      "Porque depende estrictamente de las fluctuaciones de la paridad cambiaria de la moneda."
+      "Riesgo de inversión.",
+      "Riesgo de precio/interés.",
+      "Riesgo de volatilidad."
     ],
-    explanation: "En el interés compuesto, los rendimientos devengados se integran al capital en cada periodo de capitalización, formando una serie geométrica de crecimiento acumulativo acelerado dada por: $$M = C(1 + i)^n$$"
+    explanation: "TBR."
   },
   {
-    id: 13,
+    id: 16, //READY
     topicId: "interes_compuesto",
     type: "choice",
     prompt: "Se solicita un préstamo de $50,000 pactado a una tasa de interés compuesto del 2% mensual por un plazo de 5 meses. ¿Qué monto total deberá liquidarse al vencimiento?",
@@ -225,10 +272,36 @@ var questionBank = [
       "$54,121.60",
       "$56,308.12"
     ],
-    explanation: "Calculamos el factor de crecimiento geométrico: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$ Multiplicando por el capital inicial: $$M = \\$50{,}000 \\cdot 1.1040808 \\approx \\$55{,}204.04$$"
+    explanation: "Calculamos el factor de crecimiento geométrico: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$ Multiplicando por el capital inicial: $$M = \\$50{,}000 \\cdot 1.1040808 \\approx \\mathbf{\\$55{,}204.04}$$"
   },
   {
-    id: 14,
+    id: 17,
+    topicId: "riesgos_inversion",
+    type: "match_columns",
+    prompt: "Relaciona los principales tipos de riesgo en el ahorro y la inversión con el evento que les corresponde:",
+    hint: "Distingue entre problemas de liquidez o retraso de pago, caída abrupta de valor en mercados, cambios regulatorios externos y ajustes en el costo del financiamiento.",
+    pairs: [
+      {
+        left: "Riesgo de crédito",
+        right: "<b>Rodrigo:</b> Invirtió en una cooperativa de transporte que debía pagar rendimientos en mayo, pero por problemas de liquidez postergan sus pagos de forma variable hasta fin de año."
+      },
+      {
+        left: "Riesgo de volatilidad",
+        right: "<b>Valeria:</b> Adquirió acciones de empresas consolidadas, pero una caída repentina en las bolsas internacionales redujo drásticamente su valor de rescate."
+      },
+      {
+        left: "Riesgo del sistema",
+        right: "<b>Esteban:</b> Vende joyería artesanal y enfrenta dificultades para surtir a sus clientes debido a la devaluación y nuevas regulaciones aduanales."
+      },
+      {
+        left: "Riesgo de precio o interés",
+        right: "<b>Mauricio:</b> Contrató un préstamo hipotecario a 15 años al $14\\%$ anual, pero tras el primer año la tasa pactada aumentó al $25\\%$."
+      }
+    ],
+    explanation: "Los riesgos financieros se clasifican según su origen:<br>• <b>Crédito:</b> Incumplimiento o retraso en las fechas de liquidación pactadas.<br>• <b>Volatilidad:</b> Fluctuaciones imprevistas en los precios de mercado.<br>• <b>Sistema:</b> Factores macroeconómicos, cambiarios o aduanales fuera del control de la empresa.<br>• <b>Precio/interés:</b> Alteraciones en las tasas activas que encarecen el costo del capital."
+  },
+  {
+    id: 18,
     topicId: "interes_compuesto",
     type: "choice",
     prompt: "Un inversionista tiene $100,000 a 5 años y evalúa dos ofertas bancarias: el Banco A ofrece una tasa bruta anual del 8% capitalizable cada 120 días, mientras que el Banco B ofrece una tasa bruta anual del 6% capitalizable cada 90 días. ¿Cuál alternativa ofrece mayor rendimiento final?",
@@ -243,13 +316,13 @@ var questionBank = [
     explanation: "Para el Banco A, con 3 plazos anuales ($n = 15$ periodos en 5 años) e $i = \\frac{0.08}{3}$: $$M_A = \\$100{,}000\\left(1 + \\frac{0.08}{3}\\right)^{15} \\approx \\$148{,}402.74$$ Para el Banco B, con 4 plazos anuales ($n = 20$ periodos en 5 años) e $i = \\frac{0.06}{4} = 0.015$: $$M_B = \\$100{,}000(1 + 0.015)^{20} \\approx \\$134{,}685.50$$"
   },
   {
-    id: 15,
+    id: 19, //READY
     topicId: "ingreso_base_mensual",
     type: "choice",
     prompt: "Roberto percibe un salario mensual $7,500, mientras que su esposa cobra $150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por qué?",
     image: null,
     hint: "El ingreso base mensual toma en consideración únicamente aquellas fuentes de ingreso estables y garantizadas.",
-    correct: "$7,500.00, porque el IBM se calcula estrictamente con la suma de los ingresos fijos garantizados.",
+    correct: "$7,500.00, porque el IBM se calcula estrictamente con la suma de los ingresos fijos.",
     distractors: [
       "$9,900.00, promediando 4 jornadas semanales de ingresos eventuales adicionales.",
       "$10,500.00, sumando el ingreso fijo con el tope máximo posible de ingresos esporádicos.",
@@ -258,26 +331,7 @@ var questionBank = [
     explanation: "Para diseñar un presupuesto riguroso, el ingreso base mensual debe sustentarse de forma exclusiva en los flujos monetarios predecibles y constantes (ingresos fijos), excluyendo entradas volátiles o contingentes."
   },
   {
-    id: 16,
-    type: "fill_blanks",
-    prompt: "Completa la oración:",
-    sentence: "El primer paso para elaborar un presupuesto consiste en registrar todo el dinero que {0} y posteriormente el que {1} durante un periodo determinado.",
-    image: null,
-    hint: "Identifica las dos corrientes monetarias básicas de entrada y salida de recursos en un hogar.",
-    correctOrder: [
-      "ingresa",
-      "egresa"
-    ],
-    distractors: [
-      "se ahorra",
-      "se invierte",
-      "se adeuda",
-      "se capitaliza"
-    ],
-    explanation: "La planeación presupuestaria exige registrar metódicamente los ingresos y egresos de un periodo para diagnosticar la capacidad real de ahorro y evitar endeudamiento."
-  },
-  {
-    id: 17,
+    id: 20,
     topicId: "riesgos_inversion",
     type: "classification",
     prompt: "Clasifica cada caso según el tipo de riesgo financiero que experimenta el inversionista:",
@@ -293,7 +347,7 @@ var questionBank = [
     explanation: "El riesgo de crédito atañe a la falta de pago; el de volatilidad a las fluctuaciones rápidas de precio; el de sistema a factores macroeconómicos y regulatorios; y el de interés al cambio en el costo del dinero."
   },
   {
-    id: 18,
+    id: 21,
     type: "choice",
     prompt: "¿Cuál de las siguientes operaciones NO corresponde a una operación pasiva?",
     image: null,
@@ -307,7 +361,7 @@ var questionBank = [
     explanation: "Las cuentas de ahorro y los depósitos son operaciones pasivas porque el banco capta dinero del cliente; los préstamos personales y créditos representan operaciones activas donde la entidad coloca fondos propios cobrando intereses."
   },
   {
-    id: 19,
+    id: 22,
     type: "choice",
     prompt: "¿Cuáles son las dos variables que intervienen en el cálculo de la tasa de interés real?",
     image: null,
@@ -321,7 +375,7 @@ var questionBank = [
     explanation: "La tasa de interés real refleja la rentabilidad neta de los recursos una vez descontada la inflación mediante la relación: $$r \\approx i - \\pi$$ donde $i$ representa la tasa nominal pactada y $\\pi$ es la tasa de inflación esperada."
   },
   {
-    id: 20,
+    id: 23,
     type: "fill_blanks",
     prompt: "Completa la oración:",
     sentence: "Las AFORES son instituciones que apoyan a los trabajadores para planear su {0}.",
@@ -338,153 +392,66 @@ var questionBank = [
     explanation: "Las AFORES operan como administradoras de fondos para el retiro autorizadas para invertir el saldo de las cuentas individuales en sociedades especializadas (SIEFORES), capitalizando recursos para la pensión."
   },
   {
-    id: 21,
-    type: "drag_order",
-    prompt: "Ordena los pasos secuenciales recomendados para elaborar y optimizar un presupuesto familiar:",
-    correctOrder: [
-      "Registrar exhaustivamente todas las entradas y salidas de dinero mensuales.",
-      "Clasificar los ingresos y egresos en categorías fijas y variables.",
-      "Determinar el ingreso base mensual a partir de los ingresos fijos.",
-      "Restar los egresos obligatorios y asignar un margen de ahorro previo a consumos discrecionales.",
-      "Identificar gastos prescindibles para optimizar el recurso neto disponible."
-    ],
-    explanation: "La estructuración de un presupuesto inicia con la bitácora de flujo de efectivo, procede con la clasificación de partidas y el cálculo del ingreso base, asegura la reserva de ahorro y concluye con el ajuste de fugas de capital."
-  },
-  {
-    id: 22,
-    topicId: "series",
-    type: "choice",
-    prompt: "Un modelo demográfico lineal predice que una población de 50,000 habitantes aumenta de manera constante en 2,500 personas por año. ¿Cuántos habitantes habrá al transcurrir 8 años?",
-    image: null,
-    hint: "Utiliza la estructura de una progresión aritmética $a_n = a_1 + (n - 1)d$ o el cálculo lineal directo de incremento por año.",
-    correct: "70,000 habitantes.",
-    distractors: [
-      "65,000 habitantes.",
-      "72,500 habitantes.",
-      "67,500 habitantes."
-    ],
-    explanation: "En un modelo de variación lineal el incremento es constante en cada periodo: $$\\text{Crecimiento total} = 2{,}500 \\cdot 8 = 20{,}000\\text{ habitantes}$$ Sumando al censo original: $$P_8 = 50{,}000 + 20{,}000 = 70{,}000\\text{ habitantes}$$"
-  },
-  {
-    id: 23,
-    topicId: "series",
-    type: "choice",
-    prompt: "Si una serie geométrica de crecimiento poblacional inicia con 2,000 individuos y su razón de crecimiento por periodo es r = 1.5, ¿cuál será el valor del cuarto término de la serie?",
-    image: null,
-    hint: "Aplica la regla de las progresiones geométricas $a_n = a_1 \\cdot r^{n - 1}$ para $n = 4$.",
-    correct: "6,750 individuos.",
-    distractors: [
-      "4,500 individuos.",
-      "10,125 individuos.",
-      "5,000 individuos."
-    ],
-    explanation: "Aplicando la fórmula del enésimo término geométrico: $$a_4 = a_1 \\cdot r^{4 - 1} = 2{,}000 \\cdot (1.5)^3 = 2{,}000 \\cdot 3.375 = 6{,}750$$"
-  },
-  {
     id: 24,
-    topicId: "interes_simple_dinero",
     type: "choice",
-    prompt: "Una persona invierte $15,000 a un plazo de 18 meses a una tasa de interés simple del 5% bimestral. ¿Cuánto dinero total recibirá al concluir el plazo?",
+    prompt: "Es la cantidad monetaria excedente de las personas e instituciones sobre sus gastos:",
     image: null,
-    hint: "Convierte 18 meses a bimestres (18 / 2 = 9 bimestres). Calcula el interés simple y súmalo al capital.",
-    correct: "$21,750.00",
+    hint: null,
+    correct: "Ahorro.",
     distractors: [
-      "$28,500.00",
-      "$19,500.00",
-      "$22,250.00"
-    ],
-    explanation: "El plazo de 18 meses comprende $t = \\frac{18}{2} = 9\\text{ bimestres}$. El interés simple es: $$I = (\\$15{,}000)(0.05)(9) = \\$6{,}750$$ El monto final acumulado asciende a: $$M = C + I = \\$15{,}000 + \\$6{,}750 = \\$21{,}750$$"
-  },
-  {
-    id: 25,
-    type: "choice",
-    prompt: "¿Cuál es el principal efecto sociodemográfico que experimenta una comunidad rural de origen cuando la mayoría de sus jóvenes emigran al extranjero?",
-    image: null,
-    hint: "Analiza el segmento poblacional que permanece en la localidad y el envejecimiento de la estructura comunitaria.",
-    correct: "Envejecimiento poblacional y feminización demográfica de la comunidad.",
-    distractors: [
-      "Aumento inmediato en la tasa global de natalidad y fecundidad.",
-      "Expansión sustancial del sector manufacturero industrial local.",
-      "Homogeneización absoluta de las prácticas políticas y religiosas."
-    ],
-    explanation: "La emigración selectiva de jóvenes en edad reproductiva y laboral provoca que en las comunidades de origen predomine la población de adultos mayores, niñas y niños, así como una mayor proporción de mujeres al frente de los hogares."
-  },
-  {
-    id: 26,
-    type: "choice",
-    prompt: "Si el Producto Interno Bruto de un país creció un 2% en un año y la población de ese mismo país aumentó también en un 2% durante el mismo periodo, ¿qué ocurrió con el PIB per cápita?",
-    image: null,
-    hint: "El PIB per cápita mide el producto generado dividido entre el total de habitantes.",
-    correct: "Permaneció prácticamente estancado, ya que la riqueza generada por persona no aumentó.",
-    distractors: [
-      "Se incrementó un 4% gracias al balance entre ambas variables económicas.",
-      "Disminuyó a la mitad debido al efecto distributivo demográfico.",
-      "Se elevó un 2% sostenido por la estabilidad macroeconómica."
-    ],
-    explanation: "Dado que el incremento en la producción de bienes y servicios se reparte entre una proporción idéntica de nuevos habitantes, la cantidad promedio disponible por persona no experimenta aumento."
-  },
-  {
-    id: 27,
-    type: "fill_blanks",
-    prompt: "Completa la relación entre ahorro, ingresos y egresos:",
-    sentence: "El ahorro se define conceptualmente como el excedente de los {0} sobre los {1} realizados durante un periodo económico.",
-    image: null,
-    hint: "Indica qué factor debe ser mayor que el otro para que quede una reserva monetaria disponible.",
-    correctOrder: [
-      "ingresos",
-      "gastos"
-    ],
-    distractors: [
-      "préstamos",
-      "créditos",
-      "impuestos",
-      "activos"
+      "Ingreso.",
+      "Inversión.",
+      "Presupuesto."
     ],
     explanation: "El ahorro constituye la diferencia positiva que queda a favor de una persona o institución cuando sus recursos percibidos superan la suma de erogaciones y consumos devengados."
   },
   {
-    id: 28,
-    topicId: "interes_compuesto",
+    id: 25,  //READY
+    topicId: "series",
     type: "choice",
-    prompt: "Un ahorrador coloca $20,000 en un depósito a 2 años con una tasa compuesta anual del 10% capitalizable anualmente. ¿Cuánto dinero retirará al finalizar los dos periodos?",
-    image: null,
-    hint: "Calcula el primer año ($20,000 + 10%) y sobre ese nuevo saldo aplica nuevamente el 10%, o utiliza $M = C(1 + i)^n$.",
-    correct: "$24,200.00",
+    prompt: "¿Por qué se puede afirmar que el modelo curvo es geométrico?",
+    image: "assets/m14_models.png",
+    hint: null,
+    correct: "Porque aplica la tasa de interés al capital del periodo anterior y lo acumula en cada intervalo de tiempo.",
     distractors: [
-      "$24,000.00",
-      "$22,000.00",
-      "$25,100.00"
+      "Porque se basa en una progresión no lineal que multiplica la tasa de interés al capital inicial constante.",
+      "Porque multiplica la tasa fija por el capital inicial constante y lo acumula en cada intervalo de tiempo.",
+      "Porque mantiene constante el interés que se aplica al capital inicial fijo para cada intervalo de tiempo."
     ],
-    explanation: "Al primer año el capital suma: $$\\$20{,}000 \\cdot 1.10 = \\$22{,}000$$ Al segundo año, el rendimiento se devenga sobre el saldo acumulado: $$\\$22{,}000 \\cdot 1.10 = \\$24{,}200$$ Mediante fórmula de interés compuesto: $$M = \\$20{,}000(1 + 0.10)^2 = \\$20{,}000(1.21) = \\$24{,}200$$"
+    explanation: "TBR."
   },
   {
-    id: 29,
-    topicId: "interes_simple_dinero",
+    id: 26,
+    topicId: "series",
     type: "choice",
-    prompt: "Una familia destina $8,150 a una inversión a un plazo de 5 años bajo un esquema de interés simple con una tasa del 3.5% semestral. ¿Cuánto dinero acumulado obtendrá al término del contrato?",
+    prompt: "Al calcular el crecimiento total de la población de Ciudad Xóchitl de 1989 a 2013 se obtuvo el valor $P = -937$. ¿Qué interpretación tiene este resultado?",
     image: null,
-    hint: "En 5 años hay 10 semestres. Aplica $I = C \\cdot i \\cdot t$ y suma el capital inicial.",
-    correct: "$11,002.50",
+    hint: "Observa el signo del resultado y el periodo completo sobre el cual se calculó la variación demográfica.",
+    correct: "La población se redujo en 937 personas entre 1989 y 2013.",
     distractors: [
-      "$9,576.25",
-      "$12,429.75",
-      "$10,850.00"
+      "Cada año la población disminuye a razón constante de 937 habitantes.",
+      "La población aumentó en 937 personas entre 1989 y 2013.",
+      "Ninguna interpretación válida, ya que el crecimiento poblacional no puede tomar valores negativos."
     ],
-    explanation: "El periodo de 5 años comprende $t = 5 \\cdot 2 = 10\\text{ semestres}$. El interés generado es: $$I = (\\$8{,}150)(0.035)(10) = \\$2{,}852.50$$ El monto acumulado final es: $$M = C + I = \\$8{,}150 + \\$2{,}852.50 = \\$11{,}002.50$$"
+    explanation: "El valor representa la variación absoluta acumulada en todo el periodo ($P = P_{2013} - P_{1989}$). Un signo negativo indica una reducción o decremento neto de la población entre esos dos años, no una tasa anual promedio."
   },
   {
-    id: 30,
-    topicId: "riesgos_inversion",
-    type: "choice",
-    prompt: "¿En qué consiste la ventaja financiera de mantener una adecuada diversificación al invertir recursos patrimoniales?",
+    id: 27,
+    topicId: "porcentajes",
+    type: "multi_select",
+    prompt: "Más de medio millón de mexicanos canceló sus cuentas de ahorro en el primer trimestre del año. De acuerdo al reporte de la Comisión Nacional Bancaria y de Valores, el ahorro nacional se desplomó en 60 millones de pesos comparado con el año previo. ¿Qué factores están implícitos en este fenómeno?",
     image: null,
-    hint: "Evitar concentrar todo el capital en un solo activo para mitigar el impacto si uno de ellos sufre pérdidas.",
-    correct: "Distribuir el capital en distintos instrumentos para mitigar el riesgo global de pérdida.",
-    distractors: [
-      "Garantizar que todos los fondos queden exentos de cualquier tasa impositiva.",
-      "Asegurar que todas las inversiones mantengan liquidez inmediata a la vista.",
-      "Concentrar el riesgo en una sola entidad para negociar mayores tasas preferenciales."
+    hint: "Identifica tanto las presiones sobre los ingresos de las familias como los costos bancarios y medidas fiscales que desalientan el ahorro formal.",
+    correctAnswers: [
+      "La crisis económica y el desempleo.",
+      "La reducción de los créditos bancarios.",
+      "La aplicación de impuestos a los depósitos en efectivo.",
+      "Los cobros bancarios por manejo de cuenta."
     ],
-    explanation: "La diversificación de portafolios distribuye el dinero entre activos con diferentes niveles de riesgo y liquidez, amortiguando caídas imprevistas en instrumentos particulares."
+    distractors: [
+      "El incremento en las tasas de interés pagadas.",
+      "La obligación legal de canalizar todo el ahorro hacia AFORES."
+    ],
+    explanation: "El retiro masivo del ahorro bancario obedece a un conjunto integral de factores: la pérdida de liquidez por desempleo y crisis económica, la contracción del crédito que forzó a usar reservas previas, la carga tributaria sobre depósitos en efectivo y el cobro recurrente de comisiones que reducía el saldo neto de los pequeños ahorradores."
   }
 ];
