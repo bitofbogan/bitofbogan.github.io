@@ -453,5 +453,19 @@ var questionBank = [
       "La obligación legal de canalizar todo el ahorro hacia AFORES."
     ],
     explanation: "El retiro masivo del ahorro bancario obedece a un conjunto integral de factores: la pérdida de liquidez por desempleo y crisis económica, la contracción del crédito que forzó a usar reservas previas, la carga tributaria sobre depósitos en efectivo y el cobro recurrente de comisiones que reducía el saldo neto de los pequeños ahorradores."
+  },
+  {
+    id: 28,
+    type: "choice",
+    prompt: "Un país se encuentra en subdesarrollo con muy poca población pero una tasa de crecimiento poblacional extremadamente alta. ¿Qué gráfica representa mejor el crecimiento de su población respecto a la de Europa?",
+    image: null, // o una imagen de apoyo si la pregunta la requiere
+    hint: "Busca la gráfica cuya tasa de crecimiento se acelere con el tiempo formando una curva ascendente pronunciada.",
+    correct: '<img src="assets/m14_graphnat3.png" alt="Gráfica geométrica" class="w-full max-h-36 object-contain pointer-events-none mx-auto py-1">',
+    distractors: [
+      '<img src="assets/m14_graphnat1.png" alt="Gráfica lineal" class="w-full max-h-36 object-contain pointer-events-none mx-auto py-1">',
+      '<img src="assets/m14_graphnat2.png" alt="Gráfica constante" class="w-full max-h-36 object-contain pointer-events-none mx-auto py-1">',
+      '<img src="assets/m14_graphnat4.png" alt="Gráfica decreciente" class="w-full max-h-36 object-contain pointer-events-none mx-auto py-1">'
+    ],
+    explanation: "TBR."
   }
 ];
