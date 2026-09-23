@@ -197,6 +197,7 @@
     let pendingQueue = [];
     let currentIndex = 0;
     let isReinforcementPhase = false;
+    let failedTopics = new Set();
 
     // Métricas para calificación y gamificación
     let totalQuestions = 0;
@@ -226,6 +227,7 @@
     }
 
     function initQuiz() {
+      failedTopics.clear();
       if (typeof questionBank === "undefined" || !Array.isArray(questionBank)) {
         app.innerHTML = `
           <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
@@ -326,9 +328,13 @@
             <h2 class="text-xl font-bold text-auge-dark mt-0.5 leading-snug">${q.prompt}</h2>
           </div>
 
-          ${q.image ? `
-          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl overflow-hidden flex justify-center p-2">
-            <img src="${q.image}" alt="Material gráfico de apoyo" class="w-full max-h-64 object-contain rounded-lg" loading="lazy" />
+          ${q.images || q.image ? `
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl overflow-hidden p-2">
+            <div class="${(Array.isArray(q.images) && q.images.length > 1) ? 'grid grid-cols-1 sm:grid-cols-2 gap-2' : 'flex justify-center'}">
+              ${(Array.isArray(q.images) ? q.images : (Array.isArray(q.image) ? q.image : [q.image])).map(src => `
+                <img src="${src}" alt="Material gráfico de apoyo" class="w-full max-h-64 object-contain rounded-lg bg-white border border-stone-100" loading="lazy" />
+              `).join('')}
+            </div>
           </div>
         ` : ''}
 
@@ -1079,6 +1085,9 @@
     }
 
     function queueForReinforcement(question) {
+      if (question.topicId) {
+        failedTopics.add(question.topicId);
+      }
       if (!isReinforcementPhase && !pendingQueue.some(item => item.id === question.id)) {
         pendingQueue.push(question);
       }
@@ -1158,6 +1167,38 @@
 
       const prelimGrade = totalQuestions > 0 ? ((firstRoundCorrect / totalQuestions) * 10).toFixed(1) : "0.0";
 
+      // Obtener los videos asociados a los temas con fallas
+      const videosMap = (typeof moduleInfo !== "undefined" && moduleInfo.topicVideos) ? moduleInfo.topicVideos : {};
+      const recommendedVideos = Array.from(failedTopics)
+        .map(topicId => videosMap[topicId])
+        .filter(Boolean);
+
+      let videoSectionHTML = "";
+      if (recommendedVideos.length > 0) {
+        videoSectionHTML = `
+          <div class="w-full bg-orange-50/70 border border-orange-200 rounded-xl p-4 text-left flex flex-col gap-2.5 mt-1">
+            <div class="flex items-center gap-2">
+              <span class="text-base">📺</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-auge-orange">Videos recomendados para ti</span>
+            </div>
+            <p class="text-xs text-stone-600 leading-relaxed">
+              Detectamos áreas de oportunidad en algunos temas. Revisa estas explicaciones en video antes de tu examen:
+            </p>
+            <div class="flex flex-col gap-2 mt-1">
+              ${recommendedVideos.map(vid => `
+                <a href="${vid.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 bg-white hover:bg-orange-100/50 border border-orange-200/80 rounded-lg text-xs font-semibold text-auge-dark hover:text-auge-orange transition-colors group shadow-2xs">
+                  <span class="flex items-center gap-2 truncate">
+                    <span class="text-red-600 group-hover:scale-110 transition-transform">▶</span>
+                    <span class="truncate">${vid.title}</span>
+                  </span>
+                  <span class="text-[11px] text-stone-400 group-hover:text-auge-orange shrink-0 ml-2">Ver video ↗</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
       app.innerHTML = `
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm flex flex-col items-center gap-5">
           <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl font-bold">
@@ -1186,6 +1227,9 @@
             <div>• <b>Mejor racha consecutiva:</b> 🔥 ${maxStreak} reactivos seguidos.</div>
             <div>• <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.</div>
           </div>
+
+          <!-- Sección dinámica de videos recomendados -->
+          ${videoSectionHTML}
 
           <button onclick="initQuiz(); initCounter(currentModuleId);" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
             ¡Reintentar!
