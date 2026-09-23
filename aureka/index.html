@@ -293,7 +293,7 @@
         nodesToFix.forEach(node => {
           if (/\$([0-9])/.test(node.nodeValue)) {
             const template = document.createElement("template");
-            template.innerHTML = node.nodeValue.replace(/\$([0-9])/g, '<span class="katex-ignore">$</span>$1');
+            template.innerHTML = node.nodeValue.replace(/(?<!\\)\$([0-9])/g, '<span class="katex-ignore">$</span>$1');
             node.replaceWith(template.content);
           }
         });
