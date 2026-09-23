@@ -178,7 +178,7 @@ var questionBank = [
     type: "match_columns",
     prompt: "Relaciona cada subíndice del Índice de Desarrollo Humano con su criterio de medición:",
     pairs: [
-      { left: "Salud", right: "Esperanza de vida al nacer." },
+      { left: "Salud", right: "Esperanza de vida." },
       { left: "Educación", right: "Alfabetización." },
       { left: "Ingreso", right: "PIB per cápita." }
     ],
@@ -233,7 +233,7 @@ var questionBank = [
     id: 14, //READY
     topicId: "interes_simple_tiempo",
     type: "choice",
-    prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000 con una tasa de interés simple del 5% bimestral?",
+    prompt: "¿En cuántos meses se obtendrá un monto final de \\$120,000 a partir de una inversión de \\$40,000 con una tasa de interés simple del 5% bimestral?",
     image: null,
     hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $$t = \\frac{I}{C \\cdot i}$$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
@@ -242,7 +242,7 @@ var questionBank = [
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{I}{C \\cdot i} = \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} = \\frac{\\$80{,}000}{\\$2{,}000} = 40$$ plazos. Si cada plazo es bimestral, se multiplica $40 \\cdot 2$ y se tiene el tiempo total de \\textbf{80 meses}."
+    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$\\begin{aligned} t &= \\frac{I}{C \\cdot i} \\\\[4pt] &= \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} \\\\[4pt] &= \\frac{\\$80{,}000}{\\$2{,}000} \\\\[4pt] &= \\mathbf{40\\text{ plazos (bimestres)}} \\end{aligned}$$ plazos. Si cada plazo es bimestral, se multiplica $40 \\cdot 2$ y se tiene el tiempo total de <b>80 meses</b>}."
   },
   {
     id: 15,
@@ -272,7 +272,7 @@ var questionBank = [
       "$54,121.60",
       "$56,308.12"
     ],
-    explanation: "Calculamos el factor de crecimiento geométrico: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$ Multiplicando por el capital inicial: $$M = \\$50{,}000 \\cdot 1.1040808 \\approx \\mathbf{\\$55{,}204.04}$$"
+    explanation: "Calculamos el factor de crecimiento geométrico: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$ Multiplicando por el capital inicial: $$\\begin{aligned} M &= \\$50{,}000 \\cdot 1.1040808 \\\\ &\\approx \\mathbf{\\$55{,}204.04} \\end{aligned}$$"
   },
   {
     id: 17,
