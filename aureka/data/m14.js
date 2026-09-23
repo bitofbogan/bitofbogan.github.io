@@ -233,7 +233,7 @@ var questionBank = [
     id: 14, //READY
     topicId: "interes_simple_tiempo",
     type: "choice",
-    prompt: "¿En cuántos meses se obtendrá un monto final de \\$120,000 a partir de una inversión de \\$40,000 con una tasa de interés simple del 5% bimestral?",
+    prompt: "¿En cuántos meses se obtendrá un monto final de &#36;120,000 a partir de una inversión de &#36;40,000 con una tasa de interés simple del 5% bimestral?",
     image: null,
     hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $$t = \\frac{I}{C \\cdot i}$$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
@@ -242,7 +242,7 @@ var questionBank = [
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$\\begin{aligned} t &= \\frac{I}{C \\cdot i} \\\\[4pt] &= \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} \\\\[4pt] &= \\frac{\\$80{,}000}{\\$2{,}000} \\\\[4pt] &= \\mathbf{40\\text{ plazos (bimestres)}} \\end{aligned}$$ plazos. Si cada plazo es bimestral, se multiplica $40 \\cdot 2$ y se tiene el tiempo total de <b>80 meses</b>}."
+    explanation: "Se requiere un interés de $$I = \\$120{,}000 - \\$40{,}000 = \\$80{,}000$$ Aplicando la ecuación para el cálculo de tiempo: $$\\begin{aligned} t &= \\frac{I}{C \\cdot i} \\\\[4pt] &= \\frac{\\$80{,}000}{(\\$40{,}000)(0.05)} \\\\[4pt] &= \\frac{\\$80{,}000}{\\$2{,}000} \\\\[4pt] &= \\mathbf{40\\text{ plazos (bimestres)}} \\end{aligned}$$ Si cada plazo es bimestral, se multiplica $40 \\cdot 2$ y se tiene el tiempo total de <b>80 meses</b>."
   },
   {
     id: 15,
@@ -304,14 +304,14 @@ var questionBank = [
     id: 18,
     topicId: "interes_compuesto",
     type: "choice",
-    prompt: "Un inversionista tiene $100,000 a 5 años y evalúa dos ofertas bancarias: el Banco A ofrece una tasa bruta anual del 8% capitalizable cada 120 días, mientras que el Banco B ofrece una tasa bruta anual del 6% capitalizable cada 90 días. ¿Cuál alternativa ofrece mayor rendimiento final?",
+    prompt: "Una familia invierte &#36;100,000 a 5 años con dos posibles ofertas:<br><br>• <b>Banco Andor:</b> 8% de tasa bruta anualizada a 120 días.<br>• <b>Banco Bix:</b> 6% de tasa bruta anualizada a 90 días.<br><br>¿Cuál alternativa ofrece mayor rendimiento final?",
     image: null,
     hint: "Determina el número de capitalizaciones al año para cada opción (3 para 120 días, 4 para 90 días) y calcula el monto compuesto total al término de los 5 años.",
-    correct: "El Banco A, con un saldo aproximado de $148,402.74 frente a $134,685.50 del Banco B.",
+    correct: "Banco Andor con un rendimiento de &#36;148,402.74.",
     distractors: [
-      "El Banco B, debido a que capitaliza intereses con mayor frecuencia durante el año.",
-      "Ambos instrumentos generan exactamente el mismo monto debido a la compensación por plazo.",
-      "El Banco B, al acumular 20 periodos de capitalización contra 15 del Banco A."
+      "Banco Bix con un rendimiento de &#36;148,594.73.",
+      "Ambos bancos generan el mismo rendimiento de &#36;148,402.74.",
+      "Banco Andor con un rendimiento de &#36;148,594.73."
     ],
     explanation: "Para el Banco A, con 3 plazos anuales ($n = 15$ periodos en 5 años) e $i = \\frac{0.08}{3}$: $$M_A = \\$100{,}000\\left(1 + \\frac{0.08}{3}\\right)^{15} \\approx \\$148{,}402.74$$ Para el Banco B, con 4 plazos anuales ($n = 20$ periodos en 5 años) e $i = \\frac{0.06}{4} = 0.015$: $$M_B = \\$100{,}000(1 + 0.015)^{20} \\approx \\$134{,}685.50$$"
   },
@@ -319,14 +319,14 @@ var questionBank = [
     id: 19, //READY
     topicId: "ingreso_base_mensual",
     type: "choice",
-    prompt: "Roberto percibe un salario mensual $7,500, mientras que su esposa cobra $150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por qué?",
+    prompt: "Roberto percibe un salario mensual de \\$7,500, mientras que su esposa cobra \\$150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por qué?",
     image: null,
     hint: "El ingreso base mensual toma en consideración únicamente aquellas fuentes de ingreso estables y garantizadas.",
     correct: "$7,500.00, porque el IBM se calcula estrictamente con la suma de los ingresos fijos.",
     distractors: [
-      "$9,900.00, promediando 4 jornadas semanales de ingresos eventuales adicionales.",
-      "$10,500.00, sumando el ingreso fijo con el tope máximo posible de ingresos esporádicos.",
-      "$8,250.00, añadiendo el 10% del ingreso variable por concepto de previsión presupuestal."
+      "\\$9,900.00, promediando 4 jornadas semanales de ingresos eventuales adicionales.",
+      "\\$10,500.00, sumando el ingreso fijo con el tope máximo posible de ingresos esporádicos.",
+      "\\$8,250.00, añadiendo el 10% del ingreso variable por concepto de previsión presupuestal."
     ],
     explanation: "Para diseñar un presupuesto riguroso, el ingreso base mensual debe sustentarse de forma exclusiva en los flujos monetarios predecibles y constantes (ingresos fijos), excluyendo entradas volátiles o contingentes."
   },
