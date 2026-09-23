@@ -37,6 +37,7 @@ const moduleInfo = {
   }
 };
 
+
 const questionBank = [
   {
     id: 1,
@@ -44,19 +45,22 @@ const questionBank = [
     prompt: "¿Qué es un modelo matemático?",
     image: null,
     hint: "Piensa en el instrumento formal que recurre a ecuaciones y variables para describir o anticipar el comportamiento de la realidad.",
-    correct: "Representación de la realidad mediante conceptos, símbolos o relaciones matemáticas.",
+    correct: "Una representación de la realidad mediante conceptos, símbolos o relaciones matemáticas.",
     distractors: [
-      "Planteamiento gráfico de un fenómeno natural sin apoyo cuantitativo.",
-      "Algoritmo estadístico que sustituye la recolección empírica de datos.",
-      "Esquema conceptual abstracto que prescinde de formulaciones numéricas."
+      "Un planteamiento gráfico de un fenómeno natural sin apoyo cuantitativo.",
+      "Un algoritmo estadístico que sustituye la recolección empírica de datos.",
+      "Un esquema conceptual abstracto que prescinde de formulaciones numéricas."
     ],
     explanation: "Un modelo matemático es una construcción abstracta que expresa relaciones observables mediante símbolos y ecuaciones para simular fenómenos y realizar predicciones verificables."
   },
   {
     id: 2,
     type: "choice",
-    prompt: "Al comparar las pirámides poblacionales de México de 1980 y 2010 reportadas por el INEGI, ¿cuál es el grupo de edad que muestra una mayor diferencia porcentual a la baja?",
-    image: null,
+    prompt: "Dadas las siguientes piramides poblacionales del INEGI, ¿que grupo de edad que muestra una mayor disminucion porcentual?",
+    images: [
+    "assets/m14_piramide1980.png",
+    "assets/m14_piramide2010.png"
+    ],
     hint: "Observa la base de la pirámide y el impacto del descenso de la fecundidad en los grupos de la primera infancia y edad escolar temprana.",
     correct: "5 a 9 años.",
     distractors: [
@@ -69,9 +73,9 @@ const questionBank = [
   {
     id: 3,
     type: "choice",
-    prompt: "¿Cuáles son las variables demográficas fundamentales que determinan la forma y evolución de una pirámide poblacional?",
+    prompt: "¿Cuáles son las variables demográficas que determinan la forma y evolución de una pirámide poblacional?",
     image: null,
-    hint: "Son los tres factores vitales y de desplazamiento geográfico que alteran directamente el tamaño y composición etaria de un país.",
+    hint: "Piensa en las tres cuestiones que pueden cambiar la cantidad de personas en un pais.",
     correct: "Fecundidad, mortalidad y migración.",
     distractors: [
       "Esperanza de vida, urbanización y densidad territorial.",
@@ -83,21 +87,21 @@ const questionBank = [
   {
     id: 4,
     type: "choice",
-    prompt: "¿Cómo se define el concepto demográfico de esperanza de vida?",
+    prompt: "¿Que es la esperanza de vida?",
     image: null,
     hint: "Es una estimación estadística proyectada desde el momento en que un individuo nace.",
-    correct: "Promedio de años que podría alcanzar una persona, estimados al nacer.",
+    correct: "Es el promedio de años que podría alcanzar una persona, estimados al nacer.",
     distractors: [
-      "Edad límite que alcanza el segmento más longevo de una sociedad.",
-      "Años mínimos que un ciudadano permanece en el mercado productivo.",
-      "Promedio de edad biológica calculado a partir de la tasa de mortalidad senil."
+      "Es la edad límite que alcanza el segmento más longevo de una sociedad.",
+      "Son los años mínimos que un ciudadano permanece en el mercado productivo.",
+      "Es el promedio de edad biológica calculado a partir de la tasa de mortalidad senil."
     ],
     explanation: "La esperanza de vida al nacer resume las condiciones sanitarias, alimentarias y sociales de un país, indicando la cantidad media de años que se espera que viva un recién nacido bajo las tasas de mortalidad vigentes."
   },
   {
     id: 5,
     type: "choice",
-    prompt: "Entre 1942 y 1964, el flujo migratorio laboral de México hacia Estados Unidos estuvo regulado por un acuerdo bilateral formal conocido como:",
+    prompt: "¿Como se llamo el acuerdo entre Mexico y Estados Unidos que regulo el flujo migratorio laboral entre 1942 y 1964?",
     image: null,
     hint: "Programa impulsado en el contexto de la Segunda Guerra Mundial para suministrar mano de obra en labores agrícolas y ferroviarias.",
     correct: "Programa Bracero.",
@@ -111,7 +115,7 @@ const questionBank = [
   {
     id: 6,
     type: "multi_select",
-    prompt: "Selecciona las características que distinguen al patrón migratorio contemporáneo de mexicanos hacia Estados Unidos según los análisis del CONAPO:",
+    prompt: "Selecciona las características que distinguen al patrón migratorio actual de mexicanos hacia Estados Unidos según el CONAPO:",
     image: null,
     hint: "Considera la dificultad de retorno, la diversidad de perfiles formativos y la dispersión geográfica.",
     correctAnswers: [
@@ -129,7 +133,7 @@ const questionBank = [
   {
     id: 7,
     type: "choice",
-    prompt: "Respecto a las consecuencias de la migración en las comunidades de origen, ¿cuál de las siguientes afirmaciones es FALSA?",
+    prompt: "¿Cuál de las siguientes afirmaciones es <b>falsa</b> respecto a los efectos de la migracion en sus lugares de origen?",
     image: null,
     hint: "Las remesas alivian carencias inmediatas, pero no resuelven automáticamente los problemas productivos ni erradican la pobreza estructural.",
     correct: "Provoca transformaciones económicas que reducen de forma automática y estructural los niveles de pobreza.",
@@ -143,12 +147,12 @@ const questionBank = [
   {
     id: 8,
     type: "choice",
-    prompt: "¿Cuál es la condición matemática necesaria para asegurar que existe un crecimiento de la riqueza económica per cápita en una nación?",
+    prompt: "¿Cuál es la condición necesaria para decir que existe un crecimiento de riqueza en un pais?",
     image: null,
     hint: "Compara el ritmo del Producto Interno Bruto frente a la tasa a la que se expande el número de habitantes.",
     correct: "Que la tasa de crecimiento del PIB sea superior a la tasa de crecimiento de la población.",
     distractors: [
-      "Que el Producto Interno Bruto alcance un saldo nominal positivo sin importar la demografía.",
+      "Que el PIB alcance un saldo nominal positivo sin importar la demografía.",
       "Que la balanza comercial registre superávit en productos manufacturados.",
       "Que la tasa de inflación anual se mantenga en equilibrio con la tasa de interés interbancaria."
     ],
@@ -157,46 +161,46 @@ const questionBank = [
   {
     id: 9,
     type: "match_columns",
-    prompt: "Relaciona cada dimensión del Índice de Desarrollo Humano (IDH) con su criterio específico de medición:",
+    prompt: "Relaciona cada subindice del Índice de Desarrollo Humano con su criterio de medición:",
     pairs: [
-      { left: "Salud", right: "Esperanza de vida al nacer" },
-      { left: "Educación", right: "Años promedio y años esperados de escolaridad" },
-      { left: "Ingreso", right: "Ingreso Nacional Bruto per cápita (PPA)" }
+      { left: "Salud", right: "Esperanza de vida al nacer." },
+      { left: "Educación", right: "Alfabetizacion." },
+      { left: "Ingreso", right: "PIB per capita." }
     ],
     explanation: "El IDH propuesto por la ONU integra tres pilares del bienestar: una vida larga y saludable (esperanza de vida), el acceso a la formación académica (escolaridad) y un estándar material de vida digno (ingreso per cápita ajustado)."
   },
   {
     id: 10,
     type: "choice",
-    prompt: "Esperanza invirtió $1,000 a un plazo de 6 meses con una tasa de interés simple del 5% mensual. ¿Cuánto dinero tendrá acumulado al término del plazo?",
+    prompt: "Se invierten $1,000 a un plazo de 6 meses con una tasa de interés simple del 5% mensual. ¿Cuánto dinero se acumulara al término del plazo?",
     image: null,
-    hint: "Calcula el interés con la fórmula I = C · i · t y luego súmalo al capital inicial.",
+    hint: "Calcula el interés con la ecuacion $I = C \\cdot i \\cdot t$ y luego súmalo al capital inicial.",
     correct: "$1,300.00",
     distractors: [
       "$1,050.00",
       "$1,250.00",
       "$1,350.00"
     ],
-    explanation: "El interés simple generado es I = ($1,000)(0.05)(6) = $300. Al sumar este rendimiento al capital inicial, se obtiene un monto total de $1,300."
+    explanation: "El interés simple generado es $$I = (\\$1,000)(0.05)(6) = \\$300$$. Al sumar este rendimiento al capital inicial, se obtiene un monto total de $1,300."
   },
   {
     id: 11,
     type: "choice",
     prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000, si la tasa de interés simple es del 5% bimestral?",
     image: null,
-    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con t = I / (C · i) y luego convierte los plazos a meses.",
+    hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $t = I / (C \\cdot i)$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
     distractors: [
       "40 meses.",
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de I = $120,000 - $40,000 = $80,000. Aplicando la fórmula de tiempo: t = 80,000 / (40,000 · 0.05) = 80,000 / 2,000 = 40 bimestres. Al multiplicar 40 bimestres por 2 meses, el tiempo total es de 80 meses."
+    explanation: "Se requiere un interés de $$I = \\$120,000 - \\$40,000 = \\$80,000$$. Aplicando la ecuacion para el calculo de tiempo: $$t = \\frac{80,000}{40,000 \\cdot 0.05} = \\frac{80,000}{2,000} = 40$$ bimestres. Al multiplicar 40 bimestres por 2 meses, el tiempo total es de 80 meses."
   },
   {
     id: 12,
     type: "choice",
-    prompt: "¿Por qué el interés compuesto corresponde conceptual y gráficamente a un modelo geométrico o exponencial?",
+    prompt: "¿Por qué el interés compuesto corresponde a un modelo geométrico?",
     image: null,
     hint: "Considera cómo se calculan los intereses de cada periodo y sobre qué saldo se acumulan.",
     correct: "Porque los intereses se capitalizan periódicamente, sumándose al capital para generar nuevos intereses.",
@@ -212,14 +216,14 @@ const questionBank = [
     type: "choice",
     prompt: "Se solicita un préstamo de $50,000 pactado a una tasa de interés compuesto del 2% mensual por un plazo de 5 meses. ¿Qué monto total deberá liquidarse al vencimiento?",
     image: null,
-    hint: "Aplica la ecuación fundamental M = C · (1 + i)^n sustituyendo C = 50000, i = 0.02 y n = 5.",
+    hint: "Aplica la ecuación $M = C \\cdot (1 + i)^n$.",
     correct: "$55,204.04",
     distractors: [
       "$55,000.00",
       "$54,121.60",
       "$56,308.12"
     ],
-    explanation: "Calculando el factor de crecimiento: (1 + 0.02)^5 = (1.02)^5 ≈ 1.1040808. Multiplicando por el capital inicial: M = $50,000 · 1.1040808 ≈ $55,204.04."
+    explanation: "Calculando el factor de crecimiento: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$. Multiplicando por el capital inicial: $$M = $50,000 · 1.1040808 \\approx \\$55,204.04$$."
   },
   {
     id: 14,
@@ -238,22 +242,22 @@ const questionBank = [
   {
     id: 15,
     type: "choice",
-    prompt: "Rogelio tiene un salario mensual fijo de $7,500. Su cónyuge realiza labores de limpieza de forma eventual cobrando $150 por jornada y trabajando entre 3 y 5 días a la semana según la demanda. ¿Cuál es el Ingreso Base Mensual (IBM) familiar y cuál es su fundamento?",
+    prompt: "Roberto percibe un salario mensual $7,500, mientras que su esposa cobra $150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por que?",
     image: null,
-    hint: "El ingreso base mensual toma en consideración únicamente aquellas fuentes de dinero estables y garantizadas.",
+    hint: "El ingreso base mensual toma en consideración únicamente aquellas fuentes de ingreso estables y garantizadas.",
     correct: "$7,500.00, porque el IBM se calcula estrictamente con la suma de los ingresos fijos garantizados.",
     distractors: [
       "$9,900.00, promediando 4 jornadas semanales de ingresos eventuales adicionales.",
       "$10,500.00, sumando el ingreso fijo con el tope máximo posible de ingresos esporádicos.",
       "$8,250.00, añadiendo el 10% del ingreso variable por concepto de previsión presupuestal."
     ],
-    explanation: "Para diseñar un presupuesto riguroso, el Ingreso Base Mensual debe sustentarse de forma exclusiva en los flujos monetarios predecibles y constantes (ingresos fijos), excluyendo entradas volátiles o contingentes."
+    explanation: "Para diseñar un presupuesto riguroso, el ingreso base mensual debe sustentarse de forma exclusiva en los flujos monetarios predecibles y constantes (ingresos fijos), excluyendo entradas volátiles o contingentes."
   },
   {
     id: 16,
     type: "fill_blanks",
-    prompt: "Completa el principio fundamental para el inicio de una planeación financiera familiar:",
-    sentence: "El primer paso indispensable para elaborar un presupuesto consiste en registrar de forma detallada todo el dinero que {0} y {1} durante un periodo determinado.",
+    prompt: "Completa la oracion:",
+    sentence: "El primer paso para elaborar un presupuesto consiste en registrar todo el dinero que {0} y posteriormente el que {1} durante un periodo determinado.",
     image: null,
     hint: "Identifica las dos corrientes monetarias básicas de entrada y salida de recursos en un hogar.",
     correctOrder: [
@@ -274,22 +278,22 @@ const questionBank = [
     prompt: "Clasifica cada caso según el tipo de riesgo financiero que experimenta el inversionista:",
     image: null,
     hint: "Distingue entre incumplimiento del deudor, oscilaciones de mercado, cambios regulatorios globales o variaciones en tasas.",
-    categories: ["Riesgo de crédito", "Riesgo de volatilidad", "Riesgo del sistema", "Riesgo de precio o interés"],
+    categories: ["Crédito", "Volatilidad", "Sistema", "Precio/interés"],
     items: [
-      { text: "Una cooperativa de transporte tiene problemas de liquidez y no paga los rendimientos acordados en la fecha establecida.", correct: "Riesgo de crédito" },
-      { text: "El valor de mercado de las acciones de una empresa tecnológica sube y baja abruptamente en una sola jornada bursátil.", correct: "Riesgo de volatilidad" },
-      { text: "Nuevas regulaciones arancelarias e impuestos a la importación deterioran los márgenes de ganancia de un negocio.", correct: "Riesgo del sistema" },
-      { text: "Un acreditado contrata un préstamo con tasa variable y al siguiente año el costo financiero se eleva del 14% al 25%.", correct: "Riesgo de precio o interés" }
+      { text: "Una cooperativa tiene problemas de liquidez y no paga los rendimientos acordados.", correct: "Crédito" },
+      { text: "El valor de las acciones de una empresa sube y baja abruptamente en una sola jornada.", correct: "Volatilidad" },
+      { text: "Nuevas regulaciones e impuestos de importación deterioran la ganancia de un negocio.", correct: "Sistema" },
+      { text: "Se toma un préstamo con tasa variable y al siguiente año el costo se eleva del 14% al 25%.", correct: "Precio/interés" }
     ],
     explanation: "El riesgo de crédito atañe a la falta de pago; el de volatilidad a las fluctuaciones rápidas de precio; el de sistema a factores macroeconómicos y regulatorios; y el de interés al cambio en el costo del dinero."
   },
   {
     id: 18,
     type: "choice",
-    prompt: "¿Cuál de las siguientes operaciones bancarias NO corresponde a una operación pasiva?",
+    prompt: "¿Cuál de las siguientes operaciones NO corresponde a una operación pasiva?",
     image: null,
     hint: "En las operaciones pasivas el banco recibe dinero del público; en las activas, el banco coloca o presta sus recursos.",
-    correct: "Préstamo personal o crédito hipotecario.",
+    correct: "Préstamo personal.",
     distractors: [
       "Depósito a la vista.",
       "Cuenta de cheques sin rendimiento.",
@@ -300,7 +304,7 @@ const questionBank = [
   {
     id: 19,
     type: "choice",
-    prompt: "¿Cuáles son las dos variables que intervienen en el cálculo de la tasa de interés real de una inversión?",
+    prompt: "¿Cuáles son las dos variables que intervienen en el cálculo de la tasa de interés real?",
     image: null,
     hint: "Es el rendimiento efectivo descontando el efecto inflacionario que merma el poder adquisitivo.",
     correct: "Tasa de interés nominal y tasa de inflación esperada.",
@@ -313,15 +317,18 @@ const questionBank = [
   },
   {
     id: 20,
-    type: "choice",
-    prompt: "¿Qué función sustantiva desempeñan las AFORES dentro del sistema de seguridad social mexicano?",
+    type: "fill_blanks",
+    prompt: "Completa la oracion",
+    sentence: "Las AFORES son instituciones que apoyan a los trabajadores para planear su {0}."
     image: null,
     hint: "Son entidades financieras facultadas por la ley para custodiar y rentabilizar los recursos de los trabajadores destinados a la vejez.",
-    correct: "Administrar e invertir las aportaciones para el retiro en cuentas individuales de los trabajadores.",
+    correctOrder: [
+    "retiro"
+    ],
     distractors: [
-      "Otorgar créditos personales de nómina a corto plazo con garantía prendaria.",
-      "Fijar de forma autónoma la política monetaria y las tasas de interés interbancarias.",
-      "Asegurar bienes patrimoniales e inmuebles contra riesgos de desastres naturales."
+      "impuesto",
+      "ahorro",
+      "utilidad"
     ],
     explanation: "Las AFORES operan como administradoras de fondos para el retiro autorizadas para invertir el saldo de las cuentas individuales en sociedades especializadas (SIEFORES), capitalizando recursos para la pensión."
   },
@@ -332,7 +339,7 @@ const questionBank = [
     correctOrder: [
       "Registrar exhaustivamente todas las entradas y salidas de dinero mensuales.",
       "Clasificar los ingresos y egresos en categorías fijas y variables.",
-      "Determinar el Ingreso Base Mensual (IBM) a partir de los ingresos fijos.",
+      "Determinar el ingreso base mensual a partir de los ingresos fijos.",
       "Restar los egresos obligatorios y asignar un margen de ahorro previo a consumos discrecionales.",
       "Identificar gastos prescindibles para optimizar el recurso neto disponible."
     ],
