@@ -1259,7 +1259,7 @@
       phaseBadge.textContent = `Módulo ${currentModuleId}`;
 
       const script = document.createElement("script");
-      script.src = moduleConfig.file;
+      script.src = `${moduleConfig.file}?v=${Date.now()}`;
       script.onload = () => {
         if (typeof moduleInfo !== "undefined") {
           document.title = `Aureka | ${moduleInfo.badge}: ${moduleInfo.title}`;
