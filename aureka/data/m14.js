@@ -41,6 +41,7 @@ const moduleInfo = {
 const questionBank = [
   {
     id: 1,
+    topicId: "series",
     type: "choice",
     prompt: "¿Qué es un modelo matemático?",
     image: null,
