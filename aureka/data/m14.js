@@ -1,10 +1,8 @@
 // data/m14.js
-// data/m14.js (ejemplo)
 const moduleInfo = {
   id: 14,
   title: "Variación en procesos sociales",
   badge: "Módulo 14",
-  // Catálogo de videos asociados a cada tema
   topicVideos: {
     "series": {
       title: "Series analíticas y geométricas",
@@ -37,7 +35,6 @@ const moduleInfo = {
   }
 };
 
-
 const questionBank = [
   {
     id: 1,
@@ -57,10 +54,10 @@ const questionBank = [
   {
     id: 2,
     type: "choice",
-    prompt: "Dadas las siguientes piramides poblacionales del INEGI, ¿que grupo de edad que muestra una mayor disminucion porcentual?",
+    prompt: "Dadas las siguientes pirámides poblacionales del INEGI, ¿qué grupo de edad muestra una mayor disminución porcentual?",
     images: [
-    "assets/m14_piramide1980.png",
-    "assets/m14_piramide2010.png"
+      "assets/m14_piramide1980.png",
+      "assets/m14_piramide2010.png"
     ],
     hint: "Observa la base de la pirámide y el impacto del descenso de la fecundidad en los grupos de la primera infancia y edad escolar temprana.",
     correct: "5 a 9 años.",
@@ -76,7 +73,7 @@ const questionBank = [
     type: "choice",
     prompt: "¿Cuáles son las variables demográficas que determinan la forma y evolución de una pirámide poblacional?",
     image: null,
-    hint: "Piensa en las tres cuestiones que pueden cambiar la cantidad de personas en un pais.",
+    hint: "Piensa en las tres cuestiones que pueden cambiar la cantidad de personas en un país.",
     correct: "Fecundidad, mortalidad y migración.",
     distractors: [
       "Esperanza de vida, urbanización y densidad territorial.",
@@ -88,7 +85,7 @@ const questionBank = [
   {
     id: 4,
     type: "choice",
-    prompt: "¿Que es la esperanza de vida?",
+    prompt: "¿Qué es la esperanza de vida?",
     image: null,
     hint: "Es una estimación estadística proyectada desde el momento en que un individuo nace.",
     correct: "Es el promedio de años que podría alcanzar una persona, estimados al nacer.",
@@ -102,7 +99,7 @@ const questionBank = [
   {
     id: 5,
     type: "choice",
-    prompt: "¿Como se llamo el acuerdo entre Mexico y Estados Unidos que regulo el flujo migratorio laboral entre 1942 y 1964?",
+    prompt: "¿Cómo se llamó el acuerdo entre México y Estados Unidos que reguló el flujo migratorio laboral entre 1942 y 1964?",
     image: null,
     hint: "Programa impulsado en el contexto de la Segunda Guerra Mundial para suministrar mano de obra en labores agrícolas y ferroviarias.",
     correct: "Programa Bracero.",
@@ -134,7 +131,7 @@ const questionBank = [
   {
     id: 7,
     type: "choice",
-    prompt: "¿Cuál de las siguientes afirmaciones es <b>falsa</b> respecto a los efectos de la migracion en sus lugares de origen?",
+    prompt: "¿Cuál de las siguientes afirmaciones es <b>falsa</b> respecto a los efectos de la migración en sus lugares de origen?",
     image: null,
     hint: "Las remesas alivian carencias inmediatas, pero no resuelven automáticamente los problemas productivos ni erradican la pobreza estructural.",
     correct: "Provoca transformaciones económicas que reducen de forma automática y estructural los niveles de pobreza.",
@@ -148,7 +145,7 @@ const questionBank = [
   {
     id: 8,
     type: "choice",
-    prompt: "¿Cuál es la condición necesaria para decir que existe un crecimiento de riqueza en un pais?",
+    prompt: "¿Cuál es la condición necesaria para decir que existe un crecimiento de riqueza en un país?",
     image: null,
     hint: "Compara el ritmo del Producto Interno Bruto frente a la tasa a la que se expande el número de habitantes.",
     correct: "Que la tasa de crecimiento del PIB sea superior a la tasa de crecimiento de la población.",
@@ -162,20 +159,21 @@ const questionBank = [
   {
     id: 9,
     type: "match_columns",
-    prompt: "Relaciona cada subindice del Índice de Desarrollo Humano con su criterio de medición:",
+    prompt: "Relaciona cada subíndice del Índice de Desarrollo Humano con su criterio de medición:",
     pairs: [
       { left: "Salud", right: "Esperanza de vida al nacer." },
-      { left: "Educación", right: "Alfabetizacion." },
-      { left: "Ingreso", right: "PIB per capita." }
+      { left: "Educación", right: "Alfabetización." },
+      { left: "Ingreso", right: "PIB per cápita." }
     ],
     explanation: "El IDH propuesto por la ONU integra tres pilares del bienestar: una vida larga y saludable (esperanza de vida), el acceso a la formación académica (escolaridad) y un estándar material de vida digno (ingreso per cápita ajustado)."
   },
   {
     id: 10,
+    topicId: "interes_simple_dinero",
     type: "choice",
-    prompt: "Se invierten $1,000 a un plazo de 6 meses con una tasa de interés simple del 5% mensual. ¿Cuánto dinero se acumulara al término del plazo?",
+    prompt: "Se invierten $1,000 a un plazo de 6 meses con una tasa de interés simple del 5% mensual. ¿Cuánto dinero se acumulará al término del plazo?",
     image: null,
-    hint: "Calcula el interés con la ecuacion $I = C \\cdot i \\cdot t$ y luego súmalo al capital inicial.",
+    hint: "Calcula el interés con la ecuación $I = C \\cdot i \\cdot t$ y luego súmalo al capital inicial.",
     correct: "$1,300.00",
     distractors: [
       "$1,050.00",
@@ -186,6 +184,7 @@ const questionBank = [
   },
   {
     id: 11,
+    topicId: "interes_simple_tiempo",
     type: "choice",
     prompt: "¿En cuántos meses se obtendrá un monto final de $120,000 a partir de una inversión de $40,000, si la tasa de interés simple es del 5% bimestral?",
     image: null,
@@ -196,10 +195,11 @@ const questionBank = [
       "60 meses.",
       "120 meses."
     ],
-    explanation: "Se requiere un interés de $$I = \\$120,000 - \\$40,000 = \\$80,000$$. Aplicando la ecuacion para el calculo de tiempo: $$t = \\frac{80,000}{40,000 \\cdot 0.05} = \\frac{80,000}{2,000} = 40$$ bimestres. Al multiplicar 40 bimestres por 2 meses, el tiempo total es de 80 meses."
+    explanation: "Se requiere un interés de $$I = \\$120,000 - \\$40,000 = \\$80,000$$. Aplicando la ecuación para el cálculo de tiempo: $$t = \\frac{80,000}{40,000 \\cdot 0.05} = \\frac{80,000}{2,000} = 40$$ bimestres. Al multiplicar 40 bimestres por 2 meses, el tiempo total es de 80 meses."
   },
   {
     id: 12,
+    topicId: "interes_compuesto",
     type: "choice",
     prompt: "¿Por qué el interés compuesto corresponde a un modelo geométrico?",
     image: null,
@@ -214,6 +214,7 @@ const questionBank = [
   },
   {
     id: 13,
+    topicId: "interes_compuesto",
     type: "choice",
     prompt: "Se solicita un préstamo de $50,000 pactado a una tasa de interés compuesto del 2% mensual por un plazo de 5 meses. ¿Qué monto total deberá liquidarse al vencimiento?",
     image: null,
@@ -224,10 +225,11 @@ const questionBank = [
       "$54,121.60",
       "$56,308.12"
     ],
-    explanation: "Calculando el factor de crecimiento: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$. Multiplicando por el capital inicial: $$M = $50,000 · 1.1040808 \\approx \\$55,204.04$$."
+    explanation: "Calculando el factor de crecimiento: $$(1 + 0.02)^5 = (1.02)^5 \\approx 1.1040808$$. Multiplicando por el capital inicial: $$M = \\$50,000 \\cdot 1.1040808 \\approx \\$55,204.04$$."
   },
   {
     id: 14,
+    topicId: "interes_compuesto",
     type: "choice",
     prompt: "Un inversionista tiene $100,000 a 5 años y evalúa dos ofertas bancarias: el Banco A ofrece una tasa bruta anual del 8% capitalizable cada 120 días, mientras que el Banco B ofrece una tasa bruta anual del 6% capitalizable cada 90 días. ¿Cuál alternativa ofrece mayor rendimiento final?",
     image: null,
@@ -242,8 +244,9 @@ const questionBank = [
   },
   {
     id: 15,
+    topicId: "ingreso_base_mensual",
     type: "choice",
-    prompt: "Roberto percibe un salario mensual $7,500, mientras que su esposa cobra $150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por que?",
+    prompt: "Roberto percibe un salario mensual $7,500, mientras que su esposa cobra $150 por jornada trabajando entre 3 y 5 días a la semana. ¿Cuál es el ingreso base mensual de la pareja? ¿Por qué?",
     image: null,
     hint: "El ingreso base mensual toma en consideración únicamente aquellas fuentes de ingreso estables y garantizadas.",
     correct: "$7,500.00, porque el IBM se calcula estrictamente con la suma de los ingresos fijos garantizados.",
@@ -257,7 +260,7 @@ const questionBank = [
   {
     id: 16,
     type: "fill_blanks",
-    prompt: "Completa la oracion:",
+    prompt: "Completa la oración:",
     sentence: "El primer paso para elaborar un presupuesto consiste en registrar todo el dinero que {0} y posteriormente el que {1} durante un periodo determinado.",
     image: null,
     hint: "Identifica las dos corrientes monetarias básicas de entrada y salida de recursos en un hogar.",
@@ -275,6 +278,7 @@ const questionBank = [
   },
   {
     id: 17,
+    topicId: "riesgos_inversion",
     type: "classification",
     prompt: "Clasifica cada caso según el tipo de riesgo financiero que experimenta el inversionista:",
     image: null,
@@ -319,12 +323,12 @@ const questionBank = [
   {
     id: 20,
     type: "fill_blanks",
-    prompt: "Completa la oracion",
-    sentence: "Las AFORES son instituciones que apoyan a los trabajadores para planear su {0}."
+    prompt: "Completa la oración:",
+    sentence: "Las AFORES son instituciones que apoyan a los trabajadores para planear su {0}.",
     image: null,
     hint: "Son entidades financieras facultadas por la ley para custodiar y rentabilizar los recursos de los trabajadores destinados a la vejez.",
     correctOrder: [
-    "retiro"
+      "retiro"
     ],
     distractors: [
       "impuesto",
@@ -348,6 +352,7 @@ const questionBank = [
   },
   {
     id: 22,
+    topicId: "series",
     type: "choice",
     prompt: "Un modelo demográfico lineal predice que una población de 50,000 habitantes aumenta de manera constante en 2,500 personas por año. ¿Cuántos habitantes habrá al transcurrir 8 años?",
     image: null,
@@ -362,6 +367,7 @@ const questionBank = [
   },
   {
     id: 23,
+    topicId: "series",
     type: "choice",
     prompt: "Si una serie geométrica de crecimiento poblacional inicia con 2,000 individuos y su razón de crecimiento por periodo es r = 1.5, ¿cuál será el valor del cuarto término de la serie?",
     image: null,
@@ -376,6 +382,7 @@ const questionBank = [
   },
   {
     id: 24,
+    topicId: "interes_simple_dinero",
     type: "choice",
     prompt: "Una persona invierte $15,000 a un plazo de 18 meses a una tasa de interés simple del 5% bimestral. ¿Cuánto dinero total recibirá al concluir el plazo?",
     image: null,
@@ -437,6 +444,7 @@ const questionBank = [
   },
   {
     id: 28,
+    topicId: "interes_compuesto",
     type: "choice",
     prompt: "Un ahorrador coloca $20,000 en un depósito a 2 años con una tasa compuesta anual del 10% capitalizable anualmente. ¿Cuánto dinero retirará al finalizar los dos periodos?",
     image: null,
@@ -451,6 +459,7 @@ const questionBank = [
   },
   {
     id: 29,
+    topicId: "interes_simple_dinero",
     type: "choice",
     prompt: "Una familia destina $8,150 a una inversión a un plazo de 5 años bajo un esquema de interés simple con una tasa del 3.5% semestral. ¿Cuánto dinero acumulado obtendrá al término del contrato?",
     image: null,
@@ -465,6 +474,7 @@ const questionBank = [
   },
   {
     id: 30,
+    topicId: "riesgos_inversion",
     type: "choice",
     prompt: "¿En qué consiste la ventaja financiera de mantener una adecuada diversificación al invertir recursos patrimoniales?",
     image: null,
