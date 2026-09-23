@@ -269,11 +269,42 @@
 
     function renderMath() {
       if (window.renderMathInElement) {
+        // 1. Busca nodos de texto donde haya un signo $ seguido de un número y lo aísla en un span protegido
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: (node) => {
+              if (!node.nodeValue.includes('$')) return NodeFilter.FILTER_REJECT;
+              const parent = node.parentElement;
+              if (!parent || parent.closest('.katex, .katex-ignore, script, style')) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          }
+        );
+
+        const nodesToFix = [];
+        while (walker.nextNode()) {
+          nodesToFix.push(walker.currentNode);
+        }
+
+        nodesToFix.forEach(node => {
+          if (/\$([0-9])/.test(node.nodeValue)) {
+            const template = document.createElement("template");
+            template.innerHTML = node.nodeValue.replace(/\$([0-9])/g, '<span class="katex-ignore">$</span>$1');
+            node.replaceWith(template.content);
+          }
+        });
+
+        // 2. Ejecuta KaTeX ignorando los spans protegidos
         renderMathInElement(document.body, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
             {left: '$', right: '$', display: false}
           ],
+          ignoredClasses: ["katex-ignore"],
           throwOnError: false
         });
       }
@@ -628,8 +659,8 @@
         const headerGrid = document.createElement("div");
         headerGrid.className = "grid grid-cols-2 gap-2 text-xs font-bold uppercase tracking-wider text-stone-400 px-1 select-none";
         headerGrid.innerHTML = `
-          <div class="flex items-center gap-1"><span>1.</span> Columna A</div>
-          <div class="flex items-center gap-1 justify-end sm:justify-start"><span>2.</span> Relación</div>
+          <div class="flex items-center gap-1"><span></span> Columna A</div>
+          <div class="flex items-center gap-1 justify-end sm:justify-start"><span></span> Columna B</div>
         `;
         matchContainer.appendChild(headerGrid);
 
@@ -829,7 +860,7 @@
         selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900", "animate-shake");  
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
         buttons.forEach(btn => {
-          if (btn.innerHTML === question.correct) {
+          if (btn.textContent.trim() === question.correct.replace(/<[^>]*>?/gm, '').trim()) {
             btn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
           }
         });
