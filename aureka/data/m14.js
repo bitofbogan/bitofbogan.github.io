@@ -1,8 +1,40 @@
 // data/m14.js
+// data/m14.js (ejemplo)
 const moduleInfo = {
   id: 14,
   title: "Variación en procesos sociales",
-  badge: "Módulo 14"
+  badge: "Módulo 14",
+  // Catálogo de videos asociados a cada tema
+  topicVideos: {
+    "series": {
+      title: "Series analíticas y geométricas",
+      url: "https://youtu.be/5GMPvHO4SjU?si=ss-g1Hr3m0TgYR3I"
+    },
+    "porcentajes": {
+      title: "Porcentajes",
+      url: "https://youtu.be/qF3nlTRlUk8?si=2JS7tJksA4kb_wrJ"
+    },
+    "interes_simple_dinero": {
+      title: "Interés simple: cálculo de dinero",
+      url: "https://youtu.be/w_b_zGAf3XA?si=uCeTCd7a5KbFYECK"
+    },
+    "interes_simple_tiempo": {
+      title: "Interés simple: cálculo de tiempo",
+      url: "https://youtu.be/HAs6ZFLjtjA?si=NaWwP_IQ0IQrO_jR"
+    },
+    "interes_compuesto": {
+      title: "Interés compuesto",
+      url: "https://youtu.be/PORxQYDxOJk?si=nxCP9Oox1C9hPRw8"
+    },
+    "ingreso_base_mensual": {
+      title: "Ingreso base mensual",
+      url: "https://youtu.be/y42N2mMkxU8?si=RTw0Pbj13bd6sYui"
+    },
+    "riesgos_inversion": {
+      title: "Riesgos de inversión",
+      url: "https://youtu.be/J8X8-RLvvHQ?si=iRMQnGZue5IVibGw"
+    }
+  }
 };
 
 const questionBank = [
