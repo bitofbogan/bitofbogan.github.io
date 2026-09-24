@@ -233,7 +233,7 @@ var questionBank = [
     id: 14, //READY
     topicId: "interes_simple_tiempo",
     type: "choice",
-    prompt: "¿En cuántos meses se obtendrá un monto final de $\\text{$120,000}$ a partir de una inversión de $\\text{$40,000}$ con una tasa de interés simple del 5% bimestral?",
+    prompt: "¿En cuántos meses se obtendrá un monto final de $ \\text{$120,000} $ a partir de una inversión de $ \\text{$40,000} $ con una tasa de interés simple del 5% bimestral?",
     image: null,
     hint: "El interés que se busca ganar es la diferencia ($80,000). Despeja el número de plazos bimestrales con $$t = \\frac{I}{C \\cdot i}$$ y luego convierte los plazos a meses.",
     correct: "80 meses.",
