@@ -182,11 +182,11 @@
   <main id="app" class="flex-1 w-full max-w-xl mx-auto px-4 py-6 flex flex-col justify-center"></main>
 
   <!-- Footer con Contador de visitas -->
-  <footer class="w-full max-w-xl mx-auto px-4 py-4 text-center border-t border-stone-200 text-xs text-stone-500 flex items-center justify-between">
+  <footer class="w-full max-w-xl mx-auto px-4 py-4 border-t border-stone-200 text-xs text-stone-500 flex items-center justify-between">
     <span>Autogestión y Educación Comunitaria</span>
-    <span class="flex items-center gap-1.5 font-medium bg-stone-100 px-2.5 py-1 rounded-full border border-stone-200">
-      👁️ Visitas: <span id="visitCounter" class="text-auge-dark font-bold">...</span>
-    </span>
+    <div id="visitContainer" class="flex items-center">
+      <!-- El badge dinámico se inyectará aquí -->
+    </div>
   </footer>
 
   <!-- Motor principal con cargador modular -->
@@ -304,46 +304,16 @@
 
     function renderMath() {
       if (window.renderMathInElement) {
-        // 1. Busca nodos de texto donde haya un signo $ seguido de un número y lo aísla en un span protegido
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_TEXT,
-          {
-            acceptNode: (node) => {
-              if (!node.nodeValue.includes('$')) return NodeFilter.FILTER_REJECT;
-              const parent = node.parentElement;
-              if (!parent || parent.closest('.katex, .katex-ignore, script, style')) {
-                return NodeFilter.FILTER_REJECT;
-              }
-              return NodeFilter.FILTER_ACCEPT;
-            }
-          }
-        );
-
-        const nodesToFix = [];
-        while (walker.nextNode()) {
-          nodesToFix.push(walker.currentNode);
-        }
-
-        nodesToFix.forEach(node => {
-          if (/\$([0-9])/.test(node.nodeValue)) {
-            const template = document.createElement("template");
-            template.innerHTML = node.nodeValue.replace(/(?<!\\)\$([0-9])/g, '<span class="katex-ignore">$</span>$1');
-            node.replaceWith(template.content);
-          }
-        });
-
-        // 2. Ejecuta KaTeX ignorando los spans protegidos
         renderMathInElement(document.body, {
           delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false}
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
           ],
-          ignoredClasses: ["katex-ignore"],
           throwOnError: false
         });
       }
     }
+
 
     function toggleHint() {
       const box = document.getElementById("hintBox");
@@ -1379,44 +1349,20 @@
       }, 1600);
     }
 
-    // 3. Contador de visitas independiente con bypass de caché
-    async function initCounter(moduleId = "global") {
-      const counterEl = document.getElementById("visitCounter");
-      if (!counterEl) return;
+    function initCounter(moduleId = currentModuleId) {
+      const container = document.getElementById("visitContainer");
+      if (!container) return;
 
-      const namespace = `aureka_m${moduleId}_prepa`;
-      const key = "visitas";
-
-      let localCount = parseInt(localStorage.getItem(`count_${namespace}`) || "0", 10);
-      if (localCount > 0) {
-        counterEl.textContent = localCount.toLocaleString();
-      }
-
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-        const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up?t=${Date.now()}`, {
-          method: "GET",
-          mode: "cors",
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data && typeof data.count !== "undefined") {
-            localStorage.setItem(`count_${namespace}`, data.count);
-            counterEl.textContent = Number(data.count).toLocaleString();
-            return;
-          }
-        }
-        throw new Error("Fallo en API");
-      } catch (err) {
-        localCount = localCount > 0 ? localCount + 1 : 125;
-        localStorage.setItem(`count_${namespace}`, localCount);
-        counterEl.textContent = localCount.toLocaleString();
-      }
+      const path = `bitofbogan.github.io.aureka.m${moduleId}`;
+      
+      container.innerHTML = `
+        <img 
+          src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134" 
+          alt="Contador de visitas" 
+          class="h-5 rounded shadow-2xs"
+          loading="lazy"
+        />
+      `;
     }
 
     window.addEventListener("DOMContentLoaded", loadCurrentModule);
