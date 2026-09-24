@@ -1,7 +1,7 @@
 // data/m14.js
 var moduleInfo = {
   id: 14,
-  title: "Variación en procesos sociales",
+  title: "Economía & Sociedad",
   badge: "Módulo 14",
   topicVideos: {
     "series": {
