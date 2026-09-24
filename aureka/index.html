@@ -117,10 +117,39 @@
       stroke-dasharray: 8 4;
       animation: zapFade 0.45s ease-out forwards;
     }
+
+    /* Intro splash animada */
+    @keyframes splashScale {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-splash {
+      animation: splashScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
 
 <body class="bg-auge-canvas text-auge-dark min-h-screen flex flex-col font-sans selection:bg-orange-100">
+
+  <!-- Splash Screen Intro -->
+  <div id="splashScreen" class="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-out select-none">
+    <div class="flex flex-col items-center text-center animate-splash max-w-sm">
+      <div class="relative mb-5">
+        <div class="absolute -inset-2 bg-gradient-to-tr from-orange-400/20 to-amber-300/30 rounded-3xl blur-lg animate-pulse"></div>
+        <img src="Auge_logovertical.jpg" alt="Auge Logo" class="relative w-24 h-24 sm:w-28 sm:h-28 object-contain rounded-2xl shadow-md border border-stone-200/80 bg-white p-2">
+      </div>
+      <span class="text-xs uppercase tracking-[0.25em] font-extrabold text-auge-orange mb-1" id="splashBadge">
+        Cargando
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-black text-auge-dark tracking-tight leading-tight" id="splashTitle">
+        Aureka
+      </h1>
+      <div class="mt-4 flex items-center gap-1.5 text-stone-400 text-xs font-semibold">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-auge-orange animate-ping"></span>
+        <span>Autogestión y Educación Comunitaria</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Header Fijo -->
   <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 backdrop-blur-md border-b border-stone-200">
@@ -186,6 +215,7 @@
     const successPhrases = [
       "¡Excelente!",
       "¡Muy bien!",
+      "¡Maestro!",
       "¡Impecable!",
       "¡Exacto!",
       "¡Perfecto!",
@@ -260,7 +290,7 @@
     }
 
     function confirmResetQuiz() {
-      if (confirm("¿Quieres reiniciar Aureka desde cero?")) {
+      if (confirm("¿Quieres reiniciar Aureka?")) {
         window.scrollTo({ top: 0, behavior: "smooth" });
         initQuiz();
         initCounter(currentModuleId);
@@ -448,7 +478,7 @@
           item.style.cssText = tone.style;
           item.dataset.value = opt;
           item.dataset.selected = "false";
-          item.innerHTML = `<span>${opt}</span><span class="checkbox-indicator w-5 h-5 rounded-md border-2 border-stone-300 flex items-center justify-center text-xs text-white font-bold transition-all"></span>`;
+          item.innerHTML = `<span class="flex-1 pr-3 text-left leading-snug">${opt}</span><span class="checkbox-indicator w-5 h-5 rounded-md border-2 border-stone-300 flex items-center justify-center text-xs text-white font-bold transition-all shrink-0 aspect-square"></span>`;
 
           item.onclick = () => {
             const isSel = item.dataset.selected === "true";
@@ -932,19 +962,19 @@
 
         if (isAnswer && wasSelected) {
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-emerald-500 bg-emerald-50 text-emerald-950";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white font-black shrink-0";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white font-black shrink-0 aspect-square";
           indicator.textContent = "✓";
         } else if (!isAnswer && wasSelected) {
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-400";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-red-600 border border-red-600 flex items-center justify-center text-xs text-white font-black shrink-0";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-red-600 border border-red-600 flex items-center justify-center text-xs text-white font-black shrink-0 aspect-square";
           indicator.textContent = "✕";
         } else if (isAnswer && !wasSelected) {
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-dashed border-emerald-500 bg-emerald-50/50 text-emerald-900";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white flex items-center justify-center text-xs text-emerald-600 font-bold shrink-0";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white flex items-center justify-center text-xs text-emerald-600 font-bold shrink-0 aspect-square";
           indicator.textContent = "✓";
         } else {
           el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border border-stone-200 bg-stone-50 text-stone-400 opacity-60";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 bg-stone-100 flex items-center justify-center shrink-0";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 bg-stone-100 flex items-center justify-center shrink-0 aspect-square";
           indicator.textContent = "";
         }
       });
@@ -1294,12 +1324,17 @@
       const script = document.createElement("script");
       script.src = `${moduleConfig.file}?v=${Date.now()}`;
       script.onload = () => {
-        if (typeof moduleInfo !== "undefined") {
-          document.title = `Aureka | ${moduleInfo.badge}: ${moduleInfo.title}`;
-          phaseBadge.textContent = moduleInfo.badge;
-        }
+        const badge = (typeof moduleInfo !== "undefined" && moduleInfo.badge) ? moduleInfo.badge : `Módulo ${currentModuleId}`;
+        const title = (typeof moduleInfo !== "undefined" && moduleInfo.title) ? moduleInfo.title : moduleConfig.name;
+
+        document.title = `Aureka | ${badge}: ${title}`;
+        phaseBadge.textContent = badge;
+
         initQuiz();
         initCounter(currentModuleId);
+
+        // Lanza la intro
+        playIntroSplash(badge, title);
       };
       script.onerror = () => {
         app.innerHTML = `
@@ -1311,6 +1346,32 @@
         phaseBadge.textContent = `Módulo ${currentModuleId}`;
       };
       document.body.appendChild(script);
+    }
+
+    function playIntroSplash(badgeText, titleText, callback) {
+      const splash = document.getElementById("splashScreen");
+      const splashBadge = document.getElementById("splashBadge");
+      const splashTitle = document.getElementById("splashTitle");
+
+      if (!splash) {
+        if (callback) callback();
+        return;
+      }
+
+      splashBadge.textContent = badgeText;
+      splashTitle.textContent = titleText;
+
+      // Asegura que sea visible y reinicia transiciones
+      splash.classList.remove("hidden", "opacity-0", "pointer-events-none", "scale-105");
+
+      // Permanece visible 1.1s y se desvanece
+      setTimeout(() => {
+        splash.classList.add("opacity-0", "pointer-events-none", "scale-105");
+        setTimeout(() => {
+          splash.classList.add("hidden");
+          if (callback) callback();
+        }, 650);
+      }, 1100);
     }
 
     // 3. Contador de visitas independiente con bypass de caché
