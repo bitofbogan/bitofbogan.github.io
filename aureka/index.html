@@ -167,13 +167,21 @@
         <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
           Cargando...
         </span>
-        <button 
-          type="button" 
-          onclick="confirmResetQuiz()" 
-          title="Reiniciar sesión" 
-          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-          <span>🔄</span> Reiniciar
-        </button>
+        <div class="flex items-center gap-1.5">
+  <a 
+    href="index.html" 
+    title="Ir al menú de módulos" 
+    class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+    <span>🏠</span> Inicio
+  </a>
+  <button 
+    type="button" 
+    onclick="confirmResetQuiz()" 
+    title="Reiniciar sesión" 
+    class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+    <span>🔄</span> Reiniciar
+  </button>
+</div>
       </div>
     </div>
   </header>
@@ -1276,10 +1284,17 @@
       `;
     }
 
-    // 2. Cargador dinámico por URL (?m=X)
     function loadCurrentModule() {
       const urlParams = new URLSearchParams(window.location.search);
-      currentModuleId = urlParams.get('m') || '21';
+      const requestedId = urlParams.get('m');
+
+      // Si no hay parámetro ?m=X en la URL, mostramos el menú general
+      if (!requestedId) {
+        renderModulesHub();
+        return;
+      }
+
+      currentModuleId = requestedId;
       const moduleConfig = MODULES_MAP[currentModuleId];
 
       if (!moduleConfig) {
@@ -1287,6 +1302,9 @@
           <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
             <h2 class="text-lg font-bold text-red-600">Módulo no encontrado</h2>
             <p class="text-sm text-stone-500 mt-2">El módulo solicitado (${currentModuleId}) no existe.</p>
+            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-auge-orange bg-orange-50 border border-orange-200 px-4 py-2 rounded-xl hover:bg-orange-100 transition-colors">
+              Volver al catálogo
+            </a>
           </div>
         `;
         phaseBadge.textContent = "Error";
@@ -1307,8 +1325,6 @@
 
         initQuiz();
         initCounter(currentModuleId);
-
-        // Lanza la intro
         playIntroSplash(badge, title);
       };
       script.onerror = () => {
@@ -1316,6 +1332,9 @@
           <div class="p-6 bg-white border border-amber-200 rounded-2xl text-center">
             <h2 class="text-lg font-bold text-amber-700">Contenido en preparación</h2>
             <p class="text-sm text-stone-500 mt-2">El archivo <b>${moduleConfig.file}</b> aún no ha sido cargado en el servidor.</p>
+            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-stone-600 bg-stone-100 border border-stone-200 px-4 py-2 rounded-xl hover:bg-stone-200 transition-colors">
+              Volver al catálogo
+            </a>
           </div>
         `;
         phaseBadge.textContent = `Módulo ${currentModuleId}`;
@@ -1363,6 +1382,62 @@
           loading="lazy"
         />
       `;
+    }
+
+    function renderModulesHub() {
+      // Ocultamos el splash de inmediato si se entra al índice general
+      const splash = document.getElementById("splashScreen");
+      if (splash) splash.classList.add("hidden");
+
+      document.title = "Aureka | Catálogo de Módulos";
+      phaseBadge.textContent = "22 Módulos";
+      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+
+      // Contador global para la página principal
+      initCounter("hub");
+
+      let hubHTML = `
+        <div class="animate-pop flex flex-col gap-6 py-2">
+          <!-- Cabecera de bienvenida -->
+          <div class="text-center space-y-1.5">
+            <span class="text-xs font-bold uppercase tracking-widest text-auge-orange">Preparatoria Abierta</span>
+            <h1 class="text-2xl sm:text-3xl font-black text-auge-dark tracking-tight">Elige tu módulo de estudio</h1>
+            <p class="text-xs sm:text-sm text-stone-500 max-w-sm mx-auto leading-relaxed">
+              Practica con reactivos interactivos y refuerza tus conocimientos antes de tu examen oficial.
+            </p>
+          </div>
+
+          <!-- Cuadrícula de módulos (1 al 22) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      `;
+
+      Object.entries(MODULES_MAP).forEach(([id, mod]) => {
+        hubHTML += `
+          <a href="?m=${id}" class="group bg-white hover:bg-orange-50/50 border border-stone-200 hover:border-auge-orange p-3.5 rounded-2xl shadow-2xs hover:shadow-sm transition-all flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-stone-100 group-hover:bg-auge-orange group-hover:text-white text-auge-dark font-black text-sm flex items-center justify-center shrink-0 transition-colors">
+              ${id}
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400 group-hover:text-amber-700 transition-colors block">
+                Módulo ${id}
+              </span>
+              <span class="text-xs sm:text-sm font-bold text-auge-dark group-hover:text-auge-orange leading-snug line-clamp-2 transition-colors">
+                ${mod.name}
+              </span>
+            </div>
+            <span class="text-stone-300 group-hover:text-auge-orange text-sm font-bold px-1 transition-transform group-hover:translate-x-0.5 shrink-0">
+              →
+            </span>
+          </a>
+        `;
+      });
+
+      hubHTML += `
+          </div>
+        </div>
+      `;
+
+      app.innerHTML = hubHTML;
     }
 
     window.addEventListener("DOMContentLoaded", loadCurrentModule);
