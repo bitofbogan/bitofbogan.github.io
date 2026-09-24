@@ -1,7 +1,7 @@
 // data/m21.js
 const moduleInfo = {
   id: 21,
-  title: "Impacto de la ciencia y la tecnología",
+  title: "Filosofía de la Ciencia",
   badge: "Módulo 21"
 };
 
