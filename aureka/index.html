@@ -133,19 +133,24 @@
 
   <!-- Splash Screen Intro -->
   <div id="splashScreen" class="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-out select-none">
-    <div class="flex flex-col items-center text-center animate-splash max-w-sm">
-      <div class="relative mb-5">
-        <div class="absolute -inset-2 bg-gradient-to-tr from-orange-400/20 to-amber-300/30 rounded-3xl blur-lg animate-pulse"></div>
-        <img src="Auge_logovertical.jpg" alt="Auge Logo" class="relative w-24 h-24 sm:w-28 sm:h-28 object-contain rounded-2xl shadow-md border border-stone-200/80 bg-white p-2">
+    <div class="flex flex-col items-center text-center animate-splash max-w-md w-full">
+      <!-- Contenedor del Logo con Halo Glow Amplio -->
+      <div class="relative mb-6">
+        <div class="absolute -inset-4 bg-gradient-to-tr from-orange-500/25 via-amber-400/30 to-orange-300/20 rounded-[2.5rem] blur-2xl animate-pulse"></div>
+        <div class="relative w-44 h-44 sm:w-52 sm:h-52 bg-white rounded-3xl shadow-xl shadow-orange-950/10 border border-stone-200/70 p-3 flex items-center justify-center overflow-hidden">
+          <img src="Auge_logovertical.jpg" alt="Auge Logo" class="w-full h-full object-contain">
+        </div>
       </div>
-      <span class="text-xs uppercase tracking-[0.25em] font-extrabold text-auge-orange mb-1" id="splashBadge">
+
+      <!-- Textos del Módulo -->
+      <span class="text-xs sm:text-sm uppercase tracking-[0.28em] font-extrabold text-auge-orange mb-1.5 drop-shadow-xs" id="splashBadge">
         Cargando
       </span>
-      <h1 class="text-2xl sm:text-3xl font-black text-auge-dark tracking-tight leading-tight" id="splashTitle">
+      <h1 class="text-3xl sm:text-4xl font-black text-auge-dark tracking-tight leading-tight max-w-xs sm:max-w-sm" id="splashTitle">
         Aureka
       </h1>
-      <div class="mt-4 flex items-center gap-1.5 text-stone-400 text-xs font-semibold">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-auge-orange animate-ping"></span>
+      <div class="mt-5 flex items-center gap-2 text-stone-400 text-xs font-semibold">
+        <span class="inline-block w-2 h-2 rounded-full bg-auge-orange animate-ping"></span>
         <span>Autogestión y Educación Comunitaria</span>
       </div>
     </div>
@@ -1361,17 +1366,17 @@
       splashBadge.textContent = badgeText;
       splashTitle.textContent = titleText;
 
-      // Asegura que sea visible y reinicia transiciones
+      // Asegura visibilidad en caso de reinicio
       splash.classList.remove("hidden", "opacity-0", "pointer-events-none", "scale-105");
 
-      // Permanece visible 1.1s y se desvanece
+      // Permanece 1.6 segundos visible (1100ms + 500ms) y luego se desvanece
       setTimeout(() => {
         splash.classList.add("opacity-0", "pointer-events-none", "scale-105");
         setTimeout(() => {
           splash.classList.add("hidden");
           if (callback) callback();
         }, 650);
-      }, 1100);
+      }, 1600);
     }
 
     // 3. Contador de visitas independiente con bypass de caché
