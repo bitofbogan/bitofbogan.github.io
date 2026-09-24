@@ -253,24 +253,24 @@ var questionBank = [
   },
   {
     id: 11,
-    topicId: null, //FROM HERE
+    topicId: null,
     type: "choice",
-    prompt: "Selecciona la opción que completa la siguiente descripción:<br><br>El positivismo es una corriente filosófica creada por Augusto Comte que empleó esta palabra para indicar la fase:",
+    prompt: "¿Qué describe el término <i>positivismo</i> acuñado por Auguste Comte?",
     image: null,
-    hint: "Comte consideraba que este estadio dejaba atrás la teología y la metafísica para alcanzar el orden empírico definitivo.",
-    correct: "más elevada del conocimiento en el hombre.",
+    hint: "Comte consideraba que este estado dejaba atrás la teología y la metafísica para alcanzar el orden empírico definitivo.",
+    correct: "La fase más elevada del conocimiento en el hombre.",
     distractors: [
-      "intermedia que busca explicación de los fenómenos.",
-      "inicial del conocimiento de la naturaleza de las cosas.",
-      "más elevada para deducir que hay un ser creador."
+      "La fase intermedia que busca explicación de los fenómenos.",
+      "La fase inicial del conocimiento de la naturaleza de las cosas.",
+      "La fase más elevada para deducir que hay un ser creador."
     ],
     explanation: "Comte utilizó el término <b>positivismo</b> para señalar el estado positivo o científico como la etapa más madura, perfecta y elevada del intelecto humano, basada en hechos observables y leyes universales."
   },
   {
     id: 12,
-    topicId: "biotecnologia_bioetica",
+    topicId: null,
     type: "choice",
-    prompt: "¿Cómo se denomina al conjunto de técnicas disponibles para conocer la adecuada formación y el correcto desarrollo del feto antes de su nacimiento con el objeto de corregir precozmente, en la medida de lo posible, las anomalías que le pudieran afectar?",
+    prompt: "¿Cómo se denomina el conjunto de técnicas para conocer la adecuada formación y desarrollo del feto antes de su nacimiento?",
     image: null,
     hint: "Engloba ecografías, amniocentesis y pruebas genéticas realizadas a la madre durante la gestación.",
     correct: "Diagnóstico prenatal.",
@@ -283,26 +283,26 @@ var questionBank = [
   },
   {
     id: 13,
-    topicId: "biotecnologia_bioetica",
+    topicId: null,
     type: "choice",
-    prompt: "¿Cuál de las siguientes opciones completa la descripción presentada a continuación?<br><br>El uso de las técnicas de la ingeniería genética se puede ver en:",
+    prompt: "¿Dónde se puede observar el uso de las técnicas de la ingeniería genética?",
     image: null,
     hint: "Consiste en la introducción deliberada de genes foráneos en especies vegetales para mejorar su resistencia o rendimiento.",
-    correct: "el desarrollo de productos agrícolas transgénicos",
+    correct: "En el desarrollo de productos agrícolas transgénicos",
     distractors: [
-      "la producción de suplementos alimenticios",
-      "la aplicación en el desarrollo de pesticidas y herbicidas",
-      "los métodos de control de la natalidad humana"
+      "En la producción de suplementos alimenticios",
+      "En la aplicación en el desarrollo de pesticidas y herbicidas",
+      "En los métodos de control de la natalidad humana"
     ],
     explanation: "La <b>ingeniería genética</b> se aplica de forma destacada en la agrobiotecnología mediante la creación de <b>organismos genéticamente modificados (transgénicos)</b> con tolerancia a sequías, plagas o agroquímicos."
   },
   {
     id: 14,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "choice",
     prompt: "¿Cómo se le denomina a la variedad de seres vivos que habitan en la Tierra y los patrones que lo conforman?",
     image: null,
-    hint: "Término ecológico compuesto por el prefijo bio y la palabra diversidad.",
+    hint: "Término ecológico compuesto por el prefijo para vida y variación.",
     correct: "Biodiversidad.",
     distractors: [
       "Bioma.",
@@ -313,28 +313,29 @@ var questionBank = [
   },
   {
     id: 15,
-    topicId: "biotecnologia_bioetica",
-    type: "choice",
-    prompt: "Clasifica como verdadera (V) o falsa (F) cada una de las siguientes áreas en las que se puede aplicar la biotecnología:<br><br>1. Acuicultura<br>2. Ganadería<br>3. Medicina<br>4. Física",
-    image: null,
-    hint: "La biotecnología emplea sistemas y organismos vivos; la física elemental pura no constituye una rama de aplicación biotecnológica directa.",
-    correct: "V, V, V, F",
-    distractors: [
-      "V, F, V, F",
-      "F, F, F, V",
-      "V, V, F, F"
+    topicId: null,
+    type: "multi_select",
+    prompt: "Selecciona todas las áreas en las que se puede aplicar directamente la <b>biotecnología</b>:",
+    correctAnswers: [
+      "Acuicultura.",
+      "Ganadería.",
+      "Medicina."
     ],
-    explanation: "La <b>biotecnología</b> tiene aplicaciones directas en acuicultura (reproducción y sanidad de especies marinas), ganadería (clonación, inseminación y nutrición) y medicina (fármacos, vacunas e ingeniería tisular). La física es una ciencia exacta de base, no un área de aplicación biotecnológica per se."
+    distractors: [
+      "Física."
+    ],
+    hint: "La biotecnología utiliza sistemas biológicos y organismos vivos o sus derivados; descarta la disciplina que estudia las leyes fundamentales de la materia y energía inerte.",
+    explanation: "La <b>biotecnología</b> tiene aplicaciones prácticas en la acuicultura (sanidad y reproducción marina), la ganadería (mejoramiento genético y nutrición) y la medicina (desarrollo de fármacos y terapias genéticas). La física es una ciencia exacta fundamental, no una rama de aplicación biotecnológica directa."
   },
   {
     id: 16,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "match_columns",
     prompt: "Relaciona a cada naturalista o pensador con la propuesta evolutiva o científica que formuló:",
-    hint: "Linneo formalizó la taxonomía; Lyell el uniformitarismo geológico; Leclerc de Buffon fue precursor de la biogeografía; y Lamarck abogó por el transformismo.",
+    hint: "Linneo formalizó la taxonomía; Lyell la hipótesis de uniformidad geológica; Leclerc fue precursor del estudio geográfico de las especies; y Lamarck abogó por los mecanismos de transformación de las especies.",
     pairs: [
       {
-        left: "Carlos Linneo",
+        left: "Carl Linneo",
         right: "Sistema de clasificación natural jerárquico."
       },
       {
@@ -350,37 +351,54 @@ var questionBank = [
         right: "Postuló el transformismo."
       }
     ],
-    explanation: "• <b>Linneo:</b> Padre de la taxonomía y la nomenclatura binomial jerárquica.<br>• <b>Lyell:</b> Desarrolló el uniformitarismo geológico que inspiró los tiempos graduales de Darwin.<br>• <b>Leclerc (Buffon):</b> Pionero de la biogeografía al notar que regiones aisladas con climas similares tienen floras y faunas distintas.<br>• <b>Lamarck:</b> Primer gran defensor del transformismo biológico mediante la adaptación y uso/desuso."
+    explanation: "• <b>Linneo:</b> Padre de la taxonomía y la nomenclatura binomial jerárquica.<br>• <b>Lyell:</b> Desarrolló el uniformitarismo geológico que inspiró los tiempos graduales de Darwin.<br>• <b>Leclerc:</b> Pionero de la biogeografía al notar que regiones aisladas con climas similares tienen floras y faunas distintas.<br>• <b>Lamarck:</b> Primer gran defensor del transformismo biológico mediante la adaptación y uso."
   },
   {
     id: 17,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "choice",
-    prompt: "El espermatozoide de un perro contiene 39 cromosomas, ¿cuál es el número haploide de los perros?",
+    prompt: "Si el espermatozoide de un perro contiene 39 cromosomas, ¿cuál es su número haploide?",
     image: null,
-    hint: "Recuerda que un gameto (óvulo o espermatozoide) contiene exactamente la dotación haploide (n) de la especie.",
+    hint: "Recuerda que un gameto (óvulo o espermatozoide) contiene exactamente la dotación haploide ($n$) de la especie.",
     correct: "39",
     distractors: [
       "38 + 1",
       "78",
       "76 + 2"
     ],
-    explanation: "Los gametos son células sexuales haploides ($n$). Dado que el espermatozoide ya contiene 39 cromosomas, el <b>número haploide</b> de los perros es directamente <b>39</b> (su dotación somática diploide $2n$ es de 78)."
+    explanation: "Los gametos son células sexuales haploides ($n$). Dado que el espermatozoide ya contiene 39 cromosomas, el <b>número haploide</b> de los perros es directamente <b>39</b> (su número diploide $2n$ es de 78)."
   },
   {
     id: 18,
-    topicId: "teorias_evolutivas",
-    type: "choice",
-    prompt: "Identifica con una B las propuestas que corresponden a los Biometristas y con una M las de los Mutacionistas:<br><br>1. Defienden la selección natural propuesta por Darwin.<br>2. La evolución se presenta por transformaciones en las células.<br>3. Se presenta una duplicación anormal de las células por error en el ADN.<br>4. Los cambios en las especies ocurren de forma paulatina.",
-    image: null,
-    hint: "Los biometristas apostaban por el cambio continuo, gradual y estadístico darwiniano; los mutacionistas por saltos y discontinuidades provocadas por cambios celulares bruscos.",
-    correct: "[B - 1, 4] [M - 2, 3]",
-    distractors: [
-      "[B - 1, 3] [M - 2, 4]",
-      "[B - 2, 4] [M - 1, 3]",
-      "[B - 2, 3] [M - 1, 4]"
+    topicId: "teorias_evolutivas", //FROM HERE ALSO NULL
+    type: "multi_select",
+    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>Biometristas</b>:",
+    correctAnswers: [
+      "Defienden la selección natural propuesta por Darwin.",
+      "Los cambios en las especies ocurren de forma paulatina."
     ],
-    explanation: "Los <b>biometristas</b> defendían la selección natural darwiniana y el cambio fenotípico continuo, gradual y paulatino (1, 4). Los <b>mutacionistas</b> sostenían que la evolución ocurría a saltos como consecuencia directa de alteraciones moleculares y errores abruptos en el material celular (2, 3)."
+    distractors: [
+      "La evolución se presenta por transformaciones en las células.",
+      "Se presenta una duplicación anormal de las células por error en el ADN."
+    ],
+    hint: "Los biometristas apoyaban la teoría original de Darwin y sostenían que la evolución ocurre de forma continua, cuantitativa y gradual.",
+    explanation: "Los <b>biometristas</b> defendían la selección natural darwiniana y argumentaban que la evolución se produce mediante variaciones continuas y cambios que ocurren de manera paulatina. Las posturas relacionadas con alteraciones bruscas o errores en las células corresponden a los mutacionistas."
+  },
+  {
+    id: 19,
+    topicId: "teorias_evolutivas",
+    type: "multi_select",
+    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>Mutacionistas</b>:",
+    correctAnswers: [
+      "La evolución se presenta por transformaciones en las células.",
+      "Se presenta una duplicación anormal de las células por error en el ADN."
+    ],
+    distractors: [
+      "Defienden la selección natural propuesta por Darwin.",
+      "Los cambios en las especies ocurren de forma paulatina."
+    ],
+    hint: "Los mutacionistas consideraban que las mutaciones drásticas en el material celular eran el verdadero motor evolutivo, por encima de la selección gradual.",
+    explanation: "Los <b>mutacionistas</b> sostenían que la evolución operaba mediante saltos abruptos causados por mutaciones y transformaciones anómalas en el ADN y las células. La defensa de la selección natural y el cambio paulatino corresponde a la corriente biométrica."
   },
   {
     id: 19,
