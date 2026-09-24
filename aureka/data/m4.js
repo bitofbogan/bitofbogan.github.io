@@ -1,7 +1,7 @@
 // data/m4.js
 const moduleInfo = {
   id: 4,
-  title: "Ser social y sociedad",
+  title: "Sociología",
   badge: "Módulo 4"
 };
 
