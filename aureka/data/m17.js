@@ -22,7 +22,7 @@ var moduleInfo = {
 var questionBank = [
   {
     id: 1,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "choice",
     prompt: "Al cruzarse un individuo homocigoto de plumas negras con otro homocigoto de plumas blancas y obtenerse descendientes con plumaje gris azulado, ¿qué excepción mendeliana se observa y por qué?",
     hint: "Identifica el fenómeno donde ambos alelos se expresan al mismo tiempo en el fenotipo.",
@@ -528,7 +528,7 @@ var questionBank = [
   },
   {
     id: 31,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "match_columns",
     prompt: "Relaciona cada disciplina biológica con su objeto de estudio específico:",
     hint: "La biogeografía analiza mapas y hábitats; la morfología la anatomía externa e interna; y la paleontología los restos fósiles preservados en roca.",
@@ -550,7 +550,7 @@ var questionBank = [
   },
   {
     id: 32,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "match_columns",
     prompt: "Relaciona los conceptos genéticos con la definición o descripción correspondiente:",
     hint: "El cromosoma es la macromolécula nuclear de ADN empaquetado; el gen codifica información; el fenotipo es lo visible; la mitosis replica células idénticas; y el heterocigoto tiene dos alelos diferentes.",
@@ -606,6 +606,6 @@ var questionBank = [
       "Se observa la estructura helicoidal del ADN.",
       "Se propone un modelo molecular del ADN."
     ],
-    explanation: "La cronología científica correcta es:<br>1. <b>Fines del siglo XIX / inicios del XX:</b> Descubrimiento y aislamiento celular de los ácidos nucleicos (ADN y ARN).<br>2. <b>1910-1915:</b> Experimentos de Thomas H. Morgan demostrando que los cromosomas portan los genes.<br>3. <b>1944:</b> Identificación de que el ADN de los cromosomas (y no las proteínas) es el material genético (Avery, MacLeod y McCarty).<br>4. <b>1952:</b> Obtención de la fotografía 51 por Rosalind Franklin evidenciando la doble hélice por difracción de rayos X.<br>5. <b>1953:</b> Publicación del modelo molecular tridimensional del ADN por Watson y Crick."
+    explanation: "La cronología científica correcta es:<br>1. <b>Fines del siglo XIX / inicios del XX:</b> Descubrimiento y aislamiento celular de los ácidos nucleicos (ADN y ARN).<br>2. <b>1910-1915:</b> Experimentos de Thomas H. Morgan demostrando que los cromosomas portan los genes.<br>3. <b>1944:</b> Identificación de que el ADN de los cromosomas (y no las proteínas) es el material genético.<br>4. <b>1952:</b> Obtención de la fotografía 51 por Rosalind Franklin evidenciando la doble hélice por difracción de rayos X.<br>5. <b>1953:</b> Publicación del modelo molecular tridimensional del ADN por Watson y Crick."
   }
 ];
