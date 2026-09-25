@@ -51,7 +51,7 @@
       transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Animación de error (sacudida horizontal sutil) */
+    /* Animación de error */
     @keyframes shakeSoft {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-5px); }
@@ -61,49 +61,13 @@
       animation: shakeSoft 0.35s ease-in-out;
     }
 
-    /* Animación de acierto (salto de confirmación) */
+    /* Animación de acierto */
     @keyframes bounceShort {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.025) translateY(-2px); }
     }
     .animate-success {
       animation: bounceShort 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    /* Efecto fuego estilo Balatro */
-    @keyframes flameShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes flamePulse {
-      0%, 100% { filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6)); }
-      50% { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.9)); }
-    }
-
-    /* Racha baja (2 a 3) */
-    .fire-streak-1 {
-      background: linear-gradient(90deg, #f97316, #eab308, #f97316) !important;
-      background-size: 200% 200% !important;
-      animation: flameShift 1.8s ease infinite;
-      box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
-    }
-
-    /* Racha media (4 a 5) */
-    .fire-streak-2 {
-      background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #ef4444) !important;
-      background-size: 250% 250% !important;
-      animation: flameShift 1.2s ease infinite, flamePulse 1s ease-in-out infinite;
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
-    }
-
-    /* Racha infernal (6+) */
-    .fire-streak-3 {
-      background: linear-gradient(90deg, #dc2626, #ea580c, #facc15, #f43f5e) !important;
-      background-size: 300% 300% !important;
-      animation: flameShift 0.8s linear infinite, flamePulse 0.6s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(220, 38, 38, 0.95), 0 0 30px rgba(250, 204, 21, 0.5);
     }
 
     /* Destello de conexión para match_columns */
@@ -126,6 +90,107 @@
     .animate-splash {
       animation: splashScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+
+    /* =========================================
+       BARRA DE PROGRESO "BALATRO FIRE"
+       ========================================= */
+    .progress-bar-container {
+      position: relative;
+      overflow: visible;
+    }
+
+    .progress-bar-fill.on-fire {
+      background: linear-gradient(90deg, #ff4500, #ff8c00, #ffd700, #ffffff) !important;
+      background-size: 200% 200%;
+      animation: fireGradient 0.8s ease infinite alternate;
+      position: relative;
+    }
+
+    .progress-bar-fill.on-fire::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      width: 14px;
+      height: calc(100% + 8px);
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 
+        0 0 10px #fff,
+        -4px -6px 14px #ff8c00,
+        -8px 4px 18px #ff2200,
+        0 0 25px #ff4500;
+      filter: blur(1px);
+      animation: flameTip 0.25s infinite alternate ease-in-out;
+    }
+
+    @keyframes fireGradient {
+      0% { background-position: 0% 50%; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); }
+      100% { background-position: 100% 50%; box-shadow: 0 -4px 22px rgba(255, 140, 0, 0.9), 0 0 35px rgba(255, 30, 0, 0.7); }
+    }
+
+    @keyframes flameTip {
+      0% { transform: scale(1) translateY(0); opacity: 0.9; }
+      100% { transform: scale(1.25) translateY(-2px); opacity: 1; filter: blur(0.5px); }
+    }
+
+    /* =========================================
+       RACHA: PULSO DINÁMICO ESCALABLE
+       ========================================= */
+    .streak-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 800;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .streak-badge.active-streak {
+      animation: streakPulse calc(1.2s / var(--streak-intensity, 1)) infinite ease-in-out;
+      color: #ff3e00;
+      text-shadow: 0 0 calc(3px * var(--streak-intensity, 1)) rgba(255, 60, 0, 0.6);
+    }
+
+    @keyframes streakPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(calc(1 + (0.05 * var(--streak-intensity, 1))));
+        filter: brightness(1.25);
+      }
+    }
+
+    /* =========================================
+       EFECTO SAD: PÉRDIDA DE RACHA (ASHES & SHAKE)
+       ========================================= */
+    .streak-lost-animation {
+      animation: streakBreak 0.75s forwards cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+
+    @keyframes streakBreak {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(4px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0) scale(1.1); filter: grayscale(0.5) hue-rotate(180deg); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+      100% {
+        transform: scale(0.85) translateY(4px);
+        filter: grayscale(1) opacity(0.5);
+      }
+    }
+
+    .smoke-particle {
+      position: absolute;
+      pointer-events: none;
+      font-size: 1.1rem;
+      animation: smokeFade 1s forwards ease-out;
+      z-index: 50;
+    }
+
+    @keyframes smokeFade {
+      0% { transform: translateY(0) scale(1); opacity: 0.9; }
+      100% { transform: translateY(-35px) scale(1.8) rotate(15deg); opacity: 0; filter: blur(3px); }
+    }
   </style>
 </head>
 
@@ -134,7 +199,6 @@
   <!-- Splash Screen Intro -->
   <div id="splashScreen" class="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-out select-none">
     <div class="flex flex-col items-center text-center animate-splash max-w-md w-full">
-      <!-- Contenedor del Logo con Halo Glow Amplio -->
       <div class="relative mb-6">
         <div class="absolute -inset-4 bg-gradient-to-tr from-orange-500/25 via-amber-400/30 to-orange-300/20 rounded-[2.5rem] blur-2xl animate-pulse"></div>
         <div class="relative w-44 h-44 sm:w-52 sm:h-52 bg-white rounded-3xl shadow-xl shadow-orange-950/10 border border-stone-200/70 p-3 flex items-center justify-center overflow-hidden">
@@ -142,7 +206,6 @@
         </div>
       </div>
 
-      <!-- Textos del Módulo -->
       <span class="text-xs sm:text-sm uppercase tracking-[0.28em] font-extrabold text-auge-orange mb-1.5 drop-shadow-xs" id="splashBadge">
         Cargando
       </span>
@@ -168,20 +231,20 @@
           Cargando...
         </span>
         <div class="flex items-center gap-1.5">
-  <a 
-    href="index.html" 
-    title="Ir al menú de módulos" 
-    class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-    <span>🏠</span> Inicio
-  </a>
-  <button 
-    type="button" 
-    onclick="confirmResetQuiz()" 
-    title="Reiniciar sesión" 
-    class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-    <span>🔄</span> Reiniciar
-  </button>
-</div>
+          <a 
+            href="index.html" 
+            title="Ir al menú de módulos" 
+            class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+            <span>🏠</span> Inicio
+          </a>
+          <button 
+            type="button" 
+            onclick="confirmResetQuiz()" 
+            title="Reiniciar sesión" 
+            class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
+            <span>🔄</span> Reiniciar
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -192,14 +255,11 @@
   <!-- Footer con Contador de visitas -->
   <footer class="w-full max-w-xl mx-auto px-4 py-4 border-t border-stone-200 text-xs text-stone-500 flex items-center justify-between">
     <span>Autogestión y Educación Comunitaria</span>
-    <div id="visitContainer" class="flex items-center">
-      <!-- El badge dinámico se inyectará aquí -->
-    </div>
+    <div id="visitContainer" class="flex items-center"></div>
   </footer>
 
   <!-- Motor principal con cargador modular -->
   <script>
-    // 1. Diccionario de metadatos de los 22 módulos
     const MODULES_MAP = {
       1:  { name: "Técnicas de estudio & aprendizaje", file: "data/m1.js" },
       2:  { name: "Lectura & redacción I", file: "data/m2.js" },
@@ -242,11 +302,10 @@
     let isReinforcementPhase = false;
     let failedTopics = new Set();
 
-    // Métricas para calificación y gamificación
     let totalQuestions = 0;
     let firstRoundCorrect = 0;
     let secondRoundResolved = 0;
-    let streakCount = 0;
+    let currentStreak = 0;
     let maxStreak = 0;
 
     const app = document.getElementById("app");
@@ -284,7 +343,7 @@
       totalQuestions = questionBank.length;
       firstRoundCorrect = 0;
       secondRoundResolved = 0;
-      streakCount = 0;
+      currentStreak = 0;
       maxStreak = 0;
       pendingQueue = [];
       currentIndex = 0;
@@ -322,7 +381,6 @@
       }
     }
 
-
     function toggleHint() {
       const box = document.getElementById("hintBox");
       const btn = document.getElementById("hintBtn");
@@ -333,11 +391,58 @@
       }
     }
 
-    function getStreakFireClass(streak) {
-      if (streak >= 6) return "fire-streak-3";
-      if (streak >= 4) return "fire-streak-2";
-      if (streak >= 2) return "fire-streak-1";
-      return "";
+    /* CONTROL DE RACHA BALATRO */
+    function handleStreakUpdate(isCorrect) {
+      const streakEl = document.getElementById("streak-counter");
+      const progressBarFill = document.querySelector(".progress-bar-fill");
+
+      if (isCorrect) {
+        currentStreak++;
+        if (currentStreak > maxStreak) maxStreak = currentStreak;
+
+        if (streakEl) {
+          streakEl.classList.remove("streak-lost-animation", "hidden");
+          const intensity = Math.min(1 + (currentStreak * 0.35), 4);
+          streakEl.style.setProperty("--streak-intensity", intensity);
+          streakEl.classList.add("active-streak");
+          streakEl.innerHTML = `🔥 ${currentStreak}`;
+        }
+
+        if (progressBarFill && currentStreak >= 3) {
+          progressBarFill.classList.add("on-fire");
+        }
+      } else {
+        if (currentStreak >= 2 && streakEl) {
+          triggerSadStreakLoss(streakEl);
+        } else if (streakEl) {
+          streakEl.classList.add("hidden");
+        }
+
+        currentStreak = 0;
+        if (progressBarFill) progressBarFill.classList.remove("on-fire");
+        if (streakEl) {
+          streakEl.classList.remove("active-streak");
+          streakEl.style.removeProperty("--streak-intensity");
+        }
+      }
+    }
+
+    function triggerSadStreakLoss(element) {
+      element.classList.add("streak-lost-animation");
+      element.innerHTML = `💨 0`;
+
+      const rect = element.getBoundingClientRect();
+      const smoke = document.createElement("span");
+      smoke.className = "smoke-particle";
+      smoke.innerText = "☁️";
+      smoke.style.left = `${rect.left + window.scrollX + 6}px`;
+      smoke.style.top = `${rect.top + window.scrollY - 10}px`;
+      document.body.appendChild(smoke);
+
+      setTimeout(() => {
+        smoke.remove();
+        element.classList.add("hidden");
+      }, 1000);
     }
 
     function renderQuestion() {
@@ -348,7 +453,8 @@
 
       const q = currentQueue[currentIndex];
       const progressPercent = Math.round(((currentIndex) / currentQueue.length) * 100);
-      const fireClass = getStreakFireClass(streakCount);
+      const isFireActive = currentStreak >= 3;
+      const intensity = Math.min(1 + (currentStreak * 0.35), 4);
 
       let contentHTML = `
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
@@ -356,14 +462,12 @@
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between text-xs font-bold">
               <span class="text-auge-orange uppercase tracking-wider">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
-              ${streakCount > 1 ? `
-                <span class="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 animate-pop">
-                  🔥 <span class="font-black">${streakCount}</span> en racha
-                </span>
-              ` : ''}
+              <span id="streak-counter" class="streak-badge ${currentStreak > 1 ? 'active-streak' : 'hidden'} text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
+                🔥 ${currentStreak}
+              </span>
             </div>
-            <div class="w-full bg-stone-100 h-2.5 rounded-full overflow-hidden transition-all">
-              <div class="bg-auge-orange h-full progress-bar-fill ${fireClass}" style="width: ${progressPercent}%"></div>
+            <div class="progress-bar-container w-full bg-stone-100 h-2.5 rounded-full transition-all">
+              <div class="bg-auge-orange h-full rounded-full progress-bar-fill ${isFireActive ? 'on-fire' : ''}" style="width: ${progressPercent}%"></div>
             </div>
           </div>
 
@@ -491,7 +595,6 @@
       } else if (q.type === "classification") {
         const list = document.createElement("div");
         list.className = "flex flex-col gap-3";
-
         const shuffledItems = shuffle(q.items);
 
         shuffledItems.forEach(item => {
@@ -668,7 +771,6 @@
           { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500", hex: "#6366f1" }
         ];
 
-        // 1. Cabecera visual
         const headerGrid = document.createElement("div");
         headerGrid.className = "grid grid-cols-2 gap-2 text-xs font-bold uppercase tracking-wider text-stone-400 px-1 select-none";
         headerGrid.innerHTML = `
@@ -677,7 +779,6 @@
         `;
         matchContainer.appendChild(headerGrid);
 
-        // 2. Grilla con centrado equilibrado entre columnas
         const grid = document.createElement("div");
         grid.className = "grid grid-cols-2 gap-2.5 sm:gap-3 items-center relative";
 
@@ -691,7 +792,6 @@
         grid.appendChild(colRight);
         matchContainer.appendChild(grid);
 
-        // Capa SVG para el efecto de la línea conectora
         const svgCanvas = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svgCanvas.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none z-20");
         grid.appendChild(svgCanvas);
@@ -704,7 +804,6 @@
 
         optionsContainer.appendChild(matchContainer);
 
-        // Función que dibuja el rayo temporal entre los dos pines
         function drawZapLine(leftPinEl, rightPinEl, strokeHex) {
           if (!leftPinEl || !rightPinEl) return;
           const gridRect = grid.getBoundingClientRect();
@@ -734,7 +833,6 @@
           colLeft.innerHTML = "";
           colRight.innerHTML = "";
 
-          // Render Columna Izquierda
           leftItems.forEach((item, idx) => {
             const isSelected = selectedLeftId === item.id;
             const connectedRightId = connections[item.id];
@@ -780,7 +878,6 @@
             colLeft.appendChild(card);
           });
 
-          // Render Columna Derecha
           rightItems.forEach(item => {
             const connectedLeftEntry = Object.entries(connections).find(([_, rId]) => rId === item.id);
             const connectedLeftId = connectedLeftEntry ? connectedLeftEntry[0] : null;
@@ -825,14 +922,11 @@
                 const sourceIdx = leftItems.findIndex(l => l.id === sourceLeftId);
                 const theme = pairColors[sourceIdx % pairColors.length];
 
-                // Asignar conexión
                 connections[sourceLeftId] = item.id;
                 selectedLeftId = null;
 
-                // Renderizar estados
                 renderMatchView();
 
-                // Disparar la línea visual entre los dos pines exactos
                 setTimeout(() => {
                   const leftPin = document.getElementById(`pin_${sourceLeftId}`);
                   const rightPin = document.getElementById(`pin_${item.id}`);
@@ -858,6 +952,7 @@
       buttons.forEach(btn => btn.disabled = true);
 
       const isCorrect = selectedText === question.correct;
+      handleStreakUpdate(isCorrect);
 
       if (isCorrect) {
         selectedBtn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900", "animate-success");
@@ -867,8 +962,6 @@
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900", "animate-shake");  
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
@@ -878,7 +971,6 @@
           }
         });
         queueForReinforcement(question);
-        streakCount = 0;
       }
 
       showFeedback(isCorrect, question.explanation);
@@ -890,6 +982,7 @@
 
       const items = Array.from(listElement.children).map(child => child.dataset.value);
       const isCorrect = items.every((val, idx) => val === question.correctOrder[idx]);
+      handleStreakUpdate(isCorrect);
 
       if (isCorrect) {
         listElement.classList.add("pointer-events-none");
@@ -901,14 +994,11 @@
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         listElement.classList.add("pointer-events-none");
         Array.from(listElement.children).forEach(c => {
           c.classList.add("!bg-red-50", "!border-red-300", "!text-red-900");
         });
-        streakCount = 0;
         queueForReinforcement(question);
       }
 
@@ -934,6 +1024,7 @@
       const hasAllCorrect = question.correctAnswers.every(ans => selectedValues.includes(ans));
       const hasNoExtras = selectedValues.every(ans => correctSet.has(ans));
       const isCorrect = hasAllCorrect && hasNoExtras;
+      handleStreakUpdate(isCorrect);
 
       items.forEach(el => {
         const val = el.dataset.value;
@@ -968,12 +1059,9 @@
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
         listElement.classList.add("animate-shake");
-        streakCount = 0;
       }
 
       showFeedback(isCorrect, question.explanation);
@@ -1015,19 +1103,16 @@
         });
       });
 
+      handleStreakUpdate(isAllCorrect);
+
       if (isAllCorrect) {
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
-        streakCount = 0;
-      }
-      if (!isAllCorrect) {
         listElement.classList.add("animate-shake");
       }
 
@@ -1046,6 +1131,7 @@
       containerElement.classList.add("pointer-events-none");
 
       const isAllCorrect = slotsState.every((token, idx) => token.text === question.correctOrder[idx]);
+      handleStreakUpdate(isAllCorrect);
 
       const slotElements = containerElement.querySelectorAll(".blank-slot");
       slotElements.forEach((el, idx) => {
@@ -1065,12 +1151,9 @@
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
         containerElement.classList.add("animate-shake");
-        streakCount = 0;
       }
 
       showFeedback(isAllCorrect, question.explanation);
@@ -1111,18 +1194,17 @@
         }
       });
 
+      handleStreakUpdate(isAllCorrect);
+
       if (isAllCorrect) {
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
         } else {
           secondRoundResolved++;
         }
-        streakCount++;
-        if (streakCount > maxStreak) maxStreak = streakCount;
       } else {
         queueForReinforcement(question);
         containerElement.classList.add("animate-shake");
-        streakCount = 0;
       }
 
       showFeedback(isAllCorrect, question.explanation);
@@ -1211,7 +1293,6 @@
 
       const prelimGrade = totalQuestions > 0 ? ((firstRoundCorrect / totalQuestions) * 10).toFixed(1) : "0.0";
 
-      // Obtener los videos asociados a los temas con fallas
       const videosMap = (typeof moduleInfo !== "undefined" && moduleInfo.topicVideos) ? moduleInfo.topicVideos : {};
       const recommendedVideos = Array.from(failedTopics)
         .map(topicId => videosMap[topicId])
@@ -1288,7 +1369,6 @@
       const urlParams = new URLSearchParams(window.location.search);
       const requestedId = urlParams.get('m');
 
-      // Si no hay parámetro ?m=X en la URL, mostramos el menú general
       if (!requestedId) {
         renderModulesHub();
         return;
@@ -1355,10 +1435,8 @@
       splashBadge.textContent = badgeText;
       splashTitle.textContent = titleText;
 
-      // Asegura visibilidad en caso de reinicio
       splash.classList.remove("hidden", "opacity-0", "pointer-events-none", "scale-105");
 
-      // Permanece 1.6 segundos visible (1100ms + 500ms) y luego se desvanece
       setTimeout(() => {
         splash.classList.add("opacity-0", "pointer-events-none", "scale-105");
         setTimeout(() => {
@@ -1378,14 +1456,13 @@
         <img 
           src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134" 
           alt="Contador de visitas" 
-          class="h-5 rounded shadow-2xs"
+          class="h-5 rounded shadow-2xs" 
           loading="lazy"
         />
       `;
     }
 
     function renderModulesHub() {
-      // Ocultamos el splash de inmediato si se entra al índice general
       const splash = document.getElementById("splashScreen");
       if (splash) splash.classList.add("hidden");
 
@@ -1393,12 +1470,10 @@
       phaseBadge.textContent = "22 Módulos";
       phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
 
-      // Contador global para la página principal
       initCounter("hub");
 
       let hubHTML = `
         <div class="animate-pop flex flex-col gap-6 py-2">
-          <!-- Cabecera de bienvenida -->
           <div class="text-center space-y-1.5">
             <span class="text-xs font-bold uppercase tracking-widest text-auge-orange">Prepa Auge</span>
             <h1 class="text-2xl sm:text-3xl font-black text-auge-dark tracking-tight">Elige tu módulo</h1>
@@ -1407,7 +1482,6 @@
             </p>
           </div>
 
-          <!-- Cuadrícula de módulos (1 al 22) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       `;
 
