@@ -22,23 +22,17 @@ var moduleInfo = {
 var questionBank = [
   {
     id: 1,
-    topicId: null,
-    type: "fill_blanks",
-    prompt: "Completa la oración:",
-    sentence: "Al cruzarse un individuo homocigoto de plumas negras con otro homocigoto de plumas blancas obteniendo descendientes con plumaje gris azulado, se observa la {0} como excepción mendeliana porque {1}.",
-    hint: "Analiza el fenómeno genético donde ambos alelos se manifiestan al mismo tiempo sin que uno anule al otro.",
-    correctOrder: [
-      "codominancia",
-      "se expresan al mismo tiempo los dos alelos"
-    ],
+    topicId: "genetica_mendel",
+    type: "choice",
+    prompt: "Al cruzarse un individuo homocigoto de plumas negras con otro homocigoto de plumas blancas y obtenerse descendientes con plumaje gris azulado, ¿qué excepción mendeliana se observa y por qué?",
+    hint: "Identifica el fenómeno donde ambos alelos se expresan al mismo tiempo en el fenotipo.",
+    correct: "Codominancia, porque se expresan al mismo tiempo los dos alelos.",
     distractors: [
-      "dominancia",
-      "recesividad",
-      "se manifiesta exclusivamente un sólo alelo",
-      "no llega a manifestarse ninguno de los alelos",
-      "no se expresa ninguno de los alelos del gen"
+      "Dominancia, porque se manifiesta exclusivamente un solo alelo.",
+      "Recesividad, porque no llega a manifestarse ninguno de los alelos.",
+      "Codominancia, porque no se expresa ninguno de los alelos del gen."
     ],
-    explanation: "La <b>codominancia</b> ocurre cuando ambos alelos parentales son dominantes y se manifiestan conjuntamente en el fenotipo del heterocigoto, generando una expresión simultánea (como el plumaje gris azulado obtenido al cruzar individuos negros y blancos)."
+    explanation: "La <b>codominancia</b> es una excepción mendeliana en la cual ambos alelos parentales tienen la misma fuerza y se expresan conjuntamente en el heterocigoto sin anularse."
   },
   {
     id: 2,
@@ -68,15 +62,15 @@ var questionBank = [
     hint: "Distingue entre el derecho a elegir sobre el propio cuerpo (autonomía), el reparto equitativo de recursos o méritos (justicia) y la necesidad de evitar un mal mayor como la muerte mediante una intervención drástica (no maleficencia).",
     pairs: [
       {
-        left: "Autonomía",
+        left: "Autonomía.",
         right: "<b>Beto:</b> Mi tía tuvo cáncer y ella quiso decidir sobre la posibilidad de usar un nuevo tratamiento que le ayudó un tiempo a mantenerse bien."
       },
       {
-        left: "Justicia",
+        left: "Justicia.",
         right: "<b>Alma:</b> Es dar a cada quien lo que merezca pero de forma equitativa por un criterio de antigüedad, conocimientos y aptitudes."
       },
       {
-        left: "No maleficencia",
+        left: "No maleficencia.",
         right: "<b>Carmen:</b> Al torero le tuvieron que amputar la pierna de urgencia para salvarlo de una grave cornada, pues era eso o la muerte."
       }
     ],
@@ -90,19 +84,19 @@ var questionBank = [
     hint: "Identifica qué proceso altera las secuencias del ADN, cuál transmite rasgos entre generaciones, cuál define la supervivencia del más apto y cuál se hereda causando afecciones biológicas.",
     pairs: [
       {
-        left: "Mutación",
+        left: "Mutación.",
         right: "Cambio en información genética."
       },
       {
-        left: "Herencia",
+        left: "Herencia.",
         right: "Característica que pasa de una generación a otra."
       },
       {
-        left: "Selección natural",
+        left: "Selección natural.",
         right: "Supervivencia del más apto."
       },
       {
-        left: "Enfermedad genética",
+        left: "Enfermedad genética.",
         right: "Afecta a nivel hereditario."
       }
     ],
@@ -188,19 +182,19 @@ var questionBank = [
     hint: "El estado teológico recurre a creencias sobrenaturales y seres superiores; el filosófico a conjeturas abstractas o racionales sin prueba empírica; y el científico a leyes naturales y físicas observables.",
     pairs: [
       {
-        left: "Teológico",
+        left: "Teológico.",
         right: "<b>Karen:</b> Yo creo en los OVNIs aunque nunca los haya visto, pero estoy segura de que son seres etéreos que nos observan y le reportan a otro ser superior lo que hace el ser humano."
       },
       {
-        left: "Filosófico",
+        left: "Filosófico.",
         right: "<b>Adrián:</b> Los OVNIs deben ser reales pues los físicos y biólogos siempre han conjeturado acerca de la existencia de vida en el universo y la posibilidad de que la Tierra no sea el único planeta habitado."
       },
       {
-        left: "Científico",
+        left: "Científico.",
         right: "<b>Bruno:</b> Las fotografías y videos de OVNIs se explican por fenómenos de óptica, cambios de temperatura en la atmósfera, nubosidad y hasta aviones pasando a gran altura."
       }
     ],
-    explanation: "Según la <b>Ley de los tres Estados</b> de Comte, la explicación de Karen es teológica al recurrir a seres divinos para explicar un fenómeno; la de Adrián es filosófica al presentarse como una opción racional pero sin ofrecer ninguna prueba; y la de Bruno es científica al mostrar pruebas falseables a través del método científico."
+    explanation: "Según la <b>Ley de los Tres Estados</b> de Comte, la explicación de Karen es teológica al recurrir a seres divinos para explicar un fenómeno; la de Adrián es filosófica al presentarse como una opción racional pero sin ofrecer ninguna prueba; y la de Bruno es científica al mostrar pruebas falseables a través del método científico."
   },
   {
     id: 11,
@@ -209,11 +203,11 @@ var questionBank = [
     prompt: "¿Qué científico realizó el experimento de cruza con plantas de chícharos que producían semillas amarillas y verdes como generación parental?",
     image: null,
     hint: "Monje agustino austríaco reconocido como el padre de la genética clásica.",
-    correct: "Gregor Mendel",
+    correct: "Gregor Mendel.",
     distractors: [
-      "Thomas H. Morgan",
-      "Walter Sutton",
-      "Hugo de Vries"
+      "Thomas H. Morgan.",
+      "Walter Sutton.",
+      "Hugo de Vries."
     ],
     explanation: "<b>Gregor Johann Mendel</b> estableció las leyes fundamentales de la herencia genética a través de sus minuciosos experimentos de hibridación con plantas de chícharo (<i>Pisum sativum</i>) entre 1856 y 1863."
   },
@@ -288,11 +282,11 @@ var questionBank = [
     prompt: "¿Dónde se puede observar el uso de las técnicas de la ingeniería genética?",
     image: null,
     hint: "Consiste en la introducción deliberada de genes foráneos en especies vegetales para mejorar su resistencia o rendimiento.",
-    correct: "En el desarrollo de productos agrícolas transgénicos",
+    correct: "En el desarrollo de productos agrícolas transgénicos.",
     distractors: [
-      "En la producción de suplementos alimenticios",
-      "En la aplicación en el desarrollo de pesticidas y herbicidas",
-      "En los métodos de control de la natalidad humana"
+      "En la producción de suplementos alimenticios.",
+      "En la aplicación en el desarrollo de pesticidas y herbicidas.",
+      "En los métodos de control de la natalidad humana."
     ],
     explanation: "La <b>ingeniería genética</b> se aplica de forma destacada en la agrobiotecnología mediante la creación de <b>organismos genéticamente modificados (transgénicos)</b> con tolerancia a sequías, plagas o agroquímicos."
   },
@@ -407,7 +401,7 @@ var questionBank = [
     prompt: "¿Qué enfermedad se pretendía combatir con la campaña de vacunación realizada en el 2008 en niñas de 11 a 13 años?",
     image: null,
     hint: "Infección de transmisión sexual asociada al desarrollo de cáncer cervicouterino en mujeres.",
-    correct: "Virus de Papiloma Humano.",
+    correct: "Virus del Papiloma Humano.",
     distractors: [
       "Influenza AH1N1.",
       "Hepatitis A.",
@@ -540,15 +534,15 @@ var questionBank = [
     hint: "La biogeografía analiza mapas y hábitats; la morfología la anatomía externa e interna; y la paleontología los restos fósiles preservados en roca.",
     pairs: [
       {
-        left: "Biogeografía",
+        left: "Biogeografía.",
         right: "Distribución de los seres vivos sobre la Tierra."
       },
       {
-        left: "Morfología",
+        left: "Morfología.",
         right: "Forma de los seres vivos y su evolución."
       },
       {
-        left: "Paleontología",
+        left: "Paleontología.",
         right: "Seres orgánicos desaparecidos con base en rastros y huellas fósiles."
       }
     ],
@@ -562,23 +556,23 @@ var questionBank = [
     hint: "El cromosoma es la macromolécula nuclear de ADN empaquetado; el gen codifica información; el fenotipo es lo visible; la mitosis replica células idénticas; y el heterocigoto tiene dos alelos diferentes.",
     pairs: [
       {
-        left: "Cromosoma",
+        left: "Cromosoma.",
         right: "Estructura celular formada por proteínas y ADN."
       },
       {
-        left: "Gen",
+        left: "Gen.",
         right: "Contiene información necesaria para la síntesis de una macromolécula."
       },
       {
-        left: "Fenotipo",
+        left: "Fenotipo.",
         right: "Rasgos externos de un organismo."
       },
       {
-        left: "Mitosis",
+        left: "Mitosis.",
         right: "La célula se divide y da lugar a dos células hijas con la misma cantidad de cromosomas."
       },
       {
-        left: "Heterocigoto",
+        left: "Heterocigoto.",
         right: "Porta dos genes distintos que determinan una misma característica."
       }
     ],
