@@ -25,7 +25,7 @@ var questionBank = [
     topicId: null,
     type: "fill_blanks",
     prompt: "Completa la oración:",
-    sentence: "Al cruzarse un individuo homocigoto de plumas negras con otro homocigoto de plumas blancas y se obtener descendientes con plumaje gris azulado, se observa la {0} como excepción mendeliana porque {1}.",
+    sentence: "Al cruzarse un individuo homocigoto de plumas negras con otro homocigoto de plumas blancas obteniendo descendientes con plumaje gris azulado, se observa la {0} como excepción mendeliana porque {1}.",
     hint: "Analiza el fenómeno genético donde ambos alelos se manifiestan al mismo tiempo sin que uno anule al otro.",
     correctOrder: [
       "codominancia",
@@ -146,7 +146,7 @@ var questionBank = [
     prompt: "De acuerdo a los postulados de Darwin, si ejercitamos constantemente cualquiera de nuestros órganos se tendrá un mayor desarrollo de ellos y lo transmitiremos a nuestros hijos.",
     image: null,
     hint: "Distingue entre la herencia genética y la hipótesis del uso y desuso de los órganos con herencia de caracteres adquiridos.",
-    correct: "Falso",
+    correct: "Falso.",
     distractors: [
       "Verdadero"
     ],
@@ -161,18 +161,18 @@ var questionBank = [
     hint: "Recuerda la propuesta del árbol de la vida y el origen compartido de la biodiversidad.",
     correct: "Verdadero",
     distractors: [
-      "Falso"
+      "Falso."
     ],
     explanation: "Es <b>verdadero</b>. Darwin estableció formalmente la existencia de un <b>ancestro común</b> universal del cual se han derivado todas las formas de vida a lo largo de las eras geológicas."
   },
   {
-    id: 7,
+    id: 9,
     topicId: null,
     type: "choice",
     prompt: "De acuerdo a Galton, la eugenesia es la ciencia que...",
     image: null,
     hint: "Piensa en el término acuñado por el primo de Darwin para intentar perfeccionar al ser humano mediante la selección artificial.",
-    correct: "trata de mejorar las cualidades innatas de una raza.",
+    correct: "...trata de mejorar las cualidades innatas de una raza.",
     distractors: [
       "...estudia la composición, fisiología y herencia de los organismos.",
       "...sirve al hombre para alterar el ADN de un organismo.",
@@ -181,7 +181,7 @@ var questionBank = [
     explanation: "<b>Francis Galton</b> acuñó el término eugenesia definiéndola formalmente como la ciencia que procura mejorar las cualidades biológicas e innatas de una raza mediante el control de la reproducción humana."
   },
   {
-    id: 8,
+    id: 10,
     topicId: null,
     type: "match_columns",
     prompt: "Relaciona los planteamientos de explicación sobre los OVNIs con el estado correspondiente según la Ley de los tres Estados de Augusto Comte:",
@@ -203,7 +203,7 @@ var questionBank = [
     explanation: "Según la <b>Ley de los tres Estados</b> de Comte, la explicación de Karen es teológica al recurrir a seres divinos para explicar un fenómeno; la de Adrián es filosófica al presentarse como una opción racional pero sin ofrecer ninguna prueba; y la de Bruno es científica al mostrar pruebas falseables a través del método científico."
   },
   {
-    id: 9,
+    id: 11,
     topicId: null,
     type: "choice",
     prompt: "¿Qué científico realizó el experimento de cruza con plantas de chícharos que producían semillas amarillas y verdes como generación parental?",
@@ -218,7 +218,7 @@ var questionBank = [
     explanation: "<b>Gregor Johann Mendel</b> estableció las leyes fundamentales de la herencia genética a través de sus minuciosos experimentos de hibridación con plantas de chícharo (<i>Pisum sativum</i>) entre 1856 y 1863."
   },
   {
-    id: 10,
+    id: 12,
     topicId: null,
     type: "multi_select",
     prompt: "Selecciona todas las características o procesos que corresponden a la <b>recombinación homóloga</b>:",
@@ -235,7 +235,7 @@ var questionBank = [
     explanation: "La <b>recombinación homóloga</b> se produce durante la división meiótica, transfiere fragmentos entre cromosomas homólogos y participa en el cambio de isotipos o clases de inmunoglobulinas. Los enunciados sobre mutaciones y transmisión en virus corresponden a la recombinación específica de sitio."
   },
   {
-    id: 11,
+    id: 13,
     topicId: null,
     type: "multi_select",
     prompt: "Selecciona todas las características o procesos que corresponden a la <b>recombinación específica de sitio</b>:",
@@ -252,7 +252,7 @@ var questionBank = [
     explanation: "La <b>recombinación específica de sitio</b> ocurre en secuencias diana delimitadas y es el mecanismo que aprovechan virus como el de la influenza AH1N1 para recombinar y mutar su genoma entre hospederos. Los procesos meióticos, cromosómicos celulares e inmunoglobulinas pertenecen a la recombinación homóloga."
   },
   {
-    id: 11,
+    id: 14,
     topicId: null,
     type: "choice",
     prompt: "¿Qué describe el término <i>positivismo</i> acuñado por Auguste Comte?",
@@ -267,7 +267,7 @@ var questionBank = [
     explanation: "Comte utilizó el término <b>positivismo</b> para señalar el estado positivo o científico como la etapa más madura, perfecta y elevada del intelecto humano, basada en hechos observables y leyes universales."
   },
   {
-    id: 12,
+    id: 15,
     topicId: null,
     type: "choice",
     prompt: "¿Cómo se denomina el conjunto de técnicas para conocer la adecuada formación y desarrollo del feto antes de su nacimiento?",
@@ -282,7 +282,7 @@ var questionBank = [
     explanation: "El <b>diagnóstico prenatal</b> comprende todas las herramientas clínicas y paraclínicas orientadas a evaluar el estado de salud y el desarrollo estructural y cromosómico del feto durante el embarazo."
   },
   {
-    id: 13,
+    id: 16,
     topicId: null,
     type: "choice",
     prompt: "¿Dónde se puede observar el uso de las técnicas de la ingeniería genética?",
@@ -297,7 +297,7 @@ var questionBank = [
     explanation: "La <b>ingeniería genética</b> se aplica de forma destacada en la agrobiotecnología mediante la creación de <b>organismos genéticamente modificados (transgénicos)</b> con tolerancia a sequías, plagas o agroquímicos."
   },
   {
-    id: 14,
+    id: 17,
     topicId: null,
     type: "choice",
     prompt: "¿Cómo se le denomina a la variedad de seres vivos que habitan en la Tierra y los patrones que lo conforman?",
@@ -312,7 +312,7 @@ var questionBank = [
     explanation: "La <b>biodiversidad</b> o diversidad biológica describe la variedad completa de especies biológicas, su variabilidad genética dentro de cada población y los ecosistemas que integran en el planeta."
   },
   {
-    id: 15,
+    id: 18,
     topicId: null,
     type: "multi_select",
     prompt: "Selecciona todas las áreas en las que se puede aplicar directamente la <b>biotecnología</b>:",
@@ -328,7 +328,7 @@ var questionBank = [
     explanation: "La <b>biotecnología</b> tiene aplicaciones prácticas en la acuicultura (sanidad y reproducción marina), la ganadería (mejoramiento genético y nutrición) y la medicina (desarrollo de fármacos y terapias genéticas). La física es una ciencia exacta fundamental, no una rama de aplicación biotecnológica directa."
   },
   {
-    id: 16,
+    id: 19,
     topicId: null,
     type: "match_columns",
     prompt: "Relaciona a cada naturalista o pensador con la propuesta evolutiva o científica que formuló:",
@@ -354,7 +354,7 @@ var questionBank = [
     explanation: "• <b>Linneo:</b> Padre de la taxonomía y la nomenclatura binomial jerárquica.<br>• <b>Lyell:</b> Desarrolló el uniformitarismo geológico que inspiró los tiempos graduales de Darwin.<br>• <b>Leclerc:</b> Pionero de la biogeografía al notar que regiones aisladas con climas similares tienen floras y faunas distintas.<br>• <b>Lamarck:</b> Primer gran defensor del transformismo biológico mediante la adaptación y uso."
   },
   {
-    id: 17,
+    id: 20,
     topicId: null,
     type: "choice",
     prompt: "Si el espermatozoide de un perro contiene 39 cromosomas, ¿cuál es su número haploide?",
@@ -369,7 +369,7 @@ var questionBank = [
     explanation: "Los gametos son células sexuales haploides ($n$). Dado que el espermatozoide ya contiene 39 cromosomas, el <b>número haploide</b> de los perros es directamente <b>39</b> (su número diploide $2n$ es de 78)."
   },
   {
-    id: 18,
+    id: 21,
     topicId: null,
     type: "multi_select",
     prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>biometristas</b>:",
@@ -385,7 +385,7 @@ var questionBank = [
     explanation: "Los <b>biometristas</b> defendían la selección natural darwiniana y argumentaban que la evolución se produce mediante variaciones continuas y cambios que ocurren de manera paulatina. Las posturas relacionadas con alteraciones bruscas o errores en las células corresponden a los mutacionistas."
   },
   {
-    id: 19,
+    id: 22,
     topicId: null,
     type: "multi_select",
     prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>mutacionistas</b>:",
@@ -401,10 +401,10 @@ var questionBank = [
     explanation: "Los <b>mutacionistas</b> sostenían que la evolución operaba mediante saltos abruptos causados por mutaciones y transformaciones anómalas en el ADN y las células. La defensa de la selección natural y el cambio paulatino corresponde a la corriente biométrica."
   },
   {
-    id: 19,
+    id: 23,
     topicId: null,
     type: "choice",
-    prompt: "¿Que enfermedad se pretendia combatir con la campaña de vacunacion realizada en el 2008 en niñas de 11 a 13 años?",
+    prompt: "¿Qué enfermedad se pretendía combatir con la campaña de vacunación realizada en el 2008 en niñas de 11 a 13 años?",
     image: null,
     hint: "Infección de transmisión sexual asociada al desarrollo de cáncer cervicouterino en mujeres.",
     correct: "Virus de Papiloma Humano.",
@@ -416,13 +416,13 @@ var questionBank = [
     explanation: "La campaña de salud pública de 2008 en la capital tuvo por meta inmunizar masivamente a niñas escolares contra el <b>Virus del Papiloma Humano (VPH)</b> antes del inicio de su vida sexual para prevenir lesiones premalignas y cáncer de cuello uterino."
   },
   {
-    id: 20,
+    id: 24,
     topicId: null,
     type: "choice",
-    prompt: "Una persona aprende el cuidado de los trabajos de carpinteria al observar como un compañero se corta un dedo con una herramienta. ¿Que tipo de aprendizaje ocurrio?",
+    prompt: "Una persona aprende el cuidado de los trabajos de carpintería al observar cómo un compañero se corta un dedo con una herramienta. ¿Qué tipo de aprendizaje ocurrió?",
     image: null,
-    hint: "El empirismo sostiene que el conocimiento surge de la experiencia fáctica directa o indirecta, mientras que el racionalismo defiende que el conocimiento surge de la lógica y la abstraccion.",
-    correct: "Empirismo: aprendió a traves de la experiencia.",
+    hint: "El empirismo sostiene que el conocimiento surge de la experiencia fáctica directa o indirecta, mientras que el racionalismo defiende que el conocimiento surge de la lógica y la abstracción.",
+    correct: "Empirismo: aprendió a través de la experiencia.",
     distractors: [
       "Racionalismo: se investigó el uso de la herramienta.",
       "Empirismo: se investigó el uso de la herramienta.",
@@ -431,10 +431,10 @@ var questionBank = [
     explanation: "El <b>empirismo</b> postula que el conocimiento se deriva del contacto con la realidad y la experiencia vivencial de hechos concretos, a diferencia del racionalismo puro que opera mediante razonamientos lógicos."
   },
   {
-    id: 21,
+    id: 25,
     topicId: null,
     type: "choice",
-    prompt: "¿Como se le llama a la manifestacion visible de los genes?",
+    prompt: "¿Cómo se le llama a la manifestación visible de los genes?",
     image: null,
     hint: "Distingue entre la información contenida en el código genético y los rasgos corporales físicos observables.",
     correct: "Fenotipo.",
@@ -446,10 +446,10 @@ var questionBank = [
     explanation: "El <b>fenotipo</b> es la expresión observable del genotipo que incluye rasgos observables como el color de ojos, cabello, estatura o forma de la nariz."
   },
   {
-    id: 22,
+    id: 26,
     topicId: null,
     type: "choice",
-    prompt: "¿Cómo se le denomina al cambio continuo de los seres vivos a traves de las eras geológicas que ha permitido su supervivencia?",
+    prompt: "¿Cómo se le denomina al cambio continuo de los seres vivos a través de las eras geológicas que ha permitido su supervivencia?",
     image: null,
     hint: "Es el concepto central de la biología que explica la transformación de las especies a lo largo del tiempo geológico.",
     correct: "Evolución.",
@@ -461,7 +461,7 @@ var questionBank = [
     explanation: "La <b>evolución biológica</b> es el proceso continuo de transformación y diversificación de los linajes de organismos vivos a lo largo de las eras geológicas por el cual emergen nuevas adaptaciones y especies."
   },
   {
-    id: 23,
+    id: 27,
     topicId: null,
     type: "choice",
     prompt: "¿Cuál es el principal obstáculo para la investigación biotecnológica en México?",
@@ -476,7 +476,7 @@ var questionBank = [
     explanation: "Uno de los principales frenos al desarrollo de biotecnología agrícola y molecular en México radica en el <b>elevado costo de reactivos, infraestructura de laboratorio y el arrendamiento de parcelas de prueba</b> con bioseguridad certificada."
   },
   {
-    id: 24,
+    id: 28,
     topicId: null,
     type: "choice",
     prompt: "¿Qué investigador encontró que los caracteres dominantes determinan el efecto de un gen y que los recesivos no tienen efecto genético visible?",
@@ -490,11 +490,11 @@ var questionBank = [
     ],
     explanation: "<b>Gregor Mendel</b> dedujo la presencia de factores hereditarios independientes organizados en caracteres dominantes (que se imponen fenotípicamente) y recesivos (que quedan enmascarados en la primera generación filial)."
   },
-    {
-    id: 25,
+  {
+    id: 29,
     topicId: null,
     type: "fill_blanks",
-    prompt: "Completa la oracion:",
+    prompt: "Completa la oración:",
     sentence: "Los organismos {0} son mutantes. Si dichos organismos son menos eficientes para {1} que las variedades naturales entonces {2} causan problema en la diversidad biológica.",
     hint: "Analiza qué organismos creados en laboratorio no logran desplazar a las variedades silvestres si tienen menor éxito biológico.",
     correctOrder: [
@@ -511,11 +511,11 @@ var questionBank = [
     ],
     explanation: "Los <b>transgénicos</b> poseen modificaciones génicas deliberadas. Si resultan menos eficientes que las variedades silvestres en su capacidad de <b>sobrevivir y reproducirse</b>, la selección natural evita que se propaguen de manera descontrolada, por lo que <b>no</b> representan una amenaza directa para la biodiversidad."
   },
-    {
-    id: 26,
+  {
+    id: 30,
     topicId: null,
     type: "fill_blanks",
-    prompt: "Completa la oracion:",
+    prompt: "Completa la oración:",
     sentence: "El rompimiento de las reglas {0} posibilitó la liberación de la rigidez de las estructuras y jerarquías verticales de la {1} y plantear innovaciones en las áreas del conocimiento. Se desarrolló la teoría de la {2}, que se ocupa de obtener el conocimiento de forma objetiva, racional y metódica.",
     hint: "Identifica la influencia de la Iglesia medieval, el sistema filosófico escolástico y la rama de la filosofía de la ciencia que estudia el conocimiento científico.",
     correctOrder: [
@@ -533,7 +533,7 @@ var questionBank = [
     explanation: "La superación de los dogmas <b>religiosos</b> permitió al pensamiento renacentista y moderno apartarse de la <b>escolástica</b> clerical para dar lugar a la <b>epistemología</b>: la disciplina que investiga la fundamentación, validez y métodos rigurosos del conocimiento científico."
   },
   {
-    id: 27,
+    id: 31,
     topicId: "teorias_evolutivas",
     type: "match_columns",
     prompt: "Relaciona cada disciplina biológica con su objeto de estudio específico:",
@@ -555,7 +555,7 @@ var questionBank = [
     explanation: "• <b>Biogeografía:</b> Estudia los patrones espaciales de dispersión y localización geográfica de las especies.<br>• <b>Morfología:</b> Examina la estructura, forma y arquitectura corporal de los organismos.<br>• <b>Paleontología:</b> Reconstruye la historia biológica pasada a través de fósiles, impresiones y restos óseos petrificados."
   },
   {
-    id: 28,
+    id: 32,
     topicId: "genetica_mendel",
     type: "match_columns",
     prompt: "Relaciona los conceptos genéticos con la definición o descripción correspondiente:",
@@ -585,30 +585,30 @@ var questionBank = [
     explanation: "• <b>Cromosoma:</b> Estructura de cromatina condensada (ADN y proteínas).<br>• <b>Gen:</b> Unidad molecular de herencia que codifica para un ARN funcional o proteína.<br>• <b>Fenotipo:</b> Expresión física y fisiológica visible.<br>• <b>Mitosis:</b> División celular somática conservativa.<br>• <b>Heterocigoto:</b> Organismo con alelos disímiles en un locus determinado ($Aa$)."
   },
   {
-    id: 29,
+    id: 33,
     topicId: null,
     type: "choice",
-    prompt: "¿Cual fue el resultado del experimento donde Mendel cruzo chicharos con semillas lisas y rugosas para obtener una generacion filial que se autopolinizo para formar una segunda generacion?",
+    prompt: "¿Cuál fue el resultado del experimento donde Mendel cruzó chícharos con semillas lisas y rugosas para obtener una generación filial que se autopolinizó para formar una segunda generación?",
     image: null,
-    hint: "En la primera generación la dominancia es del 100%, mientras que en la F2 reaparece el carácter recesivo en una proporción 3:1.",
-    correct: "Todas las semillas de la generación F1 y 75% de F2 fueron lisas.",
+    hint: "En la primera generación la dominancia es del 100%, mientras que en la generación F2 reaparece el carácter recesivo en una proporción 3:1.",
+    correct: "Todas las semillas de la generación F1 y 75% de la F2 fueron lisas.",
     distractors: [
-      "La totalidad de las semillas de las generaciones F1 y F2 fueron lisas.",
-      "25% de la generación F1 y 25% de las semillas de F2 fueron rugosas.",
-      "50% de la generación F1 y 75% de las semillas de F2 fueron lisas."
+      "Todas las semillas de las generaciones F1 y F2 fueron lisas.",
+      "25% de la generación F1 y 25% de la F2 fueron rugosas.",
+      "50% de la generación F1 y 75% de la F2 fueron lisas."
     ],
     explanation: "Al cruzar homocigotos $AA \\times aa$, la generación filial 1 (F1) es 100% lisa heterocigota ($Aa$). Al autofecundarse F1 ($Aa \\times Aa$), la generación filial 2 (F2) produce una proporción fenotípica mendeliana clásica de <b>75% semillas lisas</b> ($AA$ y $Aa$) y <b>25% semillas rugosas</b> ($aa$)."
   },
   {
-    id: 30,
-    topicId: "genetica_mendel",
+    id: 34,
+    topicId: null,
     type: "drag_order",
     prompt: "Ordena cronológicamente los siguientes hitos históricos relacionados con el descubrimiento de la herencia genética:",
     hint: "Empieza por el aislamiento de los ácidos nucleicos en la célula, pasa por las moscas de Morgan, la identificación del ADN como portador, la difracción de rayos X y el modelo de doble hélice.",
     correctOrder: [
       "Se descubre que la célula tiene ADN y ARN.",
-      "Se reconocen los hallazgos de Morgan, \"Los cromosomas son portadores de la herencia\".",
-      "Descubrimiento de la parte de los cromosomas responsable de portar la información genética.",
+      "Se reconocen los hallazgos de Morgan respecto a los cromosomas como portadores de la herencia.",
+      "Se descubre la parte de los cromosomas responsable de portar la información genética.",
       "Se observa la estructura helicoidal del ADN.",
       "Se propone un modelo molecular del ADN."
     ],
