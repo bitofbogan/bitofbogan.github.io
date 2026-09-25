@@ -46,7 +46,7 @@
       animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Transición elástica de barra de avance */
+    /* Transición elástica y limpia de la barra de avance */
     .progress-bar-fill {
       transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -92,63 +92,19 @@
     }
 
     /* =========================================
-       BARRA DE PROGRESO "BALATRO FIRE"
-       ========================================= */
-    .progress-bar-container {
-      position: relative;
-      overflow: visible;
-    }
-
-    .progress-bar-fill.on-fire {
-      background: linear-gradient(90deg, #ff4500, #ff8c00, #ffd700, #ffffff) !important;
-      background-size: 200% 200%;
-      animation: fireGradient 0.8s ease infinite alternate;
-      position: relative;
-    }
-
-    .progress-bar-fill.on-fire::after {
-      content: "";
-      position: absolute;
-      top: -4px;
-      right: -2px;
-      width: 14px;
-      height: calc(100% + 8px);
-      border-radius: 999px;
-      background: #ffffff;
-      box-shadow: 
-        0 0 10px #fff,
-        -4px -6px 14px #ff8c00,
-        -8px 4px 18px #ff2200,
-        0 0 25px #ff4500;
-      filter: blur(1px);
-      animation: flameTip 0.25s infinite alternate ease-in-out;
-    }
-
-    @keyframes fireGradient {
-      0% { background-position: 0% 50%; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); }
-      100% { background-position: 100% 50%; box-shadow: 0 -4px 22px rgba(255, 140, 0, 0.9), 0 0 35px rgba(255, 30, 0, 0.7); }
-    }
-
-    @keyframes flameTip {
-      0% { transform: scale(1) translateY(0); opacity: 0.9; }
-      100% { transform: scale(1.25) translateY(-2px); opacity: 1; filter: blur(0.5px); }
-    }
-
-    /* =========================================
-       RACHA: PULSO DINÁMICO ESCALABLE
+       RACHA: PULSO SUTIL Y DINÁMICO
        ========================================= */
     .streak-badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       font-weight: 800;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.25s ease;
     }
 
     .streak-badge.active-streak {
-      animation: streakPulse calc(1.2s / var(--streak-intensity, 1)) infinite ease-in-out;
-      color: #ff3e00;
-      text-shadow: 0 0 calc(3px * var(--streak-intensity, 1)) rgba(255, 60, 0, 0.6);
+      animation: streakPulse calc(1.5s / var(--streak-intensity, 1)) infinite ease-in-out;
+      color: #ea580c;
     }
 
     @keyframes streakPulse {
@@ -156,40 +112,39 @@
         transform: scale(1);
       }
       50% {
-        transform: scale(calc(1 + (0.05 * var(--streak-intensity, 1))));
-        filter: brightness(1.25);
+        transform: scale(calc(1 + (0.025 * var(--streak-intensity, 1))));
       }
     }
 
     /* =========================================
-       EFECTO SAD: PÉRDIDA DE RACHA (ASHES & SHAKE)
+       EFECTO SAD: PÉRDIDA DE RACHA
        ========================================= */
     .streak-lost-animation {
-      animation: streakBreak 0.75s forwards cubic-bezier(0.36, 0.07, 0.19, 0.97);
+      animation: streakBreak 0.6s forwards cubic-bezier(0.36, 0.07, 0.19, 0.97);
     }
 
     @keyframes streakBreak {
       10%, 90% { transform: translate3d(-2px, 0, 0); }
-      20%, 80% { transform: translate3d(4px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-6px, 0, 0) scale(1.1); filter: grayscale(0.5) hue-rotate(180deg); }
-      40%, 60% { transform: translate3d(6px, 0, 0); }
+      20%, 80% { transform: translate3d(3px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); filter: grayscale(0.5); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
       100% {
-        transform: scale(0.85) translateY(4px);
-        filter: grayscale(1) opacity(0.5);
+        transform: scale(0.9) translateY(2px);
+        filter: grayscale(1) opacity(0.4);
       }
     }
 
     .smoke-particle {
       position: absolute;
       pointer-events: none;
-      font-size: 1.1rem;
-      animation: smokeFade 1s forwards ease-out;
+      font-size: 1rem;
+      animation: smokeFade 0.9s forwards ease-out;
       z-index: 50;
     }
 
     @keyframes smokeFade {
       0% { transform: translateY(0) scale(1); opacity: 0.9; }
-      100% { transform: translateY(-35px) scale(1.8) rotate(15deg); opacity: 0; filter: blur(3px); }
+      100% { transform: translateY(-25px) scale(1.5); opacity: 0; filter: blur(2px); }
     }
   </style>
 </head>
@@ -221,30 +176,31 @@
 
   <!-- Header Fijo -->
   <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 backdrop-blur-md border-b border-stone-200">
-    <div class="max-w-xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <img src="augeicon.png" alt="Logo Auge" class="w-8 h-8 object-contain rounded-lg shadow-sm" />
-        <span class="font-black text-xl tracking-tight text-auge-dark">aureka</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span id="phaseBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200">
+    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <!-- Logo y Badge de Módulo (en una sola línea) -->
+      <div class="flex items-center gap-2 min-w-0">
+        <img src="augeicon.png" alt="Logo Auge" class="w-7 h-7 sm:w-8 sm:h-8 object-contain rounded-lg shadow-sm shrink-0" />
+        <span class="font-black text-lg sm:text-xl tracking-tight text-auge-dark shrink-0">aureka</span>
+        <span id="phaseBadge" class="text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200 whitespace-nowrap shrink-0 truncate">
           Cargando...
         </span>
-        <div class="flex items-center gap-1.5">
-          <a 
-            href="index.html" 
-            title="Ir al menú de módulos" 
-            class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-            <span>🏠</span> Inicio
-          </a>
-          <button 
-            type="button" 
-            onclick="confirmResetQuiz()" 
-            title="Reiniciar sesión" 
-            class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1">
-            <span>🔄</span> Reiniciar
-          </button>
-        </div>
+      </div>
+
+      <!-- Botones de Navegación -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a 
+          href="index.html" 
+          title="Ir al menú de módulos" 
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
+          <span>🏠</span> <span class="hidden xs:inline">Inicio</span>
+        </a>
+        <button 
+          type="button" 
+          onclick="confirmResetQuiz()" 
+          title="Reiniciar sesión" 
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
+          <span>🔄</span> <span class="hidden xs:inline">Reiniciar</span>
+        </button>
       </div>
     </div>
   </header>
@@ -356,7 +312,7 @@
         : `Módulo ${currentModuleId}`;
 
       phaseBadge.textContent = defaultBadge;
-      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200 whitespace-nowrap shrink-0 truncate";
       
       renderQuestion();
     }
@@ -391,10 +347,9 @@
       }
     }
 
-    /* CONTROL DE RACHA BALATRO */
+    /* CONTROL DE RACHA DINÁMICO */
     function handleStreakUpdate(isCorrect) {
       const streakEl = document.getElementById("streak-counter");
-      const progressBarFill = document.querySelector(".progress-bar-fill");
 
       if (isCorrect) {
         currentStreak++;
@@ -402,14 +357,10 @@
 
         if (streakEl) {
           streakEl.classList.remove("streak-lost-animation", "hidden");
-          const intensity = Math.min(1 + (currentStreak * 0.35), 4);
+          const intensity = Math.min(1 + (currentStreak * 0.25), 3);
           streakEl.style.setProperty("--streak-intensity", intensity);
           streakEl.classList.add("active-streak");
           streakEl.innerHTML = `🔥 ${currentStreak}`;
-        }
-
-        if (progressBarFill && currentStreak >= 3) {
-          progressBarFill.classList.add("on-fire");
         }
       } else {
         if (currentStreak >= 2 && streakEl) {
@@ -419,7 +370,6 @@
         }
 
         currentStreak = 0;
-        if (progressBarFill) progressBarFill.classList.remove("on-fire");
         if (streakEl) {
           streakEl.classList.remove("active-streak");
           streakEl.style.removeProperty("--streak-intensity");
@@ -435,14 +385,14 @@
       const smoke = document.createElement("span");
       smoke.className = "smoke-particle";
       smoke.innerText = "☁️";
-      smoke.style.left = `${rect.left + window.scrollX + 6}px`;
-      smoke.style.top = `${rect.top + window.scrollY - 10}px`;
+      smoke.style.left = `${rect.left + window.scrollX + 4}px`;
+      smoke.style.top = `${rect.top + window.scrollY - 8}px`;
       document.body.appendChild(smoke);
 
       setTimeout(() => {
         smoke.remove();
         element.classList.add("hidden");
-      }, 1000);
+      }, 900);
     }
 
     function renderQuestion() {
@@ -453,21 +403,20 @@
 
       const q = currentQueue[currentIndex];
       const progressPercent = Math.round(((currentIndex) / currentQueue.length) * 100);
-      const isFireActive = currentStreak >= 3;
-      const intensity = Math.min(1 + (currentStreak * 0.35), 4);
+      const intensity = Math.min(1 + (currentStreak * 0.25), 3);
 
       let contentHTML = `
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
-          <!-- Barra progreso y racha -->
+          <!-- Barra progreso limpia y racha -->
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between text-xs font-bold">
               <span class="text-auge-orange uppercase tracking-wider">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
-              <span id="streak-counter" class="streak-badge ${currentStreak > 1 ? 'active-streak' : 'hidden'} text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
+              <span id="streak-counter" class="streak-badge ${currentStreak > 1 ? 'active-streak' : 'hidden'} text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
                 🔥 ${currentStreak}
               </span>
             </div>
-            <div class="progress-bar-container w-full bg-stone-100 h-2.5 rounded-full transition-all">
-              <div class="bg-auge-orange h-full rounded-full progress-bar-fill ${isFireActive ? 'on-fire' : ''}" style="width: ${progressPercent}%"></div>
+            <div class="w-full bg-stone-100 h-2.5 rounded-full overflow-hidden">
+              <div class="bg-auge-orange h-full rounded-full progress-bar-fill" style="width: ${progressPercent}%"></div>
             </div>
           </div>
 
@@ -1257,7 +1206,7 @@
         isReinforcementPhase = true;
 
         phaseBadge.textContent = "Segunda vuelta";
-        phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+        phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200 whitespace-nowrap shrink-0 truncate";
 
         app.innerHTML = `
           <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
@@ -1280,7 +1229,7 @@
 
     function renderFinalScore() {
       phaseBadge.textContent = "Completado";
-      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 whitespace-nowrap shrink-0 truncate";
 
       if (window.confetti) {
         confetti({
@@ -1468,7 +1417,7 @@
 
       document.title = "Aureka | Catálogo de Módulos";
       phaseBadge.textContent = "22 Módulos";
-      phaseBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200 whitespace-nowrap shrink-0 truncate";
 
       initCounter("hub");
 
