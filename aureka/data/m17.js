@@ -370,86 +370,86 @@ var questionBank = [
   },
   {
     id: 18,
-    topicId: "teorias_evolutivas", //FROM HERE ALSO NULL
+    topicId: null,
     type: "multi_select",
-    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>Biometristas</b>:",
+    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>biometristas</b>:",
     correctAnswers: [
       "Defienden la selección natural propuesta por Darwin.",
-      "Los cambios en las especies ocurren de forma paulatina."
+      "Sostienen que los cambios en las especies ocurren de forma paulatina."
     ],
     distractors: [
-      "La evolución se presenta por transformaciones en las células.",
-      "Se presenta una duplicación anormal de las células por error en el ADN."
+      "Proponen que la evolución se presenta por transformaciones en las células.",
+      "Muestran que se presentan duplicaciones anormales en las células por errores aleatorios en el ADN."
     ],
     hint: "Los biometristas apoyaban la teoría original de Darwin y sostenían que la evolución ocurre de forma continua, cuantitativa y gradual.",
     explanation: "Los <b>biometristas</b> defendían la selección natural darwiniana y argumentaban que la evolución se produce mediante variaciones continuas y cambios que ocurren de manera paulatina. Las posturas relacionadas con alteraciones bruscas o errores en las células corresponden a los mutacionistas."
   },
   {
     id: 19,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "multi_select",
-    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>Mutacionistas</b>:",
+    prompt: "Selecciona todas las propuestas que corresponden a la postura de los <b>mutacionistas</b>:",
     correctAnswers: [
-      "La evolución se presenta por transformaciones en las células.",
-      "Se presenta una duplicación anormal de las células por error en el ADN."
+      "Proponen que la evolución se presenta por transformaciones en las células.",
+      "Muestran que se presentan duplicaciones anormales en las células por errores aleatorios en el ADN."
     ],
     distractors: [
       "Defienden la selección natural propuesta por Darwin.",
-      "Los cambios en las especies ocurren de forma paulatina."
+      "Sostienen que los cambios en las especies ocurren de forma paulatina."
     ],
     hint: "Los mutacionistas consideraban que las mutaciones drásticas en el material celular eran el verdadero motor evolutivo, por encima de la selección gradual.",
     explanation: "Los <b>mutacionistas</b> sostenían que la evolución operaba mediante saltos abruptos causados por mutaciones y transformaciones anómalas en el ADN y las células. La defensa de la selección natural y el cambio paulatino corresponde a la corriente biométrica."
   },
   {
     id: 19,
-    topicId: "biotecnologia_bioetica",
+    topicId: null,
     type: "choice",
-    prompt: "Completa el siguiente enunciado:<br><br>En el año 2008 se realizó una importante campaña de vacunación en niñas de 11 a 13 años en el DF, con un impacto nacional, con el objeto de evitar contagio de:",
+    prompt: "¿Que enfermedad se pretendia combatir con la campaña de vacunacion realizada en el 2008 en niñas de 11 a 13 años?",
     image: null,
     hint: "Infección de transmisión sexual asociada al desarrollo de cáncer cervicouterino en mujeres.",
-    correct: "virus de papiloma humano",
+    correct: "Virus de Papiloma Humano.",
     distractors: [
-      "influenza AH1N1",
-      "hepatitis A",
-      "meningococo"
+      "Influenza AH1N1.",
+      "Hepatitis A.",
+      "Meningococo."
     ],
     explanation: "La campaña de salud pública de 2008 en la capital tuvo por meta inmunizar masivamente a niñas escolares contra el <b>Virus del Papiloma Humano (VPH)</b> antes del inicio de su vida sexual para prevenir lesiones premalignas y cáncer de cuello uterino."
   },
   {
     id: 20,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "choice",
-    prompt: "Lee el caso del siguiente documento y contesta la respuesta de manera justificada:<br><br><i>\"Pedro aprendió por sí mismo a realizar los trabajos de carpintería con el mayor cuidado para no tener accidentes. Se percató de ello cuando supo de un compañero que se cortó un dedo con una segueta.\"</i><br><br>¿Qué tipo de aprendizaje se relaciona con el caso de Pedro?",
+    prompt: "Una persona aprende el cuidado de los trabajos de carpinteria al observar como un compañero se corta un dedo con una herramienta. ¿Que tipo de aprendizaje ocurrio?",
     image: null,
-    hint: "El empirismo sostiene que el conocimiento surge de la experiencia fáctica directa o indirecta, no de deducciones lógico-matemáticas abstractas.",
-    correct: "Empirismo. Aprendió por medio de la experiencia.",
+    hint: "El empirismo sostiene que el conocimiento surge de la experiencia fáctica directa o indirecta, mientras que el racionalismo defiende que el conocimiento surge de la lógica y la abstraccion.",
+    correct: "Empirismo: aprendió a traves de la experiencia.",
     distractors: [
-      "Racionalismo. Investigó el uso de la herramienta.",
-      "Empirismo. Investigó el uso de la herramienta.",
-      "Racionalismo. Aprendió por medio de la experiencia."
+      "Racionalismo: se investigó el uso de la herramienta.",
+      "Empirismo: se investigó el uso de la herramienta.",
+      "Racionalismo: aprendió por medio de la experiencia."
     ],
-    explanation: "El <b>empirismo</b> postula que el conocimiento se deriva del contacto con la realidad y la experiencia vivencial de hechos concretos, a diferencia del racionalismo puro que opera mediante razonamientos lógicos a priori."
+    explanation: "El <b>empirismo</b> postula que el conocimiento se deriva del contacto con la realidad y la experiencia vivencial de hechos concretos, a diferencia del racionalismo puro que opera mediante razonamientos lógicos."
   },
   {
     id: 21,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "choice",
-    prompt: "Completa la siguiente descripción:<br><br>La manifestación visible de los genes, por ejemplo, pelo rubio, ojos castaños, nariz aguileña, color de piel y la estatura entre otros se denomina:",
+    prompt: "¿Como se le llama a la manifestacion visible de los genes?",
     image: null,
     hint: "Distingue entre la información contenida en el código genético y los rasgos corporales físicos observables.",
-    correct: "fenotipo",
+    correct: "Fenotipo.",
     distractors: [
-      "genotipo",
-      "Locus",
-      "cariotipo"
+      "Genotipo.",
+      "Locus.",
+      "Cariotipo."
     ],
-    explanation: "El <b>fenotipo</b> es la expresión observable y medible del genotipo en interacción con el medio ambiente, abarcando rasgos anatómicos, fisiológicos y conductuales."
+    explanation: "El <b>fenotipo</b> es la expresión observable del genotipo que incluye rasgos observables como el color de ojos, cabello, estatura o forma de la nariz."
   },
   {
     id: 22,
-    topicId: "teorias_evolutivas",
+    topicId: null,
     type: "choice",
-    prompt: "¿Cómo se le denomina al cambio continuo de los seres vivos, que se ha presentado en las eras geológicas y que ha permitido su sobrevivencia?",
+    prompt: "¿Cómo se le denomina al cambio continuo de los seres vivos a traves de las eras geológicas que ha permitido su supervivencia?",
     image: null,
     hint: "Es el concepto central de la biología que explica la transformación de las especies a lo largo del tiempo geológico.",
     correct: "Evolución.",
@@ -462,14 +462,14 @@ var questionBank = [
   },
   {
     id: 23,
-    topicId: "biotecnologia_bioetica",
+    topicId: null,
     type: "choice",
-    prompt: "¿Cuál de las siguientes afirmaciones corresponde con un obstáculo para la investigación biotecnológica en México?",
+    prompt: "¿Cuál es el principal obstáculo para la investigación biotecnológica en México?",
     image: null,
     hint: "Enfócate en la limitación económica de insumos de laboratorio y espacios de experimentación agrícola.",
-    correct: "Rentar parcelas y obtener materiales de investigación es altamente costoso en nuestro país.",
+    correct: "El alto costo de rentar parcelas y obtener materiales de investigación.",
     distractors: [
-      "Se tienen restricciones por parte de la Iglesia en nuestro país para la investigación en Biología.",
+      "Las restricciones por parte de la Iglesia.",
       "La producción agrícola nacional es insuficiente para cubrir las necesidades de la población.",
       "Los investigadores mexicanos no compiten en preparación y estudios con los de otros países."
     ],
@@ -477,9 +477,9 @@ var questionBank = [
   },
   {
     id: 24,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "choice",
-    prompt: "¿Quién es el investigador que encontró los caracteres dominantes que determinan el efecto de un gen y los recesivos por no tener efecto genético visible en el heterocigoto?",
+    prompt: "¿Qué investigador encontró que los caracteres dominantes determinan el efecto de un gen y que los recesivos no tienen efecto genético visible?",
     image: null,
     hint: "El monje que formuló las primeras leyes de la herencia mediante el análisis estadístico de sus plantas.",
     correct: "Gregor Mendel.",
@@ -490,33 +490,45 @@ var questionBank = [
     ],
     explanation: "<b>Gregor Mendel</b> dedujo la presencia de factores hereditarios independientes organizados en caracteres dominantes (que se imponen fenotípicamente) y recesivos (que quedan enmascarados en la primera generación filial)."
   },
-  {
+    {
     id: 25,
-    topicId: "biotecnologia_bioetica",
-    type: "choice",
-    prompt: "Del libro de texto del Módulo \"Evolución y sus repercusiones sociales\" se adaptó un fragmento. Completa los espacios en blanco:<br><br>Los organismos ________ son mutantes. Si dichos organismos son menos eficientes para ________ que las variedades naturales entonces ________ causan problema en la diversidad biológica.",
-    image: null,
-    hint: "Se refiere a plantas o animales modificados por bioingeniería y su capacidad de competir en vida libre.",
-    correct: "transgénicos ⇒ sobrevivir y reproducirse ⇒ no",
-    distractors: [
-      "transgénicos ⇒ alimentarse ⇒ no",
-      "naturales ⇒ sobrevivir y reproducirse ⇒ sí",
-      "naturales ⇒ alimentarse ⇒ sí"
+    topicId: null,
+    type: "fill_blanks",
+    prompt: "Completa la oracion:",
+    sentence: "Los organismos {0} son mutantes. Si dichos organismos son menos eficientes para {1} que las variedades naturales entonces {2} causan problema en la diversidad biológica.",
+    hint: "Analiza qué organismos creados en laboratorio no logran desplazar a las variedades silvestres si tienen menor éxito biológico.",
+    correctOrder: [
+      "transgénicos",
+      "sobrevivir y reproducirse",
+      "no"
     ],
-    explanation: "Los <b>transgénicos</b> contienen modificaciones génicas artificiales. Si en condiciones silvestres poseen una menor eficacia biológica para sobrevivir y reproducirse frente a las variedades nativas, no logran desplazar a las poblaciones silvestres ni perjudicar la biodiversidad."
-  },
-  {
-    id: 26,
-    topicId: "teorias_evolutivas",
-    type: "choice",
-    prompt: "Analiza el siguiente texto y completa las palabras que faltan de acuerdo al contexto sociohistórico del que se habla:<br><br><i>\"El rompimiento de las reglas (1)________ posibilitó la liberación de la rigidez de las estructuras y jerarquías verticales de la (2)________ y plantear innovaciones en las áreas del conocimiento. Se desarrolló la teoría de la (3)________, que se ocupa de obtener el conocimiento de forma objetiva, racional, metódica etc.\"</i>",
-    image: null,
-    hint: "Identifica la influencia de la Iglesia medieval, el sistema filosófico escolástico y la rama de la filosofía de la ciencia que estudia el conocimiento científico.",
-    correct: "[1-religiosas] [2- escolástica] [3-epistemología]",
     distractors: [
-      "[1-religiosas] [2- patrística] [3-epistemología]",
-      "[1-políticas] [2- escolástica] [3-gnoselogía]",
-      "[1-políticas] [2- patrística] [3-gnoselogía]"
+      "naturales",
+      "alimentarse",
+      "sí",
+      "clonados",
+      "mutar"
+    ],
+    explanation: "Los <b>transgénicos</b> poseen modificaciones génicas deliberadas. Si resultan menos eficientes que las variedades silvestres en su capacidad de <b>sobrevivir y reproducirse</b>, la selección natural evita que se propaguen de manera descontrolada, por lo que <b>no</b> representan una amenaza directa para la biodiversidad."
+  },
+    {
+    id: 26,
+    topicId: null,
+    type: "fill_blanks",
+    prompt: "Completa la oracion:",
+    sentence: "El rompimiento de las reglas {0} posibilitó la liberación de la rigidez de las estructuras y jerarquías verticales de la {1} y plantear innovaciones en las áreas del conocimiento. Se desarrolló la teoría de la {2}, que se ocupa de obtener el conocimiento de forma objetiva, racional y metódica.",
+    hint: "Identifica la influencia de la Iglesia medieval, el sistema filosófico escolástico y la rama de la filosofía de la ciencia que estudia el conocimiento científico.",
+    correctOrder: [
+      "religiosas",
+      "escolástica",
+      "epistemología"
+    ],
+    distractors: [
+      "políticas",
+      "patrística",
+      "gnoseología",
+      "metafísica",
+      "sociales"
     ],
     explanation: "La superación de los dogmas <b>religiosos</b> permitió al pensamiento renacentista y moderno apartarse de la <b>escolástica</b> clerical para dar lugar a la <b>epistemología</b>: la disciplina que investiga la fundamentación, validez y métodos rigurosos del conocimiento científico."
   },
@@ -570,13 +582,13 @@ var questionBank = [
         right: "Porta dos genes distintos que determinan una misma característica."
       }
     ],
-    explanation: "• <b>Cromosoma:</b> Estructura de cromatina condensada (ADN y proteínas histonas).<br>• <b>Gen:</b> Unidad molecular de herencia que codifica para un ARN funcional o proteína.<br>• <b>Fenotipo:</b> Expresión física y fisiológica visible.<br>• <b>Mitosis:</b> División celular somática conservativa.<br>• <b>Heterocigoto:</b> Organismo con alelos disímiles en un locus determinado ($Aa$)."
+    explanation: "• <b>Cromosoma:</b> Estructura de cromatina condensada (ADN y proteínas).<br>• <b>Gen:</b> Unidad molecular de herencia que codifica para un ARN funcional o proteína.<br>• <b>Fenotipo:</b> Expresión física y fisiológica visible.<br>• <b>Mitosis:</b> División celular somática conservativa.<br>• <b>Heterocigoto:</b> Organismo con alelos disímiles en un locus determinado ($Aa$)."
   },
   {
     id: 29,
-    topicId: "genetica_mendel",
+    topicId: null,
     type: "choice",
-    prompt: "Mendel en sus experimentos cruzó chícharos (o guisantes) con semillas lisas y chícharos con semillas rugosas, siendo la característica lisa dominante sobre la rugosa. Recolectó semillas de esta cruza y obtuvo la generación F1 de plantas. Después dejó que se autopolinizaran para formar una segunda generación (F2).<br><br>¿Cuál fue el resultado de dicho experimento?",
+    prompt: "¿Cual fue el resultado del experimento donde Mendel cruzo chicharos con semillas lisas y rugosas para obtener una generacion filial que se autopolinizo para formar una segunda generacion?",
     image: null,
     hint: "En la primera generación la dominancia es del 100%, mientras que en la F2 reaparece el carácter recesivo en una proporción 3:1.",
     correct: "Todas las semillas de la generación F1 y 75% de F2 fueron lisas.",
