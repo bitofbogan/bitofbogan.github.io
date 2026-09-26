@@ -67,19 +67,19 @@
       50% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.7)); }
     }
 
-    /* Racha 2 a 3 aciertos */
+    /* Racha suave: solo gradiente sutil sin sombra roja pesada */
     .fire-streak-1 {
       background: linear-gradient(90deg, #f97316, #fbbf24, #f97316) !important;
       background-size: 200% 200% !important;
-      animation: flameShift 2s ease infinite;
-      box-shadow: 0 0 8px rgba(249, 115, 22, 0.45);
+      animation: flameShift 2.5s ease infinite;
+      box-shadow: none !important;
     }
 
     /* Racha 4 a 5 aciertos */
     .fire-streak-2 {
       background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #ef4444) !important;
       background-size: 220% 220% !important;
-      animation: flameShift 1.4s ease infinite, flamePulse 1.2s ease-in-out infinite;
+      animation: flameShift 1.6s ease infinite, flamePulse 1.3s ease-in-out infinite;
       box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
     }
 
@@ -87,7 +87,7 @@
     .fire-streak-3 {
       background: linear-gradient(90deg, #dc2626, #ea580c, #facc15, #f43f5e) !important;
       background-size: 250% 250% !important;
-      animation: flameShift 0.9s linear infinite, flamePulse 0.8s ease-in-out infinite;
+      animation: flameShift 1.2s linear infinite, flamePulse 0.9s ease-in-out infinite;
       box-shadow: 0 0 16px rgba(220, 38, 38, 0.75), 0 0 22px rgba(250, 204, 21, 0.35);
     }
 
@@ -535,15 +535,6 @@
           <div id="storyCarousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100 scroll-smooth">
             ${storyItemsHTML}
           </div>
-
-          ${isReviewing ? `
-            <div class="flex items-center justify-between bg-stone-100/80 border border-stone-200 px-3 py-1.5 rounded-lg text-xs">
-              <span class="text-stone-500 font-medium">Historial</span>
-              <button type="button" onclick="resumeCurrentQuestion()" class="font-bold text-auge-orange hover:text-auge-darkOrange flex items-center gap-1">
-                Ir a actual (${currentIndex + 1}) →
-              </button>
-            </div>
-          ` : ''}
 
           <!-- Prompt -->
           <div>
@@ -1593,9 +1584,9 @@
     }
 
     function getStreakFireClass(streak) {
-      if (streak >= 6) return "fire-streak-3";
-      if (streak >= 4) return "fire-streak-2";
-      if (streak >= 2) return "fire-streak-1";
+      if (streak >= 10) return "fire-streak-3";
+      if (streak >= 7) return "fire-streak-2";
+      if (streak >= 4) return "fire-streak-1";
       return "";
     }
 
