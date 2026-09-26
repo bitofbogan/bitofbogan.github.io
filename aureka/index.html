@@ -473,7 +473,7 @@
       const fireClass = getStreakFireClass(currentStreak);
       const intensity = Math.min(1 + (currentStreak * 0.25), 3);
 
-      // 1. Construir las burbujas del carrusel tipo Highlights
+      // 1. Construir las burbujas del carrusel tipo Highlights (compacto)
       let storyItemsHTML = "";
       for (let i = 0; i <= currentIndex; i++) {
         const isCurrentActive = i === currentIndex;
@@ -485,29 +485,30 @@
 
         if (isCurrentActive) {
           bubbleStyle = isSelected 
-            ? "border-auge-orange bg-orange-500 text-white shadow-sm ring-2 ring-orange-200" 
-            : "border-stone-300 bg-white text-auge-dark hover:border-auge-orange";
+            ? "border-auge-orange bg-auge-orange text-white shadow-xs" 
+            : "border-stone-300 bg-white text-stone-700 hover:border-auge-orange";
           badgeIcon = "✏️";
         } else if (record) {
           if (record.isCorrect) {
             bubbleStyle = isSelected
-              ? "border-emerald-600 bg-emerald-600 text-white ring-2 ring-emerald-200"
-              : "border-emerald-400 bg-emerald-50 text-emerald-800";
+              ? "border-emerald-600 bg-emerald-600 text-white"
+              : "border-emerald-200 bg-emerald-50 text-emerald-700";
             badgeIcon = "✓";
           } else {
             bubbleStyle = isSelected
-              ? "border-red-500 bg-red-500 text-white ring-2 ring-red-200"
-              : "border-red-300 bg-red-50 text-red-700";
+              ? "border-red-500 bg-red-500 text-white"
+              : "border-red-200 bg-red-50 text-red-600";
             badgeIcon = "✕";
           }
         }
 
         storyItemsHTML += `
           <button 
+            id="story-bubble-${i}"
             type="button" 
             onclick="inspectQuestion(${i})" 
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold shrink-0 transition-all active:scale-95 ${bubbleStyle}">
-            <span>${badgeIcon}</span>
+            class="flex items-center gap-1 px-2.5 py-1 rounded-full border text-[11px] font-bold shrink-0 transition-all active:scale-95 ${bubbleStyle}">
+            <span class="text-[10px]">${badgeIcon}</span>
             <span>${i + 1}</span>
           </button>
         `;
@@ -531,15 +532,15 @@
           </div>
 
           <!-- Carrusel Horizontal Tipo Highlights -->
-          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100">
+          <div id="storyCarousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100 scroll-smooth">
             ${storyItemsHTML}
           </div>
 
           ${isReviewing ? `
-            <div class="flex items-center justify-between bg-amber-50/80 border border-amber-200 px-3.5 py-2 rounded-xl text-xs">
-              <span class="text-amber-900 font-semibold">👀 Modo consulta (pregunta contestada)</span>
-              <button onclick="resumeCurrentQuestion()" class="font-bold text-auge-orange hover:underline">
-                Volver a la actual (${currentIndex + 1}) →
+            <div class="flex items-center justify-between bg-stone-100/80 border border-stone-200 px-3 py-1.5 rounded-lg text-xs">
+              <span class="text-stone-500 font-medium">Historial</span>
+              <button type="button" onclick="resumeCurrentQuestion()" class="font-bold text-auge-orange hover:text-auge-darkOrange flex items-center gap-1">
+                Ir a actual (${currentIndex + 1}) →
               </button>
             </div>
           ` : ''}
@@ -582,8 +583,8 @@
                 Continuar
               </button>
             ` : `
-              <button onclick="resumeCurrentQuestion()" class="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-900 font-bold text-white transition-colors shadow-sm">
-                Continuar respondiendo (Pregunta ${currentIndex + 1}) →
+              <button type="button" onclick="resumeCurrentQuestion()" class="w-full py-2.5 rounded-xl bg-auge-dark hover:bg-stone-800 font-bold text-xs sm:text-sm text-white transition-colors shadow-xs">
+                Volver a pregunta ${currentIndex + 1} →
               </button>
             `}
           </div>
@@ -606,6 +607,15 @@
           box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${hist.explanation}`;
         }
         renderMath();
+
+        // Centra automáticamente la burbuja en el carrusel
+        setTimeout(() => {
+          const activeBubble = document.getElementById(`story-bubble-${targetIndex}`);
+          if (activeBubble) {
+            activeBubble.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+          }
+        }, 50);
+
         return;
       }
 
@@ -861,7 +871,7 @@
           { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500", hex: "#f59e0b" },
           { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500", hex: "#3b82f6" },
           { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-900", badge: "bg-purple-500", hex: "#a855f7" },
-          { bg: "bg-rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500", hex: "#f43f5e" },
+          { bg: "rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500", hex: "#f43f5e" },
           { bg: "bg-teal-50", border: "border-teal-400", text: "text-teal-900", badge: "bg-teal-500", hex: "#14b8a6" },
           { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500", hex: "#6366f1" }
         ];
@@ -1040,6 +1050,14 @@
       }
 
       renderMath();
+
+      // Centra automáticamente la burbuja en el carrusel
+      setTimeout(() => {
+        const activeBubble = document.getElementById(`story-bubble-${targetIndex}`);
+        if (activeBubble) {
+          activeBubble.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+      }, 50);
     }
 
     function handleChoiceAnswer(selectedBtn, selectedText, question) {
@@ -1211,7 +1229,7 @@
         queueForReinforcement(question);
         listElement.classList.add("animate-shake");
       }
-      recordAnswerHistory(question, isCorrect);
+      recordAnswerHistory(question, isAllCorrect);
       showFeedback(isAllCorrect, question.explanation);
     }
 
@@ -1251,7 +1269,7 @@
         queueForReinforcement(question);
         containerElement.classList.add("animate-shake");
       }
-      recordAnswerHistory(question, isCorrect);
+      recordAnswerHistory(question, isAllCorrect);
       showFeedback(isAllCorrect, question.explanation);
     }
 
