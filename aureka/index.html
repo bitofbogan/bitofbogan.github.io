@@ -186,6 +186,15 @@
       0% { transform: translateY(0) scale(1); opacity: 0.9; }
       100% { transform: translateY(-25px) scale(1.5); opacity: 0; filter: blur(2px); }
     }
+
+    /* Ocultar barra de scroll nativa para el carrusel tipo Stories */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 
@@ -304,6 +313,9 @@
     let currentStreak = 0;
     let maxStreak = 0;
 
+    let answeredHistory = [];
+    let viewingIndex = null;
+
     const app = document.getElementById("app");
     const phaseBadge = document.getElementById("phaseBadge");
 
@@ -342,6 +354,8 @@
       currentStreak = 0;
       maxStreak = 0;
       pendingQueue = [];
+      answeredHistory = [];
+      viewingIndex = null;
       currentIndex = 0;
       isReinforcementPhase = false;
 
@@ -451,18 +465,63 @@
         return;
       }
 
-      const q = currentQueue[currentIndex];
+      const isReviewing = viewingIndex !== null;
+      const targetIndex = isReviewing ? viewingIndex : currentIndex;
+      const q = isReviewing ? answeredHistory[targetIndex].question : currentQueue[currentIndex];
+      
       const progressPercent = Math.round(((currentIndex) / currentQueue.length) * 100);
       const fireClass = getStreakFireClass(currentStreak);
-      const intensity = Math.min(1 + (currentStreak * 0.35), 3);
+      const intensity = Math.min(1 + (currentStreak * 0.25), 3);
+
+      // 1. Construir las burbujas del carrusel tipo Highlights
+      let storyItemsHTML = "";
+      for (let i = 0; i <= currentIndex; i++) {
+        const isCurrentActive = i === currentIndex;
+        const isSelected = i === targetIndex;
+        const record = answeredHistory[i];
+
+        let bubbleStyle = "";
+        let badgeIcon = "";
+
+        if (isCurrentActive) {
+          bubbleStyle = isSelected 
+            ? "border-auge-orange bg-orange-500 text-white shadow-sm ring-2 ring-orange-200" 
+            : "border-stone-300 bg-white text-auge-dark hover:border-auge-orange";
+          badgeIcon = "✏️";
+        } else if (record) {
+          if (record.isCorrect) {
+            bubbleStyle = isSelected
+              ? "border-emerald-600 bg-emerald-600 text-white ring-2 ring-emerald-200"
+              : "border-emerald-400 bg-emerald-50 text-emerald-800";
+            badgeIcon = "✓";
+          } else {
+            bubbleStyle = isSelected
+              ? "border-red-500 bg-red-500 text-white ring-2 ring-red-200"
+              : "border-red-300 bg-red-50 text-red-700";
+            badgeIcon = "✕";
+          }
+        }
+
+        storyItemsHTML += `
+          <button 
+            type="button" 
+            onclick="inspectQuestion(${i})" 
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold shrink-0 transition-all active:scale-95 ${bubbleStyle}">
+            <span>${badgeIcon}</span>
+            <span>${i + 1}</span>
+          </button>
+        `;
+      }
 
       let contentHTML = `
         <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
           <!-- Barra progreso limpia y racha -->
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between text-xs font-bold">
-              <span class="text-auge-orange uppercase tracking-wider">Pregunta ${currentIndex + 1} de ${currentQueue.length}</span>
-              <span id="streak-counter" class="streak-badge ${currentStreak > 1 ? 'active-streak' : 'hidden'} text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
+              <span class="text-auge-orange uppercase tracking-wider">
+                ${isReviewing ? `Revisando Pregunta ${targetIndex + 1}` : `Pregunta ${currentIndex + 1} de ${currentQueue.length}`}
+              </span>
+              <span id="streak-counter" class="streak-badge ${currentStreak > 1 && !isReviewing ? 'active-streak' : 'hidden'} text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
                 🔥 ${currentStreak}
               </span>
             </div>
@@ -470,6 +529,20 @@
               <div class="bg-auge-orange h-full rounded-full progress-bar-fill ${fireClass}" style="width: ${progressPercent}%"></div>
             </div>
           </div>
+
+          <!-- Carrusel Horizontal Tipo Highlights -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100">
+            ${storyItemsHTML}
+          </div>
+
+          ${isReviewing ? `
+            <div class="flex items-center justify-between bg-amber-50/80 border border-amber-200 px-3.5 py-2 rounded-xl text-xs">
+              <span class="text-amber-900 font-semibold">👀 Modo consulta (pregunta contestada)</span>
+              <button onclick="resumeCurrentQuestion()" class="font-bold text-auge-orange hover:underline">
+                Volver a la actual (${currentIndex + 1}) →
+              </button>
+            </div>
+          ` : ''}
 
           <!-- Prompt -->
           <div>
@@ -486,8 +559,8 @@
           </div>
         ` : ''}
 
-          <!-- Botón y Caja de Pista -->
-          ${q.hint ? `
+          <!-- Botón y Caja de Pista (Solo en pregunta activa) -->
+          ${(!isReviewing && q.hint) ? `
             <div class="flex flex-col items-start gap-2">
               <button type="button" onclick="toggleHint()" id="hintBtn" class="text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
                 <span>💡</span> ¿Necesitas una pista?
@@ -499,20 +572,42 @@
           ` : ''}
 
           <!-- Opciones según tipo -->
-          <div id="optionsContainer" class="flex flex-col gap-3 pt-1"></div>
+          <div id="optionsContainer" class="flex flex-col gap-3 pt-1 ${isReviewing ? 'pointer-events-none' : ''}"></div>
 
           <!-- Feedback & Botón siguiente -->
-          <div id="feedbackContainer" class="hidden flex-col gap-3 border-t border-stone-100 pt-4 mt-2">
+          <div id="feedbackContainer" class="${isReviewing ? 'flex' : 'hidden'} flex-col gap-3 border-t border-stone-100 pt-4 mt-2">
             <div id="feedbackBox" class="p-3.5 rounded-xl text-sm leading-relaxed"></div>
-            <button id="nextBtn" class="w-full py-3 rounded-xl bg-auge-orange hover:bg-auge-darkOrange font-bold text-white transition-colors shadow-sm">
-              Continuar
-            </button>
+            ${!isReviewing ? `
+              <button id="nextBtn" class="w-full py-3 rounded-xl bg-auge-orange hover:bg-auge-darkOrange font-bold text-white transition-colors shadow-sm">
+                Continuar
+              </button>
+            ` : `
+              <button onclick="resumeCurrentQuestion()" class="w-full py-3 rounded-xl bg-stone-800 hover:bg-stone-900 font-bold text-white transition-colors shadow-sm">
+                Continuar respondiendo (Pregunta ${currentIndex + 1}) →
+              </button>
+            `}
           </div>
         </div>
       `;
 
       app.innerHTML = contentHTML;
       const optionsContainer = document.getElementById("optionsContainer");
+
+      // Si está en modo lectura, inyectamos el HTML capturado y el feedback ya resuelto
+      if (isReviewing) {
+        const hist = answeredHistory[targetIndex];
+        optionsContainer.innerHTML = hist.renderedHTML;
+        const box = document.getElementById("feedbackBox");
+        if (hist.isCorrect) {
+          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
+          box.innerHTML = `<span class="font-bold text-emerald-700">Respuesta correcta</span><br>${hist.explanation}`;
+        } else {
+          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
+          box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${hist.explanation}`;
+        }
+        renderMath();
+        return;
+      }
 
       if (q.type === "choice") {
         const options = shuffle([q.correct, ...q.distractors]);
@@ -972,7 +1067,8 @@
         });
         queueForReinforcement(question);
       }
-
+      
+      recordAnswerHistory(question, isCorrect);
       showFeedback(isCorrect, question.explanation);
     }
 
@@ -1001,7 +1097,7 @@
         });
         queueForReinforcement(question);
       }
-
+      recordAnswerHistory(question, isCorrect);
       showFeedback(isCorrect, question.explanation);
     }
 
@@ -1063,7 +1159,7 @@
         queueForReinforcement(question);
         listElement.classList.add("animate-shake");
       }
-
+      recordAnswerHistory(question, isCorrect);
       showFeedback(isCorrect, question.explanation);
     }
 
@@ -1115,7 +1211,7 @@
         queueForReinforcement(question);
         listElement.classList.add("animate-shake");
       }
-
+      recordAnswerHistory(question, isCorrect);
       showFeedback(isAllCorrect, question.explanation);
     }
 
@@ -1155,7 +1251,7 @@
         queueForReinforcement(question);
         containerElement.classList.add("animate-shake");
       }
-
+      recordAnswerHistory(question, isCorrect);
       showFeedback(isAllCorrect, question.explanation);
     }
 
@@ -1206,7 +1302,7 @@
         queueForReinforcement(question);
         containerElement.classList.add("animate-shake");
       }
-
+      recordAnswerHistory(question, isAllCorrect);
       showFeedback(isAllCorrect, question.explanation);
     }
 
@@ -1217,6 +1313,21 @@
       if (!isReinforcementPhase && !pendingQueue.some(item => item.id === question.id)) {
         pendingQueue.push(question);
       }
+    }
+    
+    function inspectQuestion(index) {
+      if (index > answeredHistory.length) return; // No permite ver preguntas no contestadas
+      if (index === answeredHistory.length) {
+        resumeCurrentQuestion();
+        return;
+      }
+      viewingIndex = index;
+      renderQuestion();
+    }
+
+    function resumeCurrentQuestion() {
+      viewingIndex = null;
+      renderQuestion();
     }
 
     function showFeedback(isCorrect, explanation) {
@@ -1451,10 +1562,11 @@
       if (!container) return;
 
       const path = `bitofbogan.github.io.aureka.m${moduleId}`;
+      const cacheBuster = Date.now();
       
       container.innerHTML = `
         <img 
-          src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134" 
+          src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134&t=${cacheBuster}" 
           alt="Contador de visitas" 
           class="h-5 rounded shadow-2xs" 
           loading="lazy"
@@ -1467,6 +1579,26 @@
       if (streak >= 4) return "fire-streak-2";
       if (streak >= 2) return "fire-streak-1";
       return "";
+    }
+
+    function recordAnswerHistory(q, isCorrect) {
+      // Clona el contenedor de opciones tal cual quedó pintado y bloquea interacciones
+      const containerClone = document.getElementById("optionsContainer").cloneNode(true);
+      containerClone.classList.add("pointer-events-none");
+      
+      // Ocultar botones de comprobar si quedaron visibles en el clon
+      containerClone.querySelectorAll("button").forEach(b => {
+        if (b.textContent.includes("Comprobar") || b.textContent.includes("Confirmar")) {
+          b.classList.add("hidden");
+        }
+      });
+
+      answeredHistory[currentIndex] = {
+        question: q,
+        isCorrect: isCorrect,
+        renderedHTML: containerClone.innerHTML,
+        explanation: q.explanation
+      };
     }
 
     function renderModulesHub() {
