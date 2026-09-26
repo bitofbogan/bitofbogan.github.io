@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Visitas | Aureka</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50 text-stone-800 p-6 min-h-screen">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <div class="flex items-center justify-between border-b pb-4 border-stone-200">
+      <div>
+        <h1 class="text-2xl font-black text-stone-900">Métricas de Tráfico Aureka</h1>
+        <p class="text-xs text-stone-500">Contadores activos por módulo en VisitorBadge</p>
+      </div>
+      <button onclick="location.reload()" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition-colors">
+        🔄 Actualizar datos
+      </button>
+    </div>
+
+    <!-- Grid de módulos -->
+    <div id="gridBadges" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+  </div>
+
+  <script>
+    const MODULES = [
+      { id: "hub", name: "Catálogo General (Hub)" },
+      { id: "1", name: "Técnicas de estudio & aprendizaje" },
+      { id: "2", name: "Lectura & redacción I" },
+      { id: "3", name: "Aritmética & álgebra" },
+      { id: "4", name: "Sociología" },
+      { id: "5", name: "Inglés I" },
+      { id: "6", name: "Informática I" },
+      { id: "7", name: "Lectura & redacción II" },
+      { id: "8", name: "Física I" },
+      { id: "9", name: "Ciencias naturales" },
+      { id: "10", name: "Estructura social mexicana" },
+      { id: "11", name: "Historia contemporánea" },
+      { id: "12", name: "Inglés II" },
+      { id: "13", name: "Lógica argumentativa" },
+      { id: "14", name: "Economía & sociedad" },
+      { id: "15", name: "Cálculo diferencial e integral" },
+      { id: "16", name: "Ciencias ambientales II" },
+      { id: "17", name: "Biología" },
+      { id: "18", name: "Probabilidad & estadística" },
+      { id: "19", name: "Física II" },
+      { id: "20", name: "Ciencias ambientales II" },
+      { id: "21", name: "Filosofía de la ciencia" },
+      { id: "22", name: "Informática II" }
+    ];
+
+    const container = document.getElementById("gridBadges");
+    const t = Date.now();
+
+    MODULES.forEach(m => {
+      const path = m.id === "hub" 
+        ? "bitofbogan.github.io.aureka.hub" 
+        : `bitofbogan.github.io.aureka.m${m.id}`;
+
+      const card = document.createElement("div");
+      card.className = "bg-white p-3 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between gap-2";
+      card.innerHTML = `
+        <div class="min-w-0">
+          <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wider block">
+            ${m.id === "hub" ? "Hub" : `Módulo ${m.id}`}
+          </span>
+          <span class="text-xs font-bold text-stone-800 line-clamp-1" title="${m.name}">${m.name}</span>
+        </div>
+        <div class="pt-1 border-t border-stone-100 flex justify-end">
+          <img 
+            src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134&t=${t}" 
+            alt="Contador" 
+            class="h-5" 
+          />
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
