@@ -2,26 +2,57 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel de Visitas | Aureka</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Métricas Aureka</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-stone-50 text-stone-800 p-6 min-h-screen">
-  <div class="max-w-4xl mx-auto space-y-6">
+<body class="bg-stone-50 text-stone-800 p-4 sm:p-6 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-6">
     <div class="flex items-center justify-between border-b pb-4 border-stone-200">
       <div>
-        <h1 class="text-2xl font-black text-stone-900">Métricas de Tráfico Aureka</h1>
-        <p class="text-xs text-stone-500">Contadores activos por módulo en VisitorBadge</p>
+        <h1 class="text-2xl font-black text-stone-900 tracking-tight">Tráfico Aureka</h1>
+        <p class="text-xs text-stone-500">Toca cualquier tarjeta para ver su historial diario</p>
       </div>
-      <button onclick="location.reload()" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition-colors">
-        🔄 Actualizar datos
+      <button onclick="loadStats()" class="px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition-all shadow-xs">
+        🔄 Recargar
       </button>
     </div>
 
     <!-- Grid de módulos -->
-    <div id="gridBadges" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+    <div id="gridBadges" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+      <div class="col-span-full py-12 text-center text-stone-400 text-sm font-medium">
+        Cargando métricas...
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal con Gráfica -->
+  <div id="chartModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-5 max-w-lg w-full shadow-xl border border-stone-200 space-y-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <span id="modalBadge" class="text-[10px] font-bold uppercase tracking-wider text-orange-600 block"></span>
+          <h3 id="modalTitle" class="text-base font-bold text-stone-900"></h3>
+        </div>
+        <button onclick="closeModal()" class="text-stone-400 hover:text-stone-700 text-lg font-bold px-2 py-1">✕</button>
+      </div>
+      
+      <div class="h-64 w-full">
+        <canvas id="dailyChart"></canvas>
+      </div>
+
+      <div class="text-right">
+        <button onclick="closeModal()" class="px-4 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-lg transition-colors">
+          Cerrar
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
+    const STATS_API_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+
     const MODULES = [
       { id: "hub", name: "Catálogo General (Hub)" },
       { id: "1", name: "Técnicas de estudio & aprendizaje" },
@@ -48,33 +79,113 @@
       { id: "22", name: "Informática II" }
     ];
 
-    const container = document.getElementById("gridBadges");
-    const t = Date.now();
+    let rawData = [];
+    let chartInstance = null;
 
-    MODULES.forEach(m => {
-      const path = m.id === "hub" 
-        ? "bitofbogan.github.io.aureka.hub" 
-        : `bitofbogan.github.io.aureka.m${m.id}`;
+    async function loadStats() {
+      const container = document.getElementById("gridBadges");
+      container.innerHTML = '<div class="col-span-full py-12 text-center text-stone-400 text-sm">Consultando registros...</div>';
 
-      const card = document.createElement("div");
-      card.className = "bg-white p-3 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between gap-2";
-      card.innerHTML = `
-        <div class="min-w-0">
-          <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wider block">
-            ${m.id === "hub" ? "Hub" : `Módulo ${m.id}`}
-          </span>
-          <span class="text-xs font-bold text-stone-800 line-clamp-1" title="${m.name}">${m.name}</span>
-        </div>
-        <div class="pt-1 border-t border-stone-100 flex justify-end">
-          <img 
-            src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134&t=${t}" 
-            alt="Contador" 
-            class="h-5" 
-          />
-        </div>
-      `;
-      container.appendChild(card);
-    });
+      try {
+        const res = await fetch(STATS_API_URL);
+        rawData = await res.json();
+      } catch (err) {
+        rawData = [];
+      }
+
+      container.innerHTML = "";
+
+      MODULES.forEach(m => {
+        const moduleRecords = rawData.filter(r => String(r.moduleId) === String(m.id));
+        const totalVisitas = moduleRecords.reduce((acc, r) => acc + (Number(r.visitas) || 0), 0);
+
+        const card = document.createElement("button");
+        card.type = "button";
+        card.onclick = () => openModuleChart(m, moduleRecords);
+        card.className = "group bg-white p-3.5 rounded-xl border border-stone-200 hover:border-orange-300 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between gap-3 text-left";
+        card.innerHTML = `
+          <div>
+            <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wider block">
+              ${m.id === "hub" ? "Hub" : `Módulo ${m.id}`}
+            </span>
+            <span class="text-xs font-bold text-stone-800 line-clamp-1 group-hover:text-orange-600 transition-colors" title="${m.name}">
+              ${m.name}
+            </span>
+          </div>
+          <div class="pt-2 border-t border-stone-100 flex items-center justify-between w-full">
+            <span class="text-[11px] text-stone-400 font-medium">Total visitas</span>
+            <span class="text-sm font-black text-stone-900 group-hover:text-orange-600 transition-colors">
+              ${totalVisitas} 📊
+            </span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openModuleChart(mod, records) {
+      document.getElementById("modalBadge").textContent = mod.id === "hub" ? "Hub" : `Módulo ${mod.id}`;
+      document.getElementById("modalTitle").textContent = mod.name;
+
+      // Armar últimos 14 días
+      const days = [];
+      const counts = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split("T")[0];
+        days.push(dateStr.slice(5)); // Formato MM-DD
+
+        const match = records.find(r => r.fecha === dateStr);
+        counts.push(match ? match.visitas : 0);
+      }
+
+      const modal = document.getElementById("chartModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      if (chartInstance) chartInstance.destroy();
+
+      const ctx = document.getElementById("dailyChart").getContext("2d");
+      chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: days,
+          datasets: [{
+            label: "Visitas",
+            data: counts,
+            backgroundColor: "#F17D4B",
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0, font: { size: 10 } },
+              grid: { color: "#f3f4f6" }
+            },
+            x: {
+              ticks: { font: { size: 10 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("chartModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    window.addEventListener("DOMContentLoaded", loadStats);
   </script>
 </body>
 </html>
