@@ -374,8 +374,7 @@
     function confirmResetQuiz() {
       if (confirm("¿Quieres reiniciar Aureka?")) {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        initQuiz();
-        initCounter(currentModuleId);
+        initQuiz();        
       }
     }
 
@@ -1478,7 +1477,7 @@
           <!-- Sección dinámica de videos recomendados -->
           ${videoSectionHTML}
 
-          <button onclick="initQuiz(); initCounter(currentModuleId);" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+          <button onclick="initQuiz();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
             ¡Reintentar!
           </button>
         </div>
@@ -1524,7 +1523,7 @@
         phaseBadge.textContent = badge;
 
         initQuiz();
-        initCounter(currentModuleId);
+        trackModuleVisit(currentModuleId);
         playIntroSplash(badge, title);
       };
       script.onerror = () => {
@@ -1566,22 +1565,19 @@
       }, 1600);
     }
 
-    function initCounter(moduleId = currentModuleId) {
-      const container = document.getElementById("visitContainer");
-      if (!container) return;
+    const STATS_API_URL = "https://script.google.com/macros/s/AKfycbw_iDH64fj6C_5AMLkvv7wuF1x9WqwEXBf0TvSPIr7-KLzw-UeaTyOUrpP6tKPeauGdbQ/exec";
 
-      const path = `bitofbogan.github.io.aureka.m${moduleId}`;
-      const cacheBuster = Date.now();
-      
-      container.innerHTML = `
-        <img 
-          src="https://api.visitorbadge.io/api/visitors?path=${encodeURIComponent(path)}&label=Visitas&labelColor=%23F17D4B&countColor=%232D3134&t=${cacheBuster}" 
-          alt="Contador de visitas" 
-          class="h-5 rounded shadow-2xs" 
-          loading="lazy"
-        />
-      `;
-    }
+function trackModuleVisit(modId) {
+  // Para no contar tus propias pruebas en localhost o modo desarrollo (opcional)
+  if (location.hostname === "localhost" || location.protocol === "file:") return;
+
+  fetch(STATS_API_URL, {
+    method: "POST",
+    mode: "no-cors", // Envío rápido y silencioso sin problemas de CORS
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ moduleId: String(modId) })
+  }).catch(() => {});
+}
 
     function getStreakFireClass(streak) {
       if (streak >= 10) return "fire-streak-3";
@@ -1618,7 +1614,7 @@
       phaseBadge.textContent = "22 Módulos";
       phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200 whitespace-nowrap shrink-0 truncate";
 
-      initCounter("hub");
+      trackModuleVisit("hub");
 
       let hubHTML = `
         <div class="animate-pop flex flex-col gap-6 py-2">
