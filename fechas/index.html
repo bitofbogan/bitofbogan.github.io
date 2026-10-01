@@ -7,52 +7,61 @@
   <style>
     :root {
       --primary: #0f3d6e;
+      --primary-light: #1e40af;
       --accent: #2563eb;
+      --accent-soft: #eff6ff;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
       --warning-bg: #fffbeb;
       --warning-border: #fef08a;
       --warning-text: #854d0e;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       display: flex;
       justify-content: center;
-      padding: 1.5rem 1rem calc(3.5rem + env(safe-area-inset-bottom, 0px));
+      padding: 1.5rem 1rem calc(3.8rem + env(safe-area-inset-bottom, 0px));
       margin: 0;
       min-height: 100vh;
+      scroll-behavior: smooth;
     }
 
     .container {
       background-color: var(--card-bg);
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
       padding: 1.8rem 1.4rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.07);
+      border-radius: 18px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
     }
 
     .header {
       text-align: center;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.3rem;
     }
 
     .header h1 {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       color: var(--primary);
-      margin: 0 0 0.4rem 0;
+      margin: 0 0 0.35rem 0;
+      font-weight: 700;
     }
 
     .header p {
       margin: 0;
-      color: #64748b;
-      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 500;
     }
 
     /* Aviso sobre el número de módulo */
@@ -60,79 +69,219 @@
       background-color: #f1f5f9;
       border-left: 4px solid var(--accent);
       padding: 0.75rem 0.9rem;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.82rem;
-      color: #475569;
+      color: #334155;
       margin-bottom: 1.3rem;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .form-group {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.15rem;
     }
 
     label {
       display: block;
       font-weight: 600;
-      margin-bottom: 0.4rem;
-      font-size: 0.85rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.86rem;
       color: #334155;
     }
 
     select {
       width: 100%;
-      padding: 0.8rem;
-      border: 1.5px solid #cbd5e1;
+      padding: 0.8rem 0.85rem;
+      border: 1.5px solid var(--border-color);
       border-radius: 10px;
       font-size: 0.95rem;
       background-color: #fff;
       color: var(--text);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     select:focus {
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
 
-	.modulo-tema {
-      font-size: 0.9rem;
-      color: #475569;
-      font-weight: 500;
-      margin: 0.5rem 0 1rem 0;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid #dbeafe;
+    select:disabled {
+      background-color: #f1f5f9;
+      color: #94a3b8;
+      cursor: not-allowed;
     }
 
-    /* Tarjeta de resultado */
-    .card-resultado {
-      margin-top: 1.5rem;
-      padding: 1.3rem;
-      border-radius: 12px;
-      background-color: #eff6ff;
-      border: 1.5px solid #bfdbfe;
+    /* Selector de pestañas / modo */
+    .tab-container {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.7rem 0.5rem;
+      border: 1.5px solid var(--border-color);
+      background-color: #f1f5f9;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(15, 61, 110, 0.2);
+    }
+
+    /* Contenedor y diseño de mini-tarjetas */
+    .mini-cards-section {
+      margin-top: 0.8rem;
+      margin-bottom: 1.15rem;
       display: none;
       animation: fadeIn 0.25s ease-in;
     }
 
-    .card-resultado h3 {
-      margin: 0 0 1rem 0;
-      font-size: 1.05rem;
+    .mini-cards-header {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mini-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.6rem;
+    }
+
+    .mini-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.65rem 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      text-align: left;
+    }
+
+    .mini-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+
+    .mini-card.active {
+      background-color: #eff6ff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .mini-card-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .mini-card-module {
+      font-size: 0.86rem;
+      font-weight: 700;
       color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .mini-card-title {
+      font-size: 0.73rem;
+      color: #64748b;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Tarjeta detallada de resultado */
+    .card-resultado {
+      margin-top: 1.3rem;
+      padding: 1.35rem 1.2rem;
+      border-radius: 14px;
+      background-color: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      display: none;
+      animation: fadeIn 0.3s ease-in;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .card-resultado h3 {
+      margin: 0 0 0.3rem 0;
+      font-size: 1.1rem;
+      color: var(--primary);
+      line-height: 1.35;
+    }
+
+    .modulo-tema {
+      font-size: 0.88rem;
+      color: #475569;
+      font-weight: 500;
+      margin: 0.3rem 0 1rem 0;
+      padding-bottom: 0.6rem;
       border-bottom: 1px solid #dbeafe;
-      padding-bottom: 0.5rem;
     }
 
     .info-row {
       display: flex;
       align-items: flex-start;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.7rem;
       font-size: 0.95rem;
     }
 
     .info-row .icon {
-      margin-right: 0.5rem;
-      font-size: 1.1rem;
+      margin-right: 0.55rem;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    /* Botón para copiar horario */
+    .btn-copiar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      width: 100%;
+      margin: 0.85rem 0 0.45rem 0;
+      padding: 0.65rem;
+      border: 1.5px solid #bfdbfe;
+      background-color: #ffffff;
+      color: var(--accent);
+      border-radius: 9px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copiar:hover {
+      background-color: #dbeafe;
+      border-color: var(--accent);
+    }
+
+    .btn-copiar:active {
+      transform: scale(0.98);
     }
 
     /* Alerta de conexión puntual y credencial */
@@ -142,14 +291,14 @@
       border: 1px solid var(--warning-border);
       color: var(--warning-text);
       padding: 0.85rem;
-      border-radius: 8px;
-      font-size: 0.88rem;
+      border-radius: 10px;
+      font-size: 0.86rem;
       line-height: 1.45;
     }
 
     .alerta-conexion strong {
       display: block;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
     }
 
     .badge-rango {
@@ -158,63 +307,13 @@
       padding-top: 0.6rem;
       border-top: 1px dashed #cbd5e1;
       font-size: 0.8rem;
-      color: #64748b;
+      color: var(--text-muted);
       text-align: center;
     }
 
-	.tab-container {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 0.65rem 0.5rem;
-      border: 1.5px solid #cbd5e1;
-      background-color: #f1f5f9;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #64748b;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn.active {
-      background-color: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-	.btn-copiar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      width: 100%;
-      margin: 0.8rem 0 0.4rem 0;
-      padding: 0.6rem;
-      border: 1.5px solid #bfdbfe;
-      background-color: #ffffff;
-      color: var(--accent);
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-copiar:hover {
-      background-color: #dbeafe;
-    }
-
-    .btn-copiar:active {
-      transform: scale(0.98);
-    }
-
-	.footer-creditos {
-      margin-top: 1.8rem;
+    /* Pie de página discreto */
+    .footer-creditos {
+      margin-top: 2rem;
       text-align: center;
       font-size: 0.75rem;
       color: #94a3b8;
@@ -225,7 +324,7 @@
     }
 
     .footer-creditos img {
-      opacity: 0.7;
+      opacity: 0.75;
       filter: grayscale(100%);
       transition: opacity 0.2s, filter 0.2s;
     }
@@ -254,6 +353,7 @@
       📌 <strong>Importante:</strong> Los nombres de los módulos pueden variar ligeramente según la plataforma. Siempre debes <strong>guiarte por el número del módulo (1 al 22)</strong>.
     </div>
 
+    <!-- Selección de Etapa -->
     <div class="form-group">
       <label for="selectEtapa">1. Selecciona tu <strong>etapa de solicitud</strong>:</label>
       <select id="selectEtapa">
@@ -261,7 +361,7 @@
       </select>
     </div>
 
-    <!-- Selector de Modo / Pestañas -->
+    <!-- Pestañas de Modo -->
     <div class="tab-container">
       <button type="button" class="tab-btn active" id="btnModoModulo" onclick="cambiarModo('modulo')">Por módulo</button>
       <button type="button" class="tab-btn" id="btnModoHorario" onclick="cambiarModo('horario')">Por día y hora</button>
@@ -286,6 +386,15 @@
         </select>
       </div>
 
+      <!-- Mini-tarjetas interactivas de los exámenes del día -->
+      <div id="seccionMiniCards" class="mini-cards-section">
+        <div class="mini-cards-header">
+          <span>📅 Exámenes del día:</span>
+          <span style="font-weight: 400; font-size: 0.75rem; color: #64748b;">(Toca uno para ver detalles)</span>
+        </div>
+        <div id="miniCardsContainer" class="mini-cards-grid"></div>
+      </div>
+
       <div class="form-group">
         <label for="selectHora">3. Selecciona tu <strong>hora disponible</strong>:</label>
         <select id="selectHora" disabled>
@@ -294,9 +403,9 @@
       </div>
     </div>
 
-    <!-- Contenedor del Resultado -->
+    <!-- Contenedor del Resultado Completo -->
     <div id="resultado" class="card-resultado">
-      <h3 id="resModulo" style="margin-bottom: 0.3rem; border: none; padding-bottom: 0;"></h3>
+      <h3 id="resModulo"></h3>
       <div id="resTema" class="modulo-tema"></div>
       
       <div class="info-row">
@@ -313,7 +422,7 @@
       <button type="button" class="btn-copiar" id="btnCopiar" onclick="copiarHorario()">
         📋 Copiar horario
       </button>
-		
+        
       <!-- Alerta dinámica con hora de conexión -15 min -->
       <div class="alerta-conexion" style="display: flex; flex-direction: column; gap: 0.4rem;">
         <div><strong>⚠️ Conexión obligatoria 15 minutos antes:</strong></div>
@@ -324,7 +433,7 @@
       <div class="badge-rango" id="resRango"></div>
     </div>
 
-    <!-- Pie de página discreto (Siempre al final) -->
+    <!-- Pie de página discreto -->
     <div class="footer-creditos">
       <div>
         <img src="https://api.visitorbadge.io/api/visitors?path=bitofbogan.github.io.fechas&label=&countColor=%2394a3b8" alt="Contador" />
@@ -333,11 +442,191 @@
     </div>
   </div>
 
-  <!-- Carga de datos -->
-  <script src="data.js"></script>
+  <!-- Intento de cargar data.js externo si existe en local/GitHub Pages -->
+  <script src="data.js" onerror="console.info('Cargando base de datos interna de respaldo.');"></script>
 
   <script>
-    // 1. Declaración de elementos del DOM (Primero que todo)
+    // Datos integrados en caso de ejecución local o fallback
+    if (typeof modulosData === 'undefined') {
+      window.modulosData = [
+        { id: 1, nombre: "De la información al conocimiento", tema: "Técnicas de estudio & aprendizaje" },
+        { id: 2, nombre: "El lenguaje en relación del hombre con el mundo", tema: "Lectura & redacción I" },
+        { id: 3, nombre: "Representaciones simbólicas y algoritmos", tema: "Aritmética & álgebra" },
+        { id: 4, nombre: "Ser social y sociedad", tema: "Sociología" },
+        { id: 5, nombre: "Mi mundo en otra lengua", tema: "Inglés I" },
+        { id: 6, nombre: "Tecnología de información y comunicación", tema: "Informática I" },
+        { id: 7, nombre: "Textos y visiones del mundo", tema: "Lectura & redacción II" },
+        { id: 8, nombre: "Matemáticas y representaciones del sistema natural", tema: "Física I" },
+        { id: 9, nombre: "Universo natural", tema: "Ciencias naturales" },
+        { id: 10, nombre: "Sociedad mexicana contemporánea", tema: "Estructura social mexicana" },
+        { id: 11, nombre: "Transformaciones en el mundo contemporáneo", tema: "Historia contemporánea" },
+        { id: 12, nombre: "Mi vida en otra lengua", tema: "Inglés II" },
+        { id: 13, nombre: "Argumentación", tema: "Lógica argumentativa" },
+        { id: 14, nombre: "Variación en procesos sociales", tema: "Economía & sociedad" },
+        { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales", tema: "Cálculo diferencial & integral" },
+        { id: 16, nombre: "Hacia un desarrollo sustentable", tema: "Ciencias ambientales II" },
+        { id: 17, nombre: "Evolución y sus repercusiones sociales", tema: "Biología" },
+        { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales", tema: "Probabilidad & estadística" },
+        { id: 19, nombre: "Dinámica en la naturaleza: el movimiento", tema: "Física II" },
+        { id: 20, nombre: "Optimización en sistemas naturales y sociales", tema: "Ciencias ambientales I" },
+        { id: 21, nombre: "Impacto en la ciencia y la tecnología", tema: "Filosofía de la ciencia" },
+        { id: 22, nombre: "Informática", tema: "Informática II" }
+      ];
+    }
+
+    if (typeof calendarioData === 'undefined') {
+      window.calendarioData = {
+        "2610A": {
+          label: "Etapa 2610A",
+          periodo: "Periodo de aplicación: 28 de septiembre al 03 de octubre",
+          fechaFin: "2026-10-03",
+          horarios: {
+            1: { dia: "Viernes 2 de Octubre", hora: "13:00" },
+            2: { dia: "Lunes 28 de Septiembre", hora: "09:00" },
+            3: { dia: "Martes 29 de Septiembre", hora: "13:00" },
+            4: { dia: "Miércoles 30 de Septiembre", hora: "09:00" },
+            5: { dia: "Jueves 1 de Octubre", hora: "13:00" },
+            6: { dia: "Viernes 2 de Octubre", hora: "09:00" },
+            7: { dia: "Sábado 3 de Octubre", hora: "11:00" },
+            8: { dia: "Lunes 28 de Septiembre", hora: "15:00" },
+            9: { dia: "Martes 29 de Septiembre", hora: "11:00" },
+            10: { dia: "Miércoles 30 de Septiembre", hora: "15:00" },
+            11: { dia: "Jueves 1 de Octubre", hora: "11:00" },
+            12: { dia: "Viernes 2 de Octubre", hora: "15:00" },
+            13: { dia: "Sábado 3 de Octubre", hora: "09:00" },
+            14: { dia: "Lunes 28 de Septiembre", hora: "13:00" },
+            15: { dia: "Martes 29 de Septiembre", hora: "09:00" },
+            16: { dia: "Miércoles 30 de Septiembre", hora: "13:00" },
+            17: { dia: "Jueves 1 de Octubre", hora: "09:00" },
+            18: { dia: "Viernes 2 de Octubre", hora: "11:00" },
+            19: { dia: "Lunes 28 de Septiembre", hora: "11:00" },
+            20: { dia: "Martes 29 de Septiembre", hora: "15:00" },
+            21: { dia: "Miércoles 30 de Septiembre", hora: "11:00" },
+            22: { dia: "Jueves 1 de Octubre", hora: "15:00" }
+          }
+        },
+        "2610B": {
+          label: "Etapa 2610B",
+          periodo: "Periodo de aplicación: 12 al 17 de octubre",
+          fechaFin: "2026-10-17",
+          horarios: {
+            1: { dia: "Lunes 12 de Octubre", hora: "15:00" },
+            2: { dia: "Martes 13 de Octubre", hora: "11:00" },
+            3: { dia: "Miércoles 14 de Octubre", hora: "15:00" },
+            4: { dia: "Jueves 15 de Octubre", hora: "11:00" },
+            5: { dia: "Viernes 16 de Octubre", hora: "15:00" },
+            6: { dia: "Sábado 17 de Octubre", hora: "11:00" },
+            7: { dia: "Lunes 12 de Octubre", hora: "13:00" },
+            8: { dia: "Martes 13 de Octubre", hora: "09:00" },
+            9: { dia: "Miércoles 14 de Octubre", hora: "13:00" },
+            10: { dia: "Jueves 15 de Octubre", hora: "09:00" },
+            11: { dia: "Viernes 16 de Octubre", hora: "13:00" },
+            12: { dia: "Sábado 17 de Octubre", hora: "09:00" },
+            13: { dia: "Lunes 12 de Octubre", hora: "11:00" },
+            14: { dia: "Martes 13 de Octubre", hora: "15:00" },
+            15: { dia: "Miércoles 14 de Octubre", hora: "11:00" },
+            16: { dia: "Jueves 15 de Octubre", hora: "15:00" },
+            17: { dia: "Viernes 16 de Octubre", hora: "11:00" },
+            18: { dia: "Lunes 12 de Octubre", hora: "09:00" },
+            19: { dia: "Martes 13 de Octubre", hora: "13:00" },
+            20: { dia: "Miércoles 14 de Octubre", hora: "09:00" },
+            21: { dia: "Jueves 15 de Octubre", hora: "13:00" },
+            22: { dia: "Viernes 16 de Octubre", hora: "09:00" }
+          }
+        },
+        "2611A": {
+          label: "Etapa 2611A",
+          periodo: "Periodo de aplicación: 03 al 09 de noviembre",
+          fechaFin: "2026-11-09",
+          horarios: {
+            1: { dia: "Martes 3 de Noviembre", hora: "09:00" },
+            2: { dia: "Miércoles 4 de Noviembre", hora: "13:00" },
+            3: { dia: "Jueves 5 de Noviembre", hora: "09:00" },
+            4: { dia: "Viernes 6 de Noviembre", hora: "13:00" },
+            5: { dia: "Sábado 7 de Noviembre", hora: "09:00" },
+            6: { dia: "Lunes 9 de Noviembre", hora: "13:00" },
+            7: { dia: "Martes 3 de Noviembre", hora: "15:00" },
+            8: { dia: "Miércoles 4 de Noviembre", hora: "11:00" },
+            9: { dia: "Jueves 5 de Noviembre", hora: "15:00" },
+            10: { dia: "Viernes 6 de Noviembre", hora: "11:00" },
+            11: { dia: "Lunes 9 de Noviembre", hora: "15:00" },
+            12: { dia: "Lunes 9 de Noviembre", hora: "11:00" },
+            13: { dia: "Martes 3 de Noviembre", hora: "13:00" },
+            14: { dia: "Miércoles 4 de Noviembre", hora: "09:00" },
+            15: { dia: "Jueves 5 de Noviembre", hora: "13:00" },
+            16: { dia: "Viernes 6 de Noviembre", hora: "09:00" },
+            17: { dia: "Lunes 9 de Noviembre", hora: "09:00" },
+            18: { dia: "Martes 3 de Noviembre", hora: "11:00" },
+            19: { dia: "Miércoles 4 de Noviembre", hora: "15:00" },
+            20: { dia: "Jueves 5 de Noviembre", hora: "11:00" },
+            21: { dia: "Viernes 6 de Noviembre", hora: "15:00" },
+            22: { dia: "Sábado 7 de Noviembre", hora: "11:00" }
+          }
+        },
+        "2611B": {
+          label: "Etapa 2611B",
+          periodo: "Periodo de aplicación: 17 al 23 de noviembre",
+          fechaFin: "2026-11-23",
+          horarios: {
+            1: { dia: "Miércoles 18 de Noviembre", hora: "11:00" },
+            2: { dia: "Jueves 19 de Noviembre", hora: "15:00" },
+            3: { dia: "Viernes 20 de Noviembre", hora: "11:00" },
+            4: { dia: "Lunes 23 de Noviembre", hora: "15:00" },
+            5: { dia: "Lunes 23 de Noviembre", hora: "11:00" },
+            6: { dia: "Martes 17 de Noviembre", hora: "15:00" },
+            7: { dia: "Miércoles 18 de Noviembre", hora: "09:00" },
+            8: { dia: "Jueves 19 de Noviembre", hora: "13:00" },
+            9: { dia: "Viernes 20 de Noviembre", hora: "09:00" },
+            10: { dia: "Lunes 23 de Noviembre", hora: "09:00" },
+            11: { dia: "Martes 17 de Noviembre", hora: "09:00" },
+            12: { dia: "Martes 17 de Noviembre", hora: "13:00" },
+            13: { dia: "Miércoles 18 de Noviembre", hora: "15:00" },
+            14: { dia: "Jueves 19 de Noviembre", hora: "11:00" },
+            15: { dia: "Viernes 20 de Noviembre", hora: "15:00" },
+            16: { dia: "Sábado 21 de Noviembre", hora: "11:00" },
+            17: { dia: "Martes 17 de Noviembre", hora: "11:00" },
+            18: { dia: "Miércoles 18 de Noviembre", hora: "13:00" },
+            19: { dia: "Jueves 19 de Noviembre", hora: "09:00" },
+            20: { dia: "Viernes 20 de Noviembre", hora: "13:00" },
+            21: { dia: "Sábado 21 de Noviembre", hora: "09:00" },
+            22: { dia: "Lunes 23 de Noviembre", hora: "13:00" }
+          }
+        },
+        "2612A": {
+          label: "Etapa 2612A",
+          periodo: "Periodo de aplicación: 30 de noviembre al 07 de diciembre",
+          fechaFin: "2026-12-07",
+          horarios: {
+            1: { dia: "Jueves 3 de Diciembre", hora: "13:00" },
+            2: { dia: "Viernes 4 de Diciembre", hora: "09:00" },
+            3: { dia: "Lunes 30 de Noviembre", hora: "09:00" },
+            4: { dia: "Martes 1 de Diciembre", hora: "09:00" },
+            5: { dia: "Martes 1 de Diciembre", hora: "13:00" },
+            6: { dia: "Miércoles 2 de Diciembre", hora: "09:00" },
+            7: { dia: "Jueves 3 de Diciembre", hora: "11:00" },
+            8: { dia: "Viernes 4 de Diciembre", hora: "15:00" },
+            9: { dia: "Lunes 7 de Diciembre", hora: "11:00" },
+            10: { dia: "Martes 1 de Diciembre", hora: "11:00" },
+            11: { dia: "Miércoles 2 de Diciembre", hora: "11:00" },
+            12: { dia: "Miércoles 2 de Diciembre", hora: "15:00" },
+            13: { dia: "Jueves 3 de Diciembre", hora: "09:00" },
+            14: { dia: "Viernes 4 de Diciembre", hora: "13:00" },
+            15: { dia: "Lunes 7 de Diciembre", hora: "09:00" },
+            16: { dia: "Lunes 30 de Noviembre", hora: "13:00" },
+            17: { dia: "Miércoles 2 de Diciembre", hora: "13:00" },
+            18: { dia: "Jueves 3 de Diciembre", hora: "15:00" },
+            19: { dia: "Viernes 4 de Diciembre", hora: "11:00" },
+            20: { dia: "Lunes 30 de Noviembre", hora: "15:00" },
+            21: { dia: "Lunes 30 de Noviembre", hora: "11:00" },
+            22: { dia: "Martes 1 de Diciembre", hora: "15:00" }
+          }
+        }
+      };
+    }
+  </script>
+
+  <script>
+    // Referencias al DOM
     const selectEtapa = document.getElementById("selectEtapa");
     const selectModulo = document.getElementById("selectModulo");
     const selectDia = document.getElementById("selectDia");
@@ -347,12 +636,46 @@
     const btnModoModulo = document.getElementById("btnModoModulo");
     const btnModoHorario = document.getElementById("btnModoHorario");
     const cardResultado = document.getElementById("resultado");
+    const seccionMiniCards = document.getElementById("seccionMiniCards");
+    const miniCardsContainer = document.getElementById("miniCardsContainer");
 
     let modoActual = "modulo";
-
-	// Variable global para guardar los datos del resultado actual
     let datosCopiaActual = null;
 
+    // Formateador de horas
+    function formatearHora(horaStr) {
+      const [h, m] = horaStr.split(':').map(Number);
+      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      const minStr = m.toString().padStart(2, '0');
+      return `${horaStr} hrs (${h12}:${minStr} ${periodo})`;
+    }
+
+    // Cálculo de hora de conexión puntual (-15 minutos)
+    function calcularHoraConexion(horaStr) {
+      const [horas, minutos] = horaStr.split(':').map(Number);
+      let totalMinutos = horas * 60 + minutos - 15;
+      if (totalMinutos < 0) totalMinutos += 24 * 60;
+
+      const h = Math.floor(totalMinutos / 60);
+      const m = (totalMinutos % 60).toString().padStart(2, '0');
+      const hStr = h.toString().padStart(2, '0');
+      
+      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
+    }
+
+    // Desplazamiento suave hacia la tarjeta de resultado
+    function scrollHaciaResultado() {
+      setTimeout(() => {
+        if (cardResultado && cardResultado.style.display !== 'none') {
+          cardResultado.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 120);
+    }
+
+    // Copiado al portapapeles en formato "M[x]: DD/MM H:MM"
     function copiarHorario() {
       if (!datosCopiaActual) return;
 
@@ -371,56 +694,54 @@
         mesStr = mesesMap[match[2].toLowerCase()] || "00";
       }
 
-      // Quitar ceros sobrantes al inicio de la hora si aplica (ej. 09:00 -> 9:00)
       const [h, m] = datosCopiaActual.hora.split(":");
       const horaLimpia = `${parseInt(h, 10)}:${m}`;
 
       const texto = `M${datosCopiaActual.moduloId}: ${diaStr}/${mesStr} ${horaLimpia}`;
 
-      navigator.clipboard.writeText(texto).then(() => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(mostrarFeedbackCopiado).catch(copiarFallback);
+      } else {
+        copiarFallback();
+      }
+
+      function copiarFallback() {
+        const dummy = document.createElement("textarea");
+        dummy.value = texto;
+        dummy.style.position = "fixed";
+        dummy.style.opacity = "0";
+        document.body.appendChild(dummy);
+        dummy.select();
+        try {
+          document.execCommand("copy");
+          mostrarFeedbackCopiado();
+        } catch (e) {
+          console.error("No se pudo copiar", e);
+        }
+        document.body.removeChild(dummy);
+      }
+
+      function mostrarFeedbackCopiado() {
         const btn = document.getElementById("btnCopiar");
         const originalText = btn.innerHTML;
         btn.innerHTML = "✅ ¡Copiado!";
         setTimeout(() => {
           btn.innerHTML = originalText;
-        }, 1500);
-      });
+        }, 1600);
+      }
     }
 
-    // 2. Funciones de formato de horas
-    function formatearHora(horaStr) {
-      const [h, m] = horaStr.split(':').map(Number);
-      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
-      const h12 = h % 12 === 0 ? 12 : h % 12;
-      const minStr = m.toString().padStart(2, '0');
-      return `${horaStr} hrs (${h12}:${minStr} ${periodo})`;
-    }
-
-    function calcularHoraConexion(horaStr) {
-      const [horas, minutos] = horaStr.split(':').map(Number);
-      let totalMinutos = horas * 60 + minutos - 15;
-      if (totalMinutos < 0) totalMinutos += 24 * 60;
-
-      const h = Math.floor(totalMinutos / 60);
-      const m = (totalMinutos % 60).toString().padStart(2, '0');
-      const hStr = h.toString().padStart(2, '0');
-      
-      const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
-      const h12 = h % 12 === 0 ? 12 : h % 12;
-      return `${hStr}:${m} hrs (${h12}:${m} ${periodo})`;
-    }
-
-    // 3. Control de pestañas
+    // Alternar modos de consulta
     function cambiarModo(modo) {
       modoActual = modo;
-      if (cardResultado) cardResultado.style.display = "none";
+      cardResultado.style.display = "none";
 
       if (modo === 'modulo') {
         btnModoModulo.classList.add("active");
         btnModoHorario.classList.remove("active");
         panelModulo.style.display = "block";
         panelHorario.style.display = "none";
-        calcularFechaPorModulo();
+        calcularFechaPorModulo(false);
       } else {
         btnModoHorario.classList.add("active");
         btnModoModulo.classList.remove("active");
@@ -429,11 +750,11 @@
         if (selectEtapa.value && selectDia.disabled) {
           cargarDias();
         }
-        calcularFechaPorHorario();
+        calcularFechaPorHorario(false);
       }
     }
 
-    // 4. Llenado dinámico de selects
+    // Llenado de lista de módulos
     function cargarModulos() {
       const moduloPrevio = selectModulo.value;
 
@@ -451,6 +772,7 @@
       }
     }
 
+    // Llenado y ordenamiento cronológico de días
     function cargarDias() {
       const etapa = calendarioData[selectEtapa.value];
       if (!etapa) return;
@@ -460,14 +782,12 @@
         if (!diasUnicos.includes(h.dia)) diasUnicos.push(h.dia);
       });
 
-      // Mapeo de meses para ordenamiento cronológico
       const meses = {
         "enero": 0, "febrero": 1, "marzo": 2, "abril": 3,
         "mayo": 4, "junio": 5, "julio": 6, "agosto": 7,
         "septiembre": 8, "octubre": 9, "noviembre": 10, "diciembre": 11
       };
 
-      // Ordenar cronológicamente por mes y día
       diasUnicos.sort((a, b) => {
         const regex = /(\d+)\s+de\s+([a-zA-Z]+)/i;
         const matchA = a.match(regex);
@@ -496,39 +816,88 @@
 
       selectHora.innerHTML = '<option value="" disabled selected>Primero selecciona un día...</option>';
       selectHora.disabled = true;
+      seccionMiniCards.style.display = "none";
+      miniCardsContainer.innerHTML = "";
     }
 
-    function cargarHoras() {
+    function cargarHorasYMiniCards() {
       const etapa = calendarioData[selectEtapa.value];
       const diaSeleccionado = selectDia.value;
-      if (!etapa || !diaSeleccionado) return;
+      if (!etapa || !diaSeleccionado) {
+        seccionMiniCards.style.display = "none";
+        return;
+      }
 
-      const horasUnicas = [];
-      Object.values(etapa.horarios).forEach(h => {
-        if (h.dia === diaSeleccionado && !horasUnicas.includes(h.hora)) {
-          horasUnicas.push(h.hora);
+      // Recopilar módulos del día seleccionado
+      const examenesDelDia = [];
+      for (const [modId, h] of Object.entries(etapa.horarios)) {
+        if (h.dia === diaSeleccionado) {
+          const moduloObj = modulosData.find(m => m.id == modId);
+          examenesDelDia.push({
+            modId: modId,
+            moduloObj: moduloObj,
+            hora: h.hora,
+            dia: h.dia
+          });
         }
-      });
-      horasUnicas.sort();
+      }
 
+      // Ordenar por hora ascendente
+      examenesDelDia.sort((a, b) => a.hora.localeCompare(b.hora));
+
+      // Llenar select tradicional de horas
       selectHora.innerHTML = '<option value="" disabled selected>Elige una hora...</option>';
-      horasUnicas.forEach(hora => {
-        const [h, m] = hora.split(':').map(Number);
+      examenesDelDia.forEach(item => {
+        const [h, m] = item.hora.split(':').map(Number);
         const periodo = h >= 12 ? 'de la tarde' : 'de la mañana';
         const h12 = h % 12 === 0 ? 12 : h % 12;
         const minStr = m.toString().padStart(2, '0');
 
         const option = document.createElement("option");
-        option.value = hora;
-        option.textContent = `${hora} hrs (${h12}:${minStr} ${periodo})`;
+        option.value = item.hora;
+        option.textContent = `${item.hora} hrs (${h12}:${minStr} ${periodo}) - Módulo ${item.modId}`;
         selectHora.appendChild(option);
       });
       selectHora.disabled = false;
+
+      // Renderizar mini-tarjetas
+      miniCardsContainer.innerHTML = "";
+      examenesDelDia.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "mini-card";
+        card.dataset.hora = item.hora;
+
+        card.innerHTML = `
+          <div class="mini-card-time">⏰ ${item.hora} hrs</div>
+          <div class="mini-card-module">Módulo ${item.modId}</div>
+          <div class="mini-card-title">${item.moduloObj ? item.moduloObj.nombre : ''}</div>
+        `;
+
+        card.addEventListener("click", () => {
+          selectHora.value = item.hora;
+          sincronizarMiniCardActiva(item.hora);
+          calcularFechaPorHorario(true);
+        });
+
+        miniCardsContainer.appendChild(card);
+      });
+
+      seccionMiniCards.style.display = "block";
     }
 
-    // 5. Mostrar resultados
-    function mostrarResultado(moduloObj, horario, etapa) {
-      // Guardar datos para el botón de copiado
+    // Resaltar mini tarjeta seleccionada
+    function sincronizarMiniCardActiva(horaSeleccionada) {
+      const cards = miniCardsContainer.querySelectorAll(".mini-card");
+      cards.forEach(card => {
+        if (card.dataset.hora === horaSeleccionada) {
+          card.classList.add("active");
+        } else {
+          card.classList.remove("active");
+        }
+      });
+    }
+
+    function mostrarResultado(moduloObj, horario, etapa, hacerScroll = false) {
       datosCopiaActual = {
         moduloId: moduloObj.id,
         dia: horario.dia,
@@ -542,9 +911,14 @@
       document.getElementById("resHoraConexion").textContent = calcularHoraConexion(horario.hora);
       document.getElementById("resRango").textContent = etapa.periodo;
       cardResultado.style.display = "block";
+
+      if (hacerScroll) {
+        scrollHaciaResultado();
+      }
     }
 
-    function calcularFechaPorModulo() {
+    // Cálculo Modo Módulo
+    function calcularFechaPorModulo(conScroll = true) {
       const etapaKey = selectEtapa.value;
       const modId = selectModulo.value;
       if (!etapaKey || !modId) return;
@@ -554,11 +928,12 @@
       const moduloObj = modulosData.find(m => m.id == modId);
 
       if (horario && moduloObj) {
-        mostrarResultado(moduloObj, horario, etapa);
+        mostrarResultado(moduloObj, horario, etapa, conScroll);
       }
     }
 
-    function calcularFechaPorHorario() {
+    // Cálculo Modo Día y Hora
+    function calcularFechaPorHorario(conScroll = true) {
       const etapaKey = selectEtapa.value;
       const dia = selectDia.value;
       const hora = selectHora.value;
@@ -576,11 +951,11 @@
 
       if (modEncontradoId) {
         const moduloObj = modulosData.find(m => m.id == modEncontradoId);
-        mostrarResultado(moduloObj, etapa.horarios[modEncontradoId], etapa);
+        sincronizarMiniCardActiva(hora);
+        mostrarResultado(moduloObj, etapa.horarios[modEncontradoId], etapa, conScroll);
       }
     }
 
-    // 6. Carga inicial de Etapas y cálculo de la vigente
     const hoy = new Date().toISOString().split('T')[0];
     let etapaActivaClave = null;
 
@@ -610,33 +985,41 @@
       selectEtapa.appendChild(option);
     });
 
-    // 7. Event listeners
+    // Eventos
     selectEtapa.addEventListener("change", () => {
       cargarModulos();
       cargarDias();
 
       if (modoActual === 'modulo') {
         if (selectModulo.value) {
-          calcularFechaPorModulo();
+          calcularFechaPorModulo(true);
         } else {
           cardResultado.style.display = "none";
         }
       } else {
         cardResultado.style.display = "none";
-        calcularFechaPorHorario();
+        if (selectDia.value && selectHora.value) {
+          cargarHorasYMiniCards();
+          calcularFechaPorHorario(true);
+        }
       }
     });
 
-    selectModulo.addEventListener("change", calcularFechaPorModulo);
+    selectModulo.addEventListener("change", () => {
+      calcularFechaPorModulo(true);
+    });
 
     selectDia.addEventListener("change", () => {
       cardResultado.style.display = "none";
-      cargarHoras();
+      cargarHorasYMiniCards();
     });
 
-    selectHora.addEventListener("change", calcularFechaPorHorario);
+    selectHora.addEventListener("change", () => {
+      sincronizarMiniCardActiva(selectHora.value);
+      calcularFechaPorHorario(true);
+    });
 
-    // 8. Reseteo en recarga
+    // Reseteo limpio al recargar o volver a la página
     window.addEventListener("pageshow", () => {
       selectEtapa.value = "";
       selectModulo.value = "";
@@ -651,6 +1034,8 @@
       selectHora.disabled = true;
       selectHora.innerHTML = '<option value="" disabled selected>Primero selecciona un día...</option>';
 
+      seccionMiniCards.style.display = "none";
+      miniCardsContainer.innerHTML = "";
       cardResultado.style.display = "none";
       cambiarModo('modulo');
     });
