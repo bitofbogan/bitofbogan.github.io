@@ -25,66 +25,7 @@ const modulosData = [
 ];
 
 // Base de datos de Calendarios
-// (Puedes acumular etapas de 2 calendarios aquí; se listan en orden automático)
 const calendarioData = {
-  "2609A": {
-    label: "Etapa 2609A",
-    periodo: "Periodo de aplicación: 31 de agosto al 05 de septiembre",
-    fechaFin: "2026-09-05",
-    horarios: {
-      1: { dia: "Miércoles 2 de Septiembre", hora: "09:00" },
-      2: { dia: "Jueves 3 de Septiembre", hora: "09:00" },
-      3: { dia: "Sábado 5 de Septiembre", hora: "09:00" },
-      4: { dia: "Lunes 31 de Agosto", hora: "13:00" },
-      5: { dia: "Martes 1 de Septiembre", hora: "09:00" },
-      6: { dia: "Miércoles 2 de Septiembre", hora: "13:00" },
-      7: { dia: "Jueves 3 de Septiembre", hora: "15:00" },
-      8: { dia: "Jueves 3 de Septiembre", hora: "11:00" },
-      9: { dia: "Viernes 4 de Septiembre", hora: "11:00" },
-      10: { dia: "Lunes 31 de Agosto", hora: "11:00" },
-      11: { dia: "Martes 1 de Septiembre", hora: "15:00" },
-      12: { dia: "Miércoles 2 de Septiembre", hora: "11:00" },
-      13: { dia: "Jueves 3 de Septiembre", hora: "13:00" },
-      14: { dia: "Viernes 4 de Septiembre", hora: "09:00" },
-      15: { dia: "Viernes 4 de Septiembre", hora: "13:00" },
-      16: { dia: "Lunes 31 de Agosto", hora: "09:00" },
-      17: { dia: "Martes 1 de Septiembre", hora: "13:00" },
-      18: { dia: "Miércoles 2 de Septiembre", hora: "15:00" },
-      19: { dia: "Viernes 4 de Septiembre", hora: "15:00" },
-      20: { dia: "Sábado 5 de Septiembre", hora: "11:00" },
-      21: { dia: "Lunes 31 de Agosto", hora: "15:00" },
-      22: { dia: "Martes 1 de Septiembre", hora: "11:00" }
-    }
-  },
-  "2609B": {
-    label: "Etapa 2609B",
-    periodo: "Periodo de aplicación: 14 al 21 de septiembre",
-    fechaFin: "2026-09-21",
-    horarios: {
-      1: { dia: "Jueves 17 de Septiembre", hora: "11:00" },
-      2: { dia: "Viernes 18 de Septiembre", hora: "11:00" },
-      3: { dia: "Lunes 14 de Septiembre", hora: "11:00" },
-      4: { dia: "Lunes 21 de Septiembre", hora: "15:00" },
-      5: { dia: "Martes 15 de Septiembre", hora: "11:00" },
-      6: { dia: "Jueves 17 de Septiembre", hora: "15:00" },
-      7: { dia: "Viernes 18 de Septiembre", hora: "09:00" },
-      8: { dia: "Viernes 18 de Septiembre", hora: "13:00" },
-      9: { dia: "Lunes 14 de Septiembre", hora: "09:00" },
-      10: { dia: "Lunes 21 de Septiembre", hora: "13:00" },
-      11: { dia: "Martes 15 de Septiembre", hora: "09:00" },
-      12: { dia: "Jueves 17 de Septiembre", hora: "13:00" },
-      13: { dia: "Viernes 18 de Septiembre", hora: "15:00" },
-      14: { dia: "Sábado 19 de Septiembre", hora: "11:00" },
-      15: { dia: "Lunes 14 de Septiembre", hora: "15:00" },
-      16: { dia: "Lunes 21 de Septiembre", hora: "11:00" },
-      17: { dia: "Martes 15 de Septiembre", hora: "15:00" },
-      18: { dia: "Jueves 17 de Septiembre", hora: "09:00" },
-      19: { dia: "Sábado 19 de Septiembre", hora: "09:00" },
-      20: { dia: "Lunes 14 de Septiembre", hora: "13:00" },
-      21: { dia: "Lunes 21 de Septiembre", hora: "09:00" },
-      22: { dia: "Martes 15 de Septiembre", hora: "13:00" }
-    }
-  },
   "2610A": {
     label: "Etapa 2610A",
     periodo: "Periodo de aplicación: 28 de septiembre al 03 de octubre",
@@ -141,6 +82,93 @@ const calendarioData = {
       20: { dia: "Miércoles 14 de Octubre", hora: "09:00" },
       21: { dia: "Jueves 15 de Octubre", hora: "13:00" },
       22: { dia: "Viernes 16 de Octubre", hora: "09:00" }
+    }
+  },
+  "2611A": {
+    label: "Etapa 2611A",
+    periodo: "Periodo de aplicación: 03 al 09 de noviembre",
+    fechaFin: "2026-11-09",
+    horarios: {
+      1: { dia: "Martes 3 de Noviembre", hora: "09:00" },
+      2: { dia: "Miércoles 4 de Noviembre", hora: "13:00" },
+      3: { dia: "Jueves 5 de Noviembre", hora: "09:00" },
+      4: { dia: "Viernes 6 de Noviembre", hora: "13:00" },
+      5: { dia: "Sábado 7 de Noviembre", hora: "09:00" },
+      6: { dia: "Lunes 9 de Noviembre", hora: "13:00" },
+      7: { dia: "Martes 3 de Noviembre", hora: "15:00" },
+      8: { dia: "Miércoles 4 de Noviembre", hora: "11:00" },
+      9: { dia: "Jueves 5 de Noviembre", hora: "15:00" },
+      10: { dia: "Viernes 6 de Noviembre", hora: "11:00" },
+      11: { dia: "Lunes 9 de Noviembre", hora: "15:00" },
+      12: { dia: "Lunes 9 de Noviembre", hora: "11:00" },
+      13: { dia: "Martes 3 de Noviembre", hora: "13:00" },
+      14: { dia: "Miércoles 4 de Noviembre", hora: "09:00" },
+      15: { dia: "Jueves 5 de Noviembre", hora: "13:00" },
+      16: { dia: "Viernes 6 de Noviembre", hora: "09:00" },
+      17: { dia: "Lunes 9 de Noviembre", hora: "09:00" },
+      18: { dia: "Martes 3 de Noviembre", hora: "11:00" },
+      19: { dia: "Miércoles 4 de Noviembre", hora: "15:00" },
+      20: { dia: "Jueves 5 de Noviembre", hora: "11:00" },
+      21: { dia: "Viernes 6 de Noviembre", hora: "15:00" },
+      22: { dia: "Sábado 7 de Noviembre", hora: "11:00" }
+    }
+  },
+  "2611B": {
+    label: "Etapa 2611B",
+    periodo: "Periodo de aplicación: 17 al 23 de noviembre",
+    fechaFin: "2026-11-23",
+    horarios: {
+      1: { dia: "Miércoles 18 de Noviembre", hora: "11:00" },
+      2: { dia: "Jueves 19 de Noviembre", hora: "15:00" },
+      3: { dia: "Viernes 20 de Noviembre", hora: "11:00" },
+      4: { dia: "Lunes 23 de Noviembre", hora: "15:00" },
+      5: { dia: "Lunes 23 de Noviembre", hora: "11:00" },
+      6: { dia: "Martes 17 de Noviembre", hora: "15:00" },
+      7: { dia: "Miércoles 18 de Noviembre", hora: "09:00" },
+      8: { dia: "Jueves 19 de Noviembre", hora: "13:00" },
+      9: { dia: "Viernes 20 de Noviembre", hora: "09:00" },
+      10: { dia: "Lunes 23 de Noviembre", hora: "09:00" },
+      11: { dia: "Martes 17 de Noviembre", hora: "09:00" },
+      12: { dia: "Martes 17 de Noviembre", hora: "13:00" },
+      13: { dia: "Miércoles 18 de Noviembre", hora: "15:00" },
+      14: { dia: "Jueves 19 de Noviembre", hora: "11:00" },
+      15: { dia: "Viernes 20 de Noviembre", hora: "15:00" },
+      16: { dia: "Sábado 21 de Noviembre", hora: "11:00" },
+      17: { dia: "Martes 17 de Noviembre", hora: "11:00" },
+      18: { dia: "Miércoles 18 de Noviembre", hora: "13:00" },
+      19: { dia: "Jueves 19 de Noviembre", hora: "09:00" },
+      20: { dia: "Viernes 20 de Noviembre", hora: "13:00" },
+      21: { dia: "Sábado 21 de Noviembre", hora: "09:00" },
+      22: { dia: "Lunes 23 de Noviembre", hora: "13:00" }
+    }
+  },
+  "2612A": {
+    label: "Etapa 2612A",
+    periodo: "Periodo de aplicación: 30 de noviembre al 07 de diciembre",
+    fechaFin: "2026-12-07",
+    horarios: {
+      1: { dia: "Jueves 3 de Diciembre", hora: "13:00" },
+      2: { dia: "Viernes 4 de Diciembre", hora: "09:00" },
+      3: { dia: "Lunes 30 de Noviembre", hora: "09:00" },
+      4: { dia: "Martes 1 de Diciembre", hora: "09:00" },
+      5: { dia: "Martes 1 de Diciembre", hora: "13:00" },
+      6: { dia: "Miércoles 2 de Diciembre", hora: "09:00" },
+      7: { dia: "Jueves 3 de Diciembre", hora: "11:00" },
+      8: { dia: "Viernes 4 de Diciembre", hora: "15:00" },
+      9: { dia: "Lunes 7 de Diciembre", hora: "11:00" },
+      10: { dia: "Martes 1 de Diciembre", hora: "11:00" },
+      11: { dia: "Miércoles 2 de Diciembre", hora: "11:00" },
+      12: { dia: "Miércoles 2 de Diciembre", hora: "15:00" },
+      13: { dia: "Jueves 3 de Diciembre", hora: "09:00" },
+      14: { dia: "Viernes 4 de Diciembre", hora: "13:00" },
+      15: { dia: "Lunes 7 de Diciembre", hora: "09:00" },
+      16: { dia: "Lunes 30 de Noviembre", hora: "13:00" },
+      17: { dia: "Miércoles 2 de Diciembre", hora: "13:00" },
+      18: { dia: "Jueves 3 de Diciembre", hora: "15:00" },
+      19: { dia: "Viernes 4 de Diciembre", hora: "11:00" },
+      20: { dia: "Lunes 30 de Noviembre", hora: "15:00" },
+      21: { dia: "Lunes 30 de Noviembre", hora: "11:00" },
+      22: { dia: "Martes 1 de Diciembre", hora: "15:00" }
     }
   }
 };
