@@ -10,6 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -20,7 +21,7 @@
               dark: '#2D3134',
               canvas: '#FDFBF7'
             }
-          } 
+          }
         }
       }
     }
@@ -75,7 +76,7 @@
       box-shadow: none !important;
     }
 
-    /* Racha 4 a 5 aciertos */
+    /* Racha 7+ aciertos */
     .fire-streak-2 {
       background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #ef4444) !important;
       background-size: 220% 220% !important;
@@ -83,7 +84,7 @@
       box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
     }
 
-    /* Racha 6+ aciertos */
+    /* Racha 10+ aciertos */
     .fire-streak-3 {
       background: linear-gradient(90deg, #dc2626, #ea580c, #facc15, #f43f5e) !important;
       background-size: 250% 250% !important;
@@ -131,6 +132,19 @@
       animation: splashScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    /* Ajustes modo oscuro para KaTeX y componentes dinámicos */
+    .dark .katex {
+      color: #f3f4f6;
+    }
+    .dark .choice-btn,
+    .dark .drag-item,
+    .dark .multi-select-item,
+    .dark .classification-item {
+      background-color: #222527 !important;
+      color: #f3f4f6 !important;
+      border-color: #373b3e !important;
+    }
+
     /* =========================================
        RACHA: PULSO SUTIL Y DINÁMICO
        ========================================= */
@@ -148,12 +162,8 @@
     }
 
     @keyframes streakPulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(calc(1 + (0.025 * var(--streak-intensity, 1))));
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(calc(1 + (0.025 * var(--streak-intensity, 1)))); }
     }
 
     /* =========================================
@@ -198,10 +208,10 @@
   </style>
 </head>
 
-<body class="bg-auge-canvas text-auge-dark min-h-screen flex flex-col font-sans selection:bg-orange-100">
-
+<body class="bg-auge-canvas dark:bg-[#181a1b] text-auge-dark dark:text-stone-100 min-h-screen flex flex-col font-sans selection:bg-orange-100 dark:selection:bg-orange-950 transition-colors duration-200">
+  
   <!-- Splash Screen Intro -->
-  <div id="splashScreen" class="fixed inset-0 z-50 bg-[#FDFBF7] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-out select-none">
+  <div id="splashScreen" class="fixed inset-0 z-50 bg-[#FDFBF7] dark:bg-[#181a1b] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-out select-none">
     <div class="flex flex-col items-center text-center animate-splash max-w-md w-full">
       <div class="relative mb-6">
         <div class="absolute -inset-4 bg-gradient-to-tr from-orange-500/25 via-amber-400/30 to-orange-300/20 rounded-[2.5rem] blur-2xl animate-pulse"></div>
@@ -213,7 +223,7 @@
       <span class="text-xs sm:text-sm uppercase tracking-[0.28em] font-extrabold text-auge-orange mb-1.5 drop-shadow-xs" id="splashBadge">
         Cargando
       </span>
-      <h1 class="text-3xl sm:text-4xl font-black text-auge-dark tracking-tight leading-tight max-w-xs sm:max-w-sm" id="splashTitle">
+      <h1 class="text-3xl sm:text-4xl font-black text-auge-dark dark:text-stone-100 tracking-tight leading-tight max-w-xs sm:max-w-sm" id="splashTitle">
         Aureka
       </h1>
       <div class="mt-5 flex items-center gap-2 text-stone-400 text-xs font-semibold">
@@ -224,30 +234,40 @@
   </div>
 
   <!-- Header Fijo -->
-  <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 backdrop-blur-md border-b border-stone-200">
+  <header class="sticky top-0 z-30 w-full bg-auge-canvas/90 dark:bg-[#181a1b]/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 transition-colors">
     <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
-      <!-- Logo y Badge de Módulo (en una sola línea) -->
+      <!-- Logo y Badge de Módulo -->
       <div class="flex items-center gap-2 min-w-0">
         <img src="augeicon.png" alt="Logo Auge" class="w-7 h-7 sm:w-8 sm:h-8 object-contain rounded-lg shadow-sm shrink-0" />
-        <span class="font-black text-lg sm:text-xl tracking-tight text-auge-dark shrink-0">aureka</span>
-        <span id="phaseBadge" class="text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200 whitespace-nowrap shrink-0 truncate">
+        <span class="font-black text-lg sm:text-xl tracking-tight text-auge-dark dark:text-stone-100 shrink-0">aureka</span>
+        <span id="phaseBadge" class="text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-auge-gray dark:text-stone-300 border border-stone-200 dark:border-stone-700 whitespace-nowrap shrink-0 truncate">
           Cargando...
         </span>
       </div>
 
       <!-- Botones de Navegación -->
       <div class="flex items-center gap-1.5 shrink-0">
+        <!-- Switch Modo Oscuro -->
+        <button 
+          type="button" 
+          onclick="toggleDarkMode()" 
+          id="themeToggleBtn"
+          title="Cambiar modo oscuro/claro" 
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 dark:bg-stone-800 dark:text-stone-300 dark:hover:text-auge-orange border border-stone-200 dark:border-stone-700 px-2 py-1 rounded-full transition-colors flex items-center justify-center">
+          <span id="themeIcon">🌙</span>
+        </button>
+
         <a 
           href="index.html" 
           title="Ir al menú de módulos" 
-          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 dark:bg-stone-800 dark:text-stone-300 dark:hover:text-auge-orange border border-stone-200 dark:border-stone-700 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
           <span>🏠</span> <span class="hidden xs:inline">Inicio</span>
         </a>
         <button 
           type="button" 
           onclick="confirmResetQuiz()" 
           title="Reiniciar sesión" 
-          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 hover:bg-orange-50 border border-stone-200 hover:border-orange-200 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
+          class="text-xs font-medium text-stone-500 hover:text-auge-orange bg-stone-100 dark:bg-stone-800 dark:text-stone-300 dark:hover:text-auge-orange border border-stone-200 dark:border-stone-700 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 whitespace-nowrap">
           <span>🔄</span> <span class="hidden xs:inline">Reiniciar</span>
         </button>
       </div>
@@ -258,7 +278,7 @@
   <main id="app" class="flex-1 w-full max-w-xl mx-auto px-4 py-6 flex flex-col justify-center"></main>
 
   <!-- Footer con Contador de visitas -->
-  <footer class="w-full max-w-xl mx-auto px-4 py-4 border-t border-stone-200 text-xs text-stone-500 flex items-center justify-between">
+  <footer class="w-full max-w-xl mx-auto px-4 py-4 border-t border-stone-200 dark:border-stone-800 text-xs text-stone-500 dark:text-stone-400 flex items-center justify-between">
     <span>Autogestión y Educación Comunitaria</span>
     <div id="visitContainer" class="flex items-center"></div>
   </footer>
@@ -336,13 +356,38 @@
       };
     }
 
+    function initTheme() {
+      const isDark = localStorage.getItem('aureka_theme') === 'dark' || 
+        (!('aureka_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      updateThemeIcon();
+    }
+
+    function toggleDarkMode() {
+      const isCurrentlyDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('aureka_theme', isCurrentlyDark ? 'dark' : 'light');
+      updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+      const iconEl = document.getElementById('themeIcon');
+      if (!iconEl) return;
+      const isDark = document.documentElement.classList.contains('dark');
+      iconEl.textContent = isDark ? '☀️️' : '🌙';
+    }
+
     function initQuiz() {
       failedTopics.clear();
       if (typeof questionBank === "undefined" || !Array.isArray(questionBank)) {
         app.innerHTML = `
-          <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
-            <h2 class="text-lg font-bold text-red-600">Error de datos</h2>
-            <p class="text-sm text-stone-500 mt-2">No se encontró un banco de preguntas válido.</p>
+          <div class="p-6 bg-white dark:bg-[#222527] border border-red-200 dark:border-red-900/50 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-red-600 dark:text-red-400">Error de datos</h2>
+            <p class="text-sm text-stone-500 dark:text-stone-400 mt-2">No se encontró un banco de preguntas válido.</p>
           </div>
         `;
         return;
@@ -366,7 +411,7 @@
         : `Módulo ${currentModuleId}`;
 
       phaseBadge.textContent = defaultBadge;
-      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 text-auge-gray border border-stone-200 whitespace-nowrap shrink-0 truncate";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-auge-gray dark:text-stone-300 border border-stone-200 dark:border-stone-700 whitespace-nowrap shrink-0 truncate";
       
       renderQuestion();
     }
@@ -485,18 +530,18 @@
         if (isCurrentActive) {
           bubbleStyle = isSelected 
             ? "border-auge-orange bg-auge-orange text-white shadow-xs" 
-            : "border-stone-300 bg-white text-stone-700 hover:border-auge-orange";
+            : "border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:border-auge-orange";
           badgeIcon = "✏️";
         } else if (record) {
           if (record.isCorrect) {
             bubbleStyle = isSelected
               ? "border-emerald-600 bg-emerald-600 text-white"
-              : "border-emerald-200 bg-emerald-50 text-emerald-700";
+              : "border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400";
             badgeIcon = "✓";
           } else {
             bubbleStyle = isSelected
               ? "border-red-500 bg-red-500 text-white"
-              : "border-red-200 bg-red-50 text-red-600";
+              : "border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400";
             badgeIcon = "✕";
           }
         }
@@ -514,37 +559,37 @@
       }
 
       let contentHTML = `
-        <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+        <div class="animate-pop bg-white dark:bg-[#222527] border border-stone-200 dark:border-stone-800 rounded-2xl p-6 shadow-sm flex flex-col gap-5 transition-colors">
           <!-- Barra progreso limpia y racha -->
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between text-xs font-bold">
               <span class="text-auge-orange uppercase tracking-wider">
                 ${isReviewing ? `Revisando Pregunta ${targetIndex + 1}` : `Pregunta ${currentIndex + 1} de ${currentQueue.length}`}
               </span>
-              <span id="streak-counter" class="streak-badge ${currentStreak > 1 && !isReviewing ? 'active-streak' : 'hidden'} text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200" style="--streak-intensity: ${intensity}">
+              <span id="streak-counter" class="streak-badge ${currentStreak > 1 && !isReviewing ? 'active-streak' : 'hidden'} text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800" style="--streak-intensity: ${intensity}">
                 🔥 ${currentStreak}
               </span>
             </div>
-            <div class="progress-bar-container w-full bg-stone-100 h-2.5 rounded-full">
+            <div class="progress-bar-container w-full bg-stone-100 dark:bg-stone-800 h-2.5 rounded-full">
               <div class="bg-auge-orange h-full rounded-full progress-bar-fill ${fireClass}" style="width: ${progressPercent}%"></div>
             </div>
           </div>
 
           <!-- Carrusel Horizontal Tipo Highlights -->
-          <div id="storyCarousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100 scroll-smooth">
+          <div id="storyCarousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 border-b border-stone-100 dark:border-stone-800 scroll-smooth">
             ${storyItemsHTML}
           </div>
 
           <!-- Prompt -->
           <div>
-            <h2 class="text-xl font-bold text-auge-dark mt-0.5 leading-snug">${q.prompt}</h2>
+            <h2 class="text-xl font-bold text-auge-dark dark:text-stone-100 mt-0.5 leading-snug">${q.prompt}</h2>
           </div>
 
           ${q.images || q.image ? `
-          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl overflow-hidden p-2">
+          <div class="w-full bg-stone-50 dark:bg-stone-900/50 border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden p-2">
             <div class="${(Array.isArray(q.images) && q.images.length > 1) ? 'grid grid-cols-1 sm:grid-cols-2 gap-2' : 'flex justify-center'}">
               ${(Array.isArray(q.images) ? q.images : (Array.isArray(q.image) ? q.image : [q.image])).map(src => `
-                <img src="${src}" alt="Material gráfico de apoyo" class="w-full max-h-64 object-contain rounded-lg bg-white border border-stone-100" loading="lazy" />
+                <img src="${src}" alt="Material gráfico de apoyo" class="w-full max-h-64 object-contain rounded-lg bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700" loading="lazy" />
               `).join('')}
             </div>
           </div>
@@ -553,10 +598,10 @@
           <!-- Botón y Caja de Pista (Solo en pregunta activa) -->
           ${(!isReviewing && q.hint) ? `
             <div class="flex flex-col items-start gap-2">
-              <button type="button" onclick="toggleHint()" id="hintBtn" class="text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
+              <button type="button" onclick="toggleHint()" id="hintBtn" class="text-xs font-semibold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
                 <span>💡</span> ¿Necesitas una pista?
               </button>
-              <div id="hintBox" class="hidden w-full p-3 bg-amber-50/80 border border-amber-200/90 rounded-xl text-xs text-amber-900 leading-relaxed animate-pop">
+              <div id="hintBox" class="hidden w-full p-3 bg-amber-50/80 dark:bg-amber-950/60 border border-amber-200/90 dark:border-amber-800/80 rounded-xl text-xs text-amber-900 dark:text-amber-200 leading-relaxed animate-pop">
                 <span class="font-bold">Pista:</span> ${q.hint}
               </div>
             </div>
@@ -566,14 +611,14 @@
           <div id="optionsContainer" class="flex flex-col gap-3 pt-1 ${isReviewing ? 'pointer-events-none' : ''}"></div>
 
           <!-- Feedback & Botón siguiente -->
-          <div id="feedbackContainer" class="${isReviewing ? 'flex' : 'hidden'} flex-col gap-3 border-t border-stone-100 pt-4 mt-2">
+          <div id="feedbackContainer" class="${isReviewing ? 'flex' : 'hidden'} flex-col gap-3 border-t border-stone-100 dark:border-stone-800 pt-4 mt-2">
             <div id="feedbackBox" class="p-3.5 rounded-xl text-sm leading-relaxed"></div>
             ${!isReviewing ? `
               <button id="nextBtn" class="w-full py-3 rounded-xl bg-auge-orange hover:bg-auge-darkOrange font-bold text-white transition-colors shadow-sm">
                 Continuar
               </button>
             ` : `
-              <button type="button" onclick="resumeCurrentQuestion()" class="w-full py-2.5 rounded-xl bg-auge-dark hover:bg-stone-800 font-bold text-xs sm:text-sm text-white transition-colors shadow-xs">
+              <button type="button" onclick="resumeCurrentQuestion()" class="w-full py-2.5 rounded-xl bg-auge-dark dark:bg-stone-700 hover:bg-stone-800 dark:hover:bg-stone-600 font-bold text-xs sm:text-sm text-white transition-colors shadow-xs">
                 Volver a pregunta ${currentIndex + 1} →
               </button>
             `}
@@ -590,10 +635,10 @@
         optionsContainer.innerHTML = hist.renderedHTML;
         const box = document.getElementById("feedbackBox");
         if (hist.isCorrect) {
-          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
-          box.innerHTML = `<span class="font-bold text-emerald-700">Respuesta correcta</span><br>${hist.explanation}`;
+          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800";
+          box.innerHTML = `<span class="font-bold text-emerald-700 dark:text-emerald-400">Respuesta correcta</span><br>${hist.explanation}`;
         } else {
-          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
+          box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 dark:bg-stone-800 text-auge-dark dark:text-stone-200 border border-stone-200 dark:border-stone-700";
           box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${hist.explanation}`;
         }
         renderMath();
@@ -614,7 +659,7 @@
         options.forEach(opt => {
           const tone = getRandomTonedStyle();
           const btn = document.createElement("button");
-          btn.className = "choice-btn w-full p-3.5 text-left bg-white border-2 rounded-xl font-medium transition-all text-sm sm:text-base active:scale-[0.99]";
+          btn.className = "choice-btn w-full p-3.5 text-left bg-white dark:bg-stone-800 border-2 rounded-xl font-medium transition-all text-sm sm:text-base active:scale-[0.99] text-stone-800 dark:text-stone-200";
           btn.style.cssText = tone.style;
           btn.innerHTML = opt;
           btn.onclick = () => handleChoiceAnswer(btn, opt, q);
@@ -629,7 +674,7 @@
         scrambled.forEach(item => {
           const tone = getRandomTonedStyle();
           const el = document.createElement("div");
-          el.className = "drag-item p-3.5 bg-white border rounded-xl font-medium text-sm flex items-center justify-between";
+          el.className = "drag-item p-3.5 bg-white dark:bg-stone-800 border rounded-xl font-medium text-sm flex items-center justify-between text-stone-800 dark:text-stone-200";
           el.style.cssText = tone.style;
           el.innerHTML = `<span>${item}</span><span class="text-stone-400">☰</span>`;
           el.dataset.value = item;
@@ -639,7 +684,7 @@
         optionsContainer.appendChild(list);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark dark:bg-stone-700 text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 dark:hover:bg-stone-600 transition-colors";
         checkBtn.textContent = "Comprobar orden";
         checkBtn.onclick = () => handleDragAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
@@ -656,22 +701,22 @@
         allOptions.forEach(opt => {
           const tone = getRandomTonedStyle();
           const item = document.createElement("div");
-          item.className = "multi-select-item p-3.5 bg-white border-2 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between cursor-pointer transition-all active:scale-[0.99]";
+          item.className = "multi-select-item p-3.5 bg-white dark:bg-stone-800 border-2 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] text-stone-800 dark:text-stone-200";
           item.style.cssText = tone.style;
           item.dataset.value = opt;
           item.dataset.selected = "false";
-          item.innerHTML = `<span class="flex-1 pr-3 text-left leading-snug">${opt}</span><span class="checkbox-indicator w-5 h-5 rounded-md border-2 border-stone-300 flex items-center justify-center text-xs text-white font-bold transition-all shrink-0 aspect-square"></span>`;
+          item.innerHTML = `<span class="flex-1 pr-3 text-left leading-snug">${opt}</span><span class="checkbox-indicator w-5 h-5 rounded-md border-2 border-stone-300 dark:border-stone-600 flex items-center justify-center text-xs text-white font-bold transition-all shrink-0 aspect-square"></span>`;
 
           item.onclick = () => {
             const isSel = item.dataset.selected === "true";
             item.dataset.selected = isSel ? "false" : "true";
             const indicator = item.querySelector(".checkbox-indicator");
             if (!isSel) {
-              item.classList.add("!border-auge-orange", "!bg-orange-50/50");
+              item.classList.add("!border-auge-orange", "!bg-orange-50/50", "dark:!bg-orange-950/30");
               indicator.classList.add("bg-auge-orange", "border-auge-orange");
               indicator.textContent = "✓";
             } else {
-              item.classList.remove("!border-auge-orange", "!bg-orange-50/50");
+              item.classList.remove("!border-auge-orange", "!bg-orange-50/50", "dark:!bg-orange-950/30");
               indicator.classList.remove("bg-auge-orange", "border-auge-orange");
               indicator.textContent = "";
             }
@@ -683,7 +728,7 @@
         optionsContainer.appendChild(list);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark dark:bg-stone-700 text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 dark:hover:bg-stone-600 transition-colors";
         checkBtn.textContent = "Confirmar respuestas";
         checkBtn.onclick = () => handleMultiSelectAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
@@ -695,16 +740,16 @@
         shuffledItems.forEach(item => {
           const tone = getRandomTonedStyle();
           const row = document.createElement("div");
-          row.className = "classification-item p-3.5 bg-white border-2 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+          row.className = "classification-item p-3.5 bg-white dark:bg-stone-800 border-2 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3";
           row.style.cssText = tone.style;
           row.dataset.correct = item.correct;
           row.dataset.selected = "";
 
           row.innerHTML = `
-            <span class="text-sm font-medium leading-snug w-full text-stone-800">${item.text}</span>
-            <div class="grid grid-cols-2 gap-1.5 w-full pt-1.5 border-t border-stone-100/80">
+            <span class="text-sm font-medium leading-snug w-full text-stone-800 dark:text-stone-200">${item.text}</span>
+            <div class="grid grid-cols-2 gap-1.5 w-full pt-1.5 border-t border-stone-100/80 dark:border-stone-700/80">
               ${q.categories.map(cat => `
-                <button type="button" class="tag-btn text-center text-xs font-semibold px-2 py-1.5 rounded-lg border border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-600 transition-all active:scale-95">
+                <button type="button" class="tag-btn text-center text-xs font-semibold px-2 py-1.5 rounded-lg border border-stone-300 dark:border-stone-600 bg-stone-50 dark:bg-stone-700 hover:bg-stone-100 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300 transition-all active:scale-95">
                   ${cat}
                 </button>
               `).join('')}
@@ -715,7 +760,7 @@
           tagButtons.forEach(btn => {
             btn.onclick = () => {
               tagButtons.forEach(b => {
-                b.className = "tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-stone-300 bg-stone-50 text-stone-600 hover:bg-stone-100 transition-all";
+                b.className = "tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-600 bg-stone-50 dark:bg-stone-700 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-600 transition-all";
               });
               btn.className = "tag-btn text-xs font-semibold px-3 py-1.5 rounded-lg border-2 border-auge-orange bg-auge-orange text-white shadow-sm transition-all";
               row.dataset.selected = btn.textContent.trim();
@@ -728,7 +773,7 @@
         optionsContainer.appendChild(list);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.className = "w-full py-3 mt-2 rounded-xl bg-auge-dark dark:bg-stone-700 text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 dark:hover:bg-stone-600 transition-colors";
         checkBtn.textContent = "Comprobar clasificación";
         checkBtn.onclick = () => handleClassificationAnswer(list, q, checkBtn);
         optionsContainer.appendChild(checkBtn);
@@ -745,30 +790,30 @@
         let activeSlotIndex = 0;
 
         const sentenceBox = document.createElement("div");
-        sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 border border-stone-200 rounded-xl leading-loose text-base font-medium text-auge-dark select-none";
+        sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 rounded-xl leading-loose text-base font-medium text-auge-dark dark:text-stone-200 select-none";
 
         let formattedSentence = q.sentence;
         q.correctOrder.forEach((_, idx) => {
           formattedSentence = formattedSentence.replace(
             `{${idx}}`,
-            `<span class="blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed border-stone-300 bg-white/80 rounded-lg text-sm font-semibold align-middle cursor-pointer transition-all hover:border-auge-orange" data-slot="${idx}"></span>`
+            `<span class="blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-800/80 rounded-lg text-sm font-semibold align-middle cursor-pointer transition-all hover:border-auge-orange" data-slot="${idx}"></span>`
           );
         });
         sentenceBox.innerHTML = formattedSentence;
         blanksContainer.appendChild(sentenceBox);
 
         const poolTitle = document.createElement("div");
-        poolTitle.className = "text-xs font-bold uppercase tracking-wider text-stone-400 -mb-2";
+        poolTitle.className = "text-xs font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 -mb-2";
         poolTitle.textContent = "Opciones:";
         blanksContainer.appendChild(poolTitle);
 
         const poolContainer = document.createElement("div");
         poolContainer.id = "tokensPool";
-        poolContainer.className = "flex flex-wrap gap-2 p-3 bg-white border border-stone-200 rounded-xl min-h-[56px] items-center";
+        poolContainer.className = "flex flex-wrap gap-2 p-3 bg-white dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 rounded-xl min-h-[56px] items-center";
         blanksContainer.appendChild(poolContainer);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors";
+        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark dark:bg-stone-700 text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 dark:hover:bg-stone-600 transition-colors";
         checkBtn.textContent = "Comprobar respuesta";
         checkBtn.onclick = () => handleFillBlanksAnswer(slotsState, q, checkBtn, blanksContainer);
         blanksContainer.appendChild(checkBtn);
@@ -782,7 +827,7 @@
             if (!isUsed) {
               const chip = document.createElement("button");
               chip.type = "button";
-              chip.className = "token-chip px-3.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-stone-200 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark shadow-sm active:scale-95 transition-all";
+              chip.className = "token-chip px-3.5 py-1.5 bg-white dark:bg-stone-800 hover:bg-orange-50 dark:hover:bg-orange-950/40 border-2 border-stone-200 dark:border-stone-700 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark dark:text-stone-200 shadow-sm active:scale-95 transition-all";
               chip.innerHTML = token.text;
               chip.onclick = () => placeOrReplaceToken(token);
               poolContainer.appendChild(chip);
@@ -799,7 +844,7 @@
             const isActive = slotIdx === activeSlotIndex;
 
             if (currentToken) {
-              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-auge-orange bg-orange-50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
+              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-auge-orange bg-orange-50 dark:bg-orange-950/50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
               el.innerHTML = `<span>${currentToken.text}</span>`;
               el.onclick = () => {
                 slotsState[slotIdx] = null;
@@ -810,10 +855,10 @@
             } else {
               el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed rounded-lg text-sm align-middle cursor-pointer transition-all ${
                 isActive 
-                  ? 'border-auge-orange bg-orange-50/40 ring-2 ring-orange-200 shadow-sm' 
-                  : 'border-stone-300 bg-white/90 hover:border-stone-400'
+                  ? 'border-auge-orange bg-orange-50/40 dark:bg-orange-950/30 ring-2 ring-orange-200 dark:ring-orange-900 shadow-sm' 
+                  : 'border-stone-300 dark:border-stone-700 bg-white/90 dark:bg-stone-800/80 hover:border-stone-400'
               }`;
-              el.innerHTML = `<span class="w-6 h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200'}"></span>`;
+              el.innerHTML = `<span class="w-6 h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200 dark:bg-stone-700'}"></span>`;
               el.onclick = () => {
                 activeSlotIndex = slotIdx;
                 updateSlotsDisplay();
@@ -858,16 +903,16 @@
         let selectedLeftId = null;
 
         const pairColors = [
-          { bg: "bg-amber-50", border: "border-amber-400", text: "text-amber-900", badge: "bg-amber-500", hex: "#f59e0b" },
-          { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-900", badge: "bg-blue-500", hex: "#3b82f6" },
-          { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-900", badge: "bg-purple-500", hex: "#a855f7" },
-          { bg: "rose-50", border: "border-rose-400", text: "text-rose-900", badge: "bg-rose-500", hex: "#f43f5e" },
-          { bg: "bg-teal-50", border: "border-teal-400", text: "text-teal-900", badge: "bg-teal-500", hex: "#14b8a6" },
-          { bg: "bg-indigo-50", border: "border-indigo-400", text: "text-indigo-900", badge: "bg-indigo-500", hex: "#6366f1" }
+          { bg: "bg-amber-50 dark:bg-amber-950/30", border: "border-amber-400 dark:border-amber-600", text: "text-amber-900 dark:text-amber-200", badge: "bg-amber-500", hex: "#f59e0b" },
+          { bg: "bg-blue-50 dark:bg-blue-950/30", border: "border-blue-400 dark:border-blue-600", text: "text-blue-900 dark:text-blue-200", badge: "bg-blue-500", hex: "#3b82f6" },
+          { bg: "bg-purple-50 dark:bg-purple-950/30", border: "border-purple-400 dark:border-purple-600", text: "text-purple-900 dark:text-purple-200", badge: "bg-purple-500", hex: "#a855f7" },
+          { bg: "bg-rose-50 dark:bg-rose-950/30", border: "border-rose-400 dark:border-rose-600", text: "text-rose-900 dark:text-rose-200", badge: "bg-rose-500", hex: "#f43f5e" },
+          { bg: "bg-teal-50 dark:bg-teal-950/30", border: "border-teal-400 dark:border-teal-600", text: "text-teal-900 dark:text-teal-200", badge: "bg-teal-500", hex: "#14b8a6" },
+          { bg: "bg-indigo-50 dark:bg-indigo-950/30", border: "border-indigo-400 dark:border-indigo-600", text: "text-indigo-900 dark:text-indigo-200", badge: "bg-indigo-500", hex: "#6366f1" }
         ];
 
         const headerGrid = document.createElement("div");
-        headerGrid.className = "grid grid-cols-2 gap-2 text-xs font-bold uppercase tracking-wider text-stone-400 px-1 select-none";
+        headerGrid.className = "grid grid-cols-2 gap-2 text-xs font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-1 select-none";
         headerGrid.innerHTML = `
           <div class="flex items-center gap-1"><span></span> Columna A</div>
           <div class="flex items-center gap-1 justify-end sm:justify-start"><span></span> Columna B</div>
@@ -892,7 +937,7 @@
         grid.appendChild(svgCanvas);
 
         const checkBtn = document.createElement("button");
-        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 transition-colors mt-2";
+        checkBtn.className = "w-full py-3 rounded-xl bg-auge-dark dark:bg-stone-700 text-white font-bold text-sm tracking-wide shadow-sm hover:bg-stone-800 dark:hover:bg-stone-600 transition-colors mt-2";
         checkBtn.textContent = "Comprobar relaciones";
         checkBtn.onclick = () => handleMatchColumnsAnswer(connections, leftItems, rightItems, q, checkBtn, matchContainer);
         matchContainer.appendChild(checkBtn);
@@ -940,23 +985,23 @@
             let styleClasses = "relative p-3 rounded-xl border-2 text-left text-xs sm:text-sm font-semibold transition-all shadow-sm flex flex-col justify-between min-h-[76px] ";
 
             if (isSelected) {
-              styleClasses += "border-auge-orange bg-orange-50 ring-2 ring-orange-200 text-auge-dark scale-[1.02]";
+              styleClasses += "border-auge-orange bg-orange-50 dark:bg-orange-950/40 ring-2 ring-orange-200 dark:ring-orange-900 text-auge-dark dark:text-stone-100 scale-[1.02]";
             } else if (hasConnection) {
               const colorTheme = pairColors[idx % pairColors.length];
               styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
             } else {
-              styleClasses += "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
+              styleClasses += "border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-stone-300 dark:hover:border-stone-600 text-auge-dark dark:text-stone-200";
             }
 
             card.className = styleClasses;
             card.innerHTML = `
               <span class="leading-snug pr-3">${item.text}</span>
-              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 text-[11px]">
+              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 dark:border-white/5 text-[11px]">
                 ${hasConnection 
-                  ? `<span class="font-bold text-emerald-700 flex items-center gap-1">✓ Enlazado</span>` 
-                  : (isSelected ? `<span class="text-auge-orange animate-pulse font-bold">Unir con 👉</span>` : `<span class="text-stone-400 font-normal">Toca para unir</span>`)
+                  ? `<span class="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">✓ Enlazado</span>` 
+                  : (isSelected ? `<span class="text-auge-orange animate-pulse font-bold">Unir con 👉</span>` : `<span class="text-stone-400 dark:text-stone-500 font-normal">Toca para unir</span>`)
                 }
-                <span id="pin_${item.id}" class="w-3 h-3 rounded-full ${hasConnection ? pairColors[idx % pairColors.length].badge : (isSelected ? 'bg-auge-orange animate-ping' : 'bg-stone-300')} shrink-0 transition-transform"></span>
+                <span id="pin_${item.id}" class="w-3 h-3 rounded-full ${hasConnection ? pairColors[idx % pairColors.length].badge : (isSelected ? 'bg-auge-orange animate-ping' : 'bg-stone-300 dark:bg-stone-600')} shrink-0 transition-transform"></span>
               </div>
             `;
 
@@ -989,18 +1034,18 @@
               styleClasses += `${colorTheme.border} ${colorTheme.bg} ${colorTheme.text}`;
             } else {
               styleClasses += selectedLeftId 
-                ? "border-orange-200 bg-orange-50/40 hover:border-auge-orange text-stone-700 cursor-pointer" 
-                : "border-stone-200 bg-white hover:border-stone-300 text-auge-dark";
+                ? "border-orange-200 dark:border-orange-800 bg-orange-50/40 dark:bg-orange-950/20 hover:border-auge-orange text-stone-700 dark:text-stone-300 cursor-pointer" 
+                : "border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-stone-300 dark:hover:border-stone-600 text-auge-dark dark:text-stone-200";
             }
 
             card.className = styleClasses;
             card.innerHTML = `
               <span class="leading-snug pl-1">${item.text}</span>
-              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 text-[11px]">
-                <span id="pin_${item.id}" class="w-3 h-3 rounded-full ${connectedLeftId ? pairColors[leftIdx % pairColors.length].badge : 'bg-stone-300'} shrink-0 transition-transform"></span>
+              <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-black/5 dark:border-white/5 text-[11px]">
+                <span id="pin_${item.id}" class="w-3 h-3 rounded-full ${connectedLeftId ? pairColors[leftIdx % pairColors.length].badge : 'bg-stone-300 dark:bg-stone-600'} shrink-0 transition-transform"></span>
                 ${connectedLeftId 
-                  ? `<span class="font-bold text-emerald-700">✓ Conectado</span>` 
-                  : `<span class="text-stone-400 font-normal">Une aquí</span>`
+                  ? `<span class="font-bold text-emerald-700 dark:text-emerald-400">✓ Conectado</span>` 
+                  : `<span class="text-stone-400 dark:text-stone-500 font-normal">Une aquí</span>`
                 }
               </div>
             `;
@@ -1058,7 +1103,7 @@
       handleStreakUpdate(isCorrect);
 
       if (isCorrect) {
-        selectedBtn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900", "animate-success");
+        selectedBtn.classList.add("!bg-emerald-50", "dark:!bg-emerald-950/40", "!border-emerald-500", "!text-emerald-900", "dark:!text-emerald-200", "animate-success");
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(16, 185, 129, 0.3)";
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
@@ -1066,11 +1111,11 @@
           secondRoundResolved++;
         }
       } else {
-        selectedBtn.classList.add("!bg-red-50", "!border-red-400", "!text-red-900", "animate-shake");  
+        selectedBtn.classList.add("!bg-red-50", "dark:!bg-red-950/40", "!border-red-400", "!text-red-900", "dark:!text-red-200", "animate-shake");  
         selectedBtn.style.boxShadow = "0 4px 14px -2px rgba(239, 68, 68, 0.3)";
         buttons.forEach(btn => {
           if (btn.textContent.trim() === question.correct.replace(/<[^>]*>?/gm, '').trim()) {
-            btn.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+            btn.classList.add("!bg-emerald-50", "dark:!bg-emerald-950/40", "!border-emerald-500", "!text-emerald-900", "dark:!text-emerald-200");
           }
         });
         queueForReinforcement(question);
@@ -1091,7 +1136,7 @@
       if (isCorrect) {
         listElement.classList.add("pointer-events-none");
         Array.from(listElement.children).forEach(c => {
-          c.classList.add("!bg-emerald-50", "!border-emerald-500", "!text-emerald-900");
+          c.classList.add("!bg-emerald-50", "dark:!bg-emerald-950/40", "!border-emerald-500", "!text-emerald-900", "dark:!text-emerald-200");
         });
         if (!isReinforcementPhase) {
           firstRoundCorrect++;
@@ -1101,7 +1146,7 @@
       } else {
         listElement.classList.add("pointer-events-none");
         Array.from(listElement.children).forEach(c => {
-          c.classList.add("!bg-red-50", "!border-red-300", "!text-red-900");
+          c.classList.add("!bg-red-50", "dark:!bg-red-950/40", "!border-red-300", "dark:!border-red-800", "!text-red-900", "dark:!text-red-200");
         });
         queueForReinforcement(question);
       }
@@ -1139,20 +1184,20 @@
         el.style.boxShadow = "none";
 
         if (isAnswer && wasSelected) {
-          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-emerald-500 bg-emerald-50 text-emerald-950";
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white font-black shrink-0 aspect-square";
           indicator.textContent = "✓";
         } else if (!isAnswer && wasSelected) {
-          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-400";
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-red-500 bg-red-50 dark:bg-red-950/40 text-red-950 dark:text-red-200 line-through decoration-red-400";
           indicator.className = "checkbox-indicator w-6 h-6 rounded-md bg-red-600 border border-red-600 flex items-center justify-center text-xs text-white font-black shrink-0 aspect-square";
           indicator.textContent = "✕";
         } else if (isAnswer && !wasSelected) {
-          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-dashed border-emerald-500 bg-emerald-50/50 text-emerald-900";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white flex items-center justify-center text-xs text-emerald-600 font-bold shrink-0 aspect-square";
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border-2 border-dashed border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-300";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border-2 border-dashed border-emerald-500 bg-white dark:bg-stone-800 flex items-center justify-center text-xs text-emerald-600 dark:text-emerald-400 font-bold shrink-0 aspect-square";
           indicator.textContent = "✓";
         } else {
-          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border border-stone-200 bg-stone-50 text-stone-400 opacity-60";
-          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 bg-stone-100 flex items-center justify-center shrink-0 aspect-square";
+          el.className = "multi-select-item p-3.5 rounded-xl font-medium text-sm sm:text-base flex items-center justify-between border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-400 dark:text-stone-500 opacity-60";
+          indicator.className = "checkbox-indicator w-6 h-6 rounded-md border border-stone-300 dark:border-stone-600 bg-stone-100 dark:bg-stone-700 flex items-center justify-center shrink-0 aspect-square";
           indicator.textContent = "";
         }
       });
@@ -1192,9 +1237,9 @@
 
         if (!isMatch) {
           isAllCorrect = false;
-          r.classList.add("!bg-red-50/60", "!border-red-400");
+          r.classList.add("!bg-red-50/60", "dark:!bg-red-950/30", "!border-red-400", "dark:!border-red-800");
         } else {
-          r.classList.add("!bg-emerald-50/60", "!border-emerald-500");
+          r.classList.add("!bg-emerald-50/60", "dark:!bg-emerald-950/30", "!border-emerald-500", "dark:!border-emerald-700");
         }
 
         buttons.forEach(btn => {
@@ -1241,11 +1286,11 @@
       slotElements.forEach((el, idx) => {
         const isSlotCorrect = slotsState[idx].text === question.correctOrder[idx];
         if (isSlotCorrect) {
-          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-black rounded-lg text-sm shadow-sm align-middle";
-          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-emerald-600">✓</span>`;
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-950 dark:text-emerald-200 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-emerald-600 dark:text-emerald-400">✓</span>`;
         } else {
-          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-red-500 bg-red-50 text-red-950 line-through decoration-red-500 font-black rounded-lg text-sm shadow-sm align-middle";
-          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-red-600">✕</span>`;
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-red-500 bg-red-50 dark:bg-red-950/50 text-red-950 dark:text-red-200 line-through decoration-red-500 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-red-600 dark:text-red-400">✕</span>`;
         }
       });
 
@@ -1263,6 +1308,7 @@
       showFeedback(isAllCorrect, question.explanation);
     }
 
+    /* REVISIÓN DETALLADA DE COLUMNAS (DIDÁCTICA TIPO MULTI-SELECT) */
     function handleMatchColumnsAnswer(connections, leftItems, rightItems, question, triggerBtn, containerElement) {
       const totalPairs = leftItems.length;
       if (Object.keys(connections).length < totalPairs) {
@@ -1278,23 +1324,51 @@
 
       leftItems.forEach(lItem => {
         const connectedRightId = connections[lItem.id];
-        const rItem = rightItems.find(r => r.id === connectedRightId);
-        const isPairMatch = lItem.pairIndex === rItem.pairIndex;
+        const chosenRight = rightItems.find(r => r.id === connectedRightId);
+        const correctPair = question.pairs[lItem.pairIndex];
+        const isPairMatch = lItem.pairIndex === chosenRight.pairIndex;
 
         const leftEl = containerElement.querySelector(`[data-id="${lItem.id}"]`);
-        const rightEl = containerElement.querySelector(`[data-id="${rItem.id}"]`);
+        const rightEl = containerElement.querySelector(`[data-id="${chosenRight.id}"]`);
 
         if (isPairMatch) {
-          leftEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 text-sm font-semibold flex items-center justify-between";
-          rightEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 text-sm font-semibold flex items-center justify-between";
-          leftEl.innerHTML = `<span class="flex-1">${lItem.text}</span><span class="text-emerald-600 font-black">✓</span>`;
-          rightEl.innerHTML = `<span class="flex-1">${rItem.text}</span><span class="text-emerald-600 font-black">✓</span>`;
+          leftEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-semibold flex flex-col justify-between min-h-[76px]";
+          leftEl.innerHTML = `
+            <span class="leading-snug">${lItem.text}</span>
+            <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-emerald-200 dark:border-emerald-800 text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+              <span>✓ Enlace correcto</span>
+              <span class="text-xs">✓</span>
+            </div>
+          `;
+
+          rightEl.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-semibold flex flex-col justify-between min-h-[76px]";
+          rightEl.innerHTML = `
+            <span class="leading-snug">${chosenRight.text}</span>
+            <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-emerald-200 dark:border-emerald-800 text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+              <span class="text-xs">✓</span>
+              <span>Enlace correcto</span>
+            </div>
+          `;
         } else {
           isAllCorrect = false;
-          leftEl.className = "p-3 rounded-xl border-2 border-red-500 bg-red-50 text-red-950 text-sm font-semibold flex items-center justify-between";
-          rightEl.className = "p-3 rounded-xl border-2 border-red-500 bg-red-50 text-red-950 text-sm font-semibold flex items-center justify-between";
-          leftEl.innerHTML = `<span class="flex-1">${lItem.text}</span><span class="text-red-600 font-black">✕</span>`;
-          rightEl.innerHTML = `<span class="flex-1">${rItem.text}</span><span class="text-red-600 font-black">✕</span>`;
+
+          leftEl.className = "p-3 rounded-xl border-2 border-red-500 bg-red-50 dark:bg-red-950/40 text-red-950 dark:text-red-200 text-xs sm:text-sm font-semibold flex flex-col justify-between min-h-[76px]";
+          leftEl.innerHTML = `
+            <span class="leading-snug">${lItem.text}</span>
+            <div class="flex flex-col gap-0.5 mt-2 pt-1 border-t border-red-200 dark:border-red-900/60 text-[11px]">
+              <span class="text-red-600 dark:text-red-400 line-through">Tu selección: ${chosenRight.text} ✕</span>
+              <span class="text-emerald-700 dark:text-emerald-400 font-bold">Correcto: ${correctPair.right} ✓</span>
+            </div>
+          `;
+
+          rightEl.className = "p-3 rounded-xl border-2 border-red-400/80 bg-stone-50 dark:bg-stone-800/80 text-stone-600 dark:text-stone-300 text-xs sm:text-sm font-medium flex flex-col justify-between min-h-[76px]";
+          rightEl.innerHTML = `
+            <span class="leading-snug">${chosenRight.text}</span>
+            <div class="flex items-center justify-between w-full mt-2 pt-1 border-t border-stone-200 dark:border-stone-700 text-[11px] text-red-600 dark:text-red-400 font-bold">
+              <span>✕ Enlace erróneo</span>
+              <span class="text-emerald-700 dark:text-emerald-400 font-bold">Iba con: ${question.pairs[chosenRight.pairIndex].left}</span>
+            </div>
+          `;
         }
       });
 
@@ -1324,7 +1398,7 @@
     }
     
     function inspectQuestion(index) {
-      if (index > answeredHistory.length) return; // No permite ver preguntas no contestadas
+      if (index > answeredHistory.length) return;
       if (index === answeredHistory.length) {
         resumeCurrentQuestion();
         return;
@@ -1348,10 +1422,10 @@
 
       if (isCorrect) {
         const randomPhrase = successPhrases[Math.floor(Math.random() * successPhrases.length)];
-        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 text-emerald-950 border border-emerald-200";
-        box.innerHTML = `<span class="font-bold text-emerald-700">${randomPhrase}</span><br>${explanation}`;
+        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800";
+        box.innerHTML = `<span class="font-bold text-emerald-700 dark:text-emerald-400">${randomPhrase}</span><br>${explanation}`;
       } else {
-        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 text-auge-dark border border-stone-200";
+        box.className = "p-3.5 rounded-xl text-sm leading-relaxed bg-stone-100 dark:bg-stone-800 text-auge-dark dark:text-stone-200 border border-stone-200 dark:border-stone-700";
         box.innerHTML = `<span class="font-bold text-auge-orange">Concepto a reforzar:</span><br>${explanation}`;
       }
 
@@ -1376,14 +1450,14 @@
         isReinforcementPhase = true;
 
         phaseBadge.textContent = "Segunda vuelta";
-        phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200 whitespace-nowrap shrink-0 truncate";
+        phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 dark:bg-orange-950/50 text-auge-orange border border-orange-200 dark:border-orange-800 whitespace-nowrap shrink-0 truncate";
 
         app.innerHTML = `
-          <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4">
+          <div class="animate-pop bg-white dark:bg-[#222527] border border-stone-200 dark:border-stone-800 rounded-2xl p-6 text-center shadow-sm flex flex-col items-center gap-4 transition-colors">
             <img src="augeicon.png" alt="Logo Auge" class="w-12 h-12 object-contain" />
             <div>
-              <h2 class="text-xl font-bold text-auge-dark">Segunda vuelta</h2>
-              <p class="text-sm text-auge-gray mt-1 max-w-sm mx-auto">
+              <h2 class="text-xl font-bold text-auge-dark dark:text-stone-100">Segunda vuelta</h2>
+              <p class="text-sm text-auge-gray dark:text-stone-400 mt-1 max-w-sm mx-auto">
                 Vamos a darle una pasada a las preguntas que tuvieron detalle para consolidarlas antes de cerrar el módulo.
               </p>
             </div>
@@ -1399,7 +1473,7 @@
 
     function renderFinalScore() {
       phaseBadge.textContent = "Completado";
-      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 whitespace-nowrap shrink-0 truncate";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 whitespace-nowrap shrink-0 truncate";
 
       if (window.confetti) {
         confetti({
@@ -1420,22 +1494,22 @@
       let videoSectionHTML = "";
       if (recommendedVideos.length > 0) {
         videoSectionHTML = `
-          <div class="w-full bg-orange-50/70 border border-orange-200 rounded-xl p-4 text-left flex flex-col gap-2.5 mt-1">
+          <div class="w-full bg-orange-50/70 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/80 rounded-xl p-4 text-left flex flex-col gap-2.5 mt-1">
             <div class="flex items-center gap-2">
               <span class="text-base">📺</span>
               <span class="text-xs font-bold uppercase tracking-wider text-auge-orange">Videos recomendados para ti</span>
             </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
+            <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
               Estas son algunas áreas que podemos mejorar de acuerdo a tus respuestas. Revisa estas explicaciones en video antes de tu examen:
             </p>
             <div class="flex flex-col gap-2 mt-1">
               ${recommendedVideos.map(vid => `
-                <a href="${vid.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 p-3 bg-white hover:bg-orange-50/80 border border-orange-200/80 rounded-xl text-xs font-semibold text-auge-dark hover:text-auge-orange transition-all group shadow-xs">
+                <a href="${vid.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 p-3 bg-white dark:bg-stone-800 hover:bg-orange-50/80 dark:hover:bg-orange-950/50 border border-orange-200/80 dark:border-orange-800/80 rounded-xl text-xs font-semibold text-auge-dark dark:text-stone-200 hover:text-auge-orange transition-all group shadow-xs">
                   <div class="flex items-start gap-2.5 min-w-0 flex-1">
                     <span class="text-red-600 text-sm leading-none mt-0.5 group-hover:scale-110 transition-transform shrink-0">▶</span>
                     <span class="leading-snug break-words">${vid.title}</span>
                   </div>
-                  <span class="text-[11px] font-bold text-auge-orange bg-orange-50 border border-orange-200 group-hover:bg-auge-orange group-hover:text-white px-2.5 py-1 rounded-lg transition-colors shrink-0 whitespace-nowrap">
+                  <span class="text-[11px] font-bold text-auge-orange bg-orange-50 dark:bg-orange-950/50 border border-orange-200 dark:border-orange-800 group-hover:bg-auge-orange group-hover:text-white px-2.5 py-1 rounded-lg transition-colors shrink-0 whitespace-nowrap">
                     Ver ↗
                   </span>
                 </a>
@@ -1446,29 +1520,29 @@
       }
 
       app.innerHTML = `
-        <div class="animate-pop bg-white border border-stone-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm flex flex-col items-center gap-5">
-          <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl font-bold">
+        <div class="animate-pop bg-white dark:bg-[#222527] border border-stone-200 dark:border-stone-800 rounded-2xl p-6 sm:p-8 text-center shadow-sm flex flex-col items-center gap-5 transition-colors">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-2xl font-bold">
             ✓
           </div>
           
           <div>
-            <h2 class="text-2xl font-bold text-auge-dark">¡Módulo concluido!</h2>
-            <p class="text-sm text-auge-gray mt-1">Has respondido el 100% de los reactivos de esta sesión.</p>
+            <h2 class="text-2xl font-bold text-auge-dark dark:text-stone-100">¡Módulo concluido!</h2>
+            <p class="text-sm text-auge-gray dark:text-stone-400 mt-1">Has respondido el 100% de los reactivos de esta sesión.</p>
           </div>
 
           <div class="w-full grid grid-cols-2 gap-3 mt-1">
-            <div class="bg-stone-50 border border-stone-200 rounded-xl p-3.5 flex flex-col items-center justify-center">
-              <span class="text-xs text-stone-500 font-medium">Aciertos (1ª ronda)</span>
-              <span class="text-2xl font-black text-auge-dark mt-0.5">${firstRoundCorrect} / ${totalQuestions}</span>
+            <div class="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-xl p-3.5 flex flex-col items-center justify-center">
+              <span class="text-xs text-stone-500 dark:text-stone-400 font-medium">Aciertos (1ª ronda)</span>
+              <span class="text-2xl font-black text-auge-dark dark:text-stone-100 mt-0.5">${firstRoundCorrect} / ${totalQuestions}</span>
             </div>
 
-            <div class="bg-orange-50/60 border border-orange-200/80 rounded-xl p-3.5 flex flex-col items-center justify-center">
+            <div class="bg-orange-50/60 dark:bg-orange-950/30 border border-orange-200/80 dark:border-orange-800/80 rounded-xl p-3.5 flex flex-col items-center justify-center">
               <span class="text-xs text-auge-orange font-bold uppercase tracking-wider">Calificación Inicial</span>
-              <span class="text-2xl font-black text-auge-dark mt-0.5">${prelimGrade} <span class="text-sm font-semibold text-stone-500">/ 10</span></span>
+              <span class="text-2xl font-black text-auge-dark dark:text-stone-100 mt-0.5">${prelimGrade} <span class="text-sm font-semibold text-stone-500 dark:text-stone-400">/ 10</span></span>
             </div>
           </div>
 
-          <div class="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-600 text-left leading-relaxed flex flex-col gap-1">
+          <div class="w-full bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-xl p-3 text-xs text-stone-600 dark:text-stone-300 text-left leading-relaxed flex flex-col gap-1">
             <div>• <b>Aciertos rescatados en segunda vuelta:</b> ${secondRoundResolved} de ${totalQuestions - firstRoundCorrect} pendientes.</div>
             <div>• <b>Mejor racha consecutiva:</b> 🔥 ${maxStreak} reactivos seguidos.</div>
             <div>• <b>Aciertos totales logrados:</b> ${firstRoundCorrect + secondRoundResolved} / ${totalQuestions}.</div>
@@ -1477,7 +1551,7 @@
           <!-- Sección dinámica de videos recomendados -->
           ${videoSectionHTML}
 
-          <button onclick="initQuiz();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark hover:bg-stone-800 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
+          <button onclick="initQuiz();" class="w-full py-3 mt-2 rounded-xl bg-auge-dark dark:bg-stone-700 hover:bg-stone-800 dark:hover:bg-stone-600 text-white font-bold text-sm tracking-wide transition-colors shadow-sm">
             ¡Reintentar!
           </button>
         </div>
@@ -1498,10 +1572,10 @@
 
       if (!moduleConfig) {
         app.innerHTML = `
-          <div class="p-6 bg-white border border-red-200 rounded-2xl text-center">
-            <h2 class="text-lg font-bold text-red-600">Módulo no encontrado</h2>
-            <p class="text-sm text-stone-500 mt-2">El módulo solicitado (${currentModuleId}) no existe.</p>
-            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-auge-orange bg-orange-50 border border-orange-200 px-4 py-2 rounded-xl hover:bg-orange-100 transition-colors">
+          <div class="p-6 bg-white dark:bg-[#222527] border border-red-200 dark:border-red-900/50 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-red-600 dark:text-red-400">Módulo no encontrado</h2>
+            <p class="text-sm text-stone-500 dark:text-stone-400 mt-2">El módulo solicitado (${currentModuleId}) no existe.</p>
+            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-auge-orange bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800 px-4 py-2 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-900/60 transition-colors">
               Volver al catálogo
             </a>
           </div>
@@ -1528,10 +1602,10 @@
       };
       script.onerror = () => {
         app.innerHTML = `
-          <div class="p-6 bg-white border border-amber-200 rounded-2xl text-center">
-            <h2 class="text-lg font-bold text-amber-700">Contenido en preparación</h2>
-            <p class="text-sm text-stone-500 mt-2">El archivo <b>${moduleConfig.file}</b> aún no ha sido cargado en el servidor.</p>
-            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-stone-600 bg-stone-100 border border-stone-200 px-4 py-2 rounded-xl hover:bg-stone-200 transition-colors">
+          <div class="p-6 bg-white dark:bg-[#222527] border border-amber-200 dark:border-amber-900/50 rounded-2xl text-center">
+            <h2 class="text-lg font-bold text-amber-700 dark:text-amber-400">Contenido en preparación</h2>
+            <p class="text-sm text-stone-500 dark:text-stone-400 mt-2">El archivo <b>${moduleConfig.file}</b> aún no ha sido cargado en el servidor.</p>
+            <a href="index.html" class="inline-block mt-4 text-xs font-bold text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 px-4 py-2 rounded-xl hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors">
               Volver al catálogo
             </a>
           </div>
@@ -1567,17 +1641,16 @@
 
     const STATS_API_URL = "https://script.google.com/macros/s/AKfycbw_iDH64fj6C_5AMLkvv7wuF1x9WqwEXBf0TvSPIr7-KLzw-UeaTyOUrpP6tKPeauGdbQ/exec";
 
-function trackModuleVisit(modId) {
-  // Para no contar tus propias pruebas en localhost o modo desarrollo (opcional)
-  if (location.hostname === "localhost" || location.protocol === "file:") return;
+    function trackModuleVisit(modId) {
+      if (location.hostname === "localhost" || location.protocol === "file:") return;
 
-  fetch(STATS_API_URL, {
-    method: "POST",
-    mode: "no-cors", // Envío rápido y silencioso sin problemas de CORS
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ moduleId: String(modId) })
-  }).catch(() => {});
-}
+      fetch(STATS_API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ moduleId: String(modId) })
+      }).catch(() => {});
+    }
 
     function getStreakFireClass(streak) {
       if (streak >= 10) return "fire-streak-3";
@@ -1587,11 +1660,9 @@ function trackModuleVisit(modId) {
     }
 
     function recordAnswerHistory(q, isCorrect) {
-      // Clona el contenedor de opciones tal cual quedó pintado y bloquea interacciones
       const containerClone = document.getElementById("optionsContainer").cloneNode(true);
       containerClone.classList.add("pointer-events-none");
       
-      // Ocultar botones de comprobar si quedaron visibles en el clon
       containerClone.querySelectorAll("button").forEach(b => {
         if (b.textContent.includes("Comprobar") || b.textContent.includes("Confirmar")) {
           b.classList.add("hidden");
@@ -1612,7 +1683,7 @@ function trackModuleVisit(modId) {
 
       document.title = "Aureka | Catálogo de Módulos";
       phaseBadge.textContent = "22 Módulos";
-      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 text-auge-orange border border-orange-200 whitespace-nowrap shrink-0 truncate";
+      phaseBadge.className = "text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-orange-100 dark:bg-orange-950/50 text-auge-orange border border-orange-200 dark:border-orange-800 whitespace-nowrap shrink-0 truncate";
 
       trackModuleVisit("hub");
 
@@ -1620,8 +1691,8 @@ function trackModuleVisit(modId) {
         <div class="animate-pop flex flex-col gap-6 py-2">
           <div class="text-center space-y-1.5">
             <span class="text-xs font-bold uppercase tracking-widest text-auge-orange">Prepa Auge</span>
-            <h1 class="text-2xl sm:text-3xl font-black text-auge-dark tracking-tight">Elige tu módulo</h1>
-            <p class="text-xs sm:text-sm text-stone-500 max-w-sm mx-auto leading-relaxed">
+            <h1 class="text-2xl sm:text-3xl font-black text-auge-dark dark:text-stone-100 tracking-tight">Elige tu módulo</h1>
+            <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
               Practica con reactivos interactivos para estudiar antes del examen.
             </p>
           </div>
@@ -1631,19 +1702,19 @@ function trackModuleVisit(modId) {
 
       Object.entries(MODULES_MAP).forEach(([id, mod]) => {
         hubHTML += `
-          <a href="?m=${id}" class="group bg-white hover:bg-orange-50/50 border border-stone-200 hover:border-auge-orange p-3.5 rounded-2xl shadow-2xs hover:shadow-sm transition-all flex items-center gap-3 text-left">
-            <div class="w-10 h-10 rounded-xl bg-stone-100 group-hover:bg-auge-orange group-hover:text-white text-auge-dark font-black text-sm flex items-center justify-center shrink-0 transition-colors">
+          <a href="?m=${id}" class="group bg-white dark:bg-stone-800/80 hover:bg-orange-50/50 dark:hover:bg-orange-950/30 border border-stone-200 dark:border-stone-700 hover:border-auge-orange dark:hover:border-auge-orange p-3.5 rounded-2xl shadow-2xs hover:shadow-sm transition-all flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-stone-100 dark:bg-stone-700 group-hover:bg-auge-orange group-hover:text-white text-auge-dark dark:text-stone-200 font-black text-sm flex items-center justify-center shrink-0 transition-colors">
               ${id}
             </div>
             <div class="flex-1 min-w-0">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400 group-hover:text-amber-700 transition-colors block">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors block">
                 Módulo ${id}
               </span>
-              <span class="text-xs sm:text-sm font-bold text-auge-dark group-hover:text-auge-orange leading-snug line-clamp-2 transition-colors">
+              <span class="text-xs sm:text-sm font-bold text-auge-dark dark:text-stone-200 group-hover:text-auge-orange leading-snug line-clamp-2 transition-colors">
                 ${mod.name}
               </span>
             </div>
-            <span class="text-stone-300 group-hover:text-auge-orange text-sm font-bold px-1 transition-transform group-hover:translate-x-0.5 shrink-0">
+            <span class="text-stone-300 dark:text-stone-600 group-hover:text-auge-orange text-sm font-bold px-1 transition-transform group-hover:translate-x-0.5 shrink-0">
               →
             </span>
           </a>
@@ -1658,7 +1729,10 @@ function trackModuleVisit(modId) {
       app.innerHTML = hubHTML;
     }
 
-    window.addEventListener("DOMContentLoaded", loadCurrentModule);
+    window.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      loadCurrentModule();
+    });
   </script>
 </body>
 </html>
