@@ -66,7 +66,6 @@
       font-style: normal;
     }
 
-    /* Font fallbacks */
     .latex-font {
       font-family: 'KaTeX_Main', 'Times New Roman', serif;
     }
@@ -254,6 +253,17 @@
                   <span id="previewKatexLabelY" class="text-indigo-300 font-medium"></span>
                 </div>
               </div>
+            </div>
+
+            <!-- Control interactivo para el tamaño de las etiquetas de números -->
+            <div class="pt-2 border-t border-slate-700/60">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-slate-300 font-medium flex items-center gap-1">
+                  <i data-lucide="scaling" class="w-3.5 h-3.5 text-indigo-400"></i> Tamaño números de los ejes:
+                </span>
+                <span id="labelFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
+              </div>
+              <input type="range" id="inputLabelFontSize" min="8" max="26" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <p class="text-[10px] text-slate-500">Ejemplos para los ejes: <code>x</code>, <code>t (s)</code>, <code>\theta</code>, <code>y</code>, <code>f(x)</code>, <code>V(t)</code></p>
@@ -461,6 +471,7 @@
         axisColor: '#000000',
         gridColor: '#cbd5e1',
         labelColor: '#000000',
+        labelFontSize: 13,        // Tamaño editable de los números de los ejes
         axisWidth: 3.5,
         showArrows: false,        // En la imagen original no lleva flechas
         showTickNumbers: true,
@@ -511,7 +522,7 @@
     function drawPlot() {
       const padding = 58;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula } = state.style;
 
       // 1. Limpiar fondo
       ctx.fillStyle = background;
@@ -602,7 +613,7 @@
 
       // 5. Números en Tipografía KaTeX / Computer Modern con Signo Menos Real (\u2212)
       if (showTickNumbers) {
-        ctx.font = 'normal 13px "KaTeX_Main", "Times New Roman", serif';
+        ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
         ctx.fillStyle = labelColor;
 
         // Eje X
@@ -1008,6 +1019,10 @@
       document.getElementById('inputSubdivisionsX').value = state.bounds.subdivisionsX;
       document.getElementById('inputSubdivisionsY').value = state.bounds.subdivisionsY;
 
+      // Tamaño de números de ejes
+      document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
+      document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
+
       // Estilos
       document.getElementById('colorBackground').value = state.style.background;
       document.getElementById('labelBgColor').innerText = state.style.background.toUpperCase();
@@ -1039,6 +1054,13 @@
     document.getElementById('inputAxisLabelY').addEventListener('input', (e) => {
       state.labels.y = e.target.value;
       updateAxisLabelsPreview();
+      drawPlot();
+    });
+
+    // Listener para el tamaño de las etiquetas numéricas
+    document.getElementById('inputLabelFontSize').addEventListener('input', (e) => {
+      state.style.labelFontSize = parseInt(e.target.value, 10) || 13;
+      document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
       drawPlot();
     });
 
@@ -1187,6 +1209,7 @@
       state.style.axisColor = '#000000';
       state.style.gridColor = '#cbd5e1';
       state.style.labelColor = '#000000';
+      state.style.labelFontSize = 13;
       state.style.axisWidth = 3.5;
       state.style.showArrows = false;
       state.style.showAxisLabels = true;
@@ -1239,14 +1262,14 @@
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
   <defs>
     <style>
       @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
-      .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: 13px; fill: ${labelColor}; }
+      .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
       .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
     </style>
   </defs>
@@ -1389,7 +1412,6 @@
       syncInputs();
       renderFunctionInputs();
 
-      // Esperar a que las fuentes KaTeX estén completamente cargadas en el documento
       if (document.fonts && document.fonts.ready) {
         await document.fonts.ready;
       }
