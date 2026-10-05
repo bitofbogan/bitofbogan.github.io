@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlotLab - Generador Estético de Planos Cartesianos</title>
+  <title>PlotLab Pro - Generador de Planos Cartesianos LaTeX HD</title>
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Math.js for robust expression evaluation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
-
-  <!-- KaTeX for gorgeous LaTeX rendering -->
+  <!-- KaTeX CSS for preview and font declarations -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Math.js expression parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -30,16 +30,9 @@
         extend: {
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
-            mono: ['Fira Code', 'monospace']
-          },
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca'
-            }
+            mono: ['Fira Code', 'monospace'],
+            katexMain: ['KaTeX_Main', 'serif'],
+            katexMath: ['KaTeX_Math', 'serif']
           }
         }
       }
@@ -47,71 +40,105 @@
   </script>
 
   <style>
-    /* Custom scrollbar for sidebar */
+    /* Inyección explícita de tipografías KaTeX para que el Canvas 2D las reconozca nativamente */
+    @font-face {
+      font-family: 'KaTeX_Main';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'KaTeX_Main';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Bold.woff2') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'KaTeX_Math';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Math-Italic.woff2') format('woff2');
+      font-weight: normal;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'KaTeX_Size1';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Size1-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* Font fallbacks */
+    .latex-font {
+      font-family: 'KaTeX_Main', 'Times New Roman', serif;
+    }
+    .latex-math-font {
+      font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif;
+      font-style: italic;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.04);
+      background: rgba(15, 23, 42, 0.6);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(100, 116, 139, 0.3);
+      background: rgba(100, 116, 139, 0.4);
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(100, 116, 139, 0.5);
+      background: rgba(100, 116, 139, 0.6);
     }
-    .grid-pattern-bg {
-      background-image: radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+    .dot-grid-bg {
+      background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1.2px, transparent 1.2px);
       background-size: 20px 20px;
     }
-    .tab-active {
-      border-bottom: 2px solid #4f46e5;
-      color: #4f46e5;
+    .tab-btn-active {
+      border-bottom: 2px solid #6366f1;
+      color: #818cf8;
       font-weight: 600;
     }
   </style>
 </head>
 
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 lg:px-6 py-3 flex items-center justify-between">
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-md">
     <div class="flex items-center space-x-3">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-400 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-        <i data-lucide="line-chart" class="w-5 h-5 text-white"></i>
+        <i data-lucide="function-square" class="w-5 h-5 text-white"></i>
       </div>
       <div>
-        <h1 class="font-bold text-lg leading-tight tracking-tight text-white flex items-center gap-2">
-          PlotLab <span class="text-xs bg-indigo-500/20 text-indigo-400 font-mono font-medium px-2 py-0.5 rounded-full border border-indigo-500/30">Vector Studio</span>
+        <h1 class="font-bold text-base sm:text-lg leading-tight tracking-tight text-white flex items-center gap-2">
+          PlotLab <span class="text-[11px] bg-indigo-500/20 text-indigo-300 font-mono px-2 py-0.5 rounded-full border border-indigo-500/30 font-semibold tracking-normal">LaTeX Canvas Engine</span>
         </h1>
-        <p class="text-xs text-slate-400">Generador de planos cartesianos estéticos y exportación HD</p>
+        <p class="text-xs text-slate-400 hidden sm:block">Planos cartesianos vectoriales de alta precisión tipográfica</p>
       </div>
     </div>
 
     <!-- Quick action buttons -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <button id="btnResetDefault" title="Cargar función del ejemplo original" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 border border-slate-700/60">
-        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-        <span class="hidden sm:inline">Ejemplo Parábola</span>
+    <div class="flex items-center gap-2">
+      <button id="btnOriginalPreset" title="Cargar parábola original (exacta a la imagen)" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-slate-700 hover:text-white border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <span>Ejemplo Imagen</span>
       </button>
 
       <button id="btnCopyClipboard" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
-        <i data-lucide="clipboard-copy" class="w-3.5 h-3.5"></i>
-        <span>Copiar</span>
+        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Copiar Imagen</span>
       </button>
 
-      <!-- Botón Exportar Dropdown -->
+      <!-- Dropdown Exportar -->
       <div class="relative group">
-        <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
+        <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
           <span>Descargar</span>
           <i data-lucide="chevron-down" class="w-3 h-3"></i>
         </button>
 
-        <div class="absolute right-0 mt-1 w-48 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden group-hover:block hover:block">
+        <div class="absolute right-0 mt-1 w-52 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden group-hover:block hover:block">
           <button id="btnDownloadSvg" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
-            <i data-lucide="code" class="w-4 h-4 text-emerald-400"></i>
+            <i data-lucide="file-code" class="w-4 h-4 text-emerald-400"></i>
             <span>Vectorial SVG (Nitidez ∞)</span>
           </button>
           <div class="h-px bg-slate-700/60 my-1"></div>
@@ -121,7 +148,7 @@
           </button>
           <button id="btnDownloadPng2x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
             <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
-            <span>PNG HD 2x (Retina)</span>
+            <span>PNG HD (2x Retina)</span>
           </button>
           <button id="btnDownloadPng4x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
             <i data-lucide="printer" class="w-4 h-4 text-amber-400"></i>
@@ -133,62 +160,119 @@
   </header>
 
   <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-    <!-- Panel Lateral: Controles y Configuración -->
-    <aside class="w-full lg:w-[460px] xl:w-[490px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-57px)] overflow-y-auto">
+    <!-- Panel Lateral de Configuración -->
+    <aside class="w-full lg:w-[470px] xl:w-[500px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-53px)] overflow-y-auto">
       
-      <!-- Tabs superiores del panel -->
-      <div class="flex border-b border-slate-800 px-4 text-xs font-medium sticky top-0 bg-slate-900/95 backdrop-blur z-10">
-        <button id="tabBtnFunctions" class="py-3 px-4 tab-active transition flex items-center gap-2">
-          <i data-lucide="variable" class="w-4 h-4"></i> Funciones
+      <!-- Navegación de Pestañas -->
+      <div class="flex border-b border-slate-800 px-3 text-xs sticky top-0 bg-slate-900/95 backdrop-blur z-20">
+        <button id="tabBtnFunctions" class="py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5">
+          <i data-lucide="activity" class="w-3.5 h-3.5"></i> Funciones
         </button>
-        <button id="tabBtnAxes" class="py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
-          <i data-lucide="move" class="w-4 h-4"></i> Ejes & Escala
+        <button id="tabBtnAxes" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="move" class="w-3.5 h-3.5"></i> Ejes & Rótulos
         </button>
-        <button id="tabBtnStyle" class="py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
-          <i data-lucide="palette" class="w-4 h-4"></i> Estilo Gráfico
+        <button id="tabBtnStyle" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="palette" class="w-3.5 h-3.5"></i> Estilo Visual
         </button>
       </div>
 
       <div class="p-4 sm:p-5 space-y-6 flex-1">
         
-        <!-- SECCIÓN 1: FUNCIONES -->
+        <!-- PESTAÑA 1: FUNCIONES MATEMÁTICAS -->
         <div id="tabSectionFunctions" class="space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Ecuaciones Matemáticas</span>
-            <button id="btnAddFunction" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 transition">
-              <i data-lucide="plus-circle" class="w-4 h-4"></i> Añadir Función
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Funciones Matemáticas</span>
+            <button id="btnAddFunction" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 bg-indigo-500/10 px-2.5 py-1 rounded-lg border border-indigo-500/20 transition">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Añadir Función
             </button>
           </div>
 
-          <!-- Contenedor dinámico de funciones -->
-          <div id="functionsContainer" class="space-y-3">
-            <!-- Rellenado por JS -->
+          <!-- Opciones de visibilidad de la fórmula en la imagen -->
+          <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-indigo-400"></i>
+                <span>Fórmula en la imagen final</span>
+              </div>
+              <p class="text-[11px] text-slate-400">Desactiva para dejar la gráfica completamente limpia</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="checkOverlayFormula" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+            </label>
           </div>
 
-          <!-- Guía rápida de escritura -->
-          <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <p class="font-medium text-slate-300 flex items-center gap-1.5">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-400"></i> Ejemplos admitidos:
+          <!-- Lista de Funciones -->
+          <div id="functionsContainer" class="space-y-3.5">
+            <!-- Inyectado por JS -->
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-800/30 border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
+            <p class="font-medium text-slate-300 flex items-center gap-1">
+              <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis admitida:
             </p>
-            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x) * 40</code>, <code>log(x)</code>, <code>2^x</code>, <code>sqrt(x)</code></p>
+            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x)*40</code>, <code>exp(x)</code>, <code>log(x)</code>, <code>sqrt(x)</code>, <code>x^3 - 4*x</code></p>
           </div>
         </div>
 
-        <!-- SECCIÓN 2: EJES Y RANGOS -->
+        <!-- PESTAÑA 2: EJES, RÓTULOS Y RANGOS -->
         <div id="tabSectionAxes" class="space-y-5 hidden">
-          <div>
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Dominio (Eje X)</h3>
-            <div class="grid grid-cols-3 gap-3">
+          
+          <!-- Rótulos editables de los ejes en LaTeX -->
+          <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                <i data-lucide="type" class="w-3.5 h-3.5"></i> Rótulos de los Ejes (LaTeX)
+              </h3>
+              <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                <input type="checkbox" id="checkAxisLabels" checked class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
+                <span>Mostrar</span>
+              </label>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">X Mínimo</label>
+                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Horizontal (X)</label>
+                <div class="relative">
+                  <input type="text" id="inputAxisLabelX" value="X" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+                <!-- Vista previa LaTeX de X -->
+                <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+                  <span>LaTeX:</span>
+                  <span id="previewKatexLabelX" class="text-indigo-300 font-medium"></span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Vertical (Y)</label>
+                <div class="relative">
+                  <input type="text" id="inputAxisLabelY" value="Y" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+                <!-- Vista previa LaTeX de Y -->
+                <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+                  <span>LaTeX:</span>
+                  <span id="previewKatexLabelY" class="text-indigo-300 font-medium"></span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[10px] text-slate-500">Ejemplos para los ejes: <code>x</code>, <code>t (s)</code>, <code>\theta</code>, <code>y</code>, <code>f(x)</code>, <code>V(t)</code></p>
+          </div>
+
+          <!-- Rango X -->
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Dominio (Eje X)</h3>
+            <div class="grid grid-cols-3 gap-2.5">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Mínimo</label>
                 <input type="number" id="inputXMin" value="-6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">X Máximo</label>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Máximo</label>
                 <input type="number" id="inputXMax" value="6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso X (Grid)</label>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid</label>
                 <input type="number" id="inputXStep" value="1" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
@@ -196,19 +280,20 @@
 
           <div class="h-px bg-slate-800"></div>
 
+          <!-- Rango Y -->
           <div>
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Rango (Eje Y)</h3>
-            <div class="grid grid-cols-3 gap-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Rango (Eje Y)</h3>
+            <div class="grid grid-cols-3 gap-2.5">
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Y Mínimo</label>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Mínimo</label>
                 <input type="number" id="inputYMin" value="-20" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Y Máximo</label>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Máximo</label>
                 <input type="number" id="inputYMax" value="160" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Y (Grid)</label>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid</label>
                 <input type="number" id="inputYStep" value="20" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
@@ -216,152 +301,144 @@
 
           <div class="h-px bg-slate-800"></div>
 
+          <!-- Subdivisiones menores -->
           <div>
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Subdivisiones de Cuadrícula</h3>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Cuadrícula Secundaria (Subdivisiones)</h3>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones X</label>
+                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones en X</label>
                 <input type="number" id="inputSubdivisionsX" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones Y</label>
+                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones en Y</label>
                 <input type="number" id="inputSubdivisionsY" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SECCIÓN 3: ESTILOS VISUALES -->
+        <!-- PESTAÑA 3: ESTILOS VISUALES Y COLORES -->
         <div id="tabSectionStyle" class="space-y-4 hidden">
           
-          <!-- Paleta y tema del gráfico -->
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tema del Lienzo</label>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Plantillas de Color</label>
             <div class="grid grid-cols-3 gap-2">
-              <button data-canvas-preset="clean-white" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-white text-slate-900 text-xs font-medium text-center hover:ring-2 hover:ring-indigo-500 transition">
+              <button data-canvas-preset="clean-white" class="preset-theme-btn p-2 rounded-lg border border-slate-600 bg-white text-slate-900 text-xs font-semibold text-center hover:ring-2 hover:ring-indigo-500 transition">
                 Blanco Clásico
               </button>
-              <button data-canvas-preset="blueprint" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-sky-950 text-sky-200 text-xs font-medium text-center hover:ring-2 hover:ring-indigo-500 transition">
-                Blueprint Azul
+              <button data-canvas-preset="blueprint" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-sky-950 text-sky-200 text-xs font-semibold text-center hover:ring-2 hover:ring-indigo-500 transition">
+                Blueprint
               </button>
-              <button data-canvas-preset="dark-modern" class="preset-theme-btn p-2 rounded-lg border border-indigo-500 bg-slate-950 text-slate-100 text-xs font-medium text-center ring-2 ring-indigo-500 transition">
+              <button data-canvas-preset="dark-modern" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-xs font-semibold text-center hover:ring-2 hover:ring-indigo-500 transition">
                 Oscuro Mate
               </button>
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="grid grid-cols-2 gap-3 pt-1">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Fondo del Lienzo</label>
               <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
-                <input type="color" id="colorBackground" value="#ffffff" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <input type="color" id="colorBackground" value="#ffffff" class="w-6 h-6 rounded border-0 bg-transparent cursor-pointer">
                 <span id="labelBgColor" class="text-xs font-mono text-slate-300">#FFFFFF</span>
               </div>
             </div>
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Color de Ejes X / Y</label>
+              <label class="block text-[11px] text-slate-400 mb-1">Color de Ejes Principales</label>
               <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
-                <input type="color" id="colorAxes" value="#0f172a" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
-                <span id="labelAxesColor" class="text-xs font-mono text-slate-300">#0F172A</span>
+                <input type="color" id="colorAxes" value="#000000" class="w-6 h-6 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelAxesColor" class="text-xs font-mono text-slate-300">#000000</span>
               </div>
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Color Cuadrícula</label>
+              <label class="block text-[11px] text-slate-400 mb-1">Color de Cuadrícula</label>
               <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
-                <input type="color" id="colorGrid" value="#cbd5e1" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <input type="color" id="colorGrid" value="#cbd5e1" class="w-6 h-6 rounded border-0 bg-transparent cursor-pointer">
                 <span id="labelGridColor" class="text-xs font-mono text-slate-300">#CBD5E1</span>
               </div>
             </div>
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Color de Etiquetas</label>
+              <label class="block text-[11px] text-slate-400 mb-1">Color Números LaTeX</label>
               <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
-                <input type="color" id="colorLabels" value="#1e293b" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
-                <span id="labelLabelsColor" class="text-xs font-mono text-slate-300">#1E293B</span>
+                <input type="color" id="colorLabels" value="#000000" class="w-6 h-6 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelLabelsColor" class="text-xs font-mono text-slate-300">#000000</span>
               </div>
             </div>
           </div>
 
-          <!-- Opciones con Switches -->
+          <!-- Opciones de Ejes y Tipografía -->
           <div class="pt-2 space-y-2.5">
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
               <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los ejes</span>
-              <input type="checkbox" id="checkArrows" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+              <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar números en los ejes</span>
-              <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+              <span class="text-xs text-slate-300 font-medium">Mostrar números LaTeX en los ejes</span>
+              <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar sub-cuadrícula fina</span>
-              <input type="checkbox" id="checkMinorGrid" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
-            </label>
-            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar rótulos estéticos 'X' y 'Y'</span>
-              <input type="checkbox" id="checkAxisLabels" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
-            </label>
-            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Incrustar fórmula en tarjeta gráfica</span>
-              <input type="checkbox" id="checkOverlayFormula" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+              <span class="text-xs text-slate-300 font-medium">Mostrar cuadrícula fina secundaria</span>
+              <input type="checkbox" id="checkMinorGrid" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
           </div>
 
-          <!-- Grosor de líneas -->
+          <!-- Grosor de los Ejes Principales -->
           <div class="pt-2">
             <div class="flex justify-between text-xs text-slate-400 mb-1">
-              <span>Grosor de ejes principales</span>
-              <span id="labelAxisWidth" class="font-mono">3px</span>
+              <span>Grosor de Ejes X e Y</span>
+              <span id="labelAxisWidth" class="font-mono text-indigo-300 font-semibold">3.5px</span>
             </div>
-            <input type="range" id="inputAxisWidth" min="1" max="6" step="0.5" value="3" class="w-full accent-indigo-500 cursor-pointer">
+            <input type="range" id="inputAxisWidth" min="1" max="8" step="0.5" value="3.5" class="w-full accent-indigo-500 cursor-pointer">
           </div>
+
         </div>
 
       </div>
     </aside>
 
     <!-- Contenedor del Lienzo Gráfico -->
-    <section class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-4 sm:p-8 overflow-auto grid-pattern-bg relative">
+    <section class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-3 sm:p-6 lg:p-8 overflow-auto dot-grid-bg relative">
       
-      <!-- Mensaje flotante de notificación (Toast) -->
-      <div id="toastNotification" class="absolute top-5 right-5 z-50 bg-indigo-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-20px] opacity-0 pointer-events-none">
-        <i data-lucide="check-circle" class="w-4 h-4"></i>
-        <span id="toastMessage">¡Listo!</span>
+      <!-- Toast notificador -->
+      <div id="toastNotification" class="absolute top-5 right-5 z-50 bg-indigo-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-20px] opacity-0 pointer-events-none">
+        <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+        <span id="toastMessage">Acción completada</span>
       </div>
 
-      <!-- Tarjeta del Gráfico -->
-      <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
-        <!-- Canvas HTML5 que hace el render interactivo -->
-        <canvas id="cartesianCanvas" width="900" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
+      <!-- Tarjeta del Lienzo con sombra difuminada -->
+      <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
+        <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
       </div>
 
-      <!-- Barra de herramientas flotante inferior de vista previa -->
-      <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg">
+      <!-- Barra informativa inferior -->
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/90 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg">
         <div class="flex items-center gap-1.5">
-          <i data-lucide="aspect-ratio" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Resolución nativa: 900 &times; 600 px</span>
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Fuente LaTeX: <strong class="text-slate-200 font-serif">Computer Modern (KaTeX)</strong></span>
         </div>
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5">
-          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span>Auto-escalado anti-aliasing activo</span>
+          <i data-lucide="aspect-ratio" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>940 &times; 600 px nativos</span>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    /* Estado global de la aplicación */
+    /* Estado Global Reactivo */
     const state = {
       functions: [
         {
-          id: 'fn-1',
+          id: 'fn-parabola',
           name: 'f(x)',
           expr: '3*x^2 + 2*x - 5',
-          latex: 'f(x) = 3x^2 + 2x - 5',
-          color: '#3b82f6', // Azul similar al original de la imagen
-          width: 3.5,
+          color: '#3b82f6', // Azul cielo exacto al del ejercicio
+          width: 3.5,       // Grosor editable
+          style: 'solid',   // 'solid', 'dashed', 'dotted'
           visible: true
         }
       ],
@@ -375,39 +452,52 @@
         subdivisionsX: 2,
         subdivisionsY: 2
       },
+      labels: {
+        x: 'X',
+        y: 'Y'
+      },
       style: {
         background: '#ffffff',
-        axisColor: '#111827',
+        axisColor: '#000000',
         gridColor: '#cbd5e1',
-        labelColor: '#0f172a',
+        labelColor: '#000000',
         axisWidth: 3.5,
-        showArrows: true,
+        showArrows: false,        // En la imagen original no lleva flechas
         showTickNumbers: true,
         showMinorGrid: true,
         showAxisLabels: true,
-        showOverlayFormula: true
+        showOverlayFormula: false // En la imagen original no aparece el recuadro flotante
       },
-      canvasWidth: 900,
+      canvasWidth: 940,
       canvasHeight: 600
     };
 
-    // Referencias al DOM
     const canvas = document.getElementById('cartesianCanvas');
     const ctx = canvas.getContext('2d');
     const functionsContainer = document.getElementById('functionsContainer');
 
-    // Conversión de coordenadas matemáticas a píxeles del canvas
-    function toCanvasX(x, padding = 45) {
+    // Mapeo matemático -> píxeles
+    function toCanvasX(x, padding = 55) {
       const width = state.canvasWidth - (padding * 2);
       return padding + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
     }
 
-    function toCanvasY(y, padding = 45) {
+    function toCanvasY(y, padding = 55) {
       const height = state.canvasHeight - (padding * 2);
-      // El eje Y en computación gráfica está invertido
       return (state.canvasHeight - padding) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
     }
 
+    // Formatear números con signo menos matemático real de LaTeX (\u2212)
+    function formatLatexNumber(val) {
+      const rounded = Number(Math.abs(val) < 1e-12 ? 0 : val.toFixed(4));
+      const str = rounded.toString();
+      if (str.startsWith('-')) {
+        return '\u2212' + str.slice(1);
+      }
+      return str;
+    }
+
+    // Convertir expresión a LaTeX
     function expressionToLatex(expr) {
       try {
         const parsed = math.parse(expr);
@@ -417,23 +507,23 @@
       }
     }
 
+    // Motor principal de renderizado en Canvas con tipografía KaTeX
     function drawPlot() {
-      const padding = 55;
+      const padding = 58;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
+      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula } = state.style;
 
-      // 1. Limpiar lienzo y rellenar fondo
+      // 1. Limpiar fondo
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
 
-      // 2. Dibujar cuadrícula secundaria (Minor Grid)
+      // 2. Cuadrícula menor (Minor Grid)
       if (showMinorGrid) {
         ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 0.6;
+        ctx.lineWidth = 0.75;
         ctx.globalAlpha = 0.45;
         ctx.beginPath();
 
-        // Líneas verticales menores
         const stepSubX = xStep / (subdivisionsX || 2);
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
           const cx = toCanvasX(x, padding);
@@ -441,7 +531,6 @@
           ctx.lineTo(cx, state.canvasHeight - padding);
         }
 
-        // Líneas horizontales menores
         const stepSubY = yStep / (subdivisionsY || 2);
         for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
           const cy = toCanvasY(y, padding);
@@ -452,9 +541,9 @@
         ctx.globalAlpha = 1.0;
       }
 
-      // 3. Dibujar cuadrícula principal (Major Grid)
+      // 3. Cuadrícula principal (Major Grid)
       ctx.strokeStyle = gridColor;
-      ctx.lineWidth = 1.2;
+      ctx.lineWidth = 1.25;
       ctx.beginPath();
 
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
@@ -470,129 +559,141 @@
       }
       ctx.stroke();
 
-      // Coordenadas en píxeles del origen (0,0)
+      // Coordenadas origen (0,0)
       const originX = Math.max(padding, Math.min(state.canvasWidth - padding, toCanvasX(0, padding)));
       const originY = Math.max(padding, Math.min(state.canvasHeight - padding, toCanvasY(0, padding)));
 
-      // 4. Dibujar Ejes X e Y principales
+      // 4. Ejes Principales X e Y
       ctx.strokeStyle = axisColor;
       ctx.lineWidth = axisWidth;
-      ctx.lineCap = 'round';
+      ctx.lineCap = 'square';
       ctx.beginPath();
 
       // Eje X
-      ctx.moveTo(padding - 20, originY);
-      ctx.lineTo(state.canvasWidth - padding + 20, originY);
+      ctx.moveTo(padding - 26, originY);
+      ctx.lineTo(state.canvasWidth - padding + 26, originY);
 
       // Eje Y
-      ctx.moveTo(originX, state.canvasHeight - padding + 20);
-      ctx.lineTo(originX, padding - 20);
+      ctx.moveTo(originX, state.canvasHeight - padding + 26);
+      ctx.lineTo(originX, padding - 26);
       ctx.stroke();
 
-      // Flechas en los extremos de los ejes
+      // Flechas opcionales
       if (showArrows) {
-        const arrowSize = 9;
+        const arrowSize = 10;
         ctx.fillStyle = axisColor;
 
-        // Flecha eje X (+)
+        // Flecha X
         ctx.beginPath();
-        ctx.moveTo(state.canvasWidth - padding + 20, originY);
-        ctx.lineTo(state.canvasWidth - padding + 20 - arrowSize, originY - arrowSize * 0.6);
-        ctx.lineTo(state.canvasWidth - padding + 20 - arrowSize, originY + arrowSize * 0.6);
+        ctx.moveTo(state.canvasWidth - padding + 26, originY);
+        ctx.lineTo(state.canvasWidth - padding + 26 - arrowSize, originY - arrowSize * 0.55);
+        ctx.lineTo(state.canvasWidth - padding + 26 - arrowSize, originY + arrowSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
-        // Flecha eje Y (+)
+        // Flecha Y
         ctx.beginPath();
-        ctx.moveTo(originX, padding - 20);
-        ctx.lineTo(originX - arrowSize * 0.6, padding - 20 + arrowSize);
-        ctx.lineTo(originX + arrowSize * 0.6, padding - 20 + arrowSize);
+        ctx.moveTo(originX, padding - 26);
+        ctx.lineTo(originX - arrowSize * 0.55, padding - 26 + arrowSize);
+        ctx.lineTo(originX + arrowSize * 0.55, padding - 26 + arrowSize);
         ctx.closePath();
         ctx.fill();
       }
 
-      // 5. Números y marcas en los ejes (Ticks)
+      // 5. Números en Tipografía KaTeX / Computer Modern con Signo Menos Real (\u2212)
       if (showTickNumbers) {
-        ctx.font = '600 12px "Inter", sans-serif';
+        ctx.font = 'normal 13px "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = labelColor;
 
-        // Marcas en X
+        // Eje X
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x, padding);
           const isZero = Math.abs(x) < 1e-9;
-          const labelOffsetY = (originY + 18 > state.canvasHeight - 15) ? originY - 18 : originY + 8;
+          const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
 
           // Marca física pequeña
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1.6;
           ctx.moveTo(cx, originY - 4);
           ctx.lineTo(cx, originY + 4);
           ctx.stroke();
 
-          // Texto
           if (!isZero) {
-            ctx.fillText(Number(x.toFixed(4)).toString(), cx, labelOffsetY);
+            ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
           }
         }
 
-        // Marcas en Y
+        // Eje Y
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y, padding);
           const isZero = Math.abs(y) < 1e-9;
-          const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 10;
+          const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
           if (originX - 10 < 30) ctx.textAlign = 'left';
 
           // Marca física pequeña
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1.6;
           ctx.moveTo(originX - 4, cy);
           ctx.lineTo(originX + 4, cy);
           ctx.stroke();
 
-          // Texto
-          ctx.fillText(Number(y.toFixed(4)).toString(), labelOffsetX, cy);
+          ctx.fillText(formatLatexNumber(y), labelOffsetX, cy);
         }
       }
 
-      // 6. Rótulos estéticos gigantes 'X' y 'Y' (como en el ejercicio original)
+      // 6. Rótulos de los Ejes Editables en Tipografía LaTeX
       if (showAxisLabels) {
-        ctx.font = '700 22px "Inter", sans-serif';
+        ctx.font = 'bold 24px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = axisColor;
+
+        // Rótulo Eje Y
         ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        const labelYText = state.labels.y.trim() || 'Y';
+        ctx.fillText(labelYText, originX, padding - 30);
 
-        // Etiqueta Y arriba
-        ctx.fillText('Y', originX, padding - 34);
-
-        // Etiqueta X a la derecha
+        // Rótulo Eje X
         ctx.textAlign = 'left';
-        ctx.fillText('X', state.canvasWidth - padding + 26, originY + 7);
+        ctx.textBaseline = 'middle';
+        const labelXText = state.labels.x.trim() || 'X';
+        ctx.fillText(labelXText, state.canvasWidth - padding + 32, originY);
       }
 
-      // 7. Renderizado de las funciones matemáticas
+      // 7. Trazado de las Funciones Matemáticas
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
 
         try {
           const compiled = math.compile(fn.expr);
           ctx.save();
+
+          // Estilo de línea (Sólida, Guiones, Puntos)
+          if (fn.style === 'dashed') {
+            ctx.setLineDash([8, 6]);
+          } else if (fn.style === 'dotted') {
+            ctx.setLineDash([3, 4]);
+          } else {
+            ctx.setLineDash([]);
+          }
+
+          // Clipping boundary
           ctx.beginPath();
-          // Habilitar clipping para que las líneas no se salgan del marco
           ctx.rect(padding - 2, padding - 2, state.canvasWidth - (padding * 2) + 4, state.canvasHeight - (padding * 2) + 4);
           ctx.clip();
 
           ctx.strokeStyle = fn.color;
-          ctx.lineWidth = fn.width || 3;
+          ctx.lineWidth = fn.width || 3.5;
           ctx.lineCap = 'round';
           ctx.lineJoin = 'round';
 
           let isFirst = true;
-          const samplePoints = 900; // Alta fidelidad de curva
+          const samplePoints = 950;
           const stepSize = (xMax - xMin) / samplePoints;
 
           ctx.beginPath();
@@ -622,63 +723,56 @@
           ctx.stroke();
           ctx.restore();
         } catch (error) {
-          console.warn(`Error evaluando la expresión "${fn.expr}":`, error);
+          console.warn(`Error evaluando la función: ${fn.expr}`, error);
         }
       });
 
-      if (state.style.showOverlayFormula && state.functions.length > 0) {
+      // 8. Opcional: Badge con la fórmula tipográfica KaTeX
+      if (showOverlayFormula) {
         drawFormulaBadge();
       }
     }
 
-    // Dibuja una tarjeta con la fórmula en la esquina superior izquierda
     function drawFormulaBadge() {
       const activeFunctions = state.functions.filter(f => f.visible && f.expr.trim());
       if (activeFunctions.length === 0) return;
 
-      const badgeX = 65;
-      const badgeY = 25;
-      const badgeWidth = 230;
-      const badgeHeight = 22 + (activeFunctions.length * 28);
+      const badgeX = 70;
+      const badgeY = 24;
+      const badgeWidth = 240;
+      const badgeHeight = 18 + (activeFunctions.length * 28);
 
-      // Fondo tarjeta estilizada
       ctx.save();
-      ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.92)' : 'rgba(15, 23, 42, 0.9)';
+      ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)';
       ctx.strokeStyle = state.style.gridColor;
       ctx.lineWidth = 1;
-
-      // Sombra sutil
       ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetY = 4;
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 3;
 
       roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 10, true, true);
       ctx.restore();
 
-      // Texto de funciones en la tarjeta
       ctx.save();
       activeFunctions.forEach((fn, idx) => {
-        const itemY = badgeY + 22 + (idx * 26);
+        const itemY = badgeY + 20 + (idx * 26);
         
-        // Círculo del color
         ctx.fillStyle = fn.color;
         ctx.beginPath();
-        ctx.arc(badgeX + 16, itemY - 4, 5, 0, Math.PI * 2);
+        ctx.arc(badgeX + 16, itemY - 3, 5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Fórmula formateada
-        ctx.font = '600 13px "Fira Code", monospace';
+        ctx.font = 'normal 13px "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = state.style.labelColor;
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
 
-        let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³');
-        ctx.fillText(`${fn.name || 'f(x)'} = ${displayExpr}`, badgeX + 30, itemY - 4);
+        let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³').replace(/-/g, '\u2212');
+        ctx.fillText(`${fn.name || 'f(x)'} = ${displayExpr}`, badgeX + 30, itemY - 3);
       });
       ctx.restore();
     }
 
-    // Función auxiliar para dibujar rectángulos redondeados en Canvas
     function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
@@ -695,43 +789,63 @@
       if (stroke) ctx.stroke();
     }
 
+    // Renderizado reactivo de la lista de funciones
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
-      state.functions.forEach((fn, index) => {
+      state.functions.forEach((fn) => {
         const card = document.createElement('div');
-        card.className = 'p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80 space-y-2.5 transition hover:border-slate-600';
+        card.className = 'p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 space-y-3 transition hover:border-slate-600 shadow-sm';
         
-        // ID único para renderizado katex
         const katexPreviewId = `katex-preview-${fn.id}`;
 
         card.innerHTML = `
+          <!-- Cabecera de la función -->
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-              <input type="color" data-color-id="${fn.id}" value="${fn.color}" class="w-6 h-6 rounded cursor-pointer border-0 bg-transparent">
-              <input type="text" data-name-id="${fn.id}" value="${fn.name}" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
+              <input type="color" data-color-id="${fn.id}" value="${fn.color}" title="Color de la línea" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+              <input type="text" data-name-id="${fn.id}" value="${fn.name}" title="Nombre de función" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
             </div>
-            
+
             <div class="flex items-center gap-2">
-              <label class="text-[11px] text-slate-400">Grosor:</label>
-              <input type="number" data-width-id="${fn.id}" value="${fn.width}" min="1" max="10" step="0.5" class="w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-xs text-center font-mono">
               ${state.functions.length > 1 ? `
-                <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1 rounded hover:bg-slate-700 transition" title="Eliminar función">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar función">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
               ` : ''}
             </div>
           </div>
 
+          <!-- Expresión matemática -->
           <div>
             <div class="relative">
               <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 3*x^2 + 2*x - 5" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
-              <span class="absolute right-2.5 top-2.5 text-xs text-slate-500 font-mono">f(x)</span>
+              <span class="absolute right-2.5 top-2 text-xs text-slate-500 font-mono">f(x)</span>
             </div>
           </div>
 
-          <!-- Vista previa de LaTeX en vivo -->
-          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800 flex items-center justify-between">
+          <!-- Ajuste individual de Grosor y Estilo de Trazo -->
+          <div class="grid grid-cols-2 gap-3 pt-1 border-t border-slate-700/50 text-xs">
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                <span>Grosor:</span>
+                <span data-width-val-id="${fn.id}" class="font-mono text-indigo-300 font-semibold">${fn.width}px</span>
+              </div>
+              <input type="range" data-width-id="${fn.id}" value="${fn.width}" min="1" max="8" step="0.5" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Estilo de Línea:</label>
+              <select data-style-id="${fn.id}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none">
+                <option value="solid" ${fn.style === 'solid' ? 'selected' : ''}>Continua</option>
+                <option value="dashed" ${fn.style === 'dashed' ? 'selected' : ''}>Discontinua</option>
+                <option value="dotted" ${fn.style === 'dotted' ? 'selected' : ''}>Punteada</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Vista previa en vivo con KaTeX -->
+          <div class="bg-slate-950/70 rounded-lg p-2 border border-slate-800 flex items-center justify-between">
             <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">LaTeX:</span>
             <div id="${katexPreviewId}" class="text-xs text-indigo-200 font-medium overflow-x-auto"></div>
           </div>
@@ -739,7 +853,7 @@
 
         functionsContainer.appendChild(card);
 
-        // Renderizar el KaTeX en vivo
+        // Renderizar fórmula con KaTeX
         const katexEl = document.getElementById(katexPreviewId);
         if (katexEl && window.katex) {
           try {
@@ -751,22 +865,18 @@
         }
       });
 
-      // Reconectar iconos de Lucide
       lucide.createIcons();
-
-      // Añadir listeners para los inputs generados dinámicamente
       bindDynamicEvents();
     }
 
     function bindDynamicEvents() {
-      // Inputs de expresiones
+      // Expresión
       document.querySelectorAll('[data-expr-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-expr-id');
           const fn = state.functions.find(f => f.id === id);
           if (fn) {
             fn.expr = e.target.value;
-            // Actualizar vista KaTeX
             const katexEl = document.getElementById(`katex-preview-${id}`);
             if (katexEl && window.katex) {
               const tex = expressionToLatex(fn.expr);
@@ -777,7 +887,7 @@
         });
       });
 
-      // Color de función
+      // Color
       document.querySelectorAll('[data-color-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-color-id');
@@ -789,7 +899,7 @@
         });
       });
 
-      // Nombre de la función (ej: g(x))
+      // Nombre
       document.querySelectorAll('[data-name-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-name-id');
@@ -806,13 +916,27 @@
         });
       });
 
-      // Grosor
+      // Grosor individual con feedback
       document.querySelectorAll('[data-width-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-width-id');
           const fn = state.functions.find(f => f.id === id);
           if (fn) {
             fn.width = parseFloat(e.target.value) || 2;
+            const labelEl = document.querySelector(`[data-width-val-id="${id}"]`);
+            if (labelEl) labelEl.innerText = `${fn.width}px`;
+            drawPlot();
+          }
+        });
+      });
+
+      // Estilo de línea (continua, dashed, dotted)
+      document.querySelectorAll('[data-style-id]').forEach(select => {
+        select.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-style-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.style = e.target.value;
             drawPlot();
           }
         });
@@ -820,7 +944,7 @@
 
       // Eliminar
       document.querySelectorAll('[data-delete-id]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-delete-id');
           state.functions = state.functions.filter(f => f.id !== id);
           renderFunctionInputs();
@@ -829,6 +953,7 @@
       });
     }
 
+    // Tabs de navegación
     const tabBtnFunctions = document.getElementById('tabBtnFunctions');
     const tabBtnAxes = document.getElementById('tabBtnAxes');
     const tabBtnStyle = document.getElementById('tabBtnStyle');
@@ -839,18 +964,18 @@
 
     function setActiveTab(tab) {
       [tabBtnFunctions, tabBtnAxes, tabBtnStyle].forEach(btn => {
-        btn.className = 'py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2';
+        btn.className = 'py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
       });
       [tabSectionFunctions, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
 
       if (tab === 'functions') {
-        tabBtnFunctions.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabBtnFunctions.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
         tabSectionFunctions.classList.remove('hidden');
       } else if (tab === 'axes') {
-        tabBtnAxes.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabBtnAxes.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
         tabSectionAxes.classList.remove('hidden');
       } else if (tab === 'style') {
-        tabBtnStyle.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabBtnStyle.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
         tabSectionStyle.classList.remove('hidden');
       }
     }
@@ -859,8 +984,21 @@
     tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
     tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
 
+    // Actualizar previsualización KaTeX de los rótulos editables de los ejes
+    function updateAxisLabelsPreview() {
+      const elX = document.getElementById('previewKatexLabelX');
+      const elY = document.getElementById('previewKatexLabelY');
+      if (window.katex) {
+        try { katex.render(state.labels.x || 'X', elX, { throwOnError: false }); } catch (e) { elX.innerText = state.labels.x; }
+        try { katex.render(state.labels.y || 'Y', elY, { throwOnError: false }); } catch (e) { elY.innerText = state.labels.y; }
+      }
+    }
+
+    // Sincronizar todos los controles del formulario con el estado
     function syncInputs() {
-      // Ejes
+      // Ejes y rótulos
+      document.getElementById('inputAxisLabelX').value = state.labels.x;
+      document.getElementById('inputAxisLabelY').value = state.labels.y;
       document.getElementById('inputXMin').value = state.bounds.xMin;
       document.getElementById('inputXMax').value = state.bounds.xMax;
       document.getElementById('inputXStep').value = state.bounds.xStep;
@@ -887,24 +1025,39 @@
       document.getElementById('checkOverlayFormula').checked = state.style.showOverlayFormula;
       document.getElementById('inputAxisWidth').value = state.style.axisWidth;
       document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
+
+      updateAxisLabelsPreview();
     }
 
-    // Listeners de los rangos
+    // Listeners para los Rótulos de los Ejes Editables
+    document.getElementById('inputAxisLabelX').addEventListener('input', (e) => {
+      state.labels.x = e.target.value;
+      updateAxisLabelsPreview();
+      drawPlot();
+    });
+
+    document.getElementById('inputAxisLabelY').addEventListener('input', (e) => {
+      state.labels.y = e.target.value;
+      updateAxisLabelsPreview();
+      drawPlot();
+    });
+
+    // Listeners de Rangos
     ['inputXMin', 'inputXMax', 'inputXStep', 'inputYMin', 'inputYMax', 'inputYStep', 'inputSubdivisionsX', 'inputSubdivisionsY'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         state.bounds.xMin = parseFloat(document.getElementById('inputXMin').value) || -10;
         state.bounds.xMax = parseFloat(document.getElementById('inputXMax').value) || 10;
-        state.bounds.xStep = Math.max(0.001, parseFloat(document.getElementById('inputXStep').value) || 1);
+        state.bounds.xStep = Math.max(0.0001, parseFloat(document.getElementById('inputXStep').value) || 1);
         state.bounds.yMin = parseFloat(document.getElementById('inputYMin').value) || -10;
         state.bounds.yMax = parseFloat(document.getElementById('inputYMax').value) || 10;
-        state.bounds.yStep = Math.max(0.001, parseFloat(document.getElementById('inputYStep').value) || 1);
+        state.bounds.yStep = Math.max(0.0001, parseFloat(document.getElementById('inputYStep').value) || 1);
         state.bounds.subdivisionsX = parseInt(document.getElementById('inputSubdivisionsX').value) || 2;
         state.bounds.subdivisionsY = parseInt(document.getElementById('inputSubdivisionsY').value) || 2;
         drawPlot();
       });
     });
 
-    // Listeners de colores y toggles
+    // Escuchadores de Switches y Colores
     document.getElementById('colorBackground').addEventListener('input', (e) => {
       state.style.background = e.target.value;
       document.getElementById('labelBgColor').innerText = e.target.value.toUpperCase();
@@ -960,16 +1113,17 @@
       drawPlot();
     });
 
-    // Botón para añadir función nueva
+    // Añadir nueva función
     document.getElementById('btnAddFunction').addEventListener('click', () => {
-      const colors = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
-      const nextColor = colors[state.functions.length % colors.length];
+      const palette = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#e11d48'];
+      const nextColor = palette[state.functions.length % palette.length];
       const newFn = {
         id: 'fn-' + Date.now(),
         name: `g${state.functions.length}(x)`,
-        expr: 'cos(x) * 30',
+        expr: 'cos(x)*35',
         color: nextColor,
-        width: 3,
+        width: 3.5,
+        style: 'solid',
         visible: true
       };
       state.functions.push(newFn);
@@ -977,15 +1131,15 @@
       drawPlot();
     });
 
-    // Presets rápidos de temas visuales
+    // Preset temas
     document.querySelectorAll('.preset-theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const theme = btn.getAttribute('data-canvas-preset');
         if (theme === 'clean-white') {
           state.style.background = '#ffffff';
-          state.style.axisColor = '#0f172a';
+          state.style.axisColor = '#000000';
           state.style.gridColor = '#cbd5e1';
-          state.style.labelColor = '#1e293b';
+          state.style.labelColor = '#000000';
         } else if (theme === 'blueprint') {
           state.style.background = '#082f49';
           state.style.axisColor = '#38bdf8';
@@ -993,24 +1147,25 @@
           state.style.labelColor = '#bae6fd';
         } else if (theme === 'dark-modern') {
           state.style.background = '#090d16';
-          state.style.axisColor = '#f1f5f9';
+          state.style.axisColor = '#f8fafc';
           state.style.gridColor = '#1e293b';
-          state.style.labelColor = '#94a3b8';
+          state.style.labelColor = '#cbd5e1';
         }
         syncInputs();
         drawPlot();
       });
     });
 
-    // Botón para reiniciar al ejemplo exacto de la imagen
-    document.getElementById('btnResetDefault').addEventListener('click', () => {
+    // Cargar Preset Exacto de la Imagen
+    document.getElementById('btnOriginalPreset').addEventListener('click', () => {
       state.functions = [
         {
-          id: 'fn-default',
+          id: 'fn-parabola',
           name: 'f(x)',
           expr: '3*x^2 + 2*x - 5',
           color: '#3b82f6',
           width: 3.5,
+          style: 'solid',
           visible: true
         }
       ];
@@ -1024,21 +1179,25 @@
         subdivisionsX: 2,
         subdivisionsY: 2
       };
+      state.labels = {
+        x: 'X',
+        y: 'Y'
+      };
       state.style.background = '#ffffff';
       state.style.axisColor = '#000000';
       state.style.gridColor = '#cbd5e1';
       state.style.labelColor = '#000000';
       state.style.axisWidth = 3.5;
-      state.style.showArrows = false; // Como la foto original
+      state.style.showArrows = false;
       state.style.showAxisLabels = true;
       state.style.showTickNumbers = true;
       state.style.showMinorGrid = true;
-      state.style.showOverlayFormula = true;
+      state.style.showOverlayFormula = false; // Sin texto invasivo en la imagen
 
       syncInputs();
       renderFunctionInputs();
       drawPlot();
-      showToast('Cargada la parábola original f(x) = 3x² + 2x - 5');
+      showToast('Cargado el plano exacto de la imagen original');
     });
 
     function showToast(message) {
@@ -1051,7 +1210,7 @@
       }, 2600);
     }
 
-    // Exportación a PNG con escala personalizada (1x, 2x Retina, 4x Ultra Impresión)
+    // Exportación a PNG en alta fidelidad (1x, 2x Retina, 4x Ultra Impresión)
     function downloadPNG(scale = 2) {
       const offscreenCanvas = document.createElement('canvas');
       offscreenCanvas.width = state.canvasWidth * scale;
@@ -1060,32 +1219,23 @@
 
       offCtx.scale(scale, scale);
 
-      // Guardar contexto y dibujar en la escala alta
-      const oldCanvasWidth = state.canvasWidth;
-      const oldCanvasHeight = state.canvasHeight;
+      // Usar contexto temporal offscreen
       const currentCtx = ctx;
-
-      // Dibujar temporalmente en el canvas offscreen
-      // Usamos el mismo algoritmo de renderizado
-      const originalCtx = window.ctx;
       window.ctx = offCtx;
       drawPlot();
       window.ctx = currentCtx;
-
-      // Volver a dibujar el canvas visible por si acaso
       drawPlot();
 
-      // Generar descarga
       const link = document.createElement('a');
-      link.download = `plano-cartesiano-${scale}x.png`;
+      link.download = `plano-cartesiano-latex-${scale}x.png`;
       link.href = offscreenCanvas.toDataURL('image/png');
       link.click();
-      showToast(`Descargado PNG a ${scale}x (${offscreenCanvas.width}x${offscreenCanvas.height}px)`);
+      showToast(`Descargado PNG en escala ${scale}x (${offscreenCanvas.width}x${offscreenCanvas.height}px)`);
     }
 
-    // Generador de SVG Vectorial Puro (resolución infinita para publicaciones)
+    // Exportación a SVG Vectorial Puro con Fuentes LaTeX incrustadas
     function downloadSVG() {
-      const padding = 55;
+      const padding = 58;
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
@@ -1093,15 +1243,18 @@
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
-  <style>
-    .label { font-family: 'Inter', -apple-system, sans-serif; font-size: 12px; font-weight: 600; fill: ${labelColor}; }
-    .axis-title { font-family: 'Inter', -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: ${axisColor}; }
-  </style>
+  <defs>
+    <style>
+      @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
+      .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: 13px; fill: ${labelColor}; }
+      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
+    </style>
+  </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
 
       // Cuadrícula menor
       if (showMinorGrid) {
-        svg += `  <g stroke="${gridColor}" stroke-width="0.6" opacity="0.45">\n`;
+        svg += `  <g stroke="${gridColor}" stroke-width="0.75" opacity="0.45">\n`;
         const stepSubX = xStep / (subdivisionsX || 2);
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
           const cx = toCanvasX(x, padding);
@@ -1116,7 +1269,7 @@
       }
 
       // Cuadrícula principal
-      svg += `  <g stroke="${gridColor}" stroke-width="1.2">\n`;
+      svg += `  <g stroke="${gridColor}" stroke-width="1.25">\n`;
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
         const cx = toCanvasX(x, padding);
         svg += `    <line x1="${cx}" y1="${padding}" x2="${cx}" y2="${h - padding}"/>\n`;
@@ -1127,45 +1280,45 @@
       }
       svg += `  </g>\n`;
 
-      // Ejes principales
       const originX = Math.max(padding, Math.min(w - padding, toCanvasX(0, padding)));
       const originY = Math.max(padding, Math.min(h - padding, toCanvasY(0, padding)));
 
-      svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="round">\n`;
-      svg += `    <line x1="${padding - 20}" y1="${originY}" x2="${w - padding + 20}" y2="${originY}"/>\n`;
-      svg += `    <line x1="${originX}" y1="${h - padding + 20}" x2="${originX}" y2="${padding - 20}"/>\n`;
+      // Ejes principales
+      svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="square">\n`;
+      svg += `    <line x1="${padding - 26}" y1="${originY}" x2="${w - padding + 26}" y2="${originY}"/>\n`;
+      svg += `    <line x1="${originX}" y1="${h - padding + 26}" x2="${originX}" y2="${padding - 26}"/>\n`;
       svg += `  </g>\n`;
 
-      // Números y marcas
+      // Números con signo menos tipográfico
       if (showTickNumbers) {
-        svg += `  <g class="label">\n`;
+        svg += `  <g class="katex-label">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x, padding);
           if (Math.abs(x) > 1e-9) {
-            svg += `    <text x="${cx}" y="${originY + 16}" text-anchor="middle">${Number(x.toFixed(4))}</text>\n`;
+            svg += `    <text x="${cx}" y="${originY + 18}" text-anchor="middle">${formatLatexNumber(x)}</text>\n`;
           }
         }
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y, padding);
-          svg += `    <text x="${originX - 10}" y="${cy + 4}" text-anchor="end">${Number(y.toFixed(4))}</text>\n`;
+          svg += `    <text x="${originX - 9}" y="${cy + 4.5}" text-anchor="end">${formatLatexNumber(y)}</text>\n`;
         }
         svg += `  </g>\n`;
       }
 
-      // Rótulos de ejes 'X' y 'Y'
+      // Rótulos editables
       if (showAxisLabels) {
-        svg += `  <g class="axis-title">\n`;
-        svg += `    <text x="${originX}" y="${padding - 30}" text-anchor="middle">Y</text>\n`;
-        svg += `    <text x="${w - padding + 25}" y="${originY + 7}" text-anchor="start">X</text>\n`;
+        svg += `  <g class="katex-axis-title">\n`;
+        svg += `    <text x="${originX}" y="${padding - 30}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
+        svg += `    <text x="${w - padding + 32}" y="${originY + 7}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
         svg += `  </g>\n`;
       }
 
-      // Curvas de las funciones
+      // Funciones matemáticas
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
         try {
           const compiled = math.compile(fn.expr);
-          const samplePoints = 600;
+          const samplePoints = 700;
           const stepSize = (xMax - xMin) / samplePoints;
           let pathD = '';
 
@@ -1177,26 +1330,26 @@
             if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
               const cx = toCanvasX(currentX, padding);
               const cy = toCanvasY(currentY, padding);
-              pathD += (pathD === '' ? `M ${cx} ${cy}` : ` L ${cx} ${cy}`);
+              pathD += (pathD === '' ? `M ${cx.toFixed(2)} ${cy.toFixed(2)}` : ` L ${cx.toFixed(2)} ${cy.toFixed(2)}`);
             }
           }
           if (pathD) {
-            svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3}" stroke-linecap="round" stroke-linejoin="round"/>\n`;
+            const dashAttr = fn.style === 'dashed' ? ' stroke-dasharray="8,6"' : (fn.style === 'dotted' ? ' stroke-dasharray="3,4"' : '');
+            svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3.5}" stroke-linecap="round" stroke-linejoin="round"${dashAttr}/>\n`;
           }
         } catch (e) {}
       });
 
       svg += `</svg>`;
 
-      // Descargar archivo .svg
       const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'plano-cartesiano-vector.svg';
+      link.download = 'plano-cartesiano-latex-vector.svg';
       link.click();
       URL.revokeObjectURL(url);
-      showToast('Descargado archivo vectorial SVG');
+      showToast('Descargado plano vectorial SVG con tipografía KaTeX');
     }
 
     // Copiar al portapapeles
@@ -1204,7 +1357,7 @@
       try {
         canvas.toBlob(async (blob) => {
           if (!blob) {
-            showToast('Error al generar la imagen');
+            showToast('Error al procesar la imagen');
             return;
           }
           try {
@@ -1213,7 +1366,6 @@
             ]);
             showToast('¡Imagen copiada al portapapeles!');
           } catch (clipErr) {
-            // Fallback si el navegador restringe clipboard write
             const link = document.createElement('a');
             link.download = 'plano-cartesiano.png';
             link.href = canvas.toDataURL();
@@ -1226,16 +1378,21 @@
       }
     });
 
-    // Asignación de botones de descarga
     document.getElementById('btnDownloadPng1x').addEventListener('click', () => downloadPNG(1));
     document.getElementById('btnDownloadPng2x').addEventListener('click', () => downloadPNG(2));
     document.getElementById('btnDownloadPng4x').addEventListener('click', () => downloadPNG(4));
     document.getElementById('btnDownloadSvg').addEventListener('click', downloadSVG);
 
-    window.addEventListener('DOMContentLoaded', () => {
+    // Inicialización al cargar la ventana asegurando carga de fuentes KaTeX
+    window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       syncInputs();
       renderFunctionInputs();
+
+      // Esperar a que las fuentes KaTeX estén completamente cargadas en el documento
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
       drawPlot();
     });
   </script>
