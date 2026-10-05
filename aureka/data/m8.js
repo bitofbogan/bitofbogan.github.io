@@ -86,17 +86,17 @@ const questionBank = [
     type: "choice",
     correct: "$2.9\\times10^{5}$",
     distractors: [
-      "$2.9\\times10^{3}$",
-      "$2.9\\times10^{6}$",
-      "$2.9\\times10^{4}$"
+      "$2.9\\times10^{3}$ Pa.",
+      "$2.9\\times10^{6}$ Pa.",
+      "$2.9\\times10^{4}$ Pa."
     ],
-    hint: "Aplica la presión hidrostática: $P = \\rho g h$. Considera $\\rho_{agua} = 1,000\\text{ kg/m}^3$ y $g = 9.81\\text{ m/s}^2$.",
-    explanation: "Multiplicas $\\rho g h = (1000)(9.81)(30) = 294,300\\text{ Pa}$. Al convertirlo a notación científica recorriendo 5 lugares el punto decimal, obtienes $2.9\\times10^{5}\\text{ Pa}$."
+    hint: "Aplica la ecuación para la presión hidrostática: $P = \\rho g h$. Considera $\\rho_{agua} = 1,000\\text{ kg/m}^3$ y $g = 9.81\\text{ m/s}^2$.",
+    explanation: "Multiplicamos $\\rho g h = (1000)(9.81)(30) = 294,300\\text{ Pa}$. Al convertirlo a notación científica recorriendo 5 lugares el punto decimal, obtenemos $2.9\\times10^{5}\\text{ Pa}$."
   },
   {
     id: "m8-q02",
     topicId: "presion",
-    prompt: "Si la presión atmosférica tiene un valor aproximado de 101,300 Pa, ¿qué fuerza ejerce el aire de un cuarto sobre un bloque de 40 $\\times$ 80 cm?",
+    prompt: "Si la presión atmosférica tiene un valor aproximado de 101,300 Pa, ¿qué fuerza ejerce el aire de un cuarto sobre un bloque de 40 cm $\\times$ 80 cm de superficie?",
     type: "choice",
     correct: "32,416 N.",
     distractors: [
@@ -105,7 +105,7 @@ const questionBank = [
       "316,526.5 Pa."
     ],
     hint: "Despeja la fuerza de la presión: $F = P \\cdot A$. Recuerda pasar primero los centímetros a metros antes de sacar el área.",
-    explanation: "Al pedirse una presión, de inmediato descartamos las respuestas en newtons (unidad de fuerza). Primero conviertes las dimensiones a metros: $0.40\\text{ m}\\times0.80\\text{ m} = 0.32\\text{ m}^2$. Luego calculas la fuerza: $F = P \\cdot A = (101,300)(0.32) = 32,416\\text{ N}$ (ojo: te piden fuerza, la unidad debe ser newtons, no pascales)."
+    explanation: "Convertimos las dimensiones a metros y calculamos el área y la fuerza resultante:\n$$\\begin{aligned} A &= (0.40\\text{ m})(0.80\\text{ m}) = 0.32\\text{ m}^2 \\\\[6pt] F &= P \\cdot A \\\\[6pt] &= (101,300\\text{ Pa})(0.32\\text{ m}^2) \\\\[6pt] &= 32,416\\text{ N} \\end{aligned}$$"
   },
   {
     id: "m8-q03",
@@ -118,13 +118,13 @@ const questionBank = [
       "...es empujado hacia arriba porque se le aplica una fuerza menor al peso del fluido.",
       "...experimenta una fuerza boyante que actúa en dirección contraria a la gravedad del fluido."
     ],
-    hint: "Recuerda la definición literal del principio de Arquímedes.",
+    hint: "Recuerda la definición del principio de Arquímedes.",
     explanation: "Por definición del principio de Arquímedes, todo cuerpo sumergido recibe un empuje vertical hacia arriba equivalente exactamente al peso del volumen de fluido que desplaza."
   },
   {
     id: "m8-q04",
     topicId: "gasto",
-    prompt: "Calcula el gasto de agua por una tubería con un diámetro de 26.20 cm cuando la velocidad del agua es de 8 $\\text{ m/s}$.",
+    prompt: "Calcula el gasto de agua por una tubería con un diámetro de 26.20 cm cuando la velocidad del agua es de 8 m/s.",
     type: "choice",
     correct: "$0.431\\text{ m}^{3}/\\text{s}$.",
     distractors: [
@@ -133,7 +133,7 @@ const questionBank = [
       "$43.10\\text{ m}^{3}/\\text{s}$."
     ],
     hint: "El gasto es $Q = A \\cdot v$. Obtén el radio en metros ($r = d/2$), calcula el área circular $A = \\pi r^2$ y multiplica por la velocidad.",
-    explanation: "El radio es $13.10\\text{ cm} = 0.131\\text{ m}$. El área circular es $A = \\pi(0.131)^2 \\approx 0.0539\\text{ m}^2$. Multiplicando por la velocidad: $Q = (0.0539)(8) \\approx 0.431\\text{ m}^3/\\text{s}$."
+    explanation: "Calculamos el radio, el área y el gasto en unidades fundamentales:\n$$\\begin{aligned} r &= \\frac{26.20\\text{ cm}}{2} = 0.131\\text{ m} \\\\[6pt] A &= \\pi r^2 = \\pi(0.131\\text{ m})^2 \\approx 0.0539\\text{ m}^2 \\\\[6pt] Q &= A \\cdot v = (0.0539\\text{ m}^2)(8\\text{ m/s}) \\approx 0.431\\text{ m}^3/\\text{s} \\end{aligned}$$"
   },
   {
     id: "m8-q05",
@@ -156,12 +156,12 @@ const questionBank = [
     type: "choice",
     correct: "Coulomb.",
     distractors: [
-      "Ampere.",
+      "Ampère.",
       "Gauss.",
       "Faraday."
     ],
     hint: "Es el principio fundamental de la electrostática que describe la interacción entre cargas puntuales.",
-    explanation: "El principio de Coulomb formula matemáticamente la fuerza electrostática: $F = k \\frac{q_1 q_2}{r^2}$."
+    explanation: "El principio de Coulomb formula matemáticamente la fuerza electrostática."
   },
   {
     id: "m8-q07",
@@ -327,7 +327,7 @@ const questionBank = [
       "$Q=\\frac{A\\sqrt{2gH}}{kL}$"
     ],
     hint: "Combina el gasto $Q = A \\cdot v$ con el principio de Torricelli $v = \\sqrt{2gh}$.",
-    explanation: "La velocidad de salida por Torricelli se formula como $v = \\sqrt{2gh}$, por lo que el gasto total es $Q = A v = A\\sqrt{2gh}$. Con los valores, tenemos $0.043\\text{ m}^3/\\text{s}$."
+    explanation: "La velocidad de salida por el principio de Torricelli es $v = \\sqrt{2gh}$, por lo que el gasto total es $Q = A v = A\\sqrt{2gh}$."
   },
   {
     id: "m8-q19",
@@ -363,7 +363,7 @@ const questionBank = [
   {
     id: "m8-q21",
     topicId: "watt",
-    prompt: "Se tiene una bomba de agua que opera a una potencia de $1/2\\text{ hp}$ Si funciona con 127 V, ¿cuál es la corriente que consume la bomba sabiendo que 1 hp = 746 W?",
+    prompt: "Se tiene una bomba de agua que opera a una potencia de $\\frac{1}{2}$ hp. Si funciona con 127 V, ¿cuál es la corriente que consume la bomba sabiendo que 1 hp = 746 W?",
     type: "choice",
     correct: "$I = P/V = 2.93\\text{ A}$",
     distractors: [
@@ -372,7 +372,7 @@ const questionBank = [
       "$I = P*V = 4.7\\times10^{4}\\text{ A}$"
     ],
     hint: "Medio caballo de fuerza equivale a $746 / 2 = 373\\text{ W}$. Luego divide entre el voltaje: $I = P / V$.",
-    explanation: "La potencia de medio caballo de fuerza es $373\\text{ W}$. De la Ley de Watt, la corriente es $I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$."
+    explanation: "La potencia de medio caballo de fuerza es $373\\text{ W}$. Por la Ley de Watt, la corriente es $$I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$$"
   },
   {
     id: "m8-q22",
@@ -403,7 +403,7 @@ const questionBank = [
       "Ley de Boyle-Mariotte: a volumen constante, la presión de un gas ideal es directamente proporcional a la temperatura."
     ],
     hint: "La gráfica es una curva hiperbólica decreciente entre Presión ($P$) y Volumen ($V$), lo que representa una relación inversamente proporcional.",
-    explanation: "Una curva decreciente en un plano Presión-Volumen representa una isoterma regida por la Ley de Boyle-Mariotte: al comprimir el volumen, la presión se incrementa de forma inversamente proporcional ($P_1 V_1 = P_2 V_2$)."
+    explanation: "En la Ley de Boyle-Mariotte establecemos que al comprimir el volumen, la presión se incrementa de forma inversamente proporcional, como en un globo que se aprieta."
   },
   {
     id: "m8-q24",
@@ -451,16 +451,16 @@ const questionBank = [
   {
     id: "m8-q28",
     topicId: "temperatura",
-    prompt: "¿A cuántos grados Fahrenheit corresponde una medida de 5$^{\\circ}\\text{C}$?",
+    prompt: "¿A cuántos grados Fahrenheit corresponde una medida de 5$^{\\circ}$ C?",
     type: "choice",
-    correct: "$F = 1.8 T + 32 = 41^{\\circ}\\text{F}$",
+    correct: "$F = 1.8 T + 32 = 41^{\\circ}\\text{F}$.",
     distractors: [
-      "$F = 32 - 1.8T = 23^{\\circ}\\text{F}$",
-      "$F = 32 + 0.8T = 36^{\\circ}\\text{F}$",
-      "$F = 32 - 0.8T = 28^{\\circ}\\text{F}$"
+      "$F = 32 - 1.8T = 23^{\\circ}\\text{F}$.",
+      "$F = 32 + 0.8T = 36^{\\circ}\\text{F}$.",
+      "$F = 32 - 0.8T = 28^{\\circ}\\text{F}$."
     ],
     hint: "La fórmula de conversión es $T_F = 1.8 \\cdot T_C + 32$.",
-    explanation: "Sustituyendo los $5^\\circ\\text{C}$: $T_F = 1.8(5) + 32 = 9 + 32 = 41^\\circ\\text{F}$."
+    explanation: "Sustituyendo los $5^{\\circ}\\text{C}$ en la relación de conversión:\n$$\\begin{aligned} T_F &= 1.8 \\cdot T_C + 32 \\\\ &= 1.8(5) + 32 \\\\ &= 9 + 32 \\\\ &= 41^{\\circ}\\text{F} \\end{aligned}$$"
   },
   {
     id: "m8-q29",
@@ -479,13 +479,13 @@ const questionBank = [
   {
     id: "m8-q30",
     topicId: "calor",
-    prompt: "Uno de los gases de efecto invernadero es el $\\text{CO}_{2}$. A mayor cantidad de este gas, hay un mayor incremento de temperatura. ¿Por qué ocurre este efecto?",
+    prompt: "Uno de los gases de efecto invernadero es el CO$_{2}$. A mayor cantidad de este gas, hay un mayor incremento de temperatura. ¿Por qué ocurre este efecto?",
     type: "choice",
     correct: "El $\\text{CO}_{2}$ no permite que la radiación emitida por la superficie terrestre salga de regreso al espacio.",
     distractors: [
-      "El $\\text{CO}_{2}$ desencadena una serie de reacciones químicas que catalizan la formación de contaminantes.",
-      "El $\\text{CO}_{2}$ incrementa el acceso a la superficie terrestre de la radiación del espacio.",
-      "El $\\text{CO}_{2}$ impide la total absorción de radiaciones del exterior por lo que vuelven al exterior."
+      "El CO$_{2}$ desencadena una serie de reacciones químicas que catalizan la formación de contaminantes.",
+      "El CO$_{2}$ incrementa el acceso a la superficie terrestre de la radiación del espacio.",
+      "El CO$_{2}$ impide la total absorción de radiaciones del exterior por lo que vuelven al exterior."
     ],
     hint: "El efecto invernadero funciona atrapando la radiación infrarroja térmica que la Tierra reemite hacia el espacio.",
     explanation: "Las moléculas de dióxido de carbono absorben y reemiten la radiación infrarroja emitida por la superficie del planeta, reteniendo la energía térmica en la atmósfera e impidiendo que escape al espacio exterior."
