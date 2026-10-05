@@ -461,18 +461,20 @@ const questionBank = [
   },
   {
     id: "m8-q27",
-    topicId: "poligonos",
-    prompt: "27. Analiza la siguiente gráfica e identifica los enunciados que presenten conclusiones verdaderas:<br><br>1. La velocidad promedio más alta del viento se presentó entre las 13-14 hrs.<br>2. Los vientos más fuertes a las 13 hrs. fueron de una velocidad promedio de $30\\text{ km/h}$.<br>3. La dirección de los vientos a las 17 hrs. fue SO.<br>4. Todos los vientos tienen una dirección SO.<br>5. La velocidad de los vientos decrece a las 15 hrs.",
-    image: "img/m8_grafica_viento.png",
-    type: "choice",
-    correct: "3, 5",
-    distractors: [
-      "2, 4, 5",
-      "1, 2",
-      "1, 2, 4"
+    prompt: "Analiza la gráfica sobre las condiciones del viento y selecciona todos los enunciados con conclusiones verdaderas.",
+    image: "assets/m8_winds.png",
+    type: "multi_select",
+    correctAnswers: [
+      "La dirección de los vientos a las 17:00 fue SO.",
+      "La velocidad de los vientos decrece a las 15:00."
     ],
-    hint: "Observa los puntos azules para la dirección (a las 17 hrs está en la línea SO) y la curva naranja/rosa después de las 15:00 hrs (que cae continuamente).",
-    explanation: "El enunciado 3 es verdadero porque el punto azul a las 17:00 marca la coordenada SO. El enunciado 5 es verdadero porque la gráfica desciende pronunciadamente a partir de las 15:00. Las demás son falsas por lectura visual directa."
+    distractors: [
+      "La velocidad promedio más alta del viento se presentó entre las 13:00 y 14:00.",
+      "Los vientos más fuertes a las 13:00 fueron de una velocidad promedio de $30\\text{ km/h}$.",
+      "Todos los vientos tienen una dirección SO."
+    ],
+    hint: "Observa en qué nivel están los puntos azules (dirección) a las 17:00 hrs y qué ocurre con la curva de velocidad a partir de las 15:00 hrs.",
+    explanation: "Revisando cada caso en la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li><b>Verdadero:</b> A las 17:00 hrs el punto azul se ubica en la línea horizontal correspondiente a <b>SO</b> (Suroeste).</li>\n  <li><b>Verdadero:</b> Justo a partir de las 15:00 hrs la curva de velocidad comienza un descenso pronunciado.</li>\n  <li><b>Falso:</b> La velocidad promedio máxima se dio cerca de las 14:30 hrs (no entre 13-14 hrs), a las 13:00 hrs apenas rondaba los $12\\text{ km/h}$ y la dirección cambia a lo largo del tiempo (no siempre es SO).</li>\n</ul>"
   },
   {
     id: "m8-q28",
