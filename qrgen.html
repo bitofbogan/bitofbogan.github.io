@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Studio Pro - Generador de Códigos QR Personalizados</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- qr-code-styling library (Soporta logos, degradados, ojos estilizados y formas de puntos) -->
+  <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+    
+    input[type="color"] {
+      -webkit-appearance: none;
+      border: none;
+      padding: 0;
+      border-radius: 9999px;
+      cursor: pointer;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 8px; }
+  </style>
+</head>
+<body class="h-full min-h-screen flex flex-col font-sans bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
+
+  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-brand-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+        <i data-lucide="qr-code" class="w-6 h-6 text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+          QR Studio Pro
+          <span class="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">100% Offline & Privado</span>
+        </h1>
+        <p class="text-xs text-slate-400">Sin límites de escaneos, sin caducidad y sin suscripciones</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 text-xs text-slate-400">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700/60">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        QR Estático Permanente
+      </span>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+    <!-- LEFT PANEL: Configuration options (7 columns on large screens) -->
+    <section class="lg:col-span-7 space-y-5">
+      
+      <!-- Content Type Selector -->
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+          <i data-lucide="layers" class="w-4 h-4 text-brand-400"></i>
+          1. Tipo de Contenido
+        </label>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="type-selector-buttons">
+          <button data-type="url" class="type-btn active flex flex-col items-center gap-2 p-3 rounded-xl border border-brand-500 bg-brand-500/10 text-brand-300 font-medium text-xs transition-all hover:border-brand-400">
+            <i data-lucide="link" class="w-5 h-5"></i>
+            <span>Enlace / Texto</span>
+          </button>
+          <button data-type="wifi" class="type-btn flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-800 bg-slate-950/40 text-slate-400 font-medium text-xs transition-all hover:border-slate-700 hover:text-slate-200">
+            <i data-lucide="wifi" class="w-5 h-5"></i>
+            <span>Red Wi-Fi</span>
+          </button>
+          <button data-type="vcard" class="type-btn flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-800 bg-slate-950/40 text-slate-400 font-medium text-xs transition-all hover:border-slate-700 hover:text-slate-200">
+            <i data-lucide="contact" class="w-5 h-5"></i>
+            <span>Contacto</span>
+          </button>
+          <button data-type="whatsapp" class="type-btn flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-800 bg-slate-950/40 text-slate-400 font-medium text-xs transition-all hover:border-slate-700 hover:text-slate-200">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+            <span>WhatsApp</span>
+          </button>
+          <button data-type="email" class="type-btn flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-800 bg-slate-950/40 text-slate-400 font-medium text-xs transition-all hover:border-slate-700 hover:text-slate-200">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            <span>Email</span>
+          </button>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-800/80">
+          
+          <!-- URL / TEXT FORM -->
+          <div id="form-url" class="space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">URL o Texto libre</label>
+              <input type="text" id="input-url" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" placeholder="https://tu-pagina-web.com o tu mensaje..." value="https://google.com">
+            </div>
+          </div>
+
+          <!-- WI-FI FORM -->
+          <div id="form-wifi" class="space-y-3 hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Nombre de la red (SSID)</label>
+                <input type="text" id="wifi-ssid" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Ej: Mi_Casa_Fibra">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Contraseña de red</label>
+                <input type="text" id="wifi-pass" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Contraseña segura">
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <label class="block text-xs font-medium text-slate-300">Seguridad:</label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                <input type="radio" name="wifi-type" value="WPA" checked class="text-brand-500 focus:ring-0"> WPA / WPA2
+              </label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                <input type="radio" name="wifi-type" value="WEP" class="text-brand-500 focus:ring-0"> WEP
+              </label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                <input type="radio" name="wifi-type" value="nopass" class="text-brand-500 focus:ring-0"> Abierta
+              </label>
+            </div>
+          </div>
+
+          <!-- VCARD CONTACT FORM -->
+          <div id="form-vcard" class="space-y-3 hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo</label>
+                <input type="text" id="vcard-name" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Juan Pérez">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Empresa / Cargo</label>
+                <input type="text" id="vcard-org" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Director Comercial">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Teléfono Móvil</label>
+                <input type="tel" id="vcard-phone" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="+52 55 1234 5678">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Correo Electrónico</label>
+                <input type="email" id="vcard-email" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="juan@empresa.com">
+              </div>
+            </div>
+          </div>
+
+          <!-- WHATSAPP FORM -->
+          <div id="form-whatsapp" class="space-y-3 hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Número (Con código país, sin +)</label>
+                <input type="tel" id="wa-phone" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="5215512345678">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Mensaje Prellenado</label>
+                <input type="text" id="wa-msg" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="¡Hola! Me interesa su producto.">
+              </div>
+            </div>
+          </div>
+
+          <!-- EMAIL FORM -->
+          <div id="form-email" class="space-y-3 hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Dirección de Correo</label>
+                <input type="email" id="email-address" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="contacto@ejemplo.com">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Asunto</label>
+                <input type="text" id="email-subject" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Cotización de servicios">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm space-y-5">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i data-lucide="palette" class="w-4 h-4 text-brand-400"></i>
+          2. Personalización de Estilo y Colores
+        </label>
+
+        <!-- Colors and Gradients -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-300">Color Primario</span>
+              <input type="color" id="color-fg1" value="#4f46e5" class="w-8 h-8 rounded-lg cursor-pointer">
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Módulos QR</span>
+              <span id="label-fg1" class="font-mono text-[11px] text-slate-300">#4f46e5</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-300">Segundo Color</span>
+              <input type="color" id="color-fg2" value="#06b6d4" class="w-8 h-8 rounded-lg cursor-pointer">
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <label class="flex items-center gap-1.5 text-slate-300 cursor-pointer">
+                <input type="checkbox" id="enable-gradient" checked class="rounded bg-slate-900 border-slate-700 text-brand-500 focus:ring-0">
+                <span>Degradado</span>
+              </label>
+              <span id="label-fg2" class="font-mono text-[11px] text-slate-300">#06b6d4</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-300">Fondo</span>
+              <input type="color" id="color-bg" value="#ffffff" class="w-8 h-8 rounded-lg cursor-pointer">
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Lienzo</span>
+              <span id="label-bg" class="font-mono text-[11px] text-slate-300">#ffffff</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module and Corner Shapes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Dots Style -->
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-2">Forma de los Puntos (Cuerpo)</label>
+            <div class="grid grid-cols-3 gap-2" id="dot-style-container">
+              <button type="button" data-dot="rounded" class="dot-btn active py-2 px-3 text-xs rounded-xl border border-brand-500 bg-brand-500/10 text-brand-300 font-medium">Redondeado</button>
+              <button type="button" data-dot="dots" class="dot-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Círculos</button>
+              <button type="button" data-dot="classy-rounded" class="dot-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Elegante</button>
+              <button type="button" data-dot="extra-rounded" class="dot-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Curvo Plus</button>
+              <button type="button" data-dot="square" class="dot-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Cuadrado</button>
+              <button type="button" data-dot="classy" class="dot-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Clásico</button>
+            </div>
+          </div>
+
+          <!-- Corners (Eyes) Style -->
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-2">Esquinas de Enfoque (Ojos)</label>
+            <div class="grid grid-cols-3 gap-2" id="corner-style-container">
+              <button type="button" data-corner="extra-rounded" class="corner-btn active py-2 px-3 text-xs rounded-xl border border-brand-500 bg-brand-500/10 text-brand-300 font-medium">Redondeados</button>
+              <button type="button" data-corner="dot" class="corner-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Circulares</button>
+              <button type="button" data-corner="square" class="corner-btn py-2 px-3 text-xs rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200">Cuadrados</button>
+            </div>
+
+            <!-- Frame / Badge text -->
+            <div class="mt-3">
+              <label class="block text-xs font-medium text-slate-300 mb-1">Marco decorativo con texto</label>
+              <select id="frame-preset" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                <option value="none">Sin marco (Solo el código QR)</option>
+                <option value="badge-escanear" selected>Marco inferior: "ESCANÉAME"</option>
+                <option value="badge-scan-me">Marco inferior: "SCAN ME"</option>
+                <option value="badge-wifi">Marco inferior: "CONECTAR A WI-FI"</option>
+                <option value="badge-contacto">Marco inferior: "GUARDAR CONTACTO"</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm space-y-4">
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="image" class="w-4 h-4 text-brand-400"></i>
+            3. Logo Central o Ícono de Marca
+          </span>
+          <span id="logo-badge" class="text-[10px] text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full hidden">Modo ECC 'High' auto-activado</span>
+        </label>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+          <div>
+            <label for="logo-upload" class="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-700 rounded-xl hover:border-brand-500/60 cursor-pointer bg-slate-950/40 transition-colors">
+              <i data-lucide="upload-cloud" class="w-7 h-7 text-slate-400 mb-1"></i>
+              <span class="text-xs font-medium text-slate-300" id="logo-filename">Subir imagen o logo (PNG, JPG, SVG)</span>
+              <span class="text-[10px] text-slate-500">Se procesa 100% en tu navegador</span>
+              <input type="file" id="logo-upload" accept="image/*" class="hidden">
+            </label>
+            <div id="remove-logo-container" class="mt-2 hidden">
+              <button type="button" id="btn-remove-logo" class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Quitar imagen
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-300 mb-1">
+                <span>Escala del Logo</span>
+                <span id="logo-size-val" class="font-mono text-slate-400">30%</span>
+              </div>
+              <input type="range" id="logo-size" min="15" max="42" value="30" class="w-full accent-brand-500 bg-slate-800 rounded-lg cursor-pointer">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs text-slate-300 mb-1">
+                <span>Margen protector del Logo</span>
+                <span id="logo-margin-val" class="font-mono text-slate-400">4px</span>
+              </div>
+              <input type="range" id="logo-margin" min="0" max="15" value="4" class="w-full accent-brand-500 bg-slate-800 rounded-lg cursor-pointer">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: Live Interactive Preview & Download Box (5 columns) -->
+    <section class="lg:col-span-5 sticky top-20 space-y-4">
+      
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-md flex flex-col items-center">
+        
+        <!-- Live preview badge -->
+        <div class="w-full flex items-center justify-between mb-4">
+          <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
+            <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i>
+            Vista Previa en Vivo
+          </span>
+          <span id="render-status" class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Listo para escanear</span>
+        </div>
+
+        <!-- The Frame & QR Wrapper Container -->
+        <div id="preview-wrapper" class="relative p-5 rounded-2xl flex flex-col items-center justify-center transition-all bg-white shadow-xl shadow-black/40">
+          <!-- QR Canvas target mounted by qr-code-styling -->
+          <div id="qr-target" class="flex items-center justify-center overflow-hidden rounded-xl"></div>
+          
+          <!-- Optional Frame Label -->
+          <div id="frame-label" class="mt-3 text-center font-black tracking-widest text-slate-900 text-xs uppercase px-4 py-1.5 rounded-lg bg-slate-100 border border-slate-300/80 shadow-inner flex items-center gap-1.5">
+            <i data-lucide="scan" class="w-3.5 h-3.5 text-indigo-600"></i>
+            <span id="frame-text">ESCANÉAME</span>
+          </div>
+        </div>
+
+        <div class="w-full mt-6 space-y-3">
+          <div class="flex items-center justify-between text-xs text-slate-300 px-1">
+            <label for="export-resolution" class="font-medium flex items-center gap-1">
+              <i data-lucide="maximize" class="w-3.5 h-3.5 text-brand-400"></i> Resolución de descarga:
+            </label>
+            <select id="export-resolution" class="bg-slate-950 border border-slate-700/80 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none">
+              <option value="600">600 x 600 px (Digital estándar)</option>
+              <option value="1200" selected>1200 x 1200 px (Alta resolución)</option>
+              <option value="2000">2000 x 2000 px (Imprenta / Gran formato)</option>
+            </select>
+          </div>
+
+          <button type="button" id="btn-download" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-cyan-500 hover:from-brand-500 hover:to-cyan-400 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98]">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Descargar Código QR (PNG)
+          </button>
+
+          <button type="button" id="btn-copy" class="w-full py-2.5 px-4 rounded-xl border border-slate-700 bg-slate-950/60 hover:bg-slate-800 text-slate-300 hover:text-white font-medium text-xs flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            Copiar Imagen al Portapapeles
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Trust & Educational card -->
+      <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 text-xs text-slate-400 space-y-2">
+        <div class="flex items-center gap-2 font-medium text-slate-200">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+          Garantía de Código Estático
+        </div>
+        <p class="leading-relaxed">
+          Este código QR contiene tus datos de forma directa. No redirige por servidores intermediarios ni expira tras un periodo de prueba.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    /* --- Application State --- */
+    const state = {
+      contentType: 'url',
+      contentRaw: 'https://google.com',
+      fg1: '#4f46e5',
+      fg2: '#06b6d4',
+      isGradient: true,
+      bg: '#ffffff',
+      dotStyle: 'rounded',
+      cornerStyle: 'extra-rounded',
+      logoUrl: '',
+      logoSize: 0.30,
+      logoMargin: 4,
+      framePreset: 'badge-escanear',
+      errorCorrectionLevel: 'H'
+    };
+
+    const qrTarget = document.getElementById('qr-target');
+
+    // Initialize qr-code-styling instance
+    const qrCode = new QRCodeStyling({
+      width: 260,
+      height: 260,
+      type: 'canvas',
+      data: state.contentRaw,
+      image: '',
+      dotsOptions: {
+        type: 'rounded',
+        gradient: {
+          type: 'linear',
+          rotation: 45,
+          colorStops: [{ offset: 0, color: '#4f46e5' }, { offset: 1, color: '#06b6d4' }]
+        }
+      },
+      cornersSquareOptions: {
+        type: 'extra-rounded',
+        color: '#4f46e5'
+      },
+      cornersDotOptions: {
+        type: 'dot',
+        color: '#4f46e5'
+      },
+      backgroundOptions: {
+        color: '#ffffff'
+      },
+      imageOptions: {
+        crossOrigin: 'anonymous',
+        margin: 4,
+        imageSize: 0.30,
+        hideBackgroundDots: true
+      },
+      qrOptions: {
+        errorCorrectionLevel: 'H'
+      }
+    });
+
+    // Mount initial QR
+    qrCode.append(qrTarget);
+
+    function computeContentString() {
+      switch (state.contentType) {
+        case 'url':
+          return document.getElementById('input-url').value.trim() || 'https://google.com';
+        case 'wifi': {
+          const ssid = document.getElementById('wifi-ssid').value.trim() || 'MiRedWifi';
+          const pass = document.getElementById('wifi-pass').value;
+          const auth = document.querySelector('input[name="wifi-type"]:checked').value;
+          return `WIFI:T:${auth};S:${ssid};P:${pass};;`;
+        }
+        case 'vcard': {
+          const name = document.getElementById('vcard-name').value.trim() || 'Contacto';
+          const org = document.getElementById('vcard-org').value.trim();
+          const phone = document.getElementById('vcard-phone').value.trim();
+          const email = document.getElementById('vcard-email').value.trim();
+          return [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            `FN:${name}`,
+            org ? `ORG:${org}` : '',
+            phone ? `TEL;TYPE=CELL:${phone}` : '',
+            email ? `EMAIL:${email}` : '',
+            'END:VCARD'
+          ].filter(Boolean).join('\n');
+        }
+        case 'whatsapp': {
+          const phone = document.getElementById('wa-phone').value.replace(/[^0-9]/g, '');
+          const msg = encodeURIComponent(document.getElementById('wa-msg').value.trim());
+          if (!phone) return 'https://wa.me/';
+          return msg ? `https://wa.me/${phone}?text=${msg}` : `https://wa.me/${phone}`;
+        }
+        case 'email': {
+          const to = document.getElementById('email-address').value.trim();
+          const subject = encodeURIComponent(document.getElementById('email-subject').value.trim());
+          return `mailto:${to}?subject=${subject}`;
+        }
+        default:
+          return 'https://google.com';
+      }
+    }
+
+    function updateQrCode() {
+      const data = computeContentString();
+
+      // Ensure 'H' error correction whenever a custom logo is used
+      const ecc = state.logoUrl ? 'H' : 'Q';
+      const logoBadge = document.getElementById('logo-badge');
+      if (state.logoUrl) {
+        logoBadge.classList.remove('hidden');
+      } else {
+        logoBadge.classList.add('hidden');
+      }
+
+      // Configure dots styling and colors
+      let dotsOptions = {
+        type: state.dotStyle
+      };
+
+      if (state.isGradient) {
+        dotsOptions.gradient = {
+          type: 'linear',
+          rotation: 45,
+          colorStops: [
+            { offset: 0, color: state.fg1 },
+            { offset: 1, color: state.fg2 }
+          ]
+        };
+        delete dotsOptions.color;
+      } else {
+        dotsOptions.color = state.fg1;
+        delete dotsOptions.gradient;
+      }
+
+      // Corner eyes options
+      let cornerSquareType = 'extra-rounded';
+      let cornerDotType = 'dot';
+      if (state.cornerStyle === 'square') {
+        cornerSquareType = 'square';
+        cornerDotType = 'square';
+      } else if (state.cornerStyle === 'dot') {
+        cornerSquareType = 'extra-rounded';
+        cornerDotType = 'dot';
+      }
+
+      qrCode.update({
+        data: data,
+        image: state.logoUrl,
+        dotsOptions: dotsOptions,
+        cornersSquareOptions: {
+          type: cornerSquareType,
+          color: state.fg1
+        },
+        cornersDotOptions: {
+          type: cornerDotType,
+          color: state.fg1
+        },
+        backgroundOptions: {
+          color: state.bg
+        },
+        imageOptions: {
+          margin: state.logoMargin,
+          imageSize: state.logoSize,
+          hideBackgroundDots: true
+        },
+        qrOptions: {
+          errorCorrectionLevel: ecc
+        }
+      });
+
+      // Update frame container background
+      const previewWrapper = document.getElementById('preview-wrapper');
+      previewWrapper.style.backgroundColor = state.bg;
+
+      // Update frame badge text
+      updateFrameUI();
+    }
+
+    function updateFrameUI() {
+      const frameEl = document.getElementById('frame-label');
+      const frameText = document.getElementById('frame-text');
+      const preset = document.getElementById('frame-preset').value;
+
+      if (preset === 'none') {
+        frameEl.classList.add('hidden');
+      } else {
+        frameEl.classList.remove('hidden');
+        switch (preset) {
+          case 'badge-escanear':
+            frameText.innerText = 'ESCANÉAME';
+            break;
+          case 'badge-scan-me':
+            frameText.innerText = 'SCAN ME';
+            break;
+          case 'badge-wifi':
+            frameText.innerText = 'CONECTAR A WI-FI';
+            break;
+          case 'badge-contacto':
+            frameText.innerText = 'GUARDAR CONTACTO';
+            break;
+        }
+      }
+    }
+
+    const typeButtons = document.querySelectorAll('.type-btn');
+    const formSections = {
+      url: document.getElementById('form-url'),
+      wifi: document.getElementById('form-wifi'),
+      vcard: document.getElementById('form-vcard'),
+      whatsapp: document.getElementById('form-whatsapp'),
+      email: document.getElementById('form-email')
+    };
+
+    typeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        typeButtons.forEach(b => {
+          b.classList.remove('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+          b.classList.add('border-slate-800', 'bg-slate-950/40', 'text-slate-400');
+        });
+        btn.classList.add('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+        btn.classList.remove('border-slate-800', 'bg-slate-950/40', 'text-slate-400');
+
+        const type = btn.getAttribute('data-type');
+        state.contentType = type;
+
+        // Toggle form visibility
+        Object.entries(formSections).forEach(([key, el]) => {
+          if (key === type) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+
+        // Smart preset adjustment for frame
+        const frameSelect = document.getElementById('frame-preset');
+        if (type === 'wifi') frameSelect.value = 'badge-wifi';
+        else if (type === 'vcard') frameSelect.value = 'badge-contacto';
+        else if (frameSelect.value === 'badge-wifi' || frameSelect.value === 'badge-contacto') {
+          frameSelect.value = 'badge-escanear';
+        }
+
+        updateQrCode();
+      });
+    });
+
+    // Content inputs change listener
+    document.querySelectorAll('#form-url input, #form-wifi input, #form-vcard input, #form-whatsapp input, #form-email input').forEach(input => {
+      input.addEventListener('input', updateQrCode);
+    });
+
+    const fg1Input = document.getElementById('color-fg1');
+    const fg2Input = document.getElementById('color-fg2');
+    const bgInput = document.getElementById('color-bg');
+    const gradientCheck = document.getElementById('enable-gradient');
+
+    fg1Input.addEventListener('input', (e) => {
+      state.fg1 = e.target.value;
+      document.getElementById('label-fg1').innerText = state.fg1;
+      updateQrCode();
+    });
+
+    fg2Input.addEventListener('input', (e) => {
+      state.fg2 = e.target.value;
+      document.getElementById('label-fg2').innerText = state.fg2;
+      updateQrCode();
+    });
+
+    bgInput.addEventListener('input', (e) => {
+      state.bg = e.target.value;
+      document.getElementById('label-bg').innerText = state.bg;
+      updateQrCode();
+    });
+
+    gradientCheck.addEventListener('change', (e) => {
+      state.isGradient = e.target.checked;
+      fg2Input.disabled = !state.isGradient;
+      updateQrCode();
+    });
+
+    // Module shape buttons
+    const dotButtons = document.querySelectorAll('.dot-btn');
+    dotButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dotButtons.forEach(b => {
+          b.classList.remove('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+          b.classList.add('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+        });
+        btn.classList.add('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+        btn.classList.remove('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+        state.dotStyle = btn.getAttribute('data-dot');
+        updateQrCode();
+      });
+    });
+
+    // Corner shape buttons
+    const cornerButtons = document.querySelectorAll('.corner-btn');
+    cornerButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        cornerButtons.forEach(b => {
+          b.classList.remove('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+          b.classList.add('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+        });
+        btn.classList.add('active', 'border-brand-500', 'bg-brand-500/10', 'text-brand-300');
+        btn.classList.remove('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+        state.cornerStyle = btn.getAttribute('data-corner');
+        updateQrCode();
+      });
+    });
+
+    document.getElementById('frame-preset').addEventListener('change', updateQrCode);
+
+    const logoUpload = document.getElementById('logo-upload');
+    const logoFilename = document.getElementById('logo-filename');
+    const removeLogoContainer = document.getElementById('remove-logo-container');
+    const btnRemoveLogo = document.getElementById('btn-remove-logo');
+    const logoSizeSlider = document.getElementById('logo-size');
+    const logoMarginSlider = document.getElementById('logo-margin');
+
+    logoUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        logoFilename.innerText = file.name;
+        removeLogoContainer.classList.remove('hidden');
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          state.logoUrl = evt.target.result;
+          updateQrCode();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    btnRemoveLogo.addEventListener('click', () => {
+      logoUpload.value = '';
+      logoFilename.innerText = 'Subir imagen o logo (PNG, JPG, SVG)';
+      removeLogoContainer.classList.add('hidden');
+      state.logoUrl = '';
+      updateQrCode();
+    });
+
+    logoSizeSlider.addEventListener('input', (e) => {
+      state.logoSize = parseFloat(e.target.value) / 100;
+      document.getElementById('logo-size-val').innerText = `${e.target.value}%`;
+      updateQrCode();
+    });
+
+    logoMarginSlider.addEventListener('input', (e) => {
+      state.logoMargin = parseInt(e.target.value, 10);
+      document.getElementById('logo-margin-val').innerText = `${e.target.value}px`;
+      updateQrCode();
+    });
+
+    async function generateCompositeCanvas(exportSize) {
+      // Create a temporary high-res styling instance
+      const tempQr = new QRCodeStyling({
+        width: exportSize,
+        height: exportSize,
+        type: 'canvas',
+        data: computeContentString(),
+        image: state.logoUrl,
+        dotsOptions: {
+          type: state.dotStyle,
+          ...(state.isGradient ? {
+            gradient: {
+              type: 'linear',
+              rotation: 45,
+              colorStops: [{ offset: 0, color: state.fg1 }, { offset: 1, color: state.fg2 }]
+            }
+          } : { color: state.fg1 })
+        },
+        cornersSquareOptions: {
+          type: state.cornerStyle === 'square' ? 'square' : 'extra-rounded',
+          color: state.fg1
+        },
+        cornersDotOptions: {
+          type: state.cornerStyle === 'square' ? 'square' : 'dot',
+          color: state.fg1
+        },
+        backgroundOptions: { color: state.bg },
+        imageOptions: {
+          margin: state.logoMargin * (exportSize / 260),
+          imageSize: state.logoSize,
+          hideBackgroundDots: true
+        },
+        qrOptions: {
+          errorCorrectionLevel: state.logoUrl ? 'H' : 'Q'
+        }
+      });
+
+      const qrBlob = await tempQr.getRawData('png');
+      const qrBitmap = await createImageBitmap(qrBlob);
+
+      const preset = document.getElementById('frame-preset').value;
+      const finalCanvas = document.createElement('canvas');
+      const ctx = finalCanvas.getContext('2d');
+
+      if (preset === 'none') {
+        // Direct QR
+        finalCanvas.width = exportSize;
+        finalCanvas.height = exportSize;
+        ctx.fillStyle = state.bg;
+        ctx.fillRect(0, 0, exportSize, exportSize);
+        ctx.drawImage(qrBitmap, 0, 0);
+      } else {
+        // With frame badge
+        const badgeHeight = Math.round(exportSize * 0.18);
+        const padding = Math.round(exportSize * 0.08);
+
+        finalCanvas.width = exportSize + (padding * 2);
+        finalCanvas.height = exportSize + badgeHeight + (padding * 2);
+
+        // Fill overall card background
+        ctx.fillStyle = state.bg;
+        ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+
+        // Draw the QR
+        ctx.drawImage(qrBitmap, padding, padding);
+
+        // Draw Frame Badge Box
+        const badgeWidth = Math.round(exportSize * 0.7);
+        const bX = (finalCanvas.width - badgeWidth) / 2;
+        const bY = padding + exportSize + Math.round(badgeHeight * 0.15);
+        const bH = Math.round(badgeHeight * 0.65);
+
+        // Rounded badge background
+        const radius = Math.round(bH * 0.28);
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.moveTo(bX + radius, bY);
+        ctx.lineTo(bX + badgeWidth - radius, bY);
+        ctx.quadraticCurveTo(bX + badgeWidth, bY, bX + badgeWidth, bY + radius);
+        ctx.lineTo(bX + badgeWidth, bY + bH - radius);
+        ctx.quadraticCurveTo(bX + badgeWidth, bY + bH, bX + badgeWidth - radius, bY + bH);
+        ctx.lineTo(bX + radius, bY + bH);
+        ctx.quadraticCurveTo(bX, bY + bH, bX, bY + bH - radius);
+        ctx.lineTo(bX, bY + radius);
+        ctx.quadraticCurveTo(bX, bY, bX + radius, bY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw Badge Text
+        const frameText = document.getElementById('frame-text').innerText;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${Math.round(bH * 0.42)}px system-ui, -apple-system, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.letterSpacing = '2px';
+        ctx.fillText(frameText, finalCanvas.width / 2, bY + (bH / 2));
+      }
+
+      return finalCanvas;
+    }
+
+    const btnDownload = document.getElementById('btn-download');
+    const btnCopy = document.getElementById('btn-copy');
+
+    btnDownload.addEventListener('click', async () => {
+      const origText = btnDownload.innerHTML;
+      btnDownload.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Procesando alta resolución...`;
+      lucide.createIcons();
+
+      try {
+        const resolution = parseInt(document.getElementById('export-resolution').value, 10);
+        const canvas = await generateCompositeCanvas(resolution);
+        
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `codigo-qr-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+      } catch (err) {
+        console.error('Error al generar la descarga:', err);
+      } finally {
+        btnDownload.innerHTML = origText;
+        lucide.createIcons();
+      }
+    });
+
+    btnCopy.addEventListener('click', async () => {
+      const origText = btnCopy.innerHTML;
+      btnCopy.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Copiando...`;
+      lucide.createIcons();
+
+      try {
+        const canvas = await generateCompositeCanvas(800);
+        canvas.toBlob(async (blob) => {
+          if (navigator.clipboard && window.ClipboardItem) {
+            try {
+              await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+              btnCopy.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> ¡Copiado al portapapeles!`;
+            } catch {
+              fallbackCopy(canvas);
+            }
+          } else {
+            fallbackCopy(canvas);
+          }
+          setTimeout(() => {
+            btnCopy.innerHTML = origText;
+            lucide.createIcons();
+          }, 2500);
+        }, 'image/png');
+      } catch (err) {
+        btnCopy.innerHTML = origText;
+        lucide.createIcons();
+      }
+    });
+
+    function fallbackCopy(canvas) {
+      // Fallback simple: abre la imagen en una pestaña para guardar rápido
+      const win = window.open();
+      win.document.write(`<img src="${canvas.toDataURL('image/png')}"/>`);
+    }
+
+    // Initial frame update
+    updateFrameUI();
+  </script>
+</body>
+</html>
