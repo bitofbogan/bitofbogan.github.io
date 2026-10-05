@@ -203,18 +203,46 @@ const questionBank = [
     explanation: "Por la segunda ley de la termodinámica, la transferencia calor siempre fluye desde el cuerpo con mayor temperatura hacia el de menor temperatura."
   },
   {
-    id: "m8-q10",
-    prompt: "10. Dado el plano cartesiano, y tomando en cuenta que los ejes XY tienen divisiones unitarias, identifica correctamente las coordenadas de los puntos ubicados en el gráfico.",
-    image: "img/m8_plano_cartesiano.png",
+    id: "m8-q10a",
+    prompt: "¿Cuáles son las coordenadas del punto señalado en el plano cartesiano si cada división mostrada es unitaria?",
+    image: "assets/m8_cartplane1.png",
     type: "choice",
-    correct: "$P(-3,-1)$, $R(-1,2)$, $Q(0,4)$",
+    correct: "$(-3, -1)$",
     distractors: [
-      "$P(-3,1)$, $R(-1,2)$, $Q(-4,0)$",
-      "$P(-3,1)$, $R(1,2)$, $Q(4,0)$",
-      "$P(-3,-1)$, $R(-1,2)$, $Q(4,0)$"
+      "$(-3, 1)$",
+      "$(1, 3)$",
+      "$(1, -3)$"
     ],
-    hint: "Primero lee el avance horizontal en el eje $X$ y luego el vertical en el eje $Y$ para cada punto $(x, y)$.",
-    explanation: "Revisando cada coordenada: $P$ está en 3 a la izquierda y 1 abajo $(-3, -1)$; $R$ está en 1 a la izquierda y 2 arriba $(-1, 2)$; y $Q$ se ubica sobre el eje vertical en $x = 0$, $y = 4$ $(0, 4)$."
+    hint: "Inicia desde el origen y cuenta el movimiento horizontal (coordenada $x$) y luego el movimiento vertical (coordenada $y$).",
+    explanation: "El punto $P$ está en 3 a la izquierda y 1 abajo: $(-3, -1)$."
+  },
+  {
+    id: "m8-q10b",
+    prompt: "¿Cuáles son las coordenadas del punto señalado en el plano cartesiano si cada división mostrada es unitaria?",
+    image: "assets/m8_cartplane2.png",
+    type: "choice",
+    correct: "$(-1, 2)$",
+    distractors: [
+      "$(1, -2)$",
+      "$(-2, 1)$",
+      "$(2, -1)$"
+    ],
+    hint: "Inicia desde el origen y cuenta el movimiento horizontal (coordenada $x$) y luego el movimiento vertical (coordenada $y$).",
+    explanation: "El punto $R$ está en 1 a la izquierda y 2 arriba: $(-1, 2)$."
+  },
+  {
+    id: "m8-q10c",
+    prompt: "¿Cuáles son las coordenadas del punto señalado en el plano cartesiano si cada división mostrada es unitaria?",
+    image: "assets/m8_cartplane3.png",
+    type: "choice",
+    correct: "$(0, 4)$",
+    distractors: [
+      "$(4, 0)$",
+      "$(0, -4)$",
+      "$(-4, 0)$"
+    ],
+    hint: "Inicia desde el origen y cuenta el movimiento horizontal (coordenada $x$) y luego el movimiento vertical (coordenada $y$).",
+    explanation: "El punto $Q$ está en 0 a la izquierda/derecha y 4 arriba: $(-1, 2)$."
   },
   {
     id: "m8-q11",
@@ -258,18 +286,17 @@ const questionBank = [
   },
   {
     id: "m8-q14",
-    topicId: "poligonos",
-    prompt: "14. Se tienen el conjunto $A = \\{1, 4, 9\\}$ y el conjunto $B = \\{1, +2, -2, 3\\}$. Se define una relación con todos los elementos del dominio que son el cuadrado de los elementos del contradominio (o donde el dominio se relaciona con sus raíces).<br><br>¿Es correcto afirmar que $B$ es función de $A$?",
-    image: "img/m8_diagrama_flechas.png",
+    prompt: "Se define una relación entre los conjuntos $A$ y $B$ tal que cada elemento del dominio se relaciona con su raíz cuadrada en el contradominio. ¿Se puede afirmar que $B$ es una función de $A$?",
+    image: "assets/m8_domain.png",
     type: "choice",
-    correct: "No $\\Rightarrow$ Porque uno de los elementos del dominio se relaciona con dos elementos del contradominio.",
+    correct: "No, porque uno de los elementos del dominio se relaciona con dos elementos del contradominio.",
     distractors: [
-      "Sí $\\Rightarrow$ Debido a que todos los elementos del dominio están relacionados con los elementos del contradominio.",
-      "Sí $\\Rightarrow$ Porque la relación se forma con un elemento del dominio con al menos un elemento del contradominio.",
-      "No $\\Rightarrow$ Debido a que existen dos elementos del dominio asociados a un elemento del contradominio."
+      "Sí, porque todos los elementos del dominio están relacionados con los elementos del contradominio.",
+      "Sí, porque la relación se forma con un elemento del dominio con al menos un elemento del contradominio.",
+      "No, porque existen dos elementos del dominio asociados a un elemento del contradominio."
     ],
-    hint: "Para que una relación sea función, a cada elemento del dominio le debe corresponder UN SOLO elemento del contradominio.",
-    explanation: "En el diagrama se observa que el número 4 del dominio apunta a dos valores distintos (+2 y -2) en el contradominio. Al no existir unicidad, no cumple la definición de función."
+    hint: "Para que una relación sea función, a cada elemento del dominio le debe corresponder un solo elemento del contradominio.",
+    explanation: "En el diagrama se observa que el número 4 del dominio apunta a dos valores distintos (+2 y -2) en el contradominio. Al no estar relacionado un elemento del dominio con un solo elemento del contradominio, no se cumple la definición de función."
   },
   {
     id: "m8-q15",
@@ -288,22 +315,21 @@ const questionBank = [
   {
     id: "m8-q16",
     topicId: "flotacion",
-    prompt: "16. Selecciona y ordena la secuencia lógica de pasos para resolver el problema de sumergir un cubo de madera de 6 cm de lado ($830\\text{ kg/m}^3$) en agua ($1,000\\text{ kg/m}^3$):",
+    prompt: "Se introduce en agua un cubo de madera de 6 cm de lado y densidad de 830 kg/m$^3$. ¿Cuál es la secuencia de pasos para encontrar la fuerza necesaria para sumergir el cubo?",
     type: "drag_order",
     correctOrder: [
       "Volumen: $V = (6\\text{ cm})^3 = 216\\text{ cm}^3 = 2.16\\times10^{-4}\\text{ m}^3$",
       "Fuerza de flotación: $F_f = (1,000)(9.8)(2.16\\times10^{-4}) = 2.1168\\text{ N}$",
-      "Peso propio: $W = (830)(9.8)(2.16\\times10^{-4}) = 1.7569\\text{ N}$",
+      "Peso propio: $W = \\rho g V = (830)(9.8)(2.16\\times10^{-4}) = 1.7569\\text{ N}$",
       "Fuerza requerida: $F = F_f - W = 0.3599\\text{ N}$"
     ],
-    hint: "Primero obtienes el volumen geométrico, luego el empuje del agua ($F_f$), luego el peso del cubo ($W$) y al final restas ambas fuerzas.",
-    explanation: "La secuencia lógica es: 1) Calcular el volumen del cubo; 2) Calcular la fuerza de flotación que empuja hacia arriba; 3) Calcular el peso propio hacia abajo; 4) Restar ambas fuerzas ($F = F_f - W$) para determinar el empuje manual necesario."
+    hint: "Primero se obtiene el volumen, luego el empuje del agua y el peso del cubo para al final restar ambas fuerzas.",
+    explanation: "La secuencia lógica es:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Calcular el volumen del cubo.</li>\n  <li>Calcular la fuerza de flotación que empuja hacia arriba ($F_f$).</li>\n  <li>Calcular el peso propio hacia abajo ($W$).</li>\n  <li>Restar ambas fuerzas ($F = F_f - W$) para determinar el empuje manual necesario.</li>\n</ol>"
   },
     {
     id: "m8-q17",
-    topicId: "poligonos",
-    prompt: "17. ¿Cuál es la ecuación correspondiente a la siguiente parábola?",
-    image: "img/m8_grafica_parabola.png",
+    prompt: "¿Cuál es la ecuación correspondiente a la siguiente parábola?",
+    image: "assets/m8_parabola.png",
     type: "choice",
     correct: "$3x^{2}+2x-5=0$",
     distractors: [
@@ -311,7 +337,7 @@ const questionBank = [
       "$x^{2}+2x-3=0$",
       "$2x^{2}+3x-5=0$"
     ],
-    hint: "Fíjate en dónde cruza al eje Y (cuando $x = 0$, $y = -5$) y prueba con las raíces visibles en la gráfica (por ejemplo, cuando $x = 1$, $y = 0$).",
+    hint: "Fíjate en dónde cruza al eje $Y$ (cuando $x = 0$, $y = -5$) y prueba con las raíces visibles en la gráfica (por ejemplo, cuando $x = 1$, $y = 0$).",
     explanation: "Al evaluar $x = 1$ en $3(1)^2 + 2(1) - 5 = 3 + 2 - 5 = 0$, la gráfica cruza exactamente el eje en $(1, 0)$ y tiene su ordenada al origen en $(0, -5)$, lo que identifica a la opción correcta."
   },
   {
