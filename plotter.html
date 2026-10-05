@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlotLab Pro - Generador de Planos Cartesianos LaTeX HD</title>
+  <title>Plotter LaTeX HD</title>
 
   <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -127,29 +127,29 @@
         <span class="hidden sm:inline">Copiar Imagen</span>
       </button>
 
-      <!-- Dropdown Exportar -->
-      <div class="relative group">
-        <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
+      <!-- Dropdown Exportar con click corregido -->
+      <div class="relative">
+        <button id="btnToggleDropdown" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
           <span>Descargar</span>
           <i data-lucide="chevron-down" class="w-3 h-3"></i>
         </button>
 
-        <div class="absolute right-0 mt-1 w-52 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden group-hover:block hover:block">
-          <button id="btnDownloadSvg" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+        <div id="downloadDropdownMenu" class="absolute right-0 mt-1.5 w-56 bg-slate-850 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden">
+          <button id="btnDownloadSvg" type="button" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600 hover:text-white flex items-center gap-2 transition cursor-pointer">
             <i data-lucide="file-code" class="w-4 h-4 text-emerald-400"></i>
             <span>Vectorial SVG (Nitidez ∞)</span>
           </button>
           <div class="h-px bg-slate-700/60 my-1"></div>
-          <button id="btnDownloadPng1x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+          <button id="btnDownloadPng1x" type="button" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600 hover:text-white flex items-center gap-2 transition cursor-pointer">
             <i data-lucide="image" class="w-4 h-4 text-sky-400"></i>
             <span>PNG Estándar (1x)</span>
           </button>
-          <button id="btnDownloadPng2x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+          <button id="btnDownloadPng2x" type="button" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600 hover:text-white flex items-center gap-2 transition cursor-pointer">
             <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
             <span>PNG HD (2x Retina)</span>
           </button>
-          <button id="btnDownloadPng4x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+          <button id="btnDownloadPng4x" type="button" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600 hover:text-white flex items-center gap-2 transition cursor-pointer">
             <i data-lucide="printer" class="w-4 h-4 text-amber-400"></i>
             <span>PNG Ultra 4x (Impresión)</span>
           </button>
@@ -166,6 +166,9 @@
       <div class="flex border-b border-slate-800 px-3 text-xs sticky top-0 bg-slate-900/95 backdrop-blur z-20">
         <button id="tabBtnFunctions" class="py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5">
           <i data-lucide="activity" class="w-3.5 h-3.5"></i> Funciones
+        </button>
+        <button id="tabBtnPoints" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="dot" class="w-4 h-4"></i> Puntos
         </button>
         <button id="tabBtnAxes" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
           <i data-lucide="move" class="w-3.5 h-3.5"></i> Ejes & Rótulos
@@ -214,10 +217,65 @@
           </div>
         </div>
 
+        <!-- PESTAÑA: PUNTOS CARTESIANOS -->
+        <div id="tabSectionPoints" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Puntos en el Plano</span>
+            <button id="btnAddPoint" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 bg-indigo-500/10 px-2.5 py-1 rounded-lg border border-indigo-500/20 transition">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Añadir Punto
+            </button>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold text-slate-200">Mostrar coordenadas en etiquetas</span>
+              <p class="text-[11px] text-slate-400">Ejemplo: P(1, 0)</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="checkShowCoords" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+            </label>
+          </div>
+
+          <!-- Contenedor de puntos -->
+          <div id="pointsContainer" class="space-y-3.5">
+            <!-- Inyectado por JS -->
+          </div>
+        </div>
+
         <!-- PESTAÑA 2: EJES, RÓTULOS Y RANGOS -->
         <div id="tabSectionAxes" class="space-y-5 hidden">
           
-          <!-- Rótulos editables de los ejes en LaTeX -->
+          <!-- Título opcional del gráfico en LaTeX -->
+          <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                <i data-lucide="heading" class="w-3.5 h-3.5"></i> Título del Gráfico (LaTeX)
+              </h3>
+              <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                <input type="checkbox" id="checkShowChartTitle" class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
+                <span>Mostrar</span>
+              </label>
+            </div>
+
+            <div>
+              <input type="text" id="inputChartTitle" value="Gráfica de f(x) = 3x^2 + 2x - 5" placeholder="ej: f(x) = x^2 - 4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+                <span>Vista Previa:</span>
+                <span id="previewKatexChartTitle" class="text-indigo-300 font-medium"></span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-slate-400 text-[11px]">Tamaño de Fuente del Título:</span>
+                <span id="chartTitleSizeVal" class="font-mono text-indigo-300 font-semibold">18px</span>
+              </div>
+              <input type="range" id="inputChartTitleSize" min="12" max="32" step="1" value="18" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+          </div>
+
+          <!-- Rótulos editables de los ejes en LaTeX con posición movible -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
@@ -235,7 +293,6 @@
                 <div class="relative">
                   <input type="text" id="inputAxisLabelX" value="X" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
                 </div>
-                <!-- Vista previa LaTeX de X -->
                 <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
                   <span id="previewKatexLabelX" class="text-indigo-300 font-medium"></span>
@@ -247,10 +304,30 @@
                 <div class="relative">
                   <input type="text" id="inputAxisLabelY" value="Y" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
                 </div>
-                <!-- Vista previa LaTeX de Y -->
                 <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
                   <span id="previewKatexLabelY" class="text-indigo-300 font-medium"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Movilidad de los Títulos de los Ejes -->
+            <div class="pt-2 border-t border-slate-700/60 space-y-2">
+              <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wide">Posición de los Títulos (Desplazamiento)</span>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                    <span>Posición Rótulo X:</span>
+                    <span id="labelXOffsetVal" class="font-mono text-indigo-300">32px</span>
+                  </div>
+                  <input type="range" id="inputLabelXOffset" min="-60" max="90" step="1" value="32" class="w-full accent-indigo-500 cursor-pointer">
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                    <span>Posición Rótulo Y:</span>
+                    <span id="labelYOffsetVal" class="font-mono text-indigo-300">30px</span>
+                  </div>
+                  <input type="range" id="inputLabelYOffset" min="-60" max="90" step="1" value="30" class="w-full accent-indigo-500 cursor-pointer">
                 </div>
               </div>
             </div>
@@ -382,7 +459,7 @@
           <!-- Opciones de Ejes y Tipografía -->
           <div class="pt-2 space-y-2.5">
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los ejes</span>
+              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los 4 extremos de los ejes</span>
               <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
@@ -441,14 +518,31 @@
   <script>
     /* Estado Global Reactivo */
     const state = {
+      chartTitle: {
+        text: 'Gráfica de f(x) = 3x^2 + 2x - 5',
+        visible: false,
+        fontSize: 18
+      },
       functions: [
         {
           id: 'fn-parabola',
           name: 'f(x)',
           expr: '3*x^2 + 2*x - 5',
-          color: '#3b82f6', // Azul cielo exacto al del ejercicio
-          width: 3.5,       // Grosor editable
-          style: 'solid',   // 'solid', 'dashed', 'dotted'
+          color: '#3b82f6',
+          width: 3.5,
+          style: 'solid',
+          visible: true
+        }
+      ],
+      points: [
+        {
+          id: 'pt-1',
+          name: 'A',
+          x: 1,
+          y: 0,
+          color: '#ef4444',
+          size: 6,
+          symbol: 'circle', // 'circle', 'ring', 'cross', 'square'
           visible: true
         }
       ],
@@ -464,20 +558,23 @@
       },
       labels: {
         x: 'X',
-        y: 'Y'
+        y: 'Y',
+        xOffset: 32,
+        yOffset: 30
       },
       style: {
         background: '#ffffff',
         axisColor: '#000000',
         gridColor: '#cbd5e1',
         labelColor: '#000000',
-        labelFontSize: 13,        // Tamaño editable de los números de los ejes
+        labelFontSize: 13,
         axisWidth: 3.5,
-        showArrows: false,        // En la imagen original no lleva flechas
+        showArrows: false,
         showTickNumbers: true,
         showMinorGrid: true,
         showAxisLabels: true,
-        showOverlayFormula: false // En la imagen original no aparece el recuadro flotante
+        showOverlayFormula: false,
+        showPointCoords: false
       },
       canvasWidth: 940,
       canvasHeight: 600
@@ -486,14 +583,15 @@
     const canvas = document.getElementById('cartesianCanvas');
     const ctx = canvas.getContext('2d');
     const functionsContainer = document.getElementById('functionsContainer');
+    const pointsContainer = document.getElementById('pointsContainer');
 
     // Mapeo matemático -> píxeles
-    function toCanvasX(x, padding = 55) {
+    function toCanvasX(x, padding = 58) {
       const width = state.canvasWidth - (padding * 2);
       return padding + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
     }
 
-    function toCanvasY(y, padding = 55) {
+    function toCanvasY(y, padding = 58) {
       const height = state.canvasHeight - (padding * 2);
       return (state.canvasHeight - padding) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
     }
@@ -522,11 +620,20 @@
     function drawPlot() {
       const padding = 58;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
 
       // 1. Limpiar fondo
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
+
+      // Título opcional
+      if (state.chartTitle.visible && state.chartTitle.text.trim()) {
+        ctx.font = `bold ${state.chartTitle.fontSize}px "KaTeX_Main", "Times New Roman", serif`;
+        ctx.fillStyle = axisColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(state.chartTitle.text.trim(), state.canvasWidth / 2, 14);
+      }
 
       // 2. Cuadrícula menor (Minor Grid)
       if (showMinorGrid) {
@@ -589,12 +696,12 @@
       ctx.lineTo(originX, padding - 26);
       ctx.stroke();
 
-      // Flechas opcionales
+      // Flechas en los 4 extremos de los ejes
       if (showArrows) {
         const arrowSize = 10;
         ctx.fillStyle = axisColor;
 
-        // Flecha X
+        // Flecha X Derecha (+X)
         ctx.beginPath();
         ctx.moveTo(state.canvasWidth - padding + 26, originY);
         ctx.lineTo(state.canvasWidth - padding + 26 - arrowSize, originY - arrowSize * 0.55);
@@ -602,16 +709,32 @@
         ctx.closePath();
         ctx.fill();
 
-        // Flecha Y
+        // Flecha X Izquierda (-X)
+        ctx.beginPath();
+        ctx.moveTo(padding - 26, originY);
+        ctx.lineTo(padding - 26 + arrowSize, originY - arrowSize * 0.55);
+        ctx.lineTo(padding - 26 + arrowSize, originY + arrowSize * 0.55);
+        ctx.closePath();
+        ctx.fill();
+
+        // Flecha Y Arriba (+Y)
         ctx.beginPath();
         ctx.moveTo(originX, padding - 26);
         ctx.lineTo(originX - arrowSize * 0.55, padding - 26 + arrowSize);
         ctx.lineTo(originX + arrowSize * 0.55, padding - 26 + arrowSize);
         ctx.closePath();
         ctx.fill();
+
+        // Flecha Y Abajo (-Y)
+        ctx.beginPath();
+        ctx.moveTo(originX, state.canvasHeight - padding + 26);
+        ctx.lineTo(originX - arrowSize * 0.55, state.canvasHeight - padding + 26 - arrowSize);
+        ctx.lineTo(originX + arrowSize * 0.55, state.canvasHeight - padding + 26 - arrowSize);
+        ctx.closePath();
+        ctx.fill();
       }
 
-      // 5. Números en Tipografía KaTeX / Computer Modern con Signo Menos Real (\u2212)
+      // 5. Números en Tipografía KaTeX / Computer Modern
       if (showTickNumbers) {
         ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
         ctx.fillStyle = labelColor;
@@ -624,7 +747,6 @@
           const isZero = Math.abs(x) < 1e-9;
           const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
 
-          // Marca física pequeña
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
@@ -646,7 +768,6 @@
           const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
           if (originX - 10 < 30) ctx.textAlign = 'left';
 
-          // Marca física pequeña
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
@@ -658,7 +779,7 @@
         }
       }
 
-      // 6. Rótulos de los Ejes Editables en Tipografía LaTeX
+      // 6. Rótulos de los Ejes Editables con posición movible en LaTeX
       if (showAxisLabels) {
         ctx.font = 'bold 24px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = axisColor;
@@ -667,13 +788,13 @@
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         const labelYText = state.labels.y.trim() || 'Y';
-        ctx.fillText(labelYText, originX, padding - 30);
+        ctx.fillText(labelYText, originX, padding - state.labels.yOffset);
 
         // Rótulo Eje X
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         const labelXText = state.labels.x.trim() || 'X';
-        ctx.fillText(labelXText, state.canvasWidth - padding + 32, originY);
+        ctx.fillText(labelXText, state.canvasWidth - padding + state.labels.xOffset, originY);
       }
 
       // 7. Trazado de las Funciones Matemáticas
@@ -684,7 +805,6 @@
           const compiled = math.compile(fn.expr);
           ctx.save();
 
-          // Estilo de línea (Sólida, Guiones, Puntos)
           if (fn.style === 'dashed') {
             ctx.setLineDash([8, 6]);
           } else if (fn.style === 'dotted') {
@@ -693,7 +813,6 @@
             ctx.setLineDash([]);
           }
 
-          // Clipping boundary
           ctx.beginPath();
           ctx.rect(padding - 2, padding - 2, state.canvasWidth - (padding * 2) + 4, state.canvasHeight - (padding * 2) + 4);
           ctx.clip();
@@ -738,7 +857,61 @@
         }
       });
 
-      // 8. Opcional: Badge con la fórmula tipográfica KaTeX
+      // 8. Trazado de los Puntos en el Plano
+      state.points.forEach(pt => {
+        if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
+
+        const cx = toCanvasX(pt.x, padding);
+        const cy = toCanvasY(pt.y, padding);
+
+        // Si está dentro de los límites visuales
+        if (cx >= padding - 15 && cx <= state.canvasWidth - padding + 15 && cy >= padding - 15 && cy <= state.canvasHeight - padding + 15) {
+          ctx.save();
+          ctx.fillStyle = pt.color;
+          ctx.strokeStyle = pt.color;
+          ctx.lineWidth = 2.2;
+
+          const r = pt.size || 6;
+
+          if (pt.symbol === 'circle') {
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (pt.symbol === 'ring') {
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fillStyle = state.style.background;
+            ctx.fill();
+            ctx.stroke();
+          } else if (pt.symbol === 'cross') {
+            ctx.beginPath();
+            ctx.moveTo(cx - r, cy - r);
+            ctx.lineTo(cx + r, cy + r);
+            ctx.moveTo(cx + r, cy - r);
+            ctx.lineTo(cx - r, cy + r);
+            ctx.stroke();
+          } else if (pt.symbol === 'square') {
+            ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+          }
+
+          // Etiqueta del Punto (Nombre y Coordenadas opcionales)
+          const name = pt.name ? pt.name.trim() : '';
+          const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
+          const labelFull = name && coordText ? `${name}${coordText}` : (name || coordText);
+
+          if (labelFull) {
+            ctx.font = 'bold 14px "KaTeX_Math", "KaTeX_Main", serif';
+            ctx.fillStyle = pt.color;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(labelFull, cx + r + 4, cy - 3);
+          }
+
+          ctx.restore();
+        }
+      });
+
+      // 9. Opcional: Badge con la fórmula tipográfica KaTeX
       if (showOverlayFormula) {
         drawFormulaBadge();
       }
@@ -811,7 +984,6 @@
         const katexPreviewId = `katex-preview-${fn.id}`;
 
         card.innerHTML = `
-          <!-- Cabecera de la función -->
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <input type="color" data-color-id="${fn.id}" value="${fn.color}" title="Color de la línea" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
@@ -827,7 +999,6 @@
             </div>
           </div>
 
-          <!-- Expresión matemática -->
           <div>
             <div class="relative">
               <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 3*x^2 + 2*x - 5" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
@@ -835,7 +1006,6 @@
             </div>
           </div>
 
-          <!-- Ajuste individual de Grosor y Estilo de Trazo -->
           <div class="grid grid-cols-2 gap-3 pt-1 border-t border-slate-700/50 text-xs">
             <div>
               <div class="flex justify-between text-[11px] text-slate-400 mb-1">
@@ -855,7 +1025,6 @@
             </div>
           </div>
 
-          <!-- Vista previa en vivo con KaTeX -->
           <div class="bg-slate-950/70 rounded-lg p-2 border border-slate-800 flex items-center justify-between">
             <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">LaTeX:</span>
             <div id="${katexPreviewId}" class="text-xs text-indigo-200 font-medium overflow-x-auto"></div>
@@ -864,7 +1033,6 @@
 
         functionsContainer.appendChild(card);
 
-        // Renderizar fórmula con KaTeX
         const katexEl = document.getElementById(katexPreviewId);
         if (katexEl && window.katex) {
           try {
@@ -880,8 +1048,130 @@
       bindDynamicEvents();
     }
 
+    // Renderizado reactivo de la lista de puntos
+    function renderPointInputs() {
+      pointsContainer.innerHTML = '';
+
+      if (state.points.length === 0) {
+        pointsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No hay puntos añadidos. Haz clic en "Añadir Punto".</p>`;
+        return;
+      }
+
+      state.points.forEach(pt => {
+        const card = document.createElement('div');
+        card.className = 'p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 space-y-3 transition hover:border-slate-600 shadow-sm';
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <input type="color" data-pt-color-id="${pt.id}" value="${pt.color}" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+              <input type="text" data-pt-name-id="${pt.id}" value="${pt.name}" placeholder="Nombre (ej: A)" class="w-24 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
+            </div>
+
+            <button data-pt-delete-id="${pt.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar punto">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Coordenada X</label>
+              <input type="number" step="any" data-pt-x-id="${pt.id}" value="${pt.x}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Coordenada Y</label>
+              <input type="number" step="any" data-pt-y-id="${pt.id}" value="${pt.y}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-1 border-t border-slate-700/50 text-xs">
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                <span>Tamaño:</span>
+                <span data-pt-size-val-id="${pt.id}" class="font-mono text-indigo-300 font-semibold">${pt.size}px</span>
+              </div>
+              <input type="range" data-pt-size-id="${pt.id}" value="${pt.size}" min="2" max="15" step="1" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Símbolo:</label>
+              <select data-pt-symbol-id="${pt.id}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none">
+                <option value="circle" ${pt.symbol === 'circle' ? 'selected' : ''}>Círculo Lleno</option>
+                <option value="ring" ${pt.symbol === 'ring' ? 'selected' : ''}>Círculo Hueco</option>
+                <option value="cross" ${pt.symbol === 'cross' ? 'selected' : ''}>Cruz (x)</option>
+                <option value="square" ${pt.symbol === 'square' ? 'selected' : ''}>Cuadrado</option>
+              </select>
+            </div>
+          </div>
+        `;
+
+        pointsContainer.appendChild(card);
+      });
+
+      lucide.createIcons();
+      bindPointEvents();
+    }
+
+    function bindPointEvents() {
+      document.querySelectorAll('[data-pt-name-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-name-id'));
+          if (pt) { pt.name = e.target.value; drawPlot(); }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-color-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-color-id'));
+          if (pt) { pt.color = e.target.value; drawPlot(); }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-x-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-x-id'));
+          if (pt) { pt.x = parseFloat(e.target.value) || 0; drawPlot(); }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-y-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-y-id'));
+          if (pt) { pt.y = parseFloat(e.target.value) || 0; drawPlot(); }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-size-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-pt-size-id');
+          const pt = state.points.find(p => p.id === id);
+          if (pt) {
+            pt.size = parseInt(e.target.value, 10) || 6;
+            const lbl = document.querySelector(`[data-pt-size-val-id="${id}"]`);
+            if (lbl) lbl.innerText = `${pt.size}px`;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-symbol-id]').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-symbol-id'));
+          if (pt) { pt.symbol = e.target.value; drawPlot(); }
+        });
+      });
+
+      document.querySelectorAll('[data-pt-delete-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-pt-delete-id');
+          state.points = state.points.filter(p => p.id !== id);
+          renderPointInputs();
+          drawPlot();
+        });
+      });
+    }
+
     function bindDynamicEvents() {
-      // Expresión
       document.querySelectorAll('[data-expr-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-expr-id');
@@ -898,7 +1188,6 @@
         });
       });
 
-      // Color
       document.querySelectorAll('[data-color-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-color-id');
@@ -910,7 +1199,6 @@
         });
       });
 
-      // Nombre
       document.querySelectorAll('[data-name-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-name-id');
@@ -927,7 +1215,6 @@
         });
       });
 
-      // Grosor individual con feedback
       document.querySelectorAll('[data-width-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-width-id');
@@ -941,7 +1228,6 @@
         });
       });
 
-      // Estilo de línea (continua, dashed, dotted)
       document.querySelectorAll('[data-style-id]').forEach(select => {
         select.addEventListener('change', (e) => {
           const id = e.target.getAttribute('data-style-id');
@@ -953,7 +1239,6 @@
         });
       });
 
-      // Eliminar
       document.querySelectorAll('[data-delete-id]').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-delete-id');
@@ -966,22 +1251,27 @@
 
     // Tabs de navegación
     const tabBtnFunctions = document.getElementById('tabBtnFunctions');
+    const tabBtnPoints = document.getElementById('tabBtnPoints');
     const tabBtnAxes = document.getElementById('tabBtnAxes');
     const tabBtnStyle = document.getElementById('tabBtnStyle');
 
     const tabSectionFunctions = document.getElementById('tabSectionFunctions');
+    const tabSectionPoints = document.getElementById('tabSectionPoints');
     const tabSectionAxes = document.getElementById('tabSectionAxes');
     const tabSectionStyle = document.getElementById('tabSectionStyle');
 
     function setActiveTab(tab) {
-      [tabBtnFunctions, tabBtnAxes, tabBtnStyle].forEach(btn => {
+      [tabBtnFunctions, tabBtnPoints, tabBtnAxes, tabBtnStyle].forEach(btn => {
         btn.className = 'py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
       });
-      [tabSectionFunctions, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
+      [tabSectionFunctions, tabSectionPoints, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
 
       if (tab === 'functions') {
         tabBtnFunctions.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
         tabSectionFunctions.classList.remove('hidden');
+      } else if (tab === 'points') {
+        tabBtnPoints.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+        tabSectionPoints.classList.remove('hidden');
       } else if (tab === 'axes') {
         tabBtnAxes.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
         tabSectionAxes.classList.remove('hidden');
@@ -992,16 +1282,22 @@
     }
 
     tabBtnFunctions.addEventListener('click', () => setActiveTab('functions'));
+    tabBtnPoints.addEventListener('click', () => setActiveTab('points'));
     tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
     tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
 
-    // Actualizar previsualización KaTeX de los rótulos editables de los ejes
+    // Actualizar previsualización KaTeX de los rótulos editables y títulos
     function updateAxisLabelsPreview() {
       const elX = document.getElementById('previewKatexLabelX');
       const elY = document.getElementById('previewKatexLabelY');
+      const elTitle = document.getElementById('previewKatexChartTitle');
+
       if (window.katex) {
         try { katex.render(state.labels.x || 'X', elX, { throwOnError: false }); } catch (e) { elX.innerText = state.labels.x; }
         try { katex.render(state.labels.y || 'Y', elY, { throwOnError: false }); } catch (e) { elY.innerText = state.labels.y; }
+        if (elTitle) {
+          try { katex.render(state.chartTitle.text || '', elTitle, { throwOnError: false }); } catch (e) { elTitle.innerText = state.chartTitle.text; }
+        }
       }
     }
 
@@ -1010,6 +1306,18 @@
       // Ejes y rótulos
       document.getElementById('inputAxisLabelX').value = state.labels.x;
       document.getElementById('inputAxisLabelY').value = state.labels.y;
+      document.getElementById('inputLabelXOffset').value = state.labels.xOffset;
+      document.getElementById('labelXOffsetVal').innerText = `${state.labels.xOffset}px`;
+      document.getElementById('inputLabelYOffset').value = state.labels.yOffset;
+      document.getElementById('labelYOffsetVal').innerText = `${state.labels.yOffset}px`;
+
+      // Título
+      document.getElementById('checkShowChartTitle').checked = state.chartTitle.visible;
+      document.getElementById('inputChartTitle').value = state.chartTitle.text;
+      document.getElementById('inputChartTitleSize').value = state.chartTitle.fontSize;
+      document.getElementById('chartTitleSizeVal').innerText = `${state.chartTitle.fontSize}px`;
+
+      // Rangos
       document.getElementById('inputXMin').value = state.bounds.xMin;
       document.getElementById('inputXMax').value = state.bounds.xMax;
       document.getElementById('inputXStep').value = state.bounds.xStep;
@@ -1022,6 +1330,9 @@
       // Tamaño de números de ejes
       document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
+
+      // Puntos
+      document.getElementById('checkShowCoords').checked = state.style.showPointCoords;
 
       // Estilos
       document.getElementById('colorBackground').value = state.style.background;
@@ -1057,10 +1368,47 @@
       drawPlot();
     });
 
+    // Desplazamiento rótulos
+    document.getElementById('inputLabelXOffset').addEventListener('input', (e) => {
+      state.labels.xOffset = parseInt(e.target.value, 10);
+      document.getElementById('labelXOffsetVal').innerText = `${state.labels.xOffset}px`;
+      drawPlot();
+    });
+
+    document.getElementById('inputLabelYOffset').addEventListener('input', (e) => {
+      state.labels.yOffset = parseInt(e.target.value, 10);
+      document.getElementById('labelYOffsetVal').innerText = `${state.labels.yOffset}px`;
+      drawPlot();
+    });
+
+    // Listeners del Título del Gráfico
+    document.getElementById('checkShowChartTitle').addEventListener('change', (e) => {
+      state.chartTitle.visible = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('inputChartTitle').addEventListener('input', (e) => {
+      state.chartTitle.text = e.target.value;
+      updateAxisLabelsPreview();
+      drawPlot();
+    });
+
+    document.getElementById('inputChartTitleSize').addEventListener('input', (e) => {
+      state.chartTitle.fontSize = parseInt(e.target.value, 10);
+      document.getElementById('chartTitleSizeVal').innerText = `${state.chartTitle.fontSize}px`;
+      drawPlot();
+    });
+
     // Listener para el tamaño de las etiquetas numéricas
     document.getElementById('inputLabelFontSize').addEventListener('input', (e) => {
       state.style.labelFontSize = parseInt(e.target.value, 10) || 13;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
+      drawPlot();
+    });
+
+    // Coordenadas en puntos
+    document.getElementById('checkShowCoords').addEventListener('change', (e) => {
+      state.style.showPointCoords = e.target.checked;
       drawPlot();
     });
 
@@ -1153,6 +1501,26 @@
       drawPlot();
     });
 
+    // Añadir nuevo punto
+    document.getElementById('btnAddPoint').addEventListener('click', () => {
+      const pointColors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
+      const nextColor = pointColors[state.points.length % pointColors.length];
+      const charCode = 65 + (state.points.length % 26); // A, B, C...
+      const newPoint = {
+        id: 'pt-' + Date.now(),
+        name: String.fromCharCode(charCode),
+        x: 0,
+        y: 0,
+        color: nextColor,
+        size: 6,
+        symbol: 'circle',
+        visible: true
+      };
+      state.points.push(newPoint);
+      renderPointInputs();
+      drawPlot();
+    });
+
     // Preset temas
     document.querySelectorAll('.preset-theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1180,6 +1548,11 @@
 
     // Cargar Preset Exacto de la Imagen
     document.getElementById('btnOriginalPreset').addEventListener('click', () => {
+      state.chartTitle = {
+        text: 'Gráfica de f(x) = 3x^2 + 2x - 5',
+        visible: false,
+        fontSize: 18
+      };
       state.functions = [
         {
           id: 'fn-parabola',
@@ -1191,6 +1564,7 @@
           visible: true
         }
       ];
+      state.points = [];
       state.bounds = {
         xMin: -6,
         xMax: 6,
@@ -1203,7 +1577,9 @@
       };
       state.labels = {
         x: 'X',
-        y: 'Y'
+        y: 'Y',
+        xOffset: 32,
+        yOffset: 30
       };
       state.style.background = '#ffffff';
       state.style.axisColor = '#000000';
@@ -1215,10 +1591,12 @@
       state.style.showAxisLabels = true;
       state.style.showTickNumbers = true;
       state.style.showMinorGrid = true;
-      state.style.showOverlayFormula = false; // Sin texto invasivo en la imagen
+      state.style.showOverlayFormula = false;
+      state.style.showPointCoords = false;
 
       syncInputs();
       renderFunctionInputs();
+      renderPointInputs();
       drawPlot();
       showToast('Cargado el plano exacto de la imagen original');
     });
@@ -1262,7 +1640,7 @@
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
@@ -1271,9 +1649,16 @@
       @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
       .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
       .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
+      .katex-chart-title { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
+      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: 14px; font-weight: bold; }
     </style>
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
+
+      // Título
+      if (state.chartTitle.visible && state.chartTitle.text.trim()) {
+        svg += `  <text x="${w / 2}" y="24" class="katex-chart-title" text-anchor="middle">${state.chartTitle.text.trim()}</text>\n`;
+      }
 
       // Cuadrícula menor
       if (showMinorGrid) {
@@ -1312,6 +1697,21 @@
       svg += `    <line x1="${originX}" y1="${h - padding + 26}" x2="${originX}" y2="${padding - 26}"/>\n`;
       svg += `  </g>\n`;
 
+      // Flechas en 4 extremos
+      if (showArrows) {
+        const arrowSize = 10;
+        svg += `  <g fill="${axisColor}">\n`;
+        // +X
+        svg += `    <polygon points="${w - padding + 26},${originY} ${w - padding + 26 - arrowSize},${originY - arrowSize * 0.55} ${w - padding + 26 - arrowSize},${originY + arrowSize * 0.55}"/>\n`;
+        // -X
+        svg += `    <polygon points="${padding - 26},${originY} ${padding - 26 + arrowSize},${originY - arrowSize * 0.55} ${padding - 26 + arrowSize},${originY + arrowSize * 0.55}"/>\n`;
+        // +Y
+        svg += `    <polygon points="${originX},${padding - 26} ${originX - arrowSize * 0.55},${padding - 26 + arrowSize} ${originX + arrowSize * 0.55},${padding - 26 + arrowSize}"/>\n`;
+        // -Y
+        svg += `    <polygon points="${originX},${h - padding + 26} ${originX - arrowSize * 0.55},${h - padding + 26 - arrowSize} ${originX + arrowSize * 0.55},${h - padding + 26 - arrowSize}"/>\n`;
+        svg += `  </g>\n`;
+      }
+
       // Números con signo menos tipográfico
       if (showTickNumbers) {
         svg += `  <g class="katex-label">\n`;
@@ -1328,11 +1728,11 @@
         svg += `  </g>\n`;
       }
 
-      // Rótulos editables
+      // Rótulos editables con desplazamiento
       if (showAxisLabels) {
         svg += `  <g class="katex-axis-title">\n`;
-        svg += `    <text x="${originX}" y="${padding - 30}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
-        svg += `    <text x="${w - padding + 32}" y="${originY + 7}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
+        svg += `    <text x="${originX}" y="${padding - state.labels.yOffset}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
+        svg += `    <text x="${w - padding + state.labels.xOffset}" y="${originY + 7}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
         svg += `  </g>\n`;
       }
 
@@ -1361,6 +1761,33 @@
             svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3.5}" stroke-linecap="round" stroke-linejoin="round"${dashAttr}/>\n`;
           }
         } catch (e) {}
+      });
+
+      // Puntos en SVG
+      state.points.forEach(pt => {
+        if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
+        const cx = toCanvasX(pt.x, padding);
+        const cy = toCanvasY(pt.y, padding);
+        const r = pt.size || 6;
+
+        if (pt.symbol === 'circle') {
+          svg += `  <circle cx="${cx}" cy="${cy}" r="${r}" fill="${pt.color}"/>\n`;
+        } else if (pt.symbol === 'ring') {
+          svg += `  <circle cx="${cx}" cy="${cy}" r="${r}" fill="${background}" stroke="${pt.color}" stroke-width="2.2"/>\n`;
+        } else if (pt.symbol === 'cross') {
+          svg += `  <line x1="${cx - r}" y1="${cy - r}" x2="${cx + r}" y2="${cy + r}" stroke="${pt.color}" stroke-width="2.2"/>\n`;
+          svg += `  <line x1="${cx + r}" y1="${cy - r}" x2="${cx - r}" y2="${cy + r}" stroke="${pt.color}" stroke-width="2.2"/>\n`;
+        } else if (pt.symbol === 'square') {
+          svg += `  <rect x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" fill="${pt.color}"/>\n`;
+        }
+
+        const name = pt.name ? pt.name.trim() : '';
+        const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
+        const labelFull = name && coordText ? `${name}${coordText}` : (name || coordText);
+
+        if (labelFull) {
+          svg += `  <text x="${cx + r + 4}" y="${cy - 3}" class="katex-point-label" fill="${pt.color}">${labelFull}</text>\n`;
+        }
       });
 
       svg += `</svg>`;
@@ -1401,16 +1828,44 @@
       }
     });
 
-    document.getElementById('btnDownloadPng1x').addEventListener('click', () => downloadPNG(1));
-    document.getElementById('btnDownloadPng2x').addEventListener('click', () => downloadPNG(2));
-    document.getElementById('btnDownloadPng4x').addEventListener('click', () => downloadPNG(4));
-    document.getElementById('btnDownloadSvg').addEventListener('click', downloadSVG);
+    // Menú desplegable interactivo corregido (Click & Outside dismiss)
+    const btnToggleDropdown = document.getElementById('btnToggleDropdown');
+    const downloadDropdownMenu = document.getElementById('downloadDropdownMenu');
+
+    btnToggleDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      downloadDropdownMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!downloadDropdownMenu.contains(e.target) && e.target !== btnToggleDropdown) {
+        downloadDropdownMenu.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('btnDownloadPng1x').addEventListener('click', () => {
+      downloadDropdownMenu.classList.add('hidden');
+      downloadPNG(1);
+    });
+    document.getElementById('btnDownloadPng2x').addEventListener('click', () => {
+      downloadDropdownMenu.classList.add('hidden');
+      downloadPNG(2);
+    });
+    document.getElementById('btnDownloadPng4x').addEventListener('click', () => {
+      downloadDropdownMenu.classList.add('hidden');
+      downloadPNG(4);
+    });
+    document.getElementById('btnDownloadSvg').addEventListener('click', () => {
+      downloadDropdownMenu.classList.add('hidden');
+      downloadSVG();
+    });
 
     // Inicialización al cargar la ventana asegurando carga de fuentes KaTeX
     window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       syncInputs();
       renderFunctionInputs();
+      renderPointInputs();
 
       if (document.fonts && document.fonts.ready) {
         await document.fonts.ready;
