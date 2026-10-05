@@ -8,71 +8,71 @@ const moduleInfo = {
   title: "Matemáticas y representaciones del sistema natural",
   topicVideos: {
     "poligonos": {
-      title: "MÓDULO 8: Área de polígonos",
+      title: "Área de polígonos",
       url: "https://www.youtube.com/watch?v=ytQeqAJpXEk"
     },
     "volumen": {
-      title: "MÓDULO 8: Volumen de sólidos",
+      title: "Volumen de sólidos",
       url: "https://www.youtube.com/watch?v=jkSVpZsMKtU"
     },
     "notacion_cientifica": {
-      title: "MÓDULO 8: Notación científica",
+      title: "Notación científica",
       url: "https://www.youtube.com/watch?v=WzcEgEa98NU"
     },
     "conversion_unidades": {
-      title: "MÓDULO 8: Conversión de unidades",
+      title: "Conversión de unidades",
       url: "https://www.youtube.com/watch?v=kAkS3K82Iig"
     },
     "densidad": {
-      title: "MÓDULO 8: Densidad",
+      title: "Densidad",
       url: "https://www.youtube.com/watch?v=LevMSIpImvI"
     },
     "presion": {
-      title: "MÓDULO 8: Presión",
+      title: "Presión",
       url: "https://www.youtube.com/watch?v=KQZipLBdQCA"
     },
     "presion_hidrostatica": {
-      title: "MÓDULO 8: Presión hidrostática",
+      title: "Presión hidrostática",
       url: "https://www.youtube.com/watch?v=9iXX68smV94"
     },
     "arquimedes": {
-      title: "MÓDULO 8: Principio de Arquímedes",
+      title: "Principio de Arquímedes",
       url: "https://www.youtube.com/watch?v=nLx1RqdU7K0"
     },
     "flotacion": {
-      title: "MÓDULO 8: Fuerza de flotación",
+      title: "Fuerza de flotación",
       url: "https://www.youtube.com/watch?v=8VqoBCnKUYQ"
     },
     "torricelli": {
-      title: "MÓDULO 8: Principio de Torricelli",
+      title: "Principio de Torricelli",
       url: "https://www.youtube.com/watch?v=1WZJabsg7Jk"
     },
     "gasto": {
-      title: "MÓDULO 8: Gasto de un fluido",
+      title: "Gasto de un fluido",
       url: "https://www.youtube.com/watch?v=TFrSV__5EJg"
     },
     "coulomb": {
-      title: "MÓDULO 8: Principio de Coulomb",
+      title: "Principio de Coulomb",
       url: "https://www.youtube.com/watch?v=q8zsqY3k85E"
     },
     "corriente": {
-      title: "MÓDULO 8: Intensidad de corriente eléctrica",
+      title: "Intensidad de corriente eléctrica",
       url: "https://www.youtube.com/watch?v=tHbtNRDBrfc"
     },
     "watt": {
-      title: "MÓDULO 8: Ley de Watt y potencia",
+      title: "Ley de Watt",
       url: "https://www.youtube.com/watch?v=ORiYhaTAUHo"
     },
     "temperatura": {
-      title: "MÓDULO 8: Conversiones de temperatura",
+      title: "Conversiones de temperatura",
       url: "https://www.youtube.com/watch?v=fMm1gbEuIEc"
     },
     "calor": {
-      title: "MÓDULO 8: Absorción de calor",
+      title: "Absorción de calor",
       url: "https://www.youtube.com/watch?v=akao97i6a14"
     },
     "gas_ideal": {
-      title: "MÓDULO 8: Ley del gas ideal y leyes de los gases",
+      title: "Ley del gas ideal",
       url: "https://www.youtube.com/watch?v=-JnBZLafJmg"
     }
   }
@@ -82,7 +82,7 @@ const questionBank = [
   {
     id: "m8-q01",
     topicId: "presion_hidrostatica",
-    prompt: "1. La superficie del agua en un tanque de almacenamiento está a una altura de 30 m sobre una llave de agua en la cocina de una casa. Calcula la presión del agua en la llave en Pa.",
+    prompt: "La superficie del agua en un tanque está a una altura de 30 m. ¿Qué presión experimenta una llave en el fondo del tanque?",
     type: "choice",
     correct: "$2.9\\times10^{5}$",
     distractors: [
@@ -96,27 +96,27 @@ const questionBank = [
   {
     id: "m8-q02",
     topicId: "presion",
-    prompt: "2. La presión atmosférica tiene un valor aproximado de 101,300 Pa. ¿Qué fuerza ejerce el aire confinado en un cuarto sobre un bloque de $40\\times80\\text{ cm}$?",
+    prompt: "Si la presión atmosférica tiene un valor aproximado de 101,300 Pa, ¿qué fuerza ejerce el aire de un cuarto sobre un bloque de 40 $\\times$ 80 cm?",
     type: "choice",
-    correct: "32,416 N",
+    correct: "32,416 N.",
     distractors: [
-      "324,160,000 N",
-      "32,416 Pa",
-      "316,526.5 Pa"
+      "324,160,000 N.",
+      "32,416 Pa.",
+      "316,526.5 Pa."
     ],
     hint: "Despeja la fuerza de la presión: $F = P \\cdot A$. Recuerda pasar primero los centímetros a metros antes de sacar el área.",
-    explanation: "Primero conviertes las dimensiones a metros: $0.40\\text{ m}\\times0.80\\text{ m} = 0.32\\text{ m}^2$. Luego calculas la fuerza: $F = P \\cdot A = (101,300)(0.32) = 32,416\\text{ N}$ (ojo: te piden fuerza, la unidad debe ser newtons, no pascales)."
+    explanation: "Al pedirse una presión, de inmediato descartamos las respuestas en newtons (unidad de fuerza). Primero conviertes las dimensiones a metros: $0.40\\text{ m}\\times0.80\\text{ m} = 0.32\\text{ m}^2$. Luego calculas la fuerza: $F = P \\cdot A = (101,300)(0.32) = 32,416\\text{ N}$ (ojo: te piden fuerza, la unidad debe ser newtons, no pascales)."
   },
   {
     id: "m8-q03",
     topicId: "arquimedes",
-    prompt: "3. Completa el siguiente enunciado:<br><br>Puede demostrarse que cuando un cuerpo se sumerge total o parcialmente en un fluido:",
+    prompt: "Cuando un cuerpo se sumerge total o parcialmente en un fluido...",
     type: "choice",
-    correct: "Es empujado hacia arriba con una fuerza igual al peso del fluido desplazado.",
+    correct: "...es empujado hacia arriba con una fuerza igual al peso del fluido desplazado.",
     distractors: [
-      "Recibe un empuje que actúa en todas direcciones por lo que oscilando en la superficie.",
-      "Es empujado hacia arriba porque se le aplica una fuerza menor al peso del fluido.",
-      "Experimenta una fuerza boyante que actúa en dirección contraria a la gravedad del fluido."
+      "...recibe un empuje que actúa en todas direcciones por lo que oscilando en la superficie.",
+      "...es empujado hacia arriba porque se le aplica una fuerza menor al peso del fluido.",
+      "...experimenta una fuerza boyante que actúa en dirección contraria a la gravedad del fluido."
     ],
     hint: "Recuerda la definición literal del principio de Arquímedes.",
     explanation: "Por definición del principio de Arquímedes, todo cuerpo sumergido recibe un empuje vertical hacia arriba equivalente exactamente al peso del volumen de fluido que desplaza."
@@ -124,27 +124,27 @@ const questionBank = [
   {
     id: "m8-q04",
     topicId: "gasto",
-    prompt: "4. Calcula el gasto de agua por una tubería de diámetro igual a 26.20 cm, cuando la velocidad del líquido es de $8\\text{ m/s}$.",
+    prompt: "Calcula el gasto de agua por una tubería con un diámetro de 26.20 cm cuando la velocidad del agua es de 8 $\\text{ m/s}$.",
     type: "choice",
-    correct: "$0.431\\text{ m}^{3}/\\text{s}$",
+    correct: "$0.431\\text{ m}^{3}/\\text{s}$.",
     distractors: [
-      "$4310.8\\text{ m}^{3}/\\text{s}$",
-      "$0.0067\\text{ m}^{3}/\\text{s}$",
-      "$43.10\\text{ m}^{3}/\\text{s}$"
+      "$4310.8\\text{ m}^{3}/\\text{s}$.",
+      "$0.0067\\text{ m}^{3}/\\text{s}$.",
+      "$43.10\\text{ m}^{3}/\\text{s}$."
     ],
-    hint: "El gasto es $Q = A \\cdot v$. Saca el radio en metros ($r = d/2$), calcula el área circular $A = \\pi r^2$ y multiplica por la velocidad.",
+    hint: "El gasto es $Q = A \\cdot v$. Obtén el radio en metros ($r = d/2$), calcula el área circular $A = \\pi r^2$ y multiplica por la velocidad.",
     explanation: "El radio es $13.10\\text{ cm} = 0.131\\text{ m}$. El área circular es $A = \\pi(0.131)^2 \\approx 0.0539\\text{ m}^2$. Multiplicando por la velocidad: $Q = (0.0539)(8) \\approx 0.431\\text{ m}^3/\\text{s}$."
   },
   {
     id: "m8-q05",
     topicId: "gasto",
-    prompt: "5. El paso del agua en las tuberías de tu casa es un ejemplo del principio de:",
+    prompt: "El paso del agua en una tubería es un ejemplo del principio de:",
     type: "choice",
-    correct: "Bernoulli",
+    correct: "Bernoulli.",
     distractors: [
-      "Pascal",
-      "Torricelli",
-      "Arquímedes"
+      "Pascal.",
+      "Torricelli.",
+      "Arquímedes."
     ],
     hint: "Relaciona la dinámica de fluidos en movimiento continuo y diferencias de presión/velocidad en tuberías.",
     explanation: "El principio de Bernoulli rige el comportamiento de fluidos en movimiento a lo largo de conductos cerrados o tuberías, relacionando presión y velocidad."
@@ -152,27 +152,27 @@ const questionBank = [
   {
     id: "m8-q06",
     topicId: "coulomb",
-    prompt: "6. El modelo matemático que explica la fuerza de atracción o repulsión entre dos cargas es llamado Ley de:",
+    prompt: "El modelo matemático que explica la fuerza de atracción o repulsión entre dos cargas es el principio de:",
     type: "choice",
-    correct: "Coulomb",
+    correct: "Coulomb.",
     distractors: [
-      "Ampere",
-      "Gauss",
-      "Faraday"
+      "Ampere.",
+      "Gauss.",
+      "Faraday."
     ],
-    hint: "Es la ley fundamental de la electrostática que describe la interacción entre cargas puntuales.",
-    explanation: "La Ley de Coulomb formula matemáticamente la fuerza electrostática: $F = k \\frac{q_1 q_2}{r^2}$."
+    hint: "Es el principio fundamental de la electrostática que describe la interacción entre cargas puntuales.",
+    explanation: "El principio de Coulomb formula matemáticamente la fuerza electrostática: $F = k \\frac{q_1 q_2}{r^2}$."
   },
   {
     id: "m8-q07",
     topicId: "watt",
-    prompt: "7. Una consola xbox en su etiqueta tiene los datos: 120V, 25W ¿cuál es la corriente de operación de esta consola?",
+    prompt: "Una consola opera a 120V con una potencia de 25W. ¿Cuál es su corriente de operación?",
     type: "choice",
-    correct: "0.208 A",
+    correct: "0.208 A.",
     distractors: [
-      "1.0 A",
-      "0.057 A",
-      "0.113 A"
+      "1.0 A.",
+      "0.057 A.",
+      "0.113 A."
     ],
     hint: "Aplica la Ley de Watt: $P = V \\cdot I$. Despeja la corriente $I$.",
     explanation: "Despejando corriente: $I = \\frac{P}{V} = \\frac{25\\text{ W}}{120\\text{ V}} \\approx 0.208\\text{ A}$."
@@ -180,13 +180,13 @@ const questionBank = [
   {
     id: "m8-q08",
     topicId: "corriente",
-    prompt: "8. Por un conductor circula una corriente eléctrica, de modo que transporta una carga de 300 C, durante 20 segundos. ¿Cuál es la intensidad de corriente que pasa por el conductor?",
+    prompt: "Un conductor transporta una carga de 300 C en 20 segundos. ¿Qué intensidad de corriente lo atraviesa?",
     type: "choice",
-    correct: "15 A",
+    correct: "15 A.",
     distractors: [
-      "6000 A",
-      "60 A",
-      "150 A"
+      "6000 A.",
+      "60 A.",
+      "150 A."
     ],
     hint: "La intensidad de corriente es carga por unidad de tiempo: $I = \\frac{Q}{t}$.",
     explanation: "Aplicando la fórmula directa: $I = \\frac{Q}{t} = \\frac{300\\text{ C}}{20\\text{ s}} = 15\\text{ A}$."
@@ -194,20 +194,16 @@ const questionBank = [
   {
     id: "m8-q09",
     topicId: "calor",
-    prompt: "9. El calor se transmite en los cuerpos de",
-    type: "choice",
-    correct: "mayor a menor temperatura",
-    distractors: [
-      "menor a mayor temperatura",
-      "menor movimiento molecular",
-      "mayor punto de fusión"
-    ],
-    hint: "Recuerda la segunda ley de la termodinámica y el equilibrio térmico.",
-    explanation: "Por la segunda ley de la termodinámica, la transferencia espontánea de energía térmica (calor) siempre fluye desde el cuerpo con mayor temperatura hacia el de menor temperatura."
+    prompt: "Completa la oración:",
+    type: "fill_blanks",
+    sentence: "El calor se transmite de los cuerpos de {0} temperatura a los de {1} temperatura.",
+    correctOrder: ["mayor", "menor"],
+    distractors: ["igual", "constante"],
+    hint: "Recuerda la segunda ley de la termodinámica: el calor fluye de forma natural hacia las zonas más frías hasta alcanzar el equilibrio térmico.",
+    explanation: "Por la segunda ley de la termodinámica, la transferencia espontánea de energía térmica (calor) siempre fluye desde el cuerpo con **mayor** temperatura hacia el de **menor** temperatura."
   },
   {
     id: "m8-q10",
-    topicId: "poligonos",
     prompt: "10. Dado el plano cartesiano, y tomando en cuenta que los ejes XY tienen divisiones unitarias, identifica correctamente las coordenadas de los puntos ubicados en el gráfico.",
     image: "img/m8_plano_cartesiano.png",
     type: "choice",
@@ -223,43 +219,42 @@ const questionBank = [
   {
     id: "m8-q11",
     topicId: "gas_ideal",
-    prompt: "11. Los gases se expanden al aumentar su temperatura, variando de manera directamente proporcional a su",
+    prompt: "Los gases se expanden al aumentar su temperatura, variando de manera directamente proporcional a su:",
     type: "choice",
-    correct: "volumen",
+    correct: "volumen.",
     distractors: [
-      "presión",
-      "temperatura",
-      "masa"
+      "presión.",
+      "temperatura.",
+      "masa."
     ],
     hint: "Revisa la Ley de Charles: a presión constante, el volumen de un gas y su temperatura son directamente proporcionales.",
     explanation: "La Ley de Charles establece que, a presión constante, el aumento de temperatura de un gas produce una expansión directamente proporcional en su volumen ($\\frac{V_1}{T_1} = \\frac{V_2}{T_2}$)."
   },
   {
     id: "m8-q12",
-    topicId: "conversion_unidades",
-    prompt: "12. En el Sistema Internacional de Medidas, ¿cuáles son respectivamente las unidades fundamentales de las siguientes cantidades?<br><br>$$\\text{Temperatura} \\rightarrow \\text{masa} \\rightarrow \\text{longitud} \\rightarrow \\text{intensidad de corriente} \\rightarrow \\text{cantidad de sustancia}$$",
-    type: "choice",
-    correct: "$^{\\circ}\\text{K} \\rightarrow \\text{Kg} \\rightarrow \\text{m} \\rightarrow \\text{amperio} \\rightarrow \\text{mol}$",
-    distractors: [
-      "$^{\\circ}\\text{K} \\rightarrow \\text{Kg} \\rightarrow \\text{yarda} \\rightarrow \\text{V} \\rightarrow \\text{mol}$",
-      "$^{\\circ}\\text{C} \\rightarrow \\text{libra} \\rightarrow \\text{m} \\rightarrow \\text{amperio} \\rightarrow \\text{Kg}$",
-      "$^{\\circ}\\text{C} \\rightarrow \\text{libra} \\rightarrow \\text{yarda} \\rightarrow \\text{V} \\rightarrow \\text{Kg}$"
+    prompt: "Relaciona cada magnitud física con su unidad fundamental correspondiente en el Sistema Internacional de Unidades.",
+    type: "match_columns",
+    pairs: [
+      { left: "Temperatura.", right: "Kelvin (K)." },
+      { left: "Masa.", right: "Kilogramo (kg)." },
+      { left: "Longitud.", right: "Metro (m)." },
+      { left: "Intensidad de corriente.", right: "Ampère (A)." },
+      { left: "Cantidad de sustancia.", right: "Mol (mol)" }
     ],
-    hint: "Identifica las unidades estándar del SI: el kelvin, el kilogramo, el metro, el ampere y el mol.",
-    explanation: "En el Sistema Internacional, la temperatura se mide en Kelvin, la masa en kilogramos (Kg), la longitud en metros (m), la corriente en amperios (A) y la sustancia en moles (mol)."
+    hint: "Revisa las unidades básicas del SI.",
+    explanation: "En el Sistema Internacional: temperatura en Kelvin, masa en kilogramo, longitud en metro, corriente en ampère y cantidad de sustancia en mol."
   },
   {
     id: "m8-q13",
-    topicId: "densidad",
-    prompt: "13. Relaciona las siguientes sustancias con sus características de estado de agregación correspondientes:",
+    prompt: "Relaciona los estados de agregación con sus características:",
     type: "match_columns",
     pairs: [
-      { left: "1. Agua (Líquido)", right: "Incompresible y fluido a temperatura ambiente" },
-      { left: "2. Oxígeno (Gas)", right: "Altamente compresible y fluido a temperatura ambiente" },
-      { left: "3. Mármol (Sólido)", right: "Forma y volumen definidos, incompresible y el de mayor densidad" }
+      { left: "Líquido.", right: "Incompresible y fluido a temperatura ambiente." },
+      { left: "Gas.", right: "Altamente compresible y fluido a temperatura ambiente." },
+      { left: "Sólido.", right: "Forma y volumen definidos, incompresible y el estado de mayor densidad." }
     ],
     hint: "Los sólidos tienen forma fija y mayor densidad; los líquidos fluyen pero no se comprimen; los gases se comprimen con facilidad.",
-    explanation: "El agua es líquida (incompresible y fluida); el oxígeno es un gas (altamente compresible y fluido); el mármol es un sólido (forma fija, incompresible y con la mayor densidad de los tres)."
+    explanation: "Líquidos como el agua son incompresibles y fluidos; gases como el oxígeno son altamente compresible y fluidos; y sólidos como el mármol tienen forma fija, son incompresibles y tienen la mayor densidad de los tres estados."
   },
   {
     id: "m8-q14",
@@ -279,13 +274,13 @@ const questionBank = [
   {
     id: "m8-q15",
     topicId: "densidad",
-    prompt: "15. ¿Cuál es el volumen que ocupan 25 Kg de cobre considerando que la densidad del cobre es de $8,960\\text{ kg/m}^{3}$?",
+    prompt: "¿Qué volumen ocupan 25 kg de cobre considerando que su densidad es de $8,960\\text{ kg/m}^{3}$?",
     type: "choice",
-    correct: "$2.79\\times10^{-3}\\text{ m}^{3}$",
+    correct: "$2.79\\times10^{-3}\\text{ m}^{3}$.",
     distractors: [
-      "$8985\\text{ m}^{3}$",
-      "$358.4\\text{ m}^{3}$",
-      "$2.24\\times10^{3}\\text{ m}^{3}$"
+      "$8985\\text{ m}^{3}$.",
+      "$358.4\\text{ m}^{3}$.",
+      "$2.24\\times10^{3}\\text{ m}^{3}$."
     ],
     hint: "Del triángulo de densidad: $V = \\frac{m}{\\rho}$.",
     explanation: "Dividiendo masa entre densidad: $V = \\frac{25}{8960} \\approx 0.00279\\text{ m}^3$. En notación científica esto equivale a $2.79\\times10^{-3}\\text{ m}^3$."
@@ -293,17 +288,16 @@ const questionBank = [
   {
     id: "m8-q16",
     topicId: "flotacion",
-    prompt: "16. Selecciona y ordena la secuencia lógica de pasos para resolver el problema de sumergir un cubo de madera de 6 cm de lado ($830\\text{ kg/m}^3$) en agua ($1000\\text{ kg/m}^3$):",
+    prompt: "16. Selecciona y ordena la secuencia lógica de pasos para resolver el problema de sumergir un cubo de madera de 6 cm de lado ($830\\text{ kg/m}^3$) en agua ($1,000\\text{ kg/m}^3$):",
     type: "drag_order",
     correctOrder: [
-      "1. Calcular volumen: V = 6 × 6 × 6 = 216 cm³ = 2.16 × 10⁻⁴ m³",
-      "2. Fuerza de flotación: F_f = (1000 kg/m³)(9.8 m/s²)(2.16 × 10⁻⁴ m³) = 2.1168 N",
-      "3. Peso del cuerpo: W = (830 kg/m³)(9.8 m/s²)(2.16 × 10⁻⁴ m³) = 1.7569 N",
-      "4. Fuerza requerida: F = F_f - W = 0.3599 N"
+      "Volumen: $V = (6\\text{ cm})^3 = 216\\text{ cm}^3 = 2.16\\times10^{-4}\\text{ m}^3$",
+      "Fuerza de flotación: $F_f = (1,000)(9.8)(2.16\\times10^{-4}) = 2.1168\\text{ N}$",
+      "Peso propio: $W = (830)(9.8)(2.16\\times10^{-4}) = 1.7569\\text{ N}$",
+      "Fuerza requerida: $F = F_f - W = 0.3599\\text{ N}$"
     ],
-    hint: "Primero obtienes el volumen geométrico, luego el empuje del agua, luego el peso del cubo y al final restas ambas fuerzas.",
-    explanation: "La secuencia física obligada es: 1) Calcular el volumen del cuerpo; 2) Calcular la fuerza de flotación que empuja hacia arriba; 3) Calcular el peso propio hacia abajo; 4) Restar ambas fuerzas ($F = F_f - W$) para obtener el empuje manual necesario."
-  },
+    hint: "Primero obtienes el volumen geométrico, luego el empuje del agua ($F_f$), luego el peso del cubo ($W$) y al final restas ambas fuerzas.",
+    explanation: "La secuencia lógica es: 1) Calcular el volumen del cubo; 2) Calcular la fuerza de flotación que empuja hacia arriba; 3) Calcular el peso propio hacia abajo; 4) Restar ambas fuerzas ($F = F_f - W$) para determinar el empuje manual necesario."
   {
     id: "m8-q17",
     topicId: "poligonos",
@@ -322,51 +316,53 @@ const questionBank = [
   {
     id: "m8-q18",
     topicId: "gasto",
-    prompt: "18. El contenedor con orificio que se muestra en la figura se llena de agua. Calcula el gasto que sale del contenedor a partir de los datos dados ($h=1.5\\text{ m}$, $A=0.00785\\text{ m}^{2}$, $H=1.8\\text{ m}$, $g=9.81\\text{ m/s}^{2}$):",
-    image: "img/m8_contenedor_orificio.png",
+    prompt: "El contenedor de la figura se llena de agua. ¿Cuál es la expresión correcta para calcular el gasto de su tubería?",
+    image: "assets/m8_gasto.png",
     type: "choice",
-    correct: "$Q=A\\sqrt{2gh}=0.043\\text{ m}^{3}/\\text{s}$",
+    correct: "$Q=A\\sqrt{2gh}$",
     distractors: [
-      "$Q=2\\sqrt{Agh}=0.680\\text{ m}^{3}/\\text{s}$",
-      "$Q=\\sqrt{2AgH}=0.527\\text{ m}^{3}/\\text{s}$",
-      "$Q=\\frac{A\\sqrt{2gH}}{kL}=0.117\\text{ m}^{3}/\\text{s}$"
+      "$Q=2\\sqrt{Agh}$",
+      "$Q=\\sqrt{2AgH}$",
+      "$Q=\\frac{A\\sqrt{2gH}}{kL}$"
     ],
     hint: "Combina el gasto $Q = A \\cdot v$ con el principio de Torricelli $v = \\sqrt{2gh}$.",
-    explanation: "La velocidad de salida por Torricelli se formula como $v = \\sqrt{2gh}$, por lo que el gasto total es $Q = A v = A\\sqrt{2gh}$. Con los valores del examen oficial, la clave marcada corresponde a $0.043\\text{ m}^3/\\text{s}$."
+    explanation: "La velocidad de salida por Torricelli se formula como $v = \\sqrt{2gh}$, por lo que el gasto total es $Q = A v = A\\sqrt{2gh}$. Con los valores, tenemos $0.043\\text{ m}^3/\\text{s}$."
   },
   {
     id: "m8-q19",
-    topicId: "torricelli",
-    prompt: "19. De la siguiente presentación electrónica sobre una planta hidroeléctrica, ¿cuáles enunciados son verdaderos?<br><br>1. Transforma la energía potencial del agua en energía eléctrica.<br>2. Al acumularse agua en la presa se incrementa su altura y su energía potencial.<br>3. La presión del agua se mide utilizando el teorema de Torricelli.<br>4. La energía potencial se transforma en energía cinética sobre las turbinas.<br>5. En el cuarto de máquinas los generadores transforman energía mecánica en eléctrica.<br>6. La planta transforma la energía cinética del agua en energía térmica.",
-    image: "img/m8_presentacion_hidroelectrica.png",
-    type: "choice",
-    correct: "1, 2, 4, 5",
-    distractors: [
-      "1, 3, 5, 6",
-      "2, 3, 4, 6",
-      "2, 3, 4, 5"
+    prompt: "Selecciona todos los enunciados que describan el funcionamiento de una planta hidroeléctrica.",
+    type: "multi_select",
+    correctAnswers: [
+      "Transforma la energía potencial contenida en el agua en energía eléctrica.",
+      "Al acumularse agua en la presa se incrementa su altura y por tanto su energía potencial.",
+      "La energía potencial se transforma en energía cinética que actúa sobre las turbinas.",
+      "En el cuarto de máquinas los generadores transforman energía mecánica en eléctrica."
     ],
-    hint: "Descarta el 3 (Torricelli describe velocidad de salida, no mide presión) y el 6 (las hidroeléctricas no buscan generar calor).",
-    explanation: "Los enunciados correctos son 1, 2, 4 y 5. El 3 es falso porque Torricelli mide velocidad de descarga de orificios, no presión; y el 6 es falso porque la meta de una hidroeléctrica es generar electricidad, no energía térmica."
+    distractors: [
+      "La presión del agua se mide utilizando el teorema de Torricelli.",
+      "La planta transforma la energía cinética del agua en energía térmica."
+    ],
+    hint: "Identifica qué tipo de energía se aprovecha y qué produce la planta (descarta medir presión con Torricelli y generar calor).",
+    explanation: "Una hidroeléctrica aprovecha la altura del agua (energía potencial) para mover turbinas (energía cinética/mecánica) y generar electricidad mediante generadores. Torricelli calcula velocidad de descarga de orificios, no presión; y la planta no busca generar energía térmica."
   },
   {
     id: "m8-q20",
     topicId: "coulomb",
-    prompt: "20. Dos esferas, cada una con una carga de $2\\times10^{-5}\\text{ C}$, están separadas 45 mm. ¿Cuál es la fuerza de repulsión entre ellas? ($k=9\\times10^{9}\\text{ N}\\cdot\\text{m}^{2}/\\text{C}^{2}$)",
+    prompt: "Dos esferas, cada una con una carga de $2\\times10^{-5}$ C, están separadas 45 mm. ¿Cuál es la fuerza de repulsión entre ellas?",
     type: "choice",
-    correct: "$1.77\\times10^{3}\\text{ N}$",
+    correct: "$1.77\\times10^{3}$ N.",
     distractors: [
       "0.162 N",
       "0.08 N",
-      "$8.8\\times10^{-11}\\text{ N}$"
+      "$8.8\\times10^{-11}$ N."
     ],
-    hint: "Pasa 45 mm a metros ($0.045\\text{ m} = 4.5\\times10^{-2}\\text{ m}$) y sustituye en $F = k \\frac{q^2}{r^2}$.",
+    hint: "Convierte 45 mm a metros ($0.045\\text{ m} = 4.5\\times10^{-2}\\text{ m}$) y sustituye en $F = k \\frac{q^2}{r^2}$.",
     explanation: "Calculando: $F = (9\\times10^9) \\frac{(2\\times10^{-5})^2}{(0.045)^2} = (9\\times10^9) \\frac{4\\times10^{-10}}{2.025\\times10^{-3}} = 1,777.7\\text{ N} \\approx 1.77\\times10^3\\text{ N}$."
   },
   {
     id: "m8-q21",
     topicId: "watt",
-    prompt: "21. Se compra una bomba de agua de $1/2\\text{ hp}$ para suministro doméstico. La placa indica que funciona con 127 V. Calcula la corriente (en A) que consume la bomba ($1\\text{ hp} = 746\\text{ W}$).",
+    prompt: "Se tiene una bomba de agua que opera a una potencia de $1/2\\text{ hp}$ Si funciona con 127 V, ¿cuál es la corriente que consume la bomba sabiendo que 1 hp = 746 W?",
     type: "choice",
     correct: "$I = P/V = 2.93\\text{ A}$",
     distractors: [
@@ -374,34 +370,36 @@ const questionBank = [
       "$I = V/P = 0.34\\text{ A}$",
       "$I = P*V = 4.7\\times10^{4}\\text{ A}$"
     ],
-    hint: "Medio caballo equivale a $746 / 2 = 373\\text{ W}$. Luego divide entre el voltaje: $I = P / V$.",
-    explanation: "La potencia de medio caballo es $373\\text{ W}$. De la Ley de Watt, la corriente es $I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$."
+    hint: "Medio caballo de fuerza equivale a $746 / 2 = 373\\text{ W}$. Luego divide entre el voltaje: $I = P / V$.",
+    explanation: "La potencia de medio caballo de fuerza es $373\\text{ W}$. De la Ley de Watt, la corriente es $I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$."
   },
   {
     id: "m8-q22",
-    topicId: "watt",
-    prompt: "22. ¿Cuáles de las siguientes aseveraciones corresponden con las características de un campo magnético?<br><br>1. Tiene como unidad de medida el tesla (T).<br>2. Tiene como unidad el coulomb (C).<br>3. El instrumento con el que se mide es el galvanómetro.<br>4. Un campo magnético variable permite inducir un campo eléctrico.<br>5. La cantidad de líneas del campo magnético que atraviesan una superficie se denomina flujo magnético.<br>6. La fuerza de atracción entre dos polos de un campo magnético en un área determinada se denomina flujo magnético.",
-    type: "choice",
-    correct: "1, 3, 4, 5",
-    distractors: [
-      "2, 3, 4, 6",
-      "1, 3, 5",
-      "2, 4, 6"
+    prompt: "Selecciona todas las características de un campo magnético.",
+    type: "multi_select",
+    correctAnswers: [
+      "Tiene como unidad de medida el tesla (T).",
+      "Se mide con un galvanómetro.",
+      "Un campo magnético variable permite inducir un campo eléctrico.",
+      "La cantidad de líneas del campo magnético que atraviesan una superficie se denomina flujo magnético."
     ],
-    hint: "El coulomb mide carga, no campo magnético (descarta 2). El flujo magnético se define por la cantidad de líneas que cruzan una superficie (5 es correcta, 6 es falsa).",
-    explanation: "Las opciones 1, 3, 4 y 5 son los enunciados correctos. La 2 es errónea (el campo magnético no se mide en coulombs) y la 6 describe erróneamente el concepto de flujo magnético."
+    distractors: [
+      "Tiene como unidad el coulomb (C).",
+      "La fuerza de atracción entre dos polos de un campo magnético en un área determinada se denomina flujo magnético."
+    ],
+    hint: "El coulomb mide carga eléctrica (no magnetismo) y el flujo magnético se define por las líneas que atraviesan una superficie, no por una fuerza de atracción entre polos.",
+    explanation: "Las propiedades correctas del campo magnético son: se mide en teslas (T), se detecta con el galvanómetro, un campo variable induce electricidad (inducción electromagnética) y el flujo magnético representa la cantidad de líneas de campo que atraviesan una superficie."
   },
   {
     id: "m8-q23",
     topicId: "gas_ideal",
-    prompt: "23. La gráfica muestra una curva que relaciona valores de presión y volumen de un gas. ¿Cómo se denomina la ley que relaciona estas variables y cómo se interpreta?",
-    image: "img/m8_grafica_boyle.png",
+    prompt: "¿Cómo se denomina la ley que relaciona las variables de volumen y temperatura y cómo se interpreta?",
     type: "choice",
-    correct: "Boyle-Mariotte $\\Rightarrow$ A temperatura constante, la presión de un gas es inversamente proporcional al volumen que ocupa.",
+    correct: "Ley de Boyle-Mariotte: a temperatura constante, la presión de un gas es inversamente proporcional al volumen que ocupa.",
     distractors: [
-      "Gay-Lussac $\\Rightarrow$ A volumen constante, la presión de un gas ideal es directamente proporcional a la temperatura.",
-      "Gay-Lussac $\\Rightarrow$ A temperatura constante, la presión de un gas es inversamente proporcional al volumen que ocupa.",
-      "Boyle-Mariotte $\\Rightarrow$ A volumen constante, la presión de un gas ideal es directamente proporcional a la temperatura."
+      "Ley de Gay-Lussac: a volumen constante, la presión de un gas ideal es directamente proporcional a la temperatura.",
+      "Ley de Gay-Lussac: a temperatura constante, la presión de un gas es inversamente proporcional al volumen que ocupa.",
+      "Ley de Boyle-Mariotte: a volumen constante, la presión de un gas ideal es directamente proporcional a la temperatura."
     ],
     hint: "La gráfica es una curva hiperbólica decreciente entre Presión ($P$) y Volumen ($V$), lo que representa una relación inversamente proporcional.",
     explanation: "Una curva decreciente en un plano Presión-Volumen representa una isoterma regida por la Ley de Boyle-Mariotte: al comprimir el volumen, la presión se incrementa de forma inversamente proporcional ($P_1 V_1 = P_2 V_2$)."
@@ -409,13 +407,13 @@ const questionBank = [
   {
     id: "m8-q24",
     topicId: "gas_ideal",
-    prompt: "24. Una muestra de oxígeno ocupa $12\\text{ m}^{3}$ a temperatura ambiente bajo una presión de 740 mm Hg. Determina el volumen de la misma masa de gas a una presión de 760 mm Hg, en la misma condición de temperatura.",
+    prompt: "Una muestra de oxígeno ocupa $12\\text{ m}^{3}$ a temperatura ambiente bajo una presión de 740 mm Hg. Determina el volumen de la misma masa de gas a una presión de 760 mm Hg en la misma condición de temperatura.",
     type: "choice",
-    correct: "$V_{2}=(P_{1}*V_{1})/P_{2}=11.68\\text{ m}^{3}$",
+    correct: "11.68\\text{ m}^{3}.$",
     distractors: [
-      "$V_{2}=(V_{1}/P_{1})*P_{2}=12.32\\text{ m}^{3}$",
-      "$V_{2}=(T_{1}*V_{1})/T_{2}=12.0\\text{ m}^{3}$",
-      "$V_{2}=(P_{1}*P_{2})/V_{1}=4.6\\times10^{4}\\text{ m}^{3}$"
+      "12.32\\text{ m}^{3}.$",
+      "12.0\\text{ m}^{3}.$",
+      "4.6\\times10^{4}\\text{ m}^{3}.$"
     ],
     hint: "Aplica la Ley de Boyle: $P_1 V_1 = P_2 V_2$. Despeja $V_2$.",
     explanation: "Despejando el volumen final: $V_2 = \\frac{P_1 V_1}{P_2} = \\frac{(740)(12)}{760} \\approx 11.68\\text{ m}^3$. Como la presión aumentó ligeramente, el volumen debió disminuir."
@@ -423,7 +421,7 @@ const questionBank = [
   {
     id: "m8-q25",
     topicId: "gas_ideal",
-    prompt: "25. En el laboratorio se coloca nitrógeno gaseoso a 180 °K a una presión de 1,000 Pa en un volumen de $600\\text{ m}^{3}$. Enseguida se reduce su volumen a $500\\text{ m}^{3}$ y se incrementa la temperatura a 210 °K. Calcula la presión del nitrógeno al final del proceso, suponiendo que se comporta como un gas ideal.",
+    prompt: "En un laboratorio se tiene nitrógeno gaseoso a 180 K bajo una presión de 1,000 Pa en un volumen de $600\\text{ m}^{3}$. Posteriormente se reduce su volumen a $500\\text{ m}^{3}$ y se incrementa la temperatura a 210 K. Calcula la presión del nitrógeno al final del proceso asumiendo un gas ideal.",
     type: "choice",
     correct: "$P_{2}=\\frac{P_{1}V_{1}T_{2}}{V_{2}T_{1}}=1,400\\text{ Pa}$",
     distractors: [
@@ -433,21 +431,6 @@ const questionBank = [
     ],
     hint: "Aplica la ley general del gas ideal: $\\frac{P_1 V_1}{T_1} = \\frac{P_2 V_2}{T_2}$ y despeja $P_2$.",
     explanation: "Despejando: $P_2 = \\frac{P_1 V_1 T_2}{T_1 V_2} = \\frac{(1000)(600)(210)}{(180)(500)} = \\frac{126,000,000}{90,000} = 1,400\\text{ Pa}$."
-  },
-  {
-    id: "m8-q26",
-    topicId: "poligonos",
-    prompt: "26. En la investigación de fenómenos meteorológicos es importante analizar tanto la intensidad como la dirección de los vientos, considerando los puntos cardinales. ¿Cuál es el valor del ángulo que forma la dirección del viento NNO (Nor-Noroeste) con la horizontal?",
-    image: "img/m8_rosa_vientos.png",
-    type: "choice",
-    correct: "$67.5^{\\circ}$",
-    distractors: [
-      "$22.5^{\\circ}$",
-      "$90^{\\circ}$",
-      "$45^{\\circ}$"
-    ],
-    hint: "La rosa de los vientos divide el cuadrante de 90° en 4 partes de 22.5° cada una: Oeste (0°), ONO (22.5°), NO (45°) y NNO (67.5° respecto a la horizontal).",
-    explanation: "Cada subdivisión de la rosa de los vientos equivale a $22.5^\\circ$. NNO se ubica entre el Noroeste ($45^\\circ$) y el Norte ($90^\\circ$). Su elevación angular medida desde el eje horizontal Oeste es $45^\\circ + 22.5^\\circ = 67.5^\\circ$."
   },
   {
     id: "m8-q27",
@@ -467,13 +450,13 @@ const questionBank = [
   {
     id: "m8-q28",
     topicId: "temperatura",
-    prompt: "28. Se midió la temperatura de un refrigerador de uso doméstico con un termómetro en escala Celsius y fue de $5^{\\circ}\\text{C}$. ¿A cuántos grados corresponde en escala Fahrenheit?",
+    prompt: "¿A cuántos grados Fahrenheit corresponde una medida de 5$^{\\circ}\\text{C}$?",
     type: "choice",
-    correct: "$F = 1.8 T + 32 = 41$",
+    correct: "$F = 1.8 T + 32 = 41^{\\circ}\\text{F}$",
     distractors: [
-      "$F = 32 - 1.8T = 23$",
-      "$F = 32 + 0.8T = 36$",
-      "$F = 32 - 0.8T = 28$"
+      "$F = 32 - 1.8T = 23^{\\circ}\\text{F}$",
+      "$F = 32 + 0.8T = 36^{\\circ}\\text{F}$",
+      "$F = 32 - 0.8T = 28^{\\circ}\\text{F}$"
     ],
     hint: "La fórmula de conversión es $T_F = 1.8 \\cdot T_C + 32$.",
     explanation: "Sustituyendo los $5^\\circ\\text{C}$: $T_F = 1.8(5) + 32 = 9 + 32 = 41^\\circ\\text{F}$."
@@ -481,13 +464,13 @@ const questionBank = [
   {
     id: "m8-q29",
     topicId: "calor",
-    prompt: "29. Una sustancia metálica cuya temperatura es de $90^{\\circ}\\text{C}$ se coloca en un calorímetro con 325 g de agua cuya temperatura es de $20^{\\circ}\\text{C}$. La temperatura final del agua es $25^{\\circ}\\text{C}$. Determine el calor absorbido por el agua en calorías.",
+    prompt: "Una sustancia metálica a $90^{\\circ}\\text{C}$ se coloca en un calorímetro con 325 g de agua a $20^{\\circ}\\text{C}$. La temperatura final del agua termina siendo de $25^{\\circ}\\text{C}$. ¿Cuántas calorías de calor absorbió el agua?",
     type: "choice",
-    correct: "1625 cal",
+    correct: "1625 cal.",
     distractors: [
-      "6500 cal",
-      "29250 cal",
-      "8125 cal"
+      "6500 cal.",
+      "29250 cal.",
+      "8125 cal."
     ],
     hint: "Aplica $Q = m \\cdot c \\cdot \\Delta T$. Recuerda que para el agua $c = 1\\text{ cal/g}^{\\circ}\\text{C}$ y el cambio de temperatura es $\\Delta T = 25 - 20 = 5^{\\circ}\\text{C}$.",
     explanation: "Solo importa la masa y el incremento de temperatura del agua: $Q = (325\\text{ g})(1\\text{ cal/g}^{\\circ}\\text{C})(25^{\\circ}\\text{C} - 20^{\\circ}\\text{C}) = 325 \\times 5 = 1,625\\text{ cal}$."
@@ -495,13 +478,13 @@ const questionBank = [
   {
     id: "m8-q30",
     topicId: "calor",
-    prompt: "30. Uno de los gases de efecto invernadero es el $\\text{CO}_{2}$; cuando existe mayor cantidad de este gas se incrementa la temperatura. ¿Cuál es el motivo por el cual se desencadena este efecto?",
+    prompt: "Uno de los gases de efecto invernadero es el $\\text{CO}_{2}$. A mayor cantidad de este gas, hay un mayor incremento de temperatura. ¿Por qué ocurre este efecto?",
     type: "choice",
     correct: "El $\\text{CO}_{2}$ no permite que la radiación emitida por la superficie terrestre salga de regreso al espacio.",
     distractors: [
       "El $\\text{CO}_{2}$ desencadena una serie de reacciones químicas que catalizan la formación de contaminantes.",
-      "Este gas incrementa el acceso a la superficie terrestre de la radiación del espacio.",
-      "Este gas impide la total absorción de radiaciones del exterior por lo que vuelven al exterior."
+      "El $\\text{CO}_{2}$ incrementa el acceso a la superficie terrestre de la radiación del espacio.",
+      "El $\\text{CO}_{2}$ impide la total absorción de radiaciones del exterior por lo que vuelven al exterior."
     ],
     hint: "El efecto invernadero funciona atrapando la radiación infrarroja térmica que la Tierra reemite hacia el espacio.",
     explanation: "Las moléculas de dióxido de carbono absorben y reemiten la radiación infrarroja emitida por la superficie del planeta, reteniendo la energía térmica en la atmósfera e impidiendo que escape al espacio exterior."
