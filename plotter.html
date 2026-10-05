@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plotter LaTeX HD</title>
+  <title>PlotLab Pro - Generador de Planos Cartesianos LaTeX HD</title>
 
   <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,7 @@
   </script>
 
   <style>
-    /* Inyección explícita de tipografías KaTeX para que el Canvas 2D las reconozca nativamente */
+    /* Inyección explícita de tipografías KaTeX para Canvas y SVG */
     @font-face {
       font-family: 'KaTeX_Main';
       src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Regular.woff2') format('woff2');
@@ -54,23 +54,15 @@
       font-style: normal;
     }
     @font-face {
-      font-family: 'KaTeX_Math';
-      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Math-Italic.woff2') format('woff2');
+      font-family: 'KaTeX_Main';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Italic.woff2') format('woff2');
       font-weight: normal;
       font-style: italic;
     }
     @font-face {
-      font-family: 'KaTeX_Size1';
-      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Size1-Regular.woff2') format('woff2');
+      font-family: 'KaTeX_Math';
+      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Math-Italic.woff2') format('woff2');
       font-weight: normal;
-      font-style: normal;
-    }
-
-    .latex-font {
-      font-family: 'KaTeX_Main', 'Times New Roman', serif;
-    }
-    .latex-math-font {
-      font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif;
       font-style: italic;
     }
 
@@ -117,9 +109,14 @@
 
     <!-- Quick action buttons -->
     <div class="flex items-center gap-2">
-      <button id="btnOriginalPreset" title="Cargar parábola original (exacta a la imagen)" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-slate-700 hover:text-white border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
-        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-indigo-400"></i>
-        <span>Ejemplo Imagen</span>
+      <button id="btnOriginalPreset" title="Cargar ejemplo parábola" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-slate-700 hover:text-white border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <span>Ejemplo</span>
+      </button>
+
+      <button id="btnClearAll" title="Dejar lienzo completamente en blanco" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-200 bg-slate-800/80 hover:bg-rose-950/40 hover:text-rose-300 hover:border-rose-800 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="eraser" class="w-3.5 h-3.5 text-rose-400"></i>
+        <span class="hidden sm:inline">Limpiar Todo</span>
       </button>
 
       <button id="btnCopyClipboard" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
@@ -127,7 +124,7 @@
         <span class="hidden sm:inline">Copiar Imagen</span>
       </button>
 
-      <!-- Dropdown Exportar con click corregido -->
+      <!-- Dropdown Exportar -->
       <div class="relative">
         <button id="btnToggleDropdown" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
@@ -135,7 +132,7 @@
           <i data-lucide="chevron-down" class="w-3 h-3"></i>
         </button>
 
-        <div id="downloadDropdownMenu" class="absolute right-0 mt-1.5 w-56 bg-slate-850 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden">
+        <div id="downloadDropdownMenu" class="absolute right-0 mt-1.5 w-56 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden">
           <button id="btnDownloadSvg" type="button" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600 hover:text-white flex items-center gap-2 transition cursor-pointer">
             <i data-lucide="file-code" class="w-4 h-4 text-emerald-400"></i>
             <span>Vectorial SVG (Nitidez ∞)</span>
@@ -174,7 +171,7 @@
           <i data-lucide="move" class="w-3.5 h-3.5"></i> Ejes & Rótulos
         </button>
         <button id="tabBtnStyle" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
-          <i data-lucide="palette" class="w-3.5 h-3.5"></i> Estilo Visual
+          <i data-lucide="palette" class="w-3.5 h-3.5"></i> Estilo & Formato
         </button>
       </div>
 
@@ -189,35 +186,43 @@
             </button>
           </div>
 
-          <!-- Opciones de visibilidad de la fórmula en la imagen -->
-          <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/60 flex items-center justify-between">
-            <div>
-              <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                <i data-lucide="eye" class="w-3.5 h-3.5 text-indigo-400"></i>
-                <span>Fórmula en la imagen final</span>
+          <!-- Opciones de visibilidad y tamaño de fórmulas en la imagen -->
+          <div class="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-indigo-400"></i>
+                  <span>Tarjeta flotante de funciones</span>
+                </div>
+                <p class="text-[11px] text-slate-400">Mostrar recuadro con fórmulas en mathmode en la imagen</p>
               </div>
-              <p class="text-[11px] text-slate-400">Desactiva para dejar la gráfica completamente limpia</p>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="checkOverlayFormula" class="sr-only peer">
+                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="checkOverlayFormula" class="sr-only peer">
-              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
+
+            <div class="pt-2 border-t border-slate-700/60">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-slate-300 font-medium">Tamaño texto de funciones en imagen:</span>
+                <span id="formulaFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
+              </div>
+              <input type="range" id="inputFormulaFontSize" min="10" max="22" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
           </div>
 
           <!-- Lista de Funciones -->
-          <div id="functionsContainer" class="space-y-3.5">
-            <!-- Inyectado por JS -->
-          </div>
+          <div id="functionsContainer" class="space-y-3.5"></div>
 
           <div class="p-3 rounded-xl bg-slate-800/30 border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
             <p class="font-medium text-slate-300 flex items-center gap-1">
               <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis admitida:
             </p>
-            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x)*40</code>, <code>exp(x)</code>, <code>log(x)</code>, <code>sqrt(x)</code>, <code>x^3 - 4*x</code></p>
+            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x)*40</code>, <code>exp(x)</code>, <code>log(x)</code>, <code>sqrt(x)</code></p>
           </div>
         </div>
 
-        <!-- PESTAÑA: PUNTOS CARTESIANOS -->
+        <!-- PESTAÑA 2: PUNTOS CARTESIANOS -->
         <div id="tabSectionPoints" class="space-y-4 hidden">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Puntos en el Plano</span>
@@ -226,31 +231,39 @@
             </button>
           </div>
 
-          <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex items-center justify-between">
-            <div>
-              <span class="text-xs font-semibold text-slate-200">Mostrar coordenadas en etiquetas</span>
-              <p class="text-[11px] text-slate-400">Ejemplo: P(1, 0)</p>
+          <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-200">Mostrar coordenadas en etiquetas</span>
+                <p class="text-[11px] text-slate-400">Ejemplo: P(1, 0)</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="checkShowCoords" class="sr-only peer">
+                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="checkShowCoords" class="sr-only peer">
-              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-            </label>
+
+            <div class="pt-2 border-t border-slate-700/60">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-slate-300 font-medium">Tamaño texto etiquetas de puntos:</span>
+                <span id="pointLabelFontSizeVal" class="font-mono text-indigo-300 font-semibold">14px</span>
+              </div>
+              <input type="range" id="inputPointLabelFontSize" min="10" max="24" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
           </div>
 
           <!-- Contenedor de puntos -->
-          <div id="pointsContainer" class="space-y-3.5">
-            <!-- Inyectado por JS -->
-          </div>
+          <div id="pointsContainer" class="space-y-3.5"></div>
         </div>
 
-        <!-- PESTAÑA 2: EJES, RÓTULOS Y RANGOS -->
+        <!-- PESTAÑA 3: EJES, RÓTULOS Y RANGOS -->
         <div id="tabSectionAxes" class="space-y-5 hidden">
           
-          <!-- Título opcional del gráfico en LaTeX -->
+          <!-- Título opcional del gráfico con sintaxis combinada de texto y LaTeX $...$ -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                <i data-lucide="heading" class="w-3.5 h-3.5"></i> Título del Gráfico (LaTeX)
+                <i data-lucide="heading" class="w-3.5 h-3.5"></i> Título del Gráfico
               </h3>
               <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
                 <input type="checkbox" id="checkShowChartTitle" class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
@@ -259,8 +272,9 @@
             </div>
 
             <div>
-              <input type="text" id="inputChartTitle" value="Gráfica de f(x) = 3x^2 + 2x - 5" placeholder="ej: f(x) = x^2 - 4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
-              <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+              <input type="text" id="inputChartTitle" value="Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$" placeholder="Usa $..$ para mathmode, ej: Gráfica de $f(x)$" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              <p class="text-[10px] text-slate-400 mt-1">Escribe texto normal con acentos y encierra fórmulas entre signos de pesos: <code>$y = x^2$</code></p>
+              <div class="mt-1.5 flex items-center gap-1 text-[11px] text-slate-400">
                 <span>Vista Previa:</span>
                 <span id="previewKatexChartTitle" class="text-indigo-300 font-medium"></span>
               </div>
@@ -275,16 +289,21 @@
             </div>
           </div>
 
-          <!-- Rótulos editables de los ejes en LaTeX con posición movible -->
+          <!-- Rótulos de los ejes (Draggable directo en el lienzo) -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                <i data-lucide="type" class="w-3.5 h-3.5"></i> Rótulos de los Ejes (LaTeX)
+                <i data-lucide="move" class="w-3.5 h-3.5"></i> Rótulos de los Ejes (Arrastrables)
               </h3>
               <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
                 <input type="checkbox" id="checkAxisLabels" checked class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
                 <span>Mostrar</span>
               </label>
+            </div>
+
+            <div class="p-2.5 bg-indigo-950/40 border border-indigo-800/40 rounded-lg text-[11px] text-indigo-200 flex items-center gap-2">
+              <i data-lucide="hand" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+              <span><strong>¡Nuevo!</strong> Puedes hacer clic y arrastrar los rótulos directamente sobre la gráfica a cualquier posición.</span>
             </div>
             
             <div class="grid grid-cols-2 gap-3">
@@ -311,28 +330,12 @@
               </div>
             </div>
 
-            <!-- Movilidad de los Títulos de los Ejes -->
-            <div class="pt-2 border-t border-slate-700/60 space-y-2">
-              <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wide">Posición de los Títulos (Desplazamiento)</span>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <div class="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Posición Rótulo X:</span>
-                    <span id="labelXOffsetVal" class="font-mono text-indigo-300">32px</span>
-                  </div>
-                  <input type="range" id="inputLabelXOffset" min="-60" max="90" step="1" value="32" class="w-full accent-indigo-500 cursor-pointer">
-                </div>
-                <div>
-                  <div class="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Posición Rótulo Y:</span>
-                    <span id="labelYOffsetVal" class="font-mono text-indigo-300">30px</span>
-                  </div>
-                  <input type="range" id="inputLabelYOffset" min="-60" max="90" step="1" value="30" class="w-full accent-indigo-500 cursor-pointer">
-                </div>
-              </div>
-            </div>
+            <!-- Botón para resetear posición de rótulos -->
+            <button id="btnResetLabelPos" class="w-full py-1 text-center text-[11px] text-slate-400 hover:text-white bg-slate-800 rounded border border-slate-700 transition">
+              Restablecer posiciones por defecto de X e Y
+            </button>
 
-            <!-- Control interactivo para el tamaño de las etiquetas de números -->
+            <!-- Control para el tamaño de las etiquetas de números -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium flex items-center gap-1">
@@ -342,8 +345,6 @@
               </div>
               <input type="range" id="inputLabelFontSize" min="8" max="26" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
             </div>
-
-            <p class="text-[10px] text-slate-500">Ejemplos para los ejes: <code>x</code>, <code>t (s)</code>, <code>\theta</code>, <code>y</code>, <code>f(x)</code>, <code>V(t)</code></p>
           </div>
 
           <!-- Rango X -->
@@ -404,9 +405,24 @@
           </div>
         </div>
 
-        <!-- PESTAÑA 3: ESTILOS VISUALES Y COLORES -->
+        <!-- PESTAÑA 4: ESTILO, FORMATO Y COLORES -->
         <div id="tabSectionStyle" class="space-y-4 hidden">
           
+          <!-- Selector de Proporción / Forma de la imagen -->
+          <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-300">Forma / Proporción del Lienzo</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btnAspectRect" type="button" class="aspect-btn py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5 bg-indigo-600 border-indigo-500 text-white">
+                <i data-lucide="rectangle-horizontal" class="w-4 h-4"></i>
+                <span>Rectangular (16:10)</span>
+              </button>
+              <button id="btnAspectSquare" type="button" class="aspect-btn py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-slate-700">
+                <i data-lucide="square" class="w-4 h-4"></i>
+                <span>Cuadrada (1:1)</span>
+              </button>
+            </div>
+          </div>
+
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Plantillas de Color</label>
             <div class="grid grid-cols-3 gap-2">
@@ -459,6 +475,10 @@
           <!-- Opciones de Ejes y Tipografía -->
           <div class="pt-2 space-y-2.5">
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar rayitas (ticks) en los números de los ejes</span>
+              <input type="checkbox" id="checkTicks" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
               <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los 4 extremos de los ejes</span>
               <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
@@ -497,7 +517,7 @@
 
       <!-- Tarjeta del Lienzo con sombra difuminada -->
       <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
-        <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
+        <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto"></canvas>
       </div>
 
       <!-- Barra informativa inferior -->
@@ -509,58 +529,39 @@
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5">
           <i data-lucide="aspect-ratio" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span>940 &times; 600 px nativos</span>
+          <span id="infoCanvasDims">940 &times; 600 px (Rectangular)</span>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    /* Estado Global Reactivo */
+    /* Estado Global Reactivo: Inicia LIMPIO desde 0 cada vez que se abre */
     const state = {
+      aspectRatio: 'rect', // 'rect' (940x600) o 'square' (720x720)
       chartTitle: {
-        text: 'Gráfica de f(x) = 3x^2 + 2x - 5',
+        text: 'Gráfica de $f(x)$',
         visible: false,
         fontSize: 18
       },
-      functions: [
-        {
-          id: 'fn-parabola',
-          name: 'f(x)',
-          expr: '3*x^2 + 2*x - 5',
-          color: '#3b82f6',
-          width: 3.5,
-          style: 'solid',
-          visible: true
-        }
-      ],
-      points: [
-        {
-          id: 'pt-1',
-          name: 'A',
-          x: 1,
-          y: 0,
-          color: '#ef4444',
-          size: 6,
-          symbol: 'circle', // 'circle', 'ring', 'cross', 'square'
-          visible: true
-        }
-      ],
+      functions: [], // Vacío por defecto
+      points: [],    // Vacío por defecto
       bounds: {
         xMin: -6,
         xMax: 6,
         xStep: 1,
-        yMin: -20,
-        yMax: 160,
-        yStep: 20,
+        yMin: -6,
+        yMax: 6,
+        yStep: 1,
         subdivisionsX: 2,
         subdivisionsY: 2
       },
       labels: {
         x: 'X',
         y: 'Y',
-        xOffset: 32,
-        yOffset: 30
+        // Posiciones libres (null = calculada automáticamente según ejes)
+        posX: null,
+        posY: null
       },
       style: {
         background: '#ffffff',
@@ -568,7 +569,10 @@
         gridColor: '#cbd5e1',
         labelColor: '#000000',
         labelFontSize: 13,
-        axisWidth: 3.5,
+        formulaFontSize: 13,
+        pointLabelFontSize: 14,
+        axisWidth: 3.0,
+        showTicks: true,          // Las rayitas en los ejes
         showArrows: false,
         showTickNumbers: true,
         showMinorGrid: true,
@@ -585,15 +589,38 @@
     const functionsContainer = document.getElementById('functionsContainer');
     const pointsContainer = document.getElementById('pointsContainer');
 
-    // Mapeo matemático -> píxeles
-    function toCanvasX(x, padding = 58) {
-      const width = state.canvasWidth - (padding * 2);
-      return padding + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
+    // Variables para el sistema de arrastre (Draggable) de rótulos
+    let draggedElement = null; // 'labelX' o 'labelY'
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let labelHitBoxes = {
+      labelX: { x: 0, y: 0, w: 0, h: 0 },
+      labelY: { x: 0, y: 0, w: 0, h: 0 }
+    };
+
+    // Mapeo matemático -> píxeles (considera espacio superior para títulos sin traslapes)
+    function getPaddings() {
+      const topPad = (state.chartTitle.visible && state.chartTitle.text.trim()) 
+        ? Math.max(75, 45 + state.chartTitle.fontSize * 1.6) 
+        : 58;
+      return {
+        top: topPad,
+        bottom: 58,
+        left: 58,
+        right: 58
+      };
     }
 
-    function toCanvasY(y, padding = 58) {
-      const height = state.canvasHeight - (padding * 2);
-      return (state.canvasHeight - padding) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
+    function toCanvasX(x) {
+      const p = getPaddings();
+      const width = state.canvasWidth - (p.left + p.right);
+      return p.left + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
+    }
+
+    function toCanvasY(y) {
+      const p = getPaddings();
+      const height = state.canvasHeight - (p.top + p.bottom);
+      return (state.canvasHeight - p.bottom) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
     }
 
     // Formatear números con signo menos matemático real de LaTeX (\u2212)
@@ -616,23 +643,76 @@
       }
     }
 
+    // Parser para textos con mathmode ($...$) que soporta acentos en texto normal
+    function parseMathText(text) {
+      const segments = [];
+      const regex = /\$([^$]+)\$/g;
+      let lastIndex = 0;
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          segments.push({ isMath: false, text: text.substring(lastIndex, match.index) });
+        }
+        segments.push({ isMath: true, text: match[1] });
+        lastIndex = regex.lastIndex;
+      }
+      if (lastIndex < text.length) {
+        segments.push({ isMath: false, text: text.substring(lastIndex) });
+      }
+      return segments;
+    }
+
+    // Renderizado en Canvas de fragmentos con texto y mathmode
+    function drawRichText(ctx, segments, startX, y, fontSize, defaultColor, isBold = false) {
+      let currentX = startX;
+      segments.forEach(seg => {
+        if (seg.isMath) {
+          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+          const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
+          ctx.fillText(mathStr, currentX, y);
+          currentX += ctx.measureText(mathStr).width;
+        } else {
+          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Times New Roman", serif`;
+          ctx.fillText(seg.text, currentX, y);
+          currentX += ctx.measureText(seg.text).width;
+        }
+      });
+      return currentX;
+    }
+
+    function measureRichText(ctx, segments, fontSize, isBold = false) {
+      let totalW = 0;
+      segments.forEach(seg => {
+        if (seg.isMath) {
+          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+          const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
+          totalW += ctx.measureText(mathStr).width;
+        } else {
+          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Times New Roman", serif`;
+          totalW += ctx.measureText(seg.text).width;
+        }
+      });
+      return totalW;
+    }
+
     // Motor principal de renderizado en Canvas con tipografía KaTeX
     function drawPlot() {
-      const padding = 58;
+      const p = getPaddings();
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
 
       // 1. Limpiar fondo
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
 
-      // Título opcional
+      // Título opcional con soporte de texto en español + mathmode
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
-        ctx.font = `bold ${state.chartTitle.fontSize}px "KaTeX_Main", "Times New Roman", serif`;
+        const titleSegments = parseMathText(state.chartTitle.text.trim());
+        const totalTitleWidth = measureRichText(ctx, titleSegments, state.chartTitle.fontSize, true);
+        const startX = (state.canvasWidth - totalTitleWidth) / 2;
         ctx.fillStyle = axisColor;
-        ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.fillText(state.chartTitle.text.trim(), state.canvasWidth / 2, 14);
+        drawRichText(ctx, titleSegments, startX, 16, state.chartTitle.fontSize, axisColor, true);
       }
 
       // 2. Cuadrícula menor (Minor Grid)
@@ -644,16 +724,16 @@
 
         const stepSubX = xStep / (subdivisionsX || 2);
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
-          const cx = toCanvasX(x, padding);
-          ctx.moveTo(cx, padding);
-          ctx.lineTo(cx, state.canvasHeight - padding);
+          const cx = toCanvasX(x);
+          ctx.moveTo(cx, p.top);
+          ctx.lineTo(cx, state.canvasHeight - p.bottom);
         }
 
         const stepSubY = yStep / (subdivisionsY || 2);
         for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
-          const cy = toCanvasY(y, padding);
-          ctx.moveTo(padding, cy);
-          ctx.lineTo(state.canvasWidth - padding, cy);
+          const cy = toCanvasY(y);
+          ctx.moveTo(p.left, cy);
+          ctx.lineTo(state.canvasWidth - p.right, cy);
         }
         ctx.stroke();
         ctx.globalAlpha = 1.0;
@@ -665,21 +745,21 @@
       ctx.beginPath();
 
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-        const cx = toCanvasX(x, padding);
-        ctx.moveTo(cx, padding);
-        ctx.lineTo(cx, state.canvasHeight - padding);
+        const cx = toCanvasX(x);
+        ctx.moveTo(cx, p.top);
+        ctx.lineTo(cx, state.canvasHeight - p.bottom);
       }
 
       for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-        const cy = toCanvasY(y, padding);
-        ctx.moveTo(padding, cy);
-        ctx.lineTo(state.canvasWidth - padding, cy);
+        const cy = toCanvasY(y);
+        ctx.moveTo(p.left, cy);
+        ctx.lineTo(state.canvasWidth - p.right, cy);
       }
       ctx.stroke();
 
       // Coordenadas origen (0,0)
-      const originX = Math.max(padding, Math.min(state.canvasWidth - padding, toCanvasX(0, padding)));
-      const originY = Math.max(padding, Math.min(state.canvasHeight - padding, toCanvasY(0, padding)));
+      const originX = Math.max(p.left, Math.min(state.canvasWidth - p.right, toCanvasX(0)));
+      const originY = Math.max(p.top, Math.min(state.canvasHeight - p.bottom, toCanvasY(0)));
 
       // 4. Ejes Principales X e Y
       ctx.strokeStyle = axisColor;
@@ -688,12 +768,12 @@
       ctx.beginPath();
 
       // Eje X
-      ctx.moveTo(padding - 26, originY);
-      ctx.lineTo(state.canvasWidth - padding + 26, originY);
+      ctx.moveTo(p.left - 24, originY);
+      ctx.lineTo(state.canvasWidth - p.right + 24, originY);
 
       // Eje Y
-      ctx.moveTo(originX, state.canvasHeight - padding + 26);
-      ctx.lineTo(originX, padding - 26);
+      ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
+      ctx.lineTo(originX, p.top - 24);
       ctx.stroke();
 
       // Flechas en los 4 extremos de los ejes
@@ -703,98 +783,135 @@
 
         // Flecha X Derecha (+X)
         ctx.beginPath();
-        ctx.moveTo(state.canvasWidth - padding + 26, originY);
-        ctx.lineTo(state.canvasWidth - padding + 26 - arrowSize, originY - arrowSize * 0.55);
-        ctx.lineTo(state.canvasWidth - padding + 26 - arrowSize, originY + arrowSize * 0.55);
+        ctx.moveTo(state.canvasWidth - p.right + 24, originY);
+        ctx.lineTo(state.canvasWidth - p.right + 24 - arrowSize, originY - arrowSize * 0.55);
+        ctx.lineTo(state.canvasWidth - p.right + 24 - arrowSize, originY + arrowSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha X Izquierda (-X)
         ctx.beginPath();
-        ctx.moveTo(padding - 26, originY);
-        ctx.lineTo(padding - 26 + arrowSize, originY - arrowSize * 0.55);
-        ctx.lineTo(padding - 26 + arrowSize, originY + arrowSize * 0.55);
+        ctx.moveTo(p.left - 24, originY);
+        ctx.lineTo(p.left - 24 + arrowSize, originY - arrowSize * 0.55);
+        ctx.lineTo(p.left - 24 + arrowSize, originY + arrowSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Arriba (+Y)
         ctx.beginPath();
-        ctx.moveTo(originX, padding - 26);
-        ctx.lineTo(originX - arrowSize * 0.55, padding - 26 + arrowSize);
-        ctx.lineTo(originX + arrowSize * 0.55, padding - 26 + arrowSize);
+        ctx.moveTo(originX, p.top - 24);
+        ctx.lineTo(originX - arrowSize * 0.55, p.top - 24 + arrowSize);
+        ctx.lineTo(originX + arrowSize * 0.55, p.top - 24 + arrowSize);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Abajo (-Y)
         ctx.beginPath();
-        ctx.moveTo(originX, state.canvasHeight - padding + 26);
-        ctx.lineTo(originX - arrowSize * 0.55, state.canvasHeight - padding + 26 - arrowSize);
-        ctx.lineTo(originX + arrowSize * 0.55, state.canvasHeight - padding + 26 - arrowSize);
+        ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
+        ctx.lineTo(originX - arrowSize * 0.55, state.canvasHeight - p.bottom + 24 - arrowSize);
+        ctx.lineTo(originX + arrowSize * 0.55, state.canvasHeight - p.bottom + 24 - arrowSize);
         ctx.closePath();
         ctx.fill();
       }
 
-      // 5. Números en Tipografía KaTeX / Computer Modern
-      if (showTickNumbers) {
-        ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
-        ctx.fillStyle = labelColor;
+      // 5. Rayitas (Ticks) y Números en Tipografía KaTeX
+      ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
+      ctx.fillStyle = labelColor;
 
-        // Eje X
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-          const cx = toCanvasX(x, padding);
-          const isZero = Math.abs(x) < 1e-9;
-          const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
+      // Eje X
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+        const cx = toCanvasX(x);
+        const isZero = Math.abs(x) < 1e-9;
+        const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
 
+        // Rayitas de los números en el eje
+        if (showTicks) {
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
-          ctx.moveTo(cx, originY - 4);
-          ctx.lineTo(cx, originY + 4);
+          ctx.moveTo(cx, originY - 4.5);
+          ctx.lineTo(cx, originY + 4.5);
           ctx.stroke();
-
-          if (!isZero) {
-            ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
-          }
         }
 
-        // Eje Y
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-          const cy = toCanvasY(y, padding);
-          const isZero = Math.abs(y) < 1e-9;
-          const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
-          if (originX - 10 < 30) ctx.textAlign = 'left';
+        if (showTickNumbers && !isZero) {
+          ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
+        }
+      }
 
+      // Eje Y
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+        const cy = toCanvasY(y);
+        const isZero = Math.abs(y) < 1e-9;
+        const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
+        if (originX - 10 < 30) ctx.textAlign = 'left';
+
+        // Rayitas de los números en el eje
+        if (showTicks) {
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
-          ctx.moveTo(originX - 4, cy);
-          ctx.lineTo(originX + 4, cy);
+          ctx.moveTo(originX - 4.5, cy);
+          ctx.lineTo(originX + 4.5, cy);
           ctx.stroke();
+        }
 
+        if (showTickNumbers && !isZero) {
           ctx.fillText(formatLatexNumber(y), labelOffsetX, cy);
         }
       }
 
-      // 6. Rótulos de los Ejes Editables con posición movible en LaTeX
+      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable)
       if (showAxisLabels) {
         ctx.font = 'bold 24px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = axisColor;
 
-        // Rótulo Eje Y
+        // Posiciones por defecto si no han sido arrastrados manualmente
+        const defaultLabelY_X = originX;
+        const defaultLabelY_Y = p.top - 28;
+
+        const defaultLabelX_X = state.canvasWidth - p.right + 30;
+        const defaultLabelX_Y = originY;
+
+        const posX_X = state.labels.posX !== null ? state.labels.posX : defaultLabelX_X;
+        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : defaultLabelX_Y;
+
+        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : defaultLabelY_X;
+        const posY_Y = state.labels.posY !== null ? state.labels.posY : defaultLabelY_Y;
+
+        // Dibujar Rótulo Y
+        const labelYText = state.labels.y.trim() || 'Y';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        const labelYText = state.labels.y.trim() || 'Y';
-        ctx.fillText(labelYText, originX, padding - state.labels.yOffset);
+        ctx.fillText(labelYText, posY_X, posY_Y);
 
-        // Rótulo Eje X
+        // Hitbox Y para drag
+        const widthY = ctx.measureText(labelYText).width;
+        labelHitBoxes.labelY = {
+          x: posY_X - widthY / 2 - 8,
+          y: posY_Y - 26,
+          w: widthY + 16,
+          h: 30
+        };
+
+        // Dibujar Rótulo X
+        const labelXText = state.labels.x.trim() || 'X';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        const labelXText = state.labels.x.trim() || 'X';
-        ctx.fillText(labelXText, state.canvasWidth - padding + state.labels.xOffset, originY);
+        ctx.fillText(labelXText, posX_X, posX_Y);
+
+        // Hitbox X para drag
+        const widthX = ctx.measureText(labelXText).width;
+        labelHitBoxes.labelX = {
+          x: posX_X - 6,
+          y: posX_Y - 15,
+          w: widthX + 16,
+          h: 30
+        };
       }
 
       // 7. Trazado de las Funciones Matemáticas
@@ -814,7 +931,7 @@
           }
 
           ctx.beginPath();
-          ctx.rect(padding - 2, padding - 2, state.canvasWidth - (padding * 2) + 4, state.canvasHeight - (padding * 2) + 4);
+          ctx.rect(p.left - 2, p.top - 2, state.canvasWidth - (p.left + p.right) + 4, state.canvasHeight - (p.top + p.bottom) + 4);
           ctx.clip();
 
           ctx.strokeStyle = fn.color;
@@ -837,8 +954,8 @@
             }
 
             if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
-              const canvasX = toCanvasX(currentX, padding);
-              const canvasY = toCanvasY(currentY, padding);
+              const canvasX = toCanvasX(currentX);
+              const canvasY = toCanvasY(currentY);
 
               if (isFirst) {
                 ctx.moveTo(canvasX, canvasY);
@@ -852,20 +969,17 @@
           }
           ctx.stroke();
           ctx.restore();
-        } catch (error) {
-          console.warn(`Error evaluando la función: ${fn.expr}`, error);
-        }
+        } catch (error) {}
       });
 
       // 8. Trazado de los Puntos en el Plano
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
 
-        const cx = toCanvasX(pt.x, padding);
-        const cy = toCanvasY(pt.y, padding);
+        const cx = toCanvasX(pt.x);
+        const cy = toCanvasY(pt.y);
 
-        // Si está dentro de los límites visuales
-        if (cx >= padding - 15 && cx <= state.canvasWidth - padding + 15 && cy >= padding - 15 && cy <= state.canvasHeight - padding + 15) {
+        if (cx >= p.left - 15 && cx <= state.canvasWidth - p.right + 15 && cy >= p.top - 15 && cy <= state.canvasHeight - p.bottom + 15) {
           ctx.save();
           ctx.fillStyle = pt.color;
           ctx.strokeStyle = pt.color;
@@ -894,24 +1008,33 @@
             ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
           }
 
-          // Etiqueta del Punto (Nombre y Coordenadas opcionales)
+          // Etiqueta del Punto con mathmode auténtico para el nombre (A, P) y tamaño editable
           const name = pt.name ? pt.name.trim() : '';
           const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
-          const labelFull = name && coordText ? `${name}${coordText}` : (name || coordText);
+          const ptFontSize = state.style.pointLabelFontSize || 14;
 
-          if (labelFull) {
-            ctx.font = 'bold 14px "KaTeX_Math", "KaTeX_Main", serif';
+          if (name || coordText) {
             ctx.fillStyle = pt.color;
-            ctx.textAlign = 'left';
             ctx.textBaseline = 'bottom';
-            ctx.fillText(labelFull, cx + r + 4, cy - 3);
+            let curX = cx + r + 4;
+
+            if (name) {
+              ctx.font = `italic bold ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+              ctx.fillText(name, curX, cy - 2);
+              curX += ctx.measureText(name).width + 3;
+            }
+
+            if (coordText) {
+              ctx.font = `normal ${ptFontSize - 1}px "KaTeX_Main", "Times New Roman", serif`;
+              ctx.fillText(coordText, curX, cy - 2);
+            }
           }
 
           ctx.restore();
         }
       });
 
-      // 9. Opcional: Badge con la fórmula tipográfica KaTeX
+      // 9. Badge con fórmulas en Mathmode auténtico ($f(x) = ...$) y tamaño editable
       if (showOverlayFormula) {
         drawFormulaBadge();
       }
@@ -921,10 +1044,13 @@
       const activeFunctions = state.functions.filter(f => f.visible && f.expr.trim());
       if (activeFunctions.length === 0) return;
 
-      const badgeX = 70;
-      const badgeY = 24;
+      const fSize = state.style.formulaFontSize || 13;
+      const p = getPaddings();
+      const badgeX = p.left + 16;
+      const badgeY = p.top + 16;
       const badgeWidth = 240;
-      const badgeHeight = 18 + (activeFunctions.length * 28);
+      const itemHeight = fSize + 14;
+      const badgeHeight = 12 + (activeFunctions.length * itemHeight);
 
       ctx.save();
       ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)';
@@ -939,20 +1065,29 @@
 
       ctx.save();
       activeFunctions.forEach((fn, idx) => {
-        const itemY = badgeY + 20 + (idx * 26);
+        const itemY = badgeY + 18 + (idx * itemHeight);
         
         ctx.fillStyle = fn.color;
         ctx.beginPath();
         ctx.arc(badgeX + 16, itemY - 3, 5, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.font = 'normal 13px "KaTeX_Main", "Times New Roman", serif';
         ctx.fillStyle = state.style.labelColor;
-        ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
 
+        // Renderizado en mathmode para la función y la variable
+        let startTextX = badgeX + 28;
+
+        // Nombre de función: f(x) con math italic
+        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+        const nameText = `${fn.name || 'f(x)'} = `;
+        ctx.fillText(nameText, startTextX, itemY - 3);
+        startTextX += ctx.measureText(nameText).width;
+
+        // Expresión en mathmode
         let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³').replace(/-/g, '\u2212');
-        ctx.fillText(`${fn.name || 'f(x)'} = ${displayExpr}`, badgeX + 30, itemY - 3);
+        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+        ctx.fillText(displayExpr, startTextX, itemY - 3);
       });
       ctx.restore();
     }
@@ -977,6 +1112,11 @@
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
+      if (state.functions.length === 0) {
+        functionsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">Plano limpio: no hay funciones añadidas.<br>Haz clic en "+ Añadir Función".</p>`;
+        return;
+      }
+
       state.functions.forEach((fn) => {
         const card = document.createElement('div');
         card.className = 'p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 space-y-3 transition hover:border-slate-600 shadow-sm';
@@ -990,13 +1130,9 @@
               <input type="text" data-name-id="${fn.id}" value="${fn.name}" title="Nombre de función" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
             </div>
 
-            <div class="flex items-center gap-2">
-              ${state.functions.length > 1 ? `
-                <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar función">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              ` : ''}
-            </div>
+            <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar función">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
           </div>
 
           <div>
@@ -1053,7 +1189,7 @@
       pointsContainer.innerHTML = '';
 
       if (state.points.length === 0) {
-        pointsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No hay puntos añadidos. Haz clic en "Añadir Punto".</p>`;
+        pointsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">Plano limpio: no hay puntos añadidos.<br>Haz clic en "+ Añadir Punto".</p>`;
         return;
       }
 
@@ -1296,7 +1432,19 @@
         try { katex.render(state.labels.x || 'X', elX, { throwOnError: false }); } catch (e) { elX.innerText = state.labels.x; }
         try { katex.render(state.labels.y || 'Y', elY, { throwOnError: false }); } catch (e) { elY.innerText = state.labels.y; }
         if (elTitle) {
-          try { katex.render(state.chartTitle.text || '', elTitle, { throwOnError: false }); } catch (e) { elTitle.innerText = state.chartTitle.text; }
+          try {
+            // Reemplazar partes $...$ con KaTeX
+            const rawTitle = state.chartTitle.text || '';
+            const segments = parseMathText(rawTitle);
+            elTitle.innerHTML = segments.map(seg => {
+              if (seg.isMath) {
+                try { return katex.renderToString(seg.text, { throwOnError: false }); } catch (e) { return seg.text; }
+              }
+              return `<span>${seg.text}</span>`;
+            }).join('');
+          } catch (e) {
+            elTitle.innerText = state.chartTitle.text;
+          }
         }
       }
     }
@@ -1306,10 +1454,6 @@
       // Ejes y rótulos
       document.getElementById('inputAxisLabelX').value = state.labels.x;
       document.getElementById('inputAxisLabelY').value = state.labels.y;
-      document.getElementById('inputLabelXOffset').value = state.labels.xOffset;
-      document.getElementById('labelXOffsetVal').innerText = `${state.labels.xOffset}px`;
-      document.getElementById('inputLabelYOffset').value = state.labels.yOffset;
-      document.getElementById('labelYOffsetVal').innerText = `${state.labels.yOffset}px`;
 
       // Título
       document.getElementById('checkShowChartTitle').checked = state.chartTitle.visible;
@@ -1327,9 +1471,13 @@
       document.getElementById('inputSubdivisionsX').value = state.bounds.subdivisionsX;
       document.getElementById('inputSubdivisionsY').value = state.bounds.subdivisionsY;
 
-      // Tamaño de números de ejes
+      // Tamaños de fuentes
       document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
+      document.getElementById('inputFormulaFontSize').value = state.style.formulaFontSize || 13;
+      document.getElementById('formulaFontSizeVal').innerText = `${state.style.formulaFontSize || 13}px`;
+      document.getElementById('inputPointLabelFontSize').value = state.style.pointLabelFontSize || 14;
+      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 14}px`;
 
       // Puntos
       document.getElementById('checkShowCoords').checked = state.style.showPointCoords;
@@ -1344,6 +1492,7 @@
       document.getElementById('colorLabels').value = state.style.labelColor;
       document.getElementById('labelLabelsColor').innerText = state.style.labelColor.toUpperCase();
 
+      document.getElementById('checkTicks').checked = state.style.showTicks;
       document.getElementById('checkArrows').checked = state.style.showArrows;
       document.getElementById('checkTickNumbers').checked = state.style.showTickNumbers;
       document.getElementById('checkMinorGrid').checked = state.style.showMinorGrid;
@@ -1352,10 +1501,50 @@
       document.getElementById('inputAxisWidth').value = state.style.axisWidth;
       document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
 
+      updateAspectButtons();
       updateAxisLabelsPreview();
     }
 
-    // Listeners para los Rótulos de los Ejes Editables
+    // Actualizar botones de forma / aspecto
+    function updateAspectButtons() {
+      const btnRect = document.getElementById('btnAspectRect');
+      const btnSq = document.getElementById('btnAspectSquare');
+      const infoDims = document.getElementById('infoCanvasDims');
+
+      if (state.aspectRatio === 'rect') {
+        btnRect.className = 'aspect-btn py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5 bg-indigo-600 border-indigo-500 text-white shadow-md';
+        btnSq.className = 'aspect-btn py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-slate-700';
+        infoDims.innerHTML = `940 &times; 600 px (Rectangular)`;
+      } else {
+        btnSq.className = 'aspect-btn py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5 bg-indigo-600 border-indigo-500 text-white shadow-md';
+        btnRect.className = 'aspect-btn py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-slate-700';
+        infoDims.innerHTML = `720 &times; 720 px (Cuadrada)`;
+      }
+    }
+
+    function setAspectRatio(aspect) {
+      state.aspectRatio = aspect;
+      if (aspect === 'rect') {
+        state.canvasWidth = 940;
+        state.canvasHeight = 600;
+      } else {
+        state.canvasWidth = 720;
+        state.canvasHeight = 720;
+      }
+      canvas.width = state.canvasWidth;
+      canvas.height = state.canvasHeight;
+      state.labels.posX = null;
+      state.labels.posY = null;
+      state.labels.posX_Y = null;
+      state.labels.posY_X = null;
+      updateAspectButtons();
+      drawPlot();
+    }
+
+    document.getElementById('btnAspectRect').addEventListener('click', () => setAspectRatio('rect'));
+    document.getElementById('btnAspectSquare').addEventListener('click', () => setAspectRatio('square'));
+
+    // Rótulos de los Ejes
     document.getElementById('inputAxisLabelX').addEventListener('input', (e) => {
       state.labels.x = e.target.value;
       updateAxisLabelsPreview();
@@ -1368,17 +1557,13 @@
       drawPlot();
     });
 
-    // Desplazamiento rótulos
-    document.getElementById('inputLabelXOffset').addEventListener('input', (e) => {
-      state.labels.xOffset = parseInt(e.target.value, 10);
-      document.getElementById('labelXOffsetVal').innerText = `${state.labels.xOffset}px`;
+    document.getElementById('btnResetLabelPos').addEventListener('click', () => {
+      state.labels.posX = null;
+      state.labels.posY = null;
+      state.labels.posX_Y = null;
+      state.labels.posY_X = null;
       drawPlot();
-    });
-
-    document.getElementById('inputLabelYOffset').addEventListener('input', (e) => {
-      state.labels.yOffset = parseInt(e.target.value, 10);
-      document.getElementById('labelYOffsetVal').innerText = `${state.labels.yOffset}px`;
-      drawPlot();
+      showToast('Posiciones de rótulos restablecidas');
     });
 
     // Listeners del Título del Gráfico
@@ -1399,10 +1584,28 @@
       drawPlot();
     });
 
-    // Listener para el tamaño de las etiquetas numéricas
+    // Sliders de tamaños
     document.getElementById('inputLabelFontSize').addEventListener('input', (e) => {
       state.style.labelFontSize = parseInt(e.target.value, 10) || 13;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
+      drawPlot();
+    });
+
+    document.getElementById('inputFormulaFontSize').addEventListener('input', (e) => {
+      state.style.formulaFontSize = parseInt(e.target.value, 10) || 13;
+      document.getElementById('formulaFontSizeVal').innerText = `${state.style.formulaFontSize}px`;
+      drawPlot();
+    });
+
+    document.getElementById('inputPointLabelFontSize').addEventListener('input', (e) => {
+      state.style.pointLabelFontSize = parseInt(e.target.value, 10) || 14;
+      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize}px`;
+      drawPlot();
+    });
+
+    // Ticks (rayitas)
+    document.getElementById('checkTicks').addEventListener('change', (e) => {
+      state.style.showTicks = e.target.checked;
       drawPlot();
     });
 
@@ -1427,7 +1630,7 @@
       });
     });
 
-    // Escuchadores de Switches y Colores
+    // Escuchadores de Colores
     document.getElementById('colorBackground').addEventListener('input', (e) => {
       state.style.background = e.target.value;
       document.getElementById('labelBgColor').innerText = e.target.value.toUpperCase();
@@ -1485,12 +1688,13 @@
 
     // Añadir nueva función
     document.getElementById('btnAddFunction').addEventListener('click', () => {
-      const palette = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#e11d48'];
+      const palette = ['#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#e11d48'];
       const nextColor = palette[state.functions.length % palette.length];
+      const fnNum = state.functions.length === 0 ? '' : state.functions.length + 1;
       const newFn = {
         id: 'fn-' + Date.now(),
-        name: `g${state.functions.length}(x)`,
-        expr: 'cos(x)*35',
+        name: `f${fnNum}(x)`,
+        expr: state.functions.length === 0 ? 'x^2 - 4' : '2*x + 1',
         color: nextColor,
         width: 3.5,
         style: 'solid',
@@ -1505,7 +1709,7 @@
     document.getElementById('btnAddPoint').addEventListener('click', () => {
       const pointColors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
       const nextColor = pointColors[state.points.length % pointColors.length];
-      const charCode = 65 + (state.points.length % 26); // A, B, C...
+      const charCode = 65 + (state.points.length % 26);
       const newPoint = {
         id: 'pt-' + Date.now(),
         name: String.fromCharCode(charCode),
@@ -1519,6 +1723,22 @@
       state.points.push(newPoint);
       renderPointInputs();
       drawPlot();
+    });
+
+    // Limpiar TODO (dejar en blanco)
+    document.getElementById('btnClearAll').addEventListener('click', () => {
+      state.functions = [];
+      state.points = [];
+      state.chartTitle.visible = false;
+      state.labels.posX = null;
+      state.labels.posY = null;
+      state.labels.posX_Y = null;
+      state.labels.posY_X = null;
+      syncInputs();
+      renderFunctionInputs();
+      renderPointInputs();
+      drawPlot();
+      showToast('Plano cartesiano totalmente en blanco');
     });
 
     // Preset temas
@@ -1546,10 +1766,10 @@
       });
     });
 
-    // Cargar Preset Exacto de la Imagen
+    // Cargar Ejemplo Parábola
     document.getElementById('btnOriginalPreset').addEventListener('click', () => {
       state.chartTitle = {
-        text: 'Gráfica de f(x) = 3x^2 + 2x - 5',
+        text: 'Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$',
         visible: false,
         fontSize: 18
       };
@@ -1578,8 +1798,8 @@
       state.labels = {
         x: 'X',
         y: 'Y',
-        xOffset: 32,
-        yOffset: 30
+        posX: null,
+        posY: null
       };
       state.style.background = '#ffffff';
       state.style.axisColor = '#000000';
@@ -1587,6 +1807,7 @@
       state.style.labelColor = '#000000';
       state.style.labelFontSize = 13;
       state.style.axisWidth = 3.5;
+      state.style.showTicks = true;
       state.style.showArrows = false;
       state.style.showAxisLabels = true;
       state.style.showTickNumbers = true;
@@ -1598,7 +1819,7 @@
       renderFunctionInputs();
       renderPointInputs();
       drawPlot();
-      showToast('Cargado el plano exacto de la imagen original');
+      showToast('Cargado el ejemplo de parábola');
     });
 
     function showToast(message) {
@@ -1611,7 +1832,95 @@
       }, 2600);
     }
 
-    // Exportación a PNG en alta fidelidad (1x, 2x Retina, 4x Ultra Impresión)
+    // ==========================================
+    // SISTEMA DRAGGABLE DE LOS RÓTULOS EN CANVAS
+    // ==========================================
+    function getCanvasCoords(evt) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    function checkHit(pos, box) {
+      return pos.x >= box.x && pos.x <= box.x + box.w && pos.y >= box.y && pos.y <= box.y + box.h;
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      const pos = getCanvasCoords(e);
+      if (checkHit(pos, labelHitBoxes.labelX)) {
+        draggedElement = 'labelX';
+      } else if (checkHit(pos, labelHitBoxes.labelY)) {
+        draggedElement = 'labelY';
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const pos = getCanvasCoords(e);
+
+      if (draggedElement) {
+        if (draggedElement === 'labelX') {
+          state.labels.posX = Math.round(pos.x);
+          state.labels.posY_X = Math.round(pos.y);
+        } else if (draggedElement === 'labelY') {
+          state.labels.posX_Y = Math.round(pos.x);
+          state.labels.posY = Math.round(pos.y);
+        }
+        drawPlot();
+      } else {
+        // Cursor interactivo
+        if (checkHit(pos, labelHitBoxes.labelX) || checkHit(pos, labelHitBoxes.labelY)) {
+          canvas.style.cursor = 'grab';
+        } else {
+          canvas.style.cursor = 'crosshair';
+        }
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (draggedElement) {
+        draggedElement = null;
+        canvas.style.cursor = 'crosshair';
+      }
+    });
+
+    // Soporte táctil
+    canvas.addEventListener('touchstart', (e) => {
+      const pos = getCanvasCoords(e);
+      if (checkHit(pos, labelHitBoxes.labelX)) {
+        draggedElement = 'labelX';
+        e.preventDefault();
+      } else if (checkHit(pos, labelHitBoxes.labelY)) {
+        draggedElement = 'labelY';
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (draggedElement) {
+        const pos = getCanvasCoords(e);
+        if (draggedElement === 'labelX') {
+          state.labels.posX = Math.round(pos.x);
+          state.labels.posY_X = Math.round(pos.y);
+        } else if (draggedElement === 'labelY') {
+          state.labels.posX_Y = Math.round(pos.x);
+          state.labels.posY = Math.round(pos.y);
+        }
+        drawPlot();
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => {
+      draggedElement = null;
+    });
+
+    // Exportación a PNG en alta fidelidad
     function downloadPNG(scale = 2) {
       const offscreenCanvas = document.createElement('canvas');
       offscreenCanvas.width = state.canvasWidth * scale;
@@ -1620,7 +1929,6 @@
 
       offCtx.scale(scale, scale);
 
-      // Usar contexto temporal offscreen
       const currentCtx = ctx;
       window.ctx = offCtx;
       drawPlot();
@@ -1636,11 +1944,11 @@
 
     // Exportación a SVG Vectorial Puro con Fuentes LaTeX incrustadas
     function downloadSVG() {
-      const padding = 58;
+      const p = getPaddings();
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
@@ -1650,14 +1958,24 @@
       .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
       .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
       .katex-chart-title { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
-      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: 14px; font-weight: bold; }
+      .katex-math-span { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-style: italic; font-weight: normal; }
+      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: bold; }
     </style>
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
 
-      // Título
+      // Título con soporte de spans
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
-        svg += `  <text x="${w / 2}" y="24" class="katex-chart-title" text-anchor="middle">${state.chartTitle.text.trim()}</text>\n`;
+        const segments = parseMathText(state.chartTitle.text.trim());
+        svg += `  <text x="${w / 2}" y="${p.top - 20}" class="katex-chart-title" text-anchor="middle">`;
+        segments.forEach(seg => {
+          if (seg.isMath) {
+            svg += `<tspan class="katex-math-span">${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>`;
+          } else {
+            svg += seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          }
+        });
+        svg += `</text>\n`;
       }
 
       // Cuadrícula menor
@@ -1665,13 +1983,13 @@
         svg += `  <g stroke="${gridColor}" stroke-width="0.75" opacity="0.45">\n`;
         const stepSubX = xStep / (subdivisionsX || 2);
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
-          const cx = toCanvasX(x, padding);
-          svg += `    <line x1="${cx}" y1="${padding}" x2="${cx}" y2="${h - padding}"/>\n`;
+          const cx = toCanvasX(x);
+          svg += `    <line x1="${cx}" y1="${p.top}" x2="${cx}" y2="${h - p.bottom}"/>\n`;
         }
         const stepSubY = yStep / (subdivisionsY || 2);
         for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
-          const cy = toCanvasY(y, padding);
-          svg += `    <line x1="${padding}" y1="${cy}" x2="${w - padding}" y2="${cy}"/>\n`;
+          const cy = toCanvasY(y);
+          svg += `    <line x1="${p.left}" y1="${cy}" x2="${w - p.right}" y2="${cy}"/>\n`;
         }
         svg += `  </g>\n`;
       }
@@ -1679,36 +1997,46 @@
       // Cuadrícula principal
       svg += `  <g stroke="${gridColor}" stroke-width="1.25">\n`;
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-        const cx = toCanvasX(x, padding);
-        svg += `    <line x1="${cx}" y1="${padding}" x2="${cx}" y2="${h - padding}"/>\n`;
+        const cx = toCanvasX(x);
+        svg += `    <line x1="${cx}" y1="${p.top}" x2="${cx}" y2="${h - p.bottom}"/>\n`;
       }
       for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-        const cy = toCanvasY(y, padding);
-        svg += `    <line x1="${padding}" y1="${cy}" x2="${w - padding}" y2="${cy}"/>\n`;
+        const cy = toCanvasY(y);
+        svg += `    <line x1="${p.left}" y1="${cy}" x2="${w - p.right}" y2="${cy}"/>\n`;
       }
       svg += `  </g>\n`;
 
-      const originX = Math.max(padding, Math.min(w - padding, toCanvasX(0, padding)));
-      const originY = Math.max(padding, Math.min(h - padding, toCanvasY(0, padding)));
+      const originX = Math.max(p.left, Math.min(w - p.right, toCanvasX(0)));
+      const originY = Math.max(p.top, Math.min(h - p.bottom, toCanvasY(0)));
 
       // Ejes principales
       svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="square">\n`;
-      svg += `    <line x1="${padding - 26}" y1="${originY}" x2="${w - padding + 26}" y2="${originY}"/>\n`;
-      svg += `    <line x1="${originX}" y1="${h - padding + 26}" x2="${originX}" y2="${padding - 26}"/>\n`;
+      svg += `    <line x1="${p.left - 24}" y1="${originY}" x2="${w - p.right + 24}" y2="${originY}"/>\n`;
+      svg += `    <line x1="${originX}" y1="${h - p.bottom + 24}" x2="${originX}" y2="${p.top - 24}"/>\n`;
       svg += `  </g>\n`;
 
       // Flechas en 4 extremos
       if (showArrows) {
         const arrowSize = 10;
         svg += `  <g fill="${axisColor}">\n`;
-        // +X
-        svg += `    <polygon points="${w - padding + 26},${originY} ${w - padding + 26 - arrowSize},${originY - arrowSize * 0.55} ${w - padding + 26 - arrowSize},${originY + arrowSize * 0.55}"/>\n`;
-        // -X
-        svg += `    <polygon points="${padding - 26},${originY} ${padding - 26 + arrowSize},${originY - arrowSize * 0.55} ${padding - 26 + arrowSize},${originY + arrowSize * 0.55}"/>\n`;
-        // +Y
-        svg += `    <polygon points="${originX},${padding - 26} ${originX - arrowSize * 0.55},${padding - 26 + arrowSize} ${originX + arrowSize * 0.55},${padding - 26 + arrowSize}"/>\n`;
-        // -Y
-        svg += `    <polygon points="${originX},${h - padding + 26} ${originX - arrowSize * 0.55},${h - padding + 26 - arrowSize} ${originX + arrowSize * 0.55},${h - padding + 26 - arrowSize}"/>\n`;
+        svg += `    <polygon points="${w - p.right + 24},${originY} ${w - p.right + 24 - arrowSize},${originY - arrowSize * 0.55} ${w - p.right + 24 - arrowSize},${originY + arrowSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${p.left - 24},${originY} ${p.left - 24 + arrowSize},${originY - arrowSize * 0.55} ${p.left - 24 + arrowSize},${originY + arrowSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${originX},${p.top - 24} ${originX - arrowSize * 0.55},${p.top - 24 + arrowSize} ${originX + arrowSize * 0.55},${p.top - 24 + arrowSize}"/>\n`;
+        svg += `    <polygon points="${originX},${h - p.bottom + 24} ${originX - arrowSize * 0.55},${h - p.bottom + 24 - arrowSize} ${originX + arrowSize * 0.55},${h - p.bottom + 24 - arrowSize}"/>\n`;
+        svg += `  </g>\n`;
+      }
+
+      // Rayitas (Ticks)
+      if (showTicks) {
+        svg += `  <g stroke="${axisColor}" stroke-width="1.6">\n`;
+        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+          const cx = toCanvasX(x);
+          svg += `    <line x1="${cx}" y1="${originY - 4.5}" x2="${cx}" y2="${originY + 4.5}"/>\n`;
+        }
+        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+          const cy = toCanvasY(y);
+          svg += `    <line x1="${originX - 4.5}" y1="${cy}" x2="${originX + 4.5}" y2="${cy}"/>\n`;
+        }
         svg += `  </g>\n`;
       }
 
@@ -1716,23 +2044,29 @@
       if (showTickNumbers) {
         svg += `  <g class="katex-label">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-          const cx = toCanvasX(x, padding);
+          const cx = toCanvasX(x);
           if (Math.abs(x) > 1e-9) {
             svg += `    <text x="${cx}" y="${originY + 18}" text-anchor="middle">${formatLatexNumber(x)}</text>\n`;
           }
         }
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-          const cy = toCanvasY(y, padding);
+          const cy = toCanvasY(y);
           svg += `    <text x="${originX - 9}" y="${cy + 4.5}" text-anchor="end">${formatLatexNumber(y)}</text>\n`;
         }
         svg += `  </g>\n`;
       }
 
-      // Rótulos editables con desplazamiento
+      // Rótulos editables en posición arrastrada
       if (showAxisLabels) {
+        const posX_X = state.labels.posX !== null ? state.labels.posX : (w - p.right + 30);
+        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : (originY + 7);
+
+        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : originX;
+        const posY_Y = state.labels.posY !== null ? state.labels.posY : (p.top - 28);
+
         svg += `  <g class="katex-axis-title">\n`;
-        svg += `    <text x="${originX}" y="${padding - state.labels.yOffset}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
-        svg += `    <text x="${w - padding + state.labels.xOffset}" y="${originY + 7}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
+        svg += `    <text x="${posY_X}" y="${posY_Y}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
+        svg += `    <text x="${posX_X}" y="${posX_Y}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
         svg += `  </g>\n`;
       }
 
@@ -1751,8 +2085,8 @@
             try { currentY = compiled.evaluate({ x: currentX }); } catch (e) { currentY = NaN; }
 
             if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
-              const cx = toCanvasX(currentX, padding);
-              const cy = toCanvasY(currentY, padding);
+              const cx = toCanvasX(currentX);
+              const cy = toCanvasY(currentY);
               pathD += (pathD === '' ? `M ${cx.toFixed(2)} ${cy.toFixed(2)}` : ` L ${cx.toFixed(2)} ${cy.toFixed(2)}`);
             }
           }
@@ -1766,8 +2100,8 @@
       // Puntos en SVG
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
-        const cx = toCanvasX(pt.x, padding);
-        const cy = toCanvasY(pt.y, padding);
+        const cx = toCanvasX(pt.x);
+        const cy = toCanvasY(pt.y);
         const r = pt.size || 6;
 
         if (pt.symbol === 'circle') {
@@ -1828,7 +2162,7 @@
       }
     });
 
-    // Menú desplegable interactivo corregido (Click & Outside dismiss)
+    // Menú desplegable interactivo
     const btnToggleDropdown = document.getElementById('btnToggleDropdown');
     const downloadDropdownMenu = document.getElementById('downloadDropdownMenu');
 
