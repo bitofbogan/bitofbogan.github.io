@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlotLab - Generador Estético de Planos Cartesianos</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Math.js for robust expression evaluation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
+
+  <!-- KaTeX for gorgeous LaTeX rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar for sidebar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.5);
+    }
+    .grid-pattern-bg {
+      background-image: radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .tab-active {
+      border-bottom: 2px solid #4f46e5;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 lg:px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-400 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+        <i data-lucide="line-chart" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-lg leading-tight tracking-tight text-white flex items-center gap-2">
+          PlotLab <span class="text-xs bg-indigo-500/20 text-indigo-400 font-mono font-medium px-2 py-0.5 rounded-full border border-indigo-500/30">Vector Studio</span>
+        </h1>
+        <p class="text-xs text-slate-400">Generador de planos cartesianos estéticos y exportación HD</p>
+      </div>
+    </div>
+
+    <!-- Quick action buttons -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button id="btnResetDefault" title="Cargar función del ejemplo original" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 border border-slate-700/60">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Ejemplo Parábola</span>
+      </button>
+
+      <button id="btnCopyClipboard" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="clipboard-copy" class="w-3.5 h-3.5"></i>
+        <span>Copiar</span>
+      </button>
+
+      <!-- Botón Exportar Dropdown -->
+      <div class="relative group">
+        <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Descargar</span>
+          <i data-lucide="chevron-down" class="w-3 h-3"></i>
+        </button>
+
+        <div class="absolute right-0 mt-1 w-48 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1.5 z-50 hidden group-hover:block hover:block">
+          <button id="btnDownloadSvg" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+            <i data-lucide="code" class="w-4 h-4 text-emerald-400"></i>
+            <span>Vectorial SVG (Nitidez ∞)</span>
+          </button>
+          <div class="h-px bg-slate-700/60 my-1"></div>
+          <button id="btnDownloadPng1x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+            <i data-lucide="image" class="w-4 h-4 text-sky-400"></i>
+            <span>PNG Estándar (1x)</span>
+          </button>
+          <button id="btnDownloadPng2x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+            <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
+            <span>PNG HD 2x (Retina)</span>
+          </button>
+          <button id="btnDownloadPng4x" class="w-full px-4 py-2 text-left text-xs text-slate-200 hover:bg-indigo-600/20 hover:text-white flex items-center gap-2 transition">
+            <i data-lucide="printer" class="w-4 h-4 text-amber-400"></i>
+            <span>PNG Ultra 4x (Impresión)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+    <!-- Panel Lateral: Controles y Configuración -->
+    <aside class="w-full lg:w-[460px] xl:w-[490px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-57px)] overflow-y-auto">
+      
+      <!-- Tabs superiores del panel -->
+      <div class="flex border-b border-slate-800 px-4 text-xs font-medium sticky top-0 bg-slate-900/95 backdrop-blur z-10">
+        <button id="tabBtnFunctions" class="py-3 px-4 tab-active transition flex items-center gap-2">
+          <i data-lucide="variable" class="w-4 h-4"></i> Funciones
+        </button>
+        <button id="tabBtnAxes" class="py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
+          <i data-lucide="move" class="w-4 h-4"></i> Ejes & Escala
+        </button>
+        <button id="tabBtnStyle" class="py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
+          <i data-lucide="palette" class="w-4 h-4"></i> Estilo Gráfico
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-5 space-y-6 flex-1">
+        
+        <!-- SECCIÓN 1: FUNCIONES -->
+        <div id="tabSectionFunctions" class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Ecuaciones Matemáticas</span>
+            <button id="btnAddFunction" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 transition">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Añadir Función
+            </button>
+          </div>
+
+          <!-- Contenedor dinámico de funciones -->
+          <div id="functionsContainer" class="space-y-3">
+            <!-- Rellenado por JS -->
+          </div>
+
+          <!-- Guía rápida de escritura -->
+          <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+            <p class="font-medium text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-400"></i> Ejemplos admitidos:
+            </p>
+            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x) * 40</code>, <code>log(x)</code>, <code>2^x</code>, <code>sqrt(x)</code></p>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 2: EJES Y RANGOS -->
+        <div id="tabSectionAxes" class="space-y-5 hidden">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Dominio (Eje X)</h3>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">X Mínimo</label>
+                <input type="number" id="inputXMin" value="-6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">X Máximo</label>
+                <input type="number" id="inputXMax" value="6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso X (Grid)</label>
+                <input type="number" id="inputXStep" value="1" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+            </div>
+          </div>
+
+          <div class="h-px bg-slate-800"></div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Rango (Eje Y)</h3>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Y Mínimo</label>
+                <input type="number" id="inputYMin" value="-20" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Y Máximo</label>
+                <input type="number" id="inputYMax" value="160" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Y (Grid)</label>
+                <input type="number" id="inputYStep" value="20" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+            </div>
+          </div>
+
+          <div class="h-px bg-slate-800"></div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Subdivisiones de Cuadrícula</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones X</label>
+                <input type="number" id="inputSubdivisionsX" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones Y</label>
+                <input type="number" id="inputSubdivisionsY" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 3: ESTILOS VISUALES -->
+        <div id="tabSectionStyle" class="space-y-4 hidden">
+          
+          <!-- Paleta y tema del gráfico -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tema del Lienzo</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button data-canvas-preset="clean-white" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-white text-slate-900 text-xs font-medium text-center hover:ring-2 hover:ring-indigo-500 transition">
+                Blanco Clásico
+              </button>
+              <button data-canvas-preset="blueprint" class="preset-theme-btn p-2 rounded-lg border border-slate-700 bg-sky-950 text-sky-200 text-xs font-medium text-center hover:ring-2 hover:ring-indigo-500 transition">
+                Blueprint Azul
+              </button>
+              <button data-canvas-preset="dark-modern" class="preset-theme-btn p-2 rounded-lg border border-indigo-500 bg-slate-950 text-slate-100 text-xs font-medium text-center ring-2 ring-indigo-500 transition">
+                Oscuro Mate
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Fondo del Lienzo</label>
+              <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
+                <input type="color" id="colorBackground" value="#ffffff" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelBgColor" class="text-xs font-mono text-slate-300">#FFFFFF</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Color de Ejes X / Y</label>
+              <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
+                <input type="color" id="colorAxes" value="#0f172a" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelAxesColor" class="text-xs font-mono text-slate-300">#0F172A</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Color Cuadrícula</label>
+              <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
+                <input type="color" id="colorGrid" value="#cbd5e1" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelGridColor" class="text-xs font-mono text-slate-300">#CBD5E1</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Color de Etiquetas</label>
+              <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg p-1.5">
+                <input type="color" id="colorLabels" value="#1e293b" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
+                <span id="labelLabelsColor" class="text-xs font-mono text-slate-300">#1E293B</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Opciones con Switches -->
+          <div class="pt-2 space-y-2.5">
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los ejes</span>
+              <input type="checkbox" id="checkArrows" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar números en los ejes</span>
+              <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar sub-cuadrícula fina</span>
+              <input type="checkbox" id="checkMinorGrid" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar rótulos estéticos 'X' y 'Y'</span>
+              <input type="checkbox" id="checkAxisLabels" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Incrustar fórmula en tarjeta gráfica</span>
+              <input type="checkbox" id="checkOverlayFormula" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-slate-700 border-slate-600">
+            </label>
+          </div>
+
+          <!-- Grosor de líneas -->
+          <div class="pt-2">
+            <div class="flex justify-between text-xs text-slate-400 mb-1">
+              <span>Grosor de ejes principales</span>
+              <span id="labelAxisWidth" class="font-mono">3px</span>
+            </div>
+            <input type="range" id="inputAxisWidth" min="1" max="6" step="0.5" value="3" class="w-full accent-indigo-500 cursor-pointer">
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Contenedor del Lienzo Gráfico -->
+    <section class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-4 sm:p-8 overflow-auto grid-pattern-bg relative">
+      
+      <!-- Mensaje flotante de notificación (Toast) -->
+      <div id="toastNotification" class="absolute top-5 right-5 z-50 bg-indigo-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-20px] opacity-0 pointer-events-none">
+        <i data-lucide="check-circle" class="w-4 h-4"></i>
+        <span id="toastMessage">¡Listo!</span>
+      </div>
+
+      <!-- Tarjeta del Gráfico -->
+      <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
+        <!-- Canvas HTML5 que hace el render interactivo -->
+        <canvas id="cartesianCanvas" width="900" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
+      </div>
+
+      <!-- Barra de herramientas flotante inferior de vista previa -->
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="aspect-ratio" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Resolución nativa: 900 &times; 600 px</span>
+        </div>
+        <span class="text-slate-700">|</span>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Auto-escalado anti-aliasing activo</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* Estado global de la aplicación */
+    const state = {
+      functions: [
+        {
+          id: 'fn-1',
+          name: 'f(x)',
+          expr: '3*x^2 + 2*x - 5',
+          latex: 'f(x) = 3x^2 + 2x - 5',
+          color: '#3b82f6', // Azul similar al original de la imagen
+          width: 3.5,
+          visible: true
+        }
+      ],
+      bounds: {
+        xMin: -6,
+        xMax: 6,
+        xStep: 1,
+        yMin: -20,
+        yMax: 160,
+        yStep: 20,
+        subdivisionsX: 2,
+        subdivisionsY: 2
+      },
+      style: {
+        background: '#ffffff',
+        axisColor: '#111827',
+        gridColor: '#cbd5e1',
+        labelColor: '#0f172a',
+        axisWidth: 3.5,
+        showArrows: true,
+        showTickNumbers: true,
+        showMinorGrid: true,
+        showAxisLabels: true,
+        showOverlayFormula: true
+      },
+      canvasWidth: 900,
+      canvasHeight: 600
+    };
+
+    // Referencias al DOM
+    const canvas = document.getElementById('cartesianCanvas');
+    const ctx = canvas.getContext('2d');
+    const functionsContainer = document.getElementById('functionsContainer');
+
+    // Conversión de coordenadas matemáticas a píxeles del canvas
+    function toCanvasX(x, padding = 45) {
+      const width = state.canvasWidth - (padding * 2);
+      return padding + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
+    }
+
+    function toCanvasY(y, padding = 45) {
+      const height = state.canvasHeight - (padding * 2);
+      // El eje Y en computación gráfica está invertido
+      return (state.canvasHeight - padding) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
+    }
+
+    function expressionToLatex(expr) {
+      try {
+        const parsed = math.parse(expr);
+        return parsed.toTex({ parenthesis: 'auto' });
+      } catch (e) {
+        return expr.replace(/\*/g, ' ');
+      }
+    }
+
+    function drawPlot() {
+      const padding = 55;
+      const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
+      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
+
+      // 1. Limpiar lienzo y rellenar fondo
+      ctx.fillStyle = background;
+      ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
+
+      // 2. Dibujar cuadrícula secundaria (Minor Grid)
+      if (showMinorGrid) {
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 0.6;
+        ctx.globalAlpha = 0.45;
+        ctx.beginPath();
+
+        // Líneas verticales menores
+        const stepSubX = xStep / (subdivisionsX || 2);
+        for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
+          const cx = toCanvasX(x, padding);
+          ctx.moveTo(cx, padding);
+          ctx.lineTo(cx, state.canvasHeight - padding);
+        }
+
+        // Líneas horizontales menores
+        const stepSubY = yStep / (subdivisionsY || 2);
+        for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
+          const cy = toCanvasY(y, padding);
+          ctx.moveTo(padding, cy);
+          ctx.lineTo(state.canvasWidth - padding, cy);
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1.0;
+      }
+
+      // 3. Dibujar cuadrícula principal (Major Grid)
+      ctx.strokeStyle = gridColor;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+
+      for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+        const cx = toCanvasX(x, padding);
+        ctx.moveTo(cx, padding);
+        ctx.lineTo(cx, state.canvasHeight - padding);
+      }
+
+      for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+        const cy = toCanvasY(y, padding);
+        ctx.moveTo(padding, cy);
+        ctx.lineTo(state.canvasWidth - padding, cy);
+      }
+      ctx.stroke();
+
+      // Coordenadas en píxeles del origen (0,0)
+      const originX = Math.max(padding, Math.min(state.canvasWidth - padding, toCanvasX(0, padding)));
+      const originY = Math.max(padding, Math.min(state.canvasHeight - padding, toCanvasY(0, padding)));
+
+      // 4. Dibujar Ejes X e Y principales
+      ctx.strokeStyle = axisColor;
+      ctx.lineWidth = axisWidth;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+
+      // Eje X
+      ctx.moveTo(padding - 20, originY);
+      ctx.lineTo(state.canvasWidth - padding + 20, originY);
+
+      // Eje Y
+      ctx.moveTo(originX, state.canvasHeight - padding + 20);
+      ctx.lineTo(originX, padding - 20);
+      ctx.stroke();
+
+      // Flechas en los extremos de los ejes
+      if (showArrows) {
+        const arrowSize = 9;
+        ctx.fillStyle = axisColor;
+
+        // Flecha eje X (+)
+        ctx.beginPath();
+        ctx.moveTo(state.canvasWidth - padding + 20, originY);
+        ctx.lineTo(state.canvasWidth - padding + 20 - arrowSize, originY - arrowSize * 0.6);
+        ctx.lineTo(state.canvasWidth - padding + 20 - arrowSize, originY + arrowSize * 0.6);
+        ctx.closePath();
+        ctx.fill();
+
+        // Flecha eje Y (+)
+        ctx.beginPath();
+        ctx.moveTo(originX, padding - 20);
+        ctx.lineTo(originX - arrowSize * 0.6, padding - 20 + arrowSize);
+        ctx.lineTo(originX + arrowSize * 0.6, padding - 20 + arrowSize);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // 5. Números y marcas en los ejes (Ticks)
+      if (showTickNumbers) {
+        ctx.font = '600 12px "Inter", sans-serif';
+        ctx.fillStyle = labelColor;
+
+        // Marcas en X
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+          const cx = toCanvasX(x, padding);
+          const isZero = Math.abs(x) < 1e-9;
+          const labelOffsetY = (originY + 18 > state.canvasHeight - 15) ? originY - 18 : originY + 8;
+
+          // Marca física pequeña
+          ctx.beginPath();
+          ctx.strokeStyle = axisColor;
+          ctx.lineWidth = 1.5;
+          ctx.moveTo(cx, originY - 4);
+          ctx.lineTo(cx, originY + 4);
+          ctx.stroke();
+
+          // Texto
+          if (!isZero) {
+            ctx.fillText(Number(x.toFixed(4)).toString(), cx, labelOffsetY);
+          }
+        }
+
+        // Marcas en Y
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+          const cy = toCanvasY(y, padding);
+          const isZero = Math.abs(y) < 1e-9;
+          const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 10;
+          if (originX - 10 < 30) ctx.textAlign = 'left';
+
+          // Marca física pequeña
+          ctx.beginPath();
+          ctx.strokeStyle = axisColor;
+          ctx.lineWidth = 1.5;
+          ctx.moveTo(originX - 4, cy);
+          ctx.lineTo(originX + 4, cy);
+          ctx.stroke();
+
+          // Texto
+          ctx.fillText(Number(y.toFixed(4)).toString(), labelOffsetX, cy);
+        }
+      }
+
+      // 6. Rótulos estéticos gigantes 'X' y 'Y' (como en el ejercicio original)
+      if (showAxisLabels) {
+        ctx.font = '700 22px "Inter", sans-serif';
+        ctx.fillStyle = axisColor;
+        ctx.textAlign = 'center';
+
+        // Etiqueta Y arriba
+        ctx.fillText('Y', originX, padding - 34);
+
+        // Etiqueta X a la derecha
+        ctx.textAlign = 'left';
+        ctx.fillText('X', state.canvasWidth - padding + 26, originY + 7);
+      }
+
+      // 7. Renderizado de las funciones matemáticas
+      state.functions.forEach(fn => {
+        if (!fn.visible || !fn.expr.trim()) return;
+
+        try {
+          const compiled = math.compile(fn.expr);
+          ctx.save();
+          ctx.beginPath();
+          // Habilitar clipping para que las líneas no se salgan del marco
+          ctx.rect(padding - 2, padding - 2, state.canvasWidth - (padding * 2) + 4, state.canvasHeight - (padding * 2) + 4);
+          ctx.clip();
+
+          ctx.strokeStyle = fn.color;
+          ctx.lineWidth = fn.width || 3;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+
+          let isFirst = true;
+          const samplePoints = 900; // Alta fidelidad de curva
+          const stepSize = (xMax - xMin) / samplePoints;
+
+          ctx.beginPath();
+          for (let i = 0; i <= samplePoints; i++) {
+            const currentX = xMin + (i * stepSize);
+            let currentY;
+            try {
+              currentY = compiled.evaluate({ x: currentX });
+            } catch (err) {
+              currentY = NaN;
+            }
+
+            if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
+              const canvasX = toCanvasX(currentX, padding);
+              const canvasY = toCanvasY(currentY, padding);
+
+              if (isFirst) {
+                ctx.moveTo(canvasX, canvasY);
+                isFirst = false;
+              } else {
+                ctx.lineTo(canvasX, canvasY);
+              }
+            } else {
+              isFirst = true;
+            }
+          }
+          ctx.stroke();
+          ctx.restore();
+        } catch (error) {
+          console.warn(`Error evaluando la expresión "${fn.expr}":`, error);
+        }
+      });
+
+      if (state.style.showOverlayFormula && state.functions.length > 0) {
+        drawFormulaBadge();
+      }
+    }
+
+    // Dibuja una tarjeta con la fórmula en la esquina superior izquierda
+    function drawFormulaBadge() {
+      const activeFunctions = state.functions.filter(f => f.visible && f.expr.trim());
+      if (activeFunctions.length === 0) return;
+
+      const badgeX = 65;
+      const badgeY = 25;
+      const badgeWidth = 230;
+      const badgeHeight = 22 + (activeFunctions.length * 28);
+
+      // Fondo tarjeta estilizada
+      ctx.save();
+      ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.92)' : 'rgba(15, 23, 42, 0.9)';
+      ctx.strokeStyle = state.style.gridColor;
+      ctx.lineWidth = 1;
+
+      // Sombra sutil
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 4;
+
+      roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 10, true, true);
+      ctx.restore();
+
+      // Texto de funciones en la tarjeta
+      ctx.save();
+      activeFunctions.forEach((fn, idx) => {
+        const itemY = badgeY + 22 + (idx * 26);
+        
+        // Círculo del color
+        ctx.fillStyle = fn.color;
+        ctx.beginPath();
+        ctx.arc(badgeX + 16, itemY - 4, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Fórmula formateada
+        ctx.font = '600 13px "Fira Code", monospace';
+        ctx.fillStyle = state.style.labelColor;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+
+        let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³');
+        ctx.fillText(`${fn.name || 'f(x)'} = ${displayExpr}`, badgeX + 30, itemY - 4);
+      });
+      ctx.restore();
+    }
+
+    // Función auxiliar para dibujar rectángulos redondeados en Canvas
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      if (fill) ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+
+    function renderFunctionInputs() {
+      functionsContainer.innerHTML = '';
+
+      state.functions.forEach((fn, index) => {
+        const card = document.createElement('div');
+        card.className = 'p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80 space-y-2.5 transition hover:border-slate-600';
+        
+        // ID único para renderizado katex
+        const katexPreviewId = `katex-preview-${fn.id}`;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <input type="color" data-color-id="${fn.id}" value="${fn.color}" class="w-6 h-6 rounded cursor-pointer border-0 bg-transparent">
+              <input type="text" data-name-id="${fn.id}" value="${fn.name}" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <label class="text-[11px] text-slate-400">Grosor:</label>
+              <input type="number" data-width-id="${fn.id}" value="${fn.width}" min="1" max="10" step="0.5" class="w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-xs text-center font-mono">
+              ${state.functions.length > 1 ? `
+                <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1 rounded hover:bg-slate-700 transition" title="Eliminar función">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          <div>
+            <div class="relative">
+              <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 3*x^2 + 2*x - 5" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
+              <span class="absolute right-2.5 top-2.5 text-xs text-slate-500 font-mono">f(x)</span>
+            </div>
+          </div>
+
+          <!-- Vista previa de LaTeX en vivo -->
+          <div class="bg-slate-950/60 rounded-lg p-2 border border-slate-800 flex items-center justify-between">
+            <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">LaTeX:</span>
+            <div id="${katexPreviewId}" class="text-xs text-indigo-200 font-medium overflow-x-auto"></div>
+          </div>
+        `;
+
+        functionsContainer.appendChild(card);
+
+        // Renderizar el KaTeX en vivo
+        const katexEl = document.getElementById(katexPreviewId);
+        if (katexEl && window.katex) {
+          try {
+            const tex = expressionToLatex(fn.expr);
+            katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
+          } catch (err) {
+            katexEl.innerText = fn.expr;
+          }
+        }
+      });
+
+      // Reconectar iconos de Lucide
+      lucide.createIcons();
+
+      // Añadir listeners para los inputs generados dinámicamente
+      bindDynamicEvents();
+    }
+
+    function bindDynamicEvents() {
+      // Inputs de expresiones
+      document.querySelectorAll('[data-expr-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-expr-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.expr = e.target.value;
+            // Actualizar vista KaTeX
+            const katexEl = document.getElementById(`katex-preview-${id}`);
+            if (katexEl && window.katex) {
+              const tex = expressionToLatex(fn.expr);
+              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
+            }
+            drawPlot();
+          }
+        });
+      });
+
+      // Color de función
+      document.querySelectorAll('[data-color-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-color-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.color = e.target.value;
+            drawPlot();
+          }
+        });
+      });
+
+      // Nombre de la función (ej: g(x))
+      document.querySelectorAll('[data-name-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-name-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.name = e.target.value;
+            const katexEl = document.getElementById(`katex-preview-${id}`);
+            if (katexEl && window.katex) {
+              const tex = expressionToLatex(fn.expr);
+              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
+            }
+            drawPlot();
+          }
+        });
+      });
+
+      // Grosor
+      document.querySelectorAll('[data-width-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-width-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.width = parseFloat(e.target.value) || 2;
+            drawPlot();
+          }
+        });
+      });
+
+      // Eliminar
+      document.querySelectorAll('[data-delete-id]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = btn.getAttribute('data-delete-id');
+          state.functions = state.functions.filter(f => f.id !== id);
+          renderFunctionInputs();
+          drawPlot();
+        });
+      });
+    }
+
+    const tabBtnFunctions = document.getElementById('tabBtnFunctions');
+    const tabBtnAxes = document.getElementById('tabBtnAxes');
+    const tabBtnStyle = document.getElementById('tabBtnStyle');
+
+    const tabSectionFunctions = document.getElementById('tabSectionFunctions');
+    const tabSectionAxes = document.getElementById('tabSectionAxes');
+    const tabSectionStyle = document.getElementById('tabSectionStyle');
+
+    function setActiveTab(tab) {
+      [tabBtnFunctions, tabBtnAxes, tabBtnStyle].forEach(btn => {
+        btn.className = 'py-3 px-4 text-slate-400 hover:text-slate-200 transition flex items-center gap-2';
+      });
+      [tabSectionFunctions, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
+
+      if (tab === 'functions') {
+        tabBtnFunctions.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabSectionFunctions.classList.remove('hidden');
+      } else if (tab === 'axes') {
+        tabBtnAxes.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabSectionAxes.classList.remove('hidden');
+      } else if (tab === 'style') {
+        tabBtnStyle.className = 'py-3 px-4 tab-active transition flex items-center gap-2';
+        tabSectionStyle.classList.remove('hidden');
+      }
+    }
+
+    tabBtnFunctions.addEventListener('click', () => setActiveTab('functions'));
+    tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
+    tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
+
+    function syncInputs() {
+      // Ejes
+      document.getElementById('inputXMin').value = state.bounds.xMin;
+      document.getElementById('inputXMax').value = state.bounds.xMax;
+      document.getElementById('inputXStep').value = state.bounds.xStep;
+      document.getElementById('inputYMin').value = state.bounds.yMin;
+      document.getElementById('inputYMax').value = state.bounds.yMax;
+      document.getElementById('inputYStep').value = state.bounds.yStep;
+      document.getElementById('inputSubdivisionsX').value = state.bounds.subdivisionsX;
+      document.getElementById('inputSubdivisionsY').value = state.bounds.subdivisionsY;
+
+      // Estilos
+      document.getElementById('colorBackground').value = state.style.background;
+      document.getElementById('labelBgColor').innerText = state.style.background.toUpperCase();
+      document.getElementById('colorAxes').value = state.style.axisColor;
+      document.getElementById('labelAxesColor').innerText = state.style.axisColor.toUpperCase();
+      document.getElementById('colorGrid').value = state.style.gridColor;
+      document.getElementById('labelGridColor').innerText = state.style.gridColor.toUpperCase();
+      document.getElementById('colorLabels').value = state.style.labelColor;
+      document.getElementById('labelLabelsColor').innerText = state.style.labelColor.toUpperCase();
+
+      document.getElementById('checkArrows').checked = state.style.showArrows;
+      document.getElementById('checkTickNumbers').checked = state.style.showTickNumbers;
+      document.getElementById('checkMinorGrid').checked = state.style.showMinorGrid;
+      document.getElementById('checkAxisLabels').checked = state.style.showAxisLabels;
+      document.getElementById('checkOverlayFormula').checked = state.style.showOverlayFormula;
+      document.getElementById('inputAxisWidth').value = state.style.axisWidth;
+      document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
+    }
+
+    // Listeners de los rangos
+    ['inputXMin', 'inputXMax', 'inputXStep', 'inputYMin', 'inputYMax', 'inputYStep', 'inputSubdivisionsX', 'inputSubdivisionsY'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        state.bounds.xMin = parseFloat(document.getElementById('inputXMin').value) || -10;
+        state.bounds.xMax = parseFloat(document.getElementById('inputXMax').value) || 10;
+        state.bounds.xStep = Math.max(0.001, parseFloat(document.getElementById('inputXStep').value) || 1);
+        state.bounds.yMin = parseFloat(document.getElementById('inputYMin').value) || -10;
+        state.bounds.yMax = parseFloat(document.getElementById('inputYMax').value) || 10;
+        state.bounds.yStep = Math.max(0.001, parseFloat(document.getElementById('inputYStep').value) || 1);
+        state.bounds.subdivisionsX = parseInt(document.getElementById('inputSubdivisionsX').value) || 2;
+        state.bounds.subdivisionsY = parseInt(document.getElementById('inputSubdivisionsY').value) || 2;
+        drawPlot();
+      });
+    });
+
+    // Listeners de colores y toggles
+    document.getElementById('colorBackground').addEventListener('input', (e) => {
+      state.style.background = e.target.value;
+      document.getElementById('labelBgColor').innerText = e.target.value.toUpperCase();
+      drawPlot();
+    });
+
+    document.getElementById('colorAxes').addEventListener('input', (e) => {
+      state.style.axisColor = e.target.value;
+      document.getElementById('labelAxesColor').innerText = e.target.value.toUpperCase();
+      drawPlot();
+    });
+
+    document.getElementById('colorGrid').addEventListener('input', (e) => {
+      state.style.gridColor = e.target.value;
+      document.getElementById('labelGridColor').innerText = e.target.value.toUpperCase();
+      drawPlot();
+    });
+
+    document.getElementById('colorLabels').addEventListener('input', (e) => {
+      state.style.labelColor = e.target.value;
+      document.getElementById('labelLabelsColor').innerText = e.target.value.toUpperCase();
+      drawPlot();
+    });
+
+    document.getElementById('checkArrows').addEventListener('change', (e) => {
+      state.style.showArrows = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkTickNumbers').addEventListener('change', (e) => {
+      state.style.showTickNumbers = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkMinorGrid').addEventListener('change', (e) => {
+      state.style.showMinorGrid = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkAxisLabels').addEventListener('change', (e) => {
+      state.style.showAxisLabels = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkOverlayFormula').addEventListener('change', (e) => {
+      state.style.showOverlayFormula = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('inputAxisWidth').addEventListener('input', (e) => {
+      state.style.axisWidth = parseFloat(e.target.value);
+      document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
+      drawPlot();
+    });
+
+    // Botón para añadir función nueva
+    document.getElementById('btnAddFunction').addEventListener('click', () => {
+      const colors = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+      const nextColor = colors[state.functions.length % colors.length];
+      const newFn = {
+        id: 'fn-' + Date.now(),
+        name: `g${state.functions.length}(x)`,
+        expr: 'cos(x) * 30',
+        color: nextColor,
+        width: 3,
+        visible: true
+      };
+      state.functions.push(newFn);
+      renderFunctionInputs();
+      drawPlot();
+    });
+
+    // Presets rápidos de temas visuales
+    document.querySelectorAll('.preset-theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-canvas-preset');
+        if (theme === 'clean-white') {
+          state.style.background = '#ffffff';
+          state.style.axisColor = '#0f172a';
+          state.style.gridColor = '#cbd5e1';
+          state.style.labelColor = '#1e293b';
+        } else if (theme === 'blueprint') {
+          state.style.background = '#082f49';
+          state.style.axisColor = '#38bdf8';
+          state.style.gridColor = '#0369a1';
+          state.style.labelColor = '#bae6fd';
+        } else if (theme === 'dark-modern') {
+          state.style.background = '#090d16';
+          state.style.axisColor = '#f1f5f9';
+          state.style.gridColor = '#1e293b';
+          state.style.labelColor = '#94a3b8';
+        }
+        syncInputs();
+        drawPlot();
+      });
+    });
+
+    // Botón para reiniciar al ejemplo exacto de la imagen
+    document.getElementById('btnResetDefault').addEventListener('click', () => {
+      state.functions = [
+        {
+          id: 'fn-default',
+          name: 'f(x)',
+          expr: '3*x^2 + 2*x - 5',
+          color: '#3b82f6',
+          width: 3.5,
+          visible: true
+        }
+      ];
+      state.bounds = {
+        xMin: -6,
+        xMax: 6,
+        xStep: 1,
+        yMin: -20,
+        yMax: 160,
+        yStep: 20,
+        subdivisionsX: 2,
+        subdivisionsY: 2
+      };
+      state.style.background = '#ffffff';
+      state.style.axisColor = '#000000';
+      state.style.gridColor = '#cbd5e1';
+      state.style.labelColor = '#000000';
+      state.style.axisWidth = 3.5;
+      state.style.showArrows = false; // Como la foto original
+      state.style.showAxisLabels = true;
+      state.style.showTickNumbers = true;
+      state.style.showMinorGrid = true;
+      state.style.showOverlayFormula = true;
+
+      syncInputs();
+      renderFunctionInputs();
+      drawPlot();
+      showToast('Cargada la parábola original f(x) = 3x² + 2x - 5');
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.innerText = message;
+      toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      }, 2600);
+    }
+
+    // Exportación a PNG con escala personalizada (1x, 2x Retina, 4x Ultra Impresión)
+    function downloadPNG(scale = 2) {
+      const offscreenCanvas = document.createElement('canvas');
+      offscreenCanvas.width = state.canvasWidth * scale;
+      offscreenCanvas.height = state.canvasHeight * scale;
+      const offCtx = offscreenCanvas.getContext('2d');
+
+      offCtx.scale(scale, scale);
+
+      // Guardar contexto y dibujar en la escala alta
+      const oldCanvasWidth = state.canvasWidth;
+      const oldCanvasHeight = state.canvasHeight;
+      const currentCtx = ctx;
+
+      // Dibujar temporalmente en el canvas offscreen
+      // Usamos el mismo algoritmo de renderizado
+      const originalCtx = window.ctx;
+      window.ctx = offCtx;
+      drawPlot();
+      window.ctx = currentCtx;
+
+      // Volver a dibujar el canvas visible por si acaso
+      drawPlot();
+
+      // Generar descarga
+      const link = document.createElement('a');
+      link.download = `plano-cartesiano-${scale}x.png`;
+      link.href = offscreenCanvas.toDataURL('image/png');
+      link.click();
+      showToast(`Descargado PNG a ${scale}x (${offscreenCanvas.width}x${offscreenCanvas.height}px)`);
+    }
+
+    // Generador de SVG Vectorial Puro (resolución infinita para publicaciones)
+    function downloadSVG() {
+      const padding = 55;
+      const w = state.canvasWidth;
+      const h = state.canvasHeight;
+      const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
+      const { background, axisColor, gridColor, labelColor, axisWidth, showArrows, showTickNumbers, showMinorGrid, showAxisLabels } = state.style;
+
+      let svg = `<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
+  <style>
+    .label { font-family: 'Inter', -apple-system, sans-serif; font-size: 12px; font-weight: 600; fill: ${labelColor}; }
+    .axis-title { font-family: 'Inter', -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: ${axisColor}; }
+  </style>
+  <rect width="100%" height="100%" fill="${background}"/>\n`;
+
+      // Cuadrícula menor
+      if (showMinorGrid) {
+        svg += `  <g stroke="${gridColor}" stroke-width="0.6" opacity="0.45">\n`;
+        const stepSubX = xStep / (subdivisionsX || 2);
+        for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
+          const cx = toCanvasX(x, padding);
+          svg += `    <line x1="${cx}" y1="${padding}" x2="${cx}" y2="${h - padding}"/>\n`;
+        }
+        const stepSubY = yStep / (subdivisionsY || 2);
+        for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
+          const cy = toCanvasY(y, padding);
+          svg += `    <line x1="${padding}" y1="${cy}" x2="${w - padding}" y2="${cy}"/>\n`;
+        }
+        svg += `  </g>\n`;
+      }
+
+      // Cuadrícula principal
+      svg += `  <g stroke="${gridColor}" stroke-width="1.2">\n`;
+      for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+        const cx = toCanvasX(x, padding);
+        svg += `    <line x1="${cx}" y1="${padding}" x2="${cx}" y2="${h - padding}"/>\n`;
+      }
+      for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+        const cy = toCanvasY(y, padding);
+        svg += `    <line x1="${padding}" y1="${cy}" x2="${w - padding}" y2="${cy}"/>\n`;
+      }
+      svg += `  </g>\n`;
+
+      // Ejes principales
+      const originX = Math.max(padding, Math.min(w - padding, toCanvasX(0, padding)));
+      const originY = Math.max(padding, Math.min(h - padding, toCanvasY(0, padding)));
+
+      svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="round">\n`;
+      svg += `    <line x1="${padding - 20}" y1="${originY}" x2="${w - padding + 20}" y2="${originY}"/>\n`;
+      svg += `    <line x1="${originX}" y1="${h - padding + 20}" x2="${originX}" y2="${padding - 20}"/>\n`;
+      svg += `  </g>\n`;
+
+      // Números y marcas
+      if (showTickNumbers) {
+        svg += `  <g class="label">\n`;
+        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+          const cx = toCanvasX(x, padding);
+          if (Math.abs(x) > 1e-9) {
+            svg += `    <text x="${cx}" y="${originY + 16}" text-anchor="middle">${Number(x.toFixed(4))}</text>\n`;
+          }
+        }
+        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+          const cy = toCanvasY(y, padding);
+          svg += `    <text x="${originX - 10}" y="${cy + 4}" text-anchor="end">${Number(y.toFixed(4))}</text>\n`;
+        }
+        svg += `  </g>\n`;
+      }
+
+      // Rótulos de ejes 'X' y 'Y'
+      if (showAxisLabels) {
+        svg += `  <g class="axis-title">\n`;
+        svg += `    <text x="${originX}" y="${padding - 30}" text-anchor="middle">Y</text>\n`;
+        svg += `    <text x="${w - padding + 25}" y="${originY + 7}" text-anchor="start">X</text>\n`;
+        svg += `  </g>\n`;
+      }
+
+      // Curvas de las funciones
+      state.functions.forEach(fn => {
+        if (!fn.visible || !fn.expr.trim()) return;
+        try {
+          const compiled = math.compile(fn.expr);
+          const samplePoints = 600;
+          const stepSize = (xMax - xMin) / samplePoints;
+          let pathD = '';
+
+          for (let i = 0; i <= samplePoints; i++) {
+            const currentX = xMin + (i * stepSize);
+            let currentY;
+            try { currentY = compiled.evaluate({ x: currentX }); } catch (e) { currentY = NaN; }
+
+            if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
+              const cx = toCanvasX(currentX, padding);
+              const cy = toCanvasY(currentY, padding);
+              pathD += (pathD === '' ? `M ${cx} ${cy}` : ` L ${cx} ${cy}`);
+            }
+          }
+          if (pathD) {
+            svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3}" stroke-linecap="round" stroke-linejoin="round"/>\n`;
+          }
+        } catch (e) {}
+      });
+
+      svg += `</svg>`;
+
+      // Descargar archivo .svg
+      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'plano-cartesiano-vector.svg';
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast('Descargado archivo vectorial SVG');
+    }
+
+    // Copiar al portapapeles
+    document.getElementById('btnCopyClipboard').addEventListener('click', async () => {
+      try {
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            showToast('Error al generar la imagen');
+            return;
+          }
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ 'image/png': blob })
+            ]);
+            showToast('¡Imagen copiada al portapapeles!');
+          } catch (clipErr) {
+            // Fallback si el navegador restringe clipboard write
+            const link = document.createElement('a');
+            link.download = 'plano-cartesiano.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            showToast('Descargada al no permitir acceso directo al portapapeles');
+          }
+        });
+      } catch (err) {
+        showToast('No se pudo copiar automáticamente');
+      }
+    });
+
+    // Asignación de botones de descarga
+    document.getElementById('btnDownloadPng1x').addEventListener('click', () => downloadPNG(1));
+    document.getElementById('btnDownloadPng2x').addEventListener('click', () => downloadPNG(2));
+    document.getElementById('btnDownloadPng4x').addEventListener('click', () => downloadPNG(4));
+    document.getElementById('btnDownloadSvg').addEventListener('click', downloadSVG);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      syncInputs();
+      renderFunctionInputs();
+      drawPlot();
+    });
+  </script>
+</body>
+</html>
