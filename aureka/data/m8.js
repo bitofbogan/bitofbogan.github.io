@@ -5,7 +5,7 @@
 
 const moduleInfo = {
   badge: "Módulo 8",
-  title: "Matemáticas y representaciones del sistema natural",
+  title: "Física I",
   topicVideos: {
     "poligonos": {
       title: "Área de polígonos",
@@ -298,7 +298,8 @@ const questionBank = [
     ],
     hint: "Primero obtienes el volumen geométrico, luego el empuje del agua ($F_f$), luego el peso del cubo ($W$) y al final restas ambas fuerzas.",
     explanation: "La secuencia lógica es: 1) Calcular el volumen del cubo; 2) Calcular la fuerza de flotación que empuja hacia arriba; 3) Calcular el peso propio hacia abajo; 4) Restar ambas fuerzas ($F = F_f - W$) para determinar el empuje manual necesario."
-  {
+  },
+    {
     id: "m8-q17",
     topicId: "poligonos",
     prompt: "17. ¿Cuál es la ecuación correspondiente a la siguiente parábola?",
@@ -409,11 +410,11 @@ const questionBank = [
     topicId: "gas_ideal",
     prompt: "Una muestra de oxígeno ocupa $12\\text{ m}^{3}$ a temperatura ambiente bajo una presión de 740 mm Hg. Determina el volumen de la misma masa de gas a una presión de 760 mm Hg en la misma condición de temperatura.",
     type: "choice",
-    correct: "11.68\\text{ m}^{3}.$",
+    correct: "11.68$\\text{ m}^{3}.$",
     distractors: [
-      "12.32\\text{ m}^{3}.$",
-      "12.0\\text{ m}^{3}.$",
-      "4.6\\times10^{4}\\text{ m}^{3}.$"
+      "12.32$\\text{ m}^{3}.$",
+      "12.0$\\text{ m}^{3}.$",
+      "4.6$\\times10^{4}\\text{ m}^{3}.$"
     ],
     hint: "Aplica la Ley de Boyle: $P_1 V_1 = P_2 V_2$. Despeja $V_2$.",
     explanation: "Despejando el volumen final: $V_2 = \\frac{P_1 V_1}{P_2} = \\frac{(740)(12)}{760} \\approx 11.68\\text{ m}^3$. Como la presión aumentó ligeramente, el volumen debió disminuir."
