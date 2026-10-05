@@ -8,71 +8,71 @@ const moduleInfo = {
   title: "Física I",
   topicVideos: {
     "poligonos": {
-      title: "Área de polígonos",
+      title: "Área de polígonos.",
       url: "https://www.youtube.com/watch?v=ytQeqAJpXEk"
     },
     "volumen": {
-      title: "Volumen de sólidos",
+      title: "Volumen de sólidos.",
       url: "https://www.youtube.com/watch?v=jkSVpZsMKtU"
     },
     "notacion_cientifica": {
-      title: "Notación científica",
+      title: "Notación científica.",
       url: "https://www.youtube.com/watch?v=WzcEgEa98NU"
     },
     "conversion_unidades": {
-      title: "Conversión de unidades",
+      title: "Conversión de unidades.",
       url: "https://www.youtube.com/watch?v=kAkS3K82Iig"
     },
     "densidad": {
-      title: "Densidad",
+      title: "Densidad.",
       url: "https://www.youtube.com/watch?v=LevMSIpImvI"
     },
     "presion": {
-      title: "Presión",
+      title: "Presión.",
       url: "https://www.youtube.com/watch?v=KQZipLBdQCA"
     },
     "presion_hidrostatica": {
-      title: "Presión hidrostática",
+      title: "Presión hidrostática.",
       url: "https://www.youtube.com/watch?v=9iXX68smV94"
     },
     "arquimedes": {
-      title: "Principio de Arquímedes",
+      title: "Principio de Arquímedes.",
       url: "https://www.youtube.com/watch?v=nLx1RqdU7K0"
     },
     "flotacion": {
-      title: "Fuerza de flotación",
+      title: "Fuerza de flotación.",
       url: "https://www.youtube.com/watch?v=8VqoBCnKUYQ"
     },
     "torricelli": {
-      title: "Principio de Torricelli",
+      title: "Principio de Torricelli.",
       url: "https://www.youtube.com/watch?v=1WZJabsg7Jk"
     },
     "gasto": {
-      title: "Gasto de un fluido",
+      title: "Gasto de un fluido.",
       url: "https://www.youtube.com/watch?v=TFrSV__5EJg"
     },
     "coulomb": {
-      title: "Principio de Coulomb",
+      title: "Principio de Coulomb.",
       url: "https://www.youtube.com/watch?v=q8zsqY3k85E"
     },
     "corriente": {
-      title: "Intensidad de corriente eléctrica",
+      title: "Intensidad de corriente eléctrica.",
       url: "https://www.youtube.com/watch?v=tHbtNRDBrfc"
     },
     "watt": {
-      title: "Ley de Watt",
+      title: "Ley de Watt.",
       url: "https://www.youtube.com/watch?v=ORiYhaTAUHo"
     },
     "temperatura": {
-      title: "Conversiones de temperatura",
+      title: "Conversiones de temperatura.",
       url: "https://www.youtube.com/watch?v=fMm1gbEuIEc"
     },
     "calor": {
-      title: "Absorción de calor",
+      title: "Absorción de calor.",
       url: "https://www.youtube.com/watch?v=akao97i6a14"
     },
     "gas_ideal": {
-      title: "Ley del gas ideal",
+      title: "Ley del gas ideal.",
       url: "https://www.youtube.com/watch?v=-JnBZLafJmg"
     }
   }
@@ -84,7 +84,7 @@ const questionBank = [
     topicId: "presion_hidrostatica",
     prompt: "La superficie del agua en un tanque está a una altura de 30 m. ¿Qué presión experimenta una llave en el fondo del tanque?",
     type: "choice",
-    correct: "$2.9\\times10^{5}$",
+    correct: "$2.9\\times10^{5}$ Pa.",
     distractors: [
       "$2.9\\times10^{3}$ Pa.",
       "$2.9\\times10^{6}$ Pa.",
@@ -104,7 +104,7 @@ const questionBank = [
       "32,416 Pa.",
       "316,526.5 Pa."
     ],
-    hint: "Despeja la fuerza de la presión: $F = P \\cdot A$. Recuerda pasar primero los centímetros a metros antes de sacar el área.",
+    hint: "Despeja la fuerza de la presión: $F = P \\cdot A$. Recuerda pasar primero los centímetros a metros antes de obtener el área.",
     explanation: "Convertimos las dimensiones a metros y calculamos el área y la fuerza resultante:\n$$\\begin{aligned} A &= (0.40\\text{ m})(0.80\\text{ m}) = 0.32\\text{ m}^2 \\\\[6pt] F &= P \\cdot A \\\\[6pt] &= (101,300\\text{ Pa})(0.32\\text{ m}^2) \\\\[6pt] &= 32,416\\text{ N} \\end{aligned}$$"
   },
   {
@@ -133,7 +133,7 @@ const questionBank = [
       "$43.10\\text{ m}^{3}/\\text{s}$."
     ],
     hint: "El gasto es $Q = A \\cdot v$. Obtén el radio en metros ($r = d/2$), calcula el área circular $A = \\pi r^2$ y multiplica por la velocidad.",
-    explanation: "Calculamos el radio, el área y el gasto en unidades fundamentales:\n$$\\begin{aligned} r &= \\frac{26.20\\text{ cm}}{2} = 0.131\\text{ m} \\\\[6pt] A &= \\pi r^2 = \\pi(0.131\\text{ m})^2 \\approx 0.0539\\text{ m}^2 \\\\[6pt] Q &= A \\cdot v = (0.0539\\text{ m}^2)(8\\text{ m/s}) \\approx 0.431\\text{ m}^3/\\text{s} \\end{aligned}$$"
+    explanation: "Calculamos el radio, el área y el gasto en unidades fundamentales:\n$$\\begin{aligned} r &= \\frac{26.20\\text{ cm}}{2} = 0.131\\text{ m} \\\\[4pt] A &= \\pi(0.131\\text{ m})^2 \\approx 0.0539\\text{ m}^2 \\\\[4pt] Q &= A \\cdot v \\\\[4pt] &= (0.0539)(8) \\approx 0.431\\text{ m}^3/\\text{s} \\end{aligned}$$"
   },
   {
     id: "m8-q05",
@@ -189,7 +189,7 @@ const questionBank = [
       "150 A."
     ],
     hint: "La intensidad de corriente es carga por unidad de tiempo: $I = \\frac{Q}{t}$.",
-    explanation: "Aplicando la fórmula directa: $I = \\frac{Q}{t} = \\frac{300\\text{ C}}{20\\text{ s}} = 15\\text{ A}$."
+    explanation: "Aplicando la definición de intensidad de corriente eléctrica: $$I = \\frac{Q}{t} = \\frac{300\\text{ C}}{20\\text{ s}} = 15\\text{ A}$$"
   },
   {
     id: "m8-q09",
@@ -200,7 +200,7 @@ const questionBank = [
     correctOrder: ["mayor", "menor"],
     distractors: ["igual", "constante"],
     hint: "Recuerda la segunda ley de la termodinámica: el calor fluye de forma natural hacia las zonas más frías hasta alcanzar el equilibrio térmico.",
-    explanation: "Por la segunda ley de la termodinámica, la transferencia espontánea de energía térmica (calor) siempre fluye desde el cuerpo con **mayor** temperatura hacia el de **menor** temperatura."
+    explanation: "Por la segunda ley de la termodinámica, la transferencia calor siempre fluye desde el cuerpo con mayor temperatura hacia el de menor temperatura."
   },
   {
     id: "m8-q10",
@@ -221,14 +221,14 @@ const questionBank = [
     topicId: "gas_ideal",
     prompt: "Los gases se expanden al aumentar su temperatura, variando de manera directamente proporcional a su:",
     type: "choice",
-    correct: "volumen.",
+    correct: "Volumen.",
     distractors: [
-      "presión.",
-      "temperatura.",
-      "masa."
+      "Presión.",
+      "Temperatura.",
+      "Masa."
     ],
-    hint: "Revisa la Ley de Charles: a presión constante, el volumen de un gas y su temperatura son directamente proporcionales.",
-    explanation: "La Ley de Charles establece que, a presión constante, el aumento de temperatura de un gas produce una expansión directamente proporcional en su volumen ($\\frac{V_1}{T_1} = \\frac{V_2}{T_2}$)."
+    hint: "Revisa la ley de Charles: a presión constante, el volumen de un gas y su temperatura son directamente proporcionales.",
+    explanation: "La ley de Charles establece que, a presión constante, el aumento de temperatura de un gas produce una expansión directamente proporcional en su volumen."
   },
   {
     id: "m8-q12",
@@ -274,7 +274,7 @@ const questionBank = [
   {
     id: "m8-q15",
     topicId: "densidad",
-    prompt: "¿Qué volumen ocupan 25 kg de cobre considerando que su densidad es de $8,960\\text{ kg/m}^{3}$?",
+    prompt: "¿Qué volumen ocupan 25 kg de cobre considerando que su densidad es de 8,960 kg/m$^{3}$?",
     type: "choice",
     correct: "$2.79\\times10^{-3}\\text{ m}^{3}$.",
     distractors: [
@@ -283,7 +283,7 @@ const questionBank = [
       "$2.24\\times10^{3}\\text{ m}^{3}$."
     ],
     hint: "Del triángulo de densidad: $V = \\frac{m}{\\rho}$.",
-    explanation: "Dividiendo masa entre densidad: $V = \\frac{25}{8960} \\approx 0.00279\\text{ m}^3$. En notación científica esto equivale a $2.79\\times10^{-3}\\text{ m}^3$."
+    explanation: "Dividiendo masa entre densidad: $$V = \\frac{25}{8960} \\approx 0.00279\\text{ m}^3$$En notación científica esto equivale a $2.79\\times10^{-3}\\text{ m}^3$."
   },
   {
     id: "m8-q16",
@@ -344,26 +344,26 @@ const questionBank = [
       "La planta transforma la energía cinética del agua en energía térmica."
     ],
     hint: "Identifica qué tipo de energía se aprovecha y qué produce la planta (descarta medir presión con Torricelli y generar calor).",
-    explanation: "Una hidroeléctrica aprovecha la altura del agua (energía potencial) para mover turbinas (energía cinética/mecánica) y generar electricidad mediante generadores. Torricelli calcula velocidad de descarga de orificios, no presión; y la planta no busca generar energía térmica."
+    explanation: "Una hidroeléctrica aprovecha la altura del agua para mover turbinas y generar energía eléctrica, no térmica. El principio de Torricelli calcula velocidad de salida de orificios, no presión."
   },
   {
     id: "m8-q20",
     topicId: "coulomb",
-    prompt: "Dos esferas, cada una con una carga de $2\\times10^{-5}$ C, están separadas 45 mm. ¿Cuál es la fuerza de repulsión entre ellas?",
+    prompt: "Dos esferas con una carga de $2\\times10^{-5}$ C están separadas 45 mm. ¿Cuál es la fuerza de repulsión entre ellas?",
     type: "choice",
     correct: "$1.77\\times10^{3}$ N.",
     distractors: [
-      "0.162 N",
-      "0.08 N",
+      "0.162 N.",
+      "0.08 N.",
       "$8.8\\times10^{-11}$ N."
     ],
-    hint: "Convierte 45 mm a metros ($0.045\\text{ m} = 4.5\\times10^{-2}\\text{ m}$) y sustituye en $F = k \\frac{q^2}{r^2}$.",
-    explanation: "Calculando: $F = (9\\times10^9) \\frac{(2\\times10^{-5})^2}{(0.045)^2} = (9\\times10^9) \\frac{4\\times10^{-10}}{2.025\\times10^{-3}} = 1,777.7\\text{ N} \\approx 1.77\\times10^3\\text{ N}$."
+    hint: "Convierte 45 mm a metros ($0.045\\text{ m} = 4.5\\times10^{-2}\\text{ m}$) y sustituye en el principio de Coulomb.",
+    explanation: "Sustituyendo los valores en el principio de Coulomb:\n$$\\begin{aligned} F &= k \\frac{q_1 q_2}{r^2} \\\\[6pt] &= (9\\times10^9) \\frac{(2\\times10^{-5})^2}{(0.045)^2} \\\\[6pt] &= (9\\times10^9) \\frac{4\\times10^{-10}}{2.025\\times10^{-3}} \\\\[6pt] &= 1,777.7\\text{ N} \\approx 1.77\\times10^3\\text{ N} \\end{aligned}$$"
   },
   {
     id: "m8-q21",
     topicId: "watt",
-    prompt: "Se tiene una bomba de agua que opera a una potencia de $\\frac{1}{2}$ hp. Si funciona con 127 V, ¿cuál es la corriente que consume la bomba sabiendo que 1 hp = 746 W?",
+    prompt: "Se tiene una bomba de agua que opera a una potencia de 1/2 hp. Si funciona con 127 V, ¿cuál es la corriente que consume la bomba sabiendo que 1 hp = 746 W?",
     type: "choice",
     correct: "$I = P/V = 2.93\\text{ A}$",
     distractors: [
@@ -372,7 +372,7 @@ const questionBank = [
       "$I = P*V = 4.7\\times10^{4}\\text{ A}$"
     ],
     hint: "Medio caballo de fuerza equivale a $746 / 2 = 373\\text{ W}$. Luego divide entre el voltaje: $I = P / V$.",
-    explanation: "La potencia de medio caballo de fuerza es $373\\text{ W}$. Por la Ley de Watt, la corriente es $$I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$$"
+    explanation: "La potencia de medio caballo de fuerza es $373\\text{ W}$. Por la ley de Watt, la corriente es $$I = \\frac{P}{V} = \\frac{373\\text{ W}}{127\\text{ V}} \\approx 2.93\\text{ A}$$"
   },
   {
     id: "m8-q22",
@@ -389,7 +389,7 @@ const questionBank = [
       "La fuerza de atracción entre dos polos de un campo magnético en un área determinada se denomina flujo magnético."
     ],
     hint: "El coulomb mide carga eléctrica (no magnetismo) y el flujo magnético se define por las líneas que atraviesan una superficie, no por una fuerza de atracción entre polos.",
-    explanation: "Las propiedades correctas del campo magnético son: se mide en teslas (T), se detecta con el galvanómetro, un campo variable induce electricidad (inducción electromagnética) y el flujo magnético representa la cantidad de líneas de campo que atraviesan una superficie."
+    explanation: "Un campo magnético se mide en teslas (T) con un galvanómetro. Cuando se hace variar, induce electricidad y el flujo magnético representa la cantidad de líneas de campo que atraviesan una superficie."
   },
   {
     id: "m8-q23",
@@ -408,7 +408,7 @@ const questionBank = [
   {
     id: "m8-q24",
     topicId: "gas_ideal",
-    prompt: "Una muestra de oxígeno ocupa $12\\text{ m}^{3}$ a temperatura ambiente bajo una presión de 740 mm Hg. Determina el volumen de la misma masa de gas a una presión de 760 mm Hg en la misma condición de temperatura.",
+    prompt: "Una muestra de oxígeno ocupa 12 m$^{3}$ a temperatura ambiente bajo una presión de 740 mm Hg. Determina el volumen de la misma masa de gas a una presión de 760 mm Hg en la misma condición de temperatura.",
     type: "choice",
     correct: "11.68$\\text{ m}^{3}.$",
     distractors: [
@@ -417,12 +417,12 @@ const questionBank = [
       "4.6$\\times10^{4}\\text{ m}^{3}.$"
     ],
     hint: "Aplica la Ley de Boyle: $P_1 V_1 = P_2 V_2$. Despeja $V_2$.",
-    explanation: "Despejando el volumen final: $V_2 = \\frac{P_1 V_1}{P_2} = \\frac{(740)(12)}{760} \\approx 11.68\\text{ m}^3$. Como la presión aumentó ligeramente, el volumen debió disminuir."
+    explanation: "Despejando el volumen final: $$V_2 = \\frac{P_1 V_1}{P_2} = \\frac{(740)(12)}{760} \\approx 11.68\\text{ m}^3$$. Como la presión aumentó ligeramente, el volumen debió disminuir."
   },
   {
     id: "m8-q25",
     topicId: "gas_ideal",
-    prompt: "En un laboratorio se tiene nitrógeno gaseoso a 180 K bajo una presión de 1,000 Pa en un volumen de $600\\text{ m}^{3}$. Posteriormente se reduce su volumen a $500\\text{ m}^{3}$ y se incrementa la temperatura a 210 K. Calcula la presión del nitrógeno al final del proceso asumiendo un gas ideal.",
+    prompt: "En un laboratorio se tiene nitrógeno gaseoso a 180 K bajo una presión de 1,000 Pa en un volumen de 600 m$^{3}$. Posteriormente se reduce su volumen a 500 m$^{3}$ y se incrementa la temperatura a 210 K. Calcula la presión del nitrógeno al final del proceso asumiendo un gas ideal.",
     type: "choice",
     correct: "$P_{2}=\\frac{P_{1}V_{1}T_{2}}{V_{2}T_{1}}=1,400\\text{ Pa}$",
     distractors: [
@@ -431,7 +431,7 @@ const questionBank = [
       "$P_{2}=\\frac{P_{1}V_{2}T_{1}}{V_{1}T_{2}}=257\\text{ Pa}$"
     ],
     hint: "Aplica la ley general del gas ideal: $\\frac{P_1 V_1}{T_1} = \\frac{P_2 V_2}{T_2}$ y despeja $P_2$.",
-    explanation: "Despejando: $P_2 = \\frac{P_1 V_1 T_2}{T_1 V_2} = \\frac{(1000)(600)(210)}{(180)(500)} = \\frac{126,000,000}{90,000} = 1,400\\text{ Pa}$."
+    explanation: "Despejamos la presión final en la ley del gas ideal y sustituimos datos:\n$$\\begin{aligned} \\frac{P_1 V_1}{T_1} &= \\frac{P_2 V_2}{T_2} \\\\[6pt] P_2 &= \\frac{P_1 V_1 T_2}{T_1 V_2} \\\\[6pt] &= \\frac{(1,000\\text{ Pa})(600\\text{ m}^3)(210\\text{ K})}{(180\\text{ K})(500\\text{ m}^3)} \\\\[6pt] &= \\frac{126,000,000}{90,000} \\\\[6pt] &= 1,400\\text{ Pa} \\end{aligned}$$"
   },
   {
     id: "m8-q27",
@@ -465,7 +465,7 @@ const questionBank = [
   {
     id: "m8-q29",
     topicId: "calor",
-    prompt: "Una sustancia metálica a $90^{\\circ}\\text{C}$ se coloca en un calorímetro con 325 g de agua a $20^{\\circ}\\text{C}$. La temperatura final del agua termina siendo de $25^{\\circ}\\text{C}$. ¿Cuántas calorías de calor absorbió el agua?",
+    prompt: "Una sustancia metálica a 90$^{\\circ}$C se coloca en un calorímetro con 325 g de agua a 20$^{\\circ}$C. La temperatura final del agua termina siendo de 25$^{\\circ}$C. ¿Cuántas calorías absorbió el agua?",
     type: "choice",
     correct: "1625 cal.",
     distractors: [
@@ -474,14 +474,14 @@ const questionBank = [
       "8125 cal."
     ],
     hint: "Aplica $Q = m \\cdot c \\cdot \\Delta T$. Recuerda que para el agua $c = 1\\text{ cal/g}^{\\circ}\\text{C}$ y el cambio de temperatura es $\\Delta T = 25 - 20 = 5^{\\circ}\\text{C}$.",
-    explanation: "Solo importa la masa y el incremento de temperatura del agua: $Q = (325\\text{ g})(1\\text{ cal/g}^{\\circ}\\text{C})(25^{\\circ}\\text{C} - 20^{\\circ}\\text{C}) = 325 \\times 5 = 1,625\\text{ cal}$."
+    explanation: "Solo importa la masa y el incremento de temperatura del agua:\n$$\\begin{aligned} Q &= m \\cdot c \\cdot \\Delta T \\\\[6pt] &= (325\\text{ g})(1\\text{ cal/g}^{\\circ}\\text{C})(25^{\\circ}\\text{C} - 20^{\\circ}\\text{C}) \\\\[6pt] &= (325)(1)(5) \\\\[6pt] &= 1,625\\text{ cal} \\end{aligned}$$"
   },
   {
     id: "m8-q30",
     topicId: "calor",
     prompt: "Uno de los gases de efecto invernadero es el CO$_{2}$. A mayor cantidad de este gas, hay un mayor incremento de temperatura. ¿Por qué ocurre este efecto?",
     type: "choice",
-    correct: "El $\\text{CO}_{2}$ no permite que la radiación emitida por la superficie terrestre salga de regreso al espacio.",
+    correct: "El CO$_{2}$ no permite que la radiación emitida por la superficie terrestre salga de regreso al espacio.",
     distractors: [
       "El CO$_{2}$ desencadena una serie de reacciones químicas que catalizan la formación de contaminantes.",
       "El CO$_{2}$ incrementa el acceso a la superficie terrestre de la radiación del espacio.",
