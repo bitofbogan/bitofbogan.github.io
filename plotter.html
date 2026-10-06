@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlotLab Pro - Generador de Planos Cartesianos LaTeX HD</title>
+  <title>Plotter LaTeX HD</title>
 
   <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,12 +98,6 @@
     <div class="flex items-center space-x-3">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-400 flex items-center justify-center shadow-lg shadow-indigo-500/25">
         <i data-lucide="function-square" class="w-5 h-5 text-white"></i>
-      </div>
-      <div>
-        <h1 class="font-bold text-base sm:text-lg leading-tight tracking-tight text-white flex items-center gap-2">
-          PlotLab <span class="text-[11px] bg-indigo-500/20 text-indigo-300 font-mono px-2 py-0.5 rounded-full border border-indigo-500/30 font-semibold tracking-normal">LaTeX Canvas Engine</span>
-        </h1>
-        <p class="text-xs text-slate-400 hidden sm:block">Planos cartesianos vectoriales de alta precisión tipográfica</p>
       </div>
     </div>
 
@@ -207,7 +201,7 @@
                 <span class="text-slate-300 font-medium">Tamaño texto de funciones en imagen:</span>
                 <span id="formulaFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
               </div>
-              <input type="range" id="inputFormulaFontSize" min="10" max="22" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputFormulaFontSize" min="10" max="48" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
@@ -248,7 +242,7 @@
                 <span class="text-slate-300 font-medium">Tamaño texto etiquetas de puntos:</span>
                 <span id="pointLabelFontSizeVal" class="font-mono text-indigo-300 font-semibold">14px</span>
               </div>
-              <input type="range" id="inputPointLabelFontSize" min="10" max="24" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputPointLabelFontSize" min="10" max="48" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
@@ -285,7 +279,7 @@
                 <span class="text-slate-400 text-[11px]">Tamaño de Fuente del Título:</span>
                 <span id="chartTitleSizeVal" class="font-mono text-indigo-300 font-semibold">18px</span>
               </div>
-              <input type="range" id="inputChartTitleSize" min="12" max="32" step="1" value="18" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputChartTitleSize" min="12" max="64" step="1" value="18" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
@@ -308,9 +302,9 @@
             
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Horizontal (X)</label>
+                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Horizontal (x)</label>
                 <div class="relative">
-                  <input type="text" id="inputAxisLabelX" value="X" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                  <input type="text" id="inputAxisLabelX" value="x" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
                 </div>
                 <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
@@ -319,9 +313,9 @@
               </div>
 
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Vertical (Y)</label>
+                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Vertical (y)</label>
                 <div class="relative">
-                  <input type="text" id="inputAxisLabelY" value="Y" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                  <input type="text" id="inputAxisLabelY" value="y" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
                 </div>
                 <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
@@ -332,8 +326,19 @@
 
             <!-- Botón para resetear posición de rótulos -->
             <button id="btnResetLabelPos" class="w-full py-1 text-center text-[11px] text-slate-400 hover:text-white bg-slate-800 rounded border border-slate-700 transition">
-              Restablecer posiciones por defecto de X e Y
+              Restablecer posiciones por defecto de x e y
             </button>
+
+            <!-- Control interactivo para el tamaño de los rótulos de ejes (x, y) -->
+            <div class="pt-2 border-t border-slate-700/60">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-slate-300 font-medium flex items-center gap-1">
+                  <i data-lucide="type" class="w-3.5 h-3.5 text-indigo-400"></i> Tamaño rótulos de ejes (x, y):
+                </span>
+                <span id="axisTitleFontSizeVal" class="font-mono text-indigo-300 font-semibold">24px</span>
+              </div>
+              <input type="range" id="inputAxisTitleFontSize" min="12" max="64" step="1" value="24" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
 
             <!-- Control para el tamaño de las etiquetas de números -->
             <div class="pt-2 border-t border-slate-700/60">
@@ -343,7 +348,7 @@
                 </span>
                 <span id="labelFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
               </div>
-              <input type="range" id="inputLabelFontSize" min="8" max="26" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputLabelFontSize" min="8" max="52" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
@@ -492,13 +497,13 @@
             </label>
           </div>
 
-          <!-- Grosor de los Ejes Principales -->
+          <!-- Grosor de los Ejes Principales con límite duplicado a 16px -->
           <div class="pt-2">
             <div class="flex justify-between text-xs text-slate-400 mb-1">
               <span>Grosor de Ejes X e Y</span>
               <span id="labelAxisWidth" class="font-mono text-indigo-300 font-semibold">3.5px</span>
             </div>
-            <input type="range" id="inputAxisWidth" min="1" max="8" step="0.5" value="3.5" class="w-full accent-indigo-500 cursor-pointer">
+            <input type="range" id="inputAxisWidth" min="1" max="16" step="0.5" value="3.5" class="w-full accent-indigo-500 cursor-pointer">
           </div>
 
         </div>
@@ -536,7 +541,7 @@
   </main>
 
   <script>
-    /* Estado Global Reactivo: Inicia LIMPIO desde 0 cada vez que se abre */
+    /* Estado Global Reactivo */
     const state = {
       aspectRatio: 'rect', // 'rect' (940x600) o 'square' (720x720)
       chartTitle: {
@@ -557,11 +562,13 @@
         subdivisionsY: 2
       },
       labels: {
-        x: 'X',
-        y: 'Y',
-        // Posiciones libres (null = calculada automáticamente según ejes)
+        x: 'x',        // minúscula por defecto
+        y: 'y',        // minúscula por defecto
+        fontSize: 24,  // tamaño configurable de rótulos de ejes
         posX: null,
-        posY: null
+        posY: null,
+        posX_Y: null,
+        posY_X: null
       },
       style: {
         background: '#ffffff',
@@ -591,14 +598,11 @@
 
     // Variables para el sistema de arrastre (Draggable) de rótulos
     let draggedElement = null; // 'labelX' o 'labelY'
-    let dragStartX = 0;
-    let dragStartY = 0;
     let labelHitBoxes = {
       labelX: { x: 0, y: 0, w: 0, h: 0 },
       labelY: { x: 0, y: 0, w: 0, h: 0 }
     };
 
-    // Mapeo matemático -> píxeles (considera espacio superior para títulos sin traslapes)
     function getPaddings() {
       const topPad = (state.chartTitle.visible && state.chartTitle.text.trim()) 
         ? Math.max(75, 45 + state.chartTitle.fontSize * 1.6) 
@@ -623,7 +627,6 @@
       return (state.canvasHeight - p.bottom) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
     }
 
-    // Formatear números con signo menos matemático real de LaTeX (\u2212)
     function formatLatexNumber(val) {
       const rounded = Number(Math.abs(val) < 1e-12 ? 0 : val.toFixed(4));
       const str = rounded.toString();
@@ -633,7 +636,6 @@
       return str;
     }
 
-    // Convertir expresión a LaTeX
     function expressionToLatex(expr) {
       try {
         const parsed = math.parse(expr);
@@ -643,7 +645,6 @@
       }
     }
 
-    // Parser para textos con mathmode ($...$) que soporta acentos en texto normal
     function parseMathText(text) {
       const segments = [];
       const regex = /\$([^$]+)\$/g;
@@ -662,7 +663,6 @@
       return segments;
     }
 
-    // Renderizado en Canvas de fragmentos con texto y mathmode
     function drawRichText(ctx, segments, startX, y, fontSize, defaultColor, isBold = false) {
       let currentX = startX;
       segments.forEach(seg => {
@@ -695,7 +695,6 @@
       return totalW;
     }
 
-    // Motor principal de renderizado en Canvas con tipografía KaTeX
     function drawPlot() {
       const p = getPaddings();
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
@@ -705,7 +704,7 @@
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
 
-      // Título opcional con soporte de texto en español + mathmode
+      // Título opcional
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
         const titleSegments = parseMathText(state.chartTitle.text.trim());
         const totalTitleWidth = measureRichText(ctx, titleSegments, state.chartTitle.fontSize, true);
@@ -826,7 +825,6 @@
         const isZero = Math.abs(x) < 1e-9;
         const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
 
-        // Rayitas de los números en el eje
         if (showTicks) {
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
@@ -850,7 +848,6 @@
         const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
         if (originX - 10 < 30) ctx.textAlign = 'left';
 
-        // Rayitas de los números en el eje
         if (showTicks) {
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
@@ -865,12 +862,12 @@
         }
       }
 
-      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable)
+      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable) con tamaño dinámico
       if (showAxisLabels) {
-        ctx.font = 'bold 24px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif';
+        const axisTitleSize = state.labels.fontSize || 24;
+        ctx.font = `bold ${axisTitleSize}px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif`;
         ctx.fillStyle = axisColor;
 
-        // Posiciones por defecto si no han sido arrastrados manualmente
         const defaultLabelY_X = originX;
         const defaultLabelY_Y = p.top - 28;
 
@@ -884,33 +881,33 @@
         const posY_Y = state.labels.posY !== null ? state.labels.posY : defaultLabelY_Y;
 
         // Dibujar Rótulo Y
-        const labelYText = state.labels.y.trim() || 'Y';
+        const labelYText = state.labels.y.trim() || 'y';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText(labelYText, posY_X, posY_Y);
 
-        // Hitbox Y para drag
+        // Hitbox Y adaptado al tamaño de fuente
         const widthY = ctx.measureText(labelYText).width;
         labelHitBoxes.labelY = {
           x: posY_X - widthY / 2 - 8,
-          y: posY_Y - 26,
+          y: posY_Y - axisTitleSize - 2,
           w: widthY + 16,
-          h: 30
+          h: axisTitleSize + 8
         };
 
         // Dibujar Rótulo X
-        const labelXText = state.labels.x.trim() || 'X';
+        const labelXText = state.labels.x.trim() || 'x';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         ctx.fillText(labelXText, posX_X, posX_Y);
 
-        // Hitbox X para drag
+        // Hitbox X adaptado al tamaño de fuente
         const widthX = ctx.measureText(labelXText).width;
         labelHitBoxes.labelX = {
           x: posX_X - 6,
-          y: posX_Y - 15,
+          y: posX_Y - axisTitleSize / 2,
           w: widthX + 16,
-          h: 30
+          h: axisTitleSize + 8
         };
       }
 
@@ -1008,7 +1005,6 @@
             ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
           }
 
-          // Etiqueta del Punto con mathmode auténtico para el nombre (A, P) y tamaño editable
           const name = pt.name ? pt.name.trim() : '';
           const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
           const ptFontSize = state.style.pointLabelFontSize || 14;
@@ -1034,7 +1030,7 @@
         }
       });
 
-      // 9. Badge con fórmulas en Mathmode auténtico ($f(x) = ...$) y tamaño editable
+      // 9. Badge con fórmulas
       if (showOverlayFormula) {
         drawFormulaBadge();
       }
@@ -1075,16 +1071,13 @@
         ctx.fillStyle = state.style.labelColor;
         ctx.textBaseline = 'middle';
 
-        // Renderizado en mathmode para la función y la variable
         let startTextX = badgeX + 28;
 
-        // Nombre de función: f(x) con math italic
         ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
         const nameText = `${fn.name || 'f(x)'} = `;
         ctx.fillText(nameText, startTextX, itemY - 3);
         startTextX += ctx.measureText(nameText).width;
 
-        // Expresión en mathmode
         let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³').replace(/-/g, '\u2212');
         ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
         ctx.fillText(displayExpr, startTextX, itemY - 3);
@@ -1108,7 +1101,6 @@
       if (stroke) ctx.stroke();
     }
 
-    // Renderizado reactivo de la lista de funciones
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
@@ -1148,7 +1140,7 @@
                 <span>Grosor:</span>
                 <span data-width-val-id="${fn.id}" class="font-mono text-indigo-300 font-semibold">${fn.width}px</span>
               </div>
-              <input type="range" data-width-id="${fn.id}" value="${fn.width}" min="1" max="8" step="0.5" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" data-width-id="${fn.id}" value="${fn.width}" min="1" max="16" step="0.5" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <div>
@@ -1184,7 +1176,6 @@
       bindDynamicEvents();
     }
 
-    // Renderizado reactivo de la lista de puntos
     function renderPointInputs() {
       pointsContainer.innerHTML = '';
 
@@ -1226,7 +1217,7 @@
                 <span>Tamaño:</span>
                 <span data-pt-size-val-id="${pt.id}" class="font-mono text-indigo-300 font-semibold">${pt.size}px</span>
               </div>
-              <input type="range" data-pt-size-id="${pt.id}" value="${pt.size}" min="2" max="15" step="1" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" data-pt-size-id="${pt.id}" value="${pt.size}" min="2" max="32" step="1" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <div>
@@ -1385,7 +1376,6 @@
       });
     }
 
-    // Tabs de navegación
     const tabBtnFunctions = document.getElementById('tabBtnFunctions');
     const tabBtnPoints = document.getElementById('tabBtnPoints');
     const tabBtnAxes = document.getElementById('tabBtnAxes');
@@ -1422,18 +1412,16 @@
     tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
     tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
 
-    // Actualizar previsualización KaTeX de los rótulos editables y títulos
     function updateAxisLabelsPreview() {
       const elX = document.getElementById('previewKatexLabelX');
       const elY = document.getElementById('previewKatexLabelY');
       const elTitle = document.getElementById('previewKatexChartTitle');
 
       if (window.katex) {
-        try { katex.render(state.labels.x || 'X', elX, { throwOnError: false }); } catch (e) { elX.innerText = state.labels.x; }
-        try { katex.render(state.labels.y || 'Y', elY, { throwOnError: false }); } catch (e) { elY.innerText = state.labels.y; }
+        try { katex.render(state.labels.x || 'x', elX, { throwOnError: false }); } catch (e) { elX.innerText = state.labels.x; }
+        try { katex.render(state.labels.y || 'y', elY, { throwOnError: false }); } catch (e) { elY.innerText = state.labels.y; }
         if (elTitle) {
           try {
-            // Reemplazar partes $...$ con KaTeX
             const rawTitle = state.chartTitle.text || '';
             const segments = parseMathText(rawTitle);
             elTitle.innerHTML = segments.map(seg => {
@@ -1449,19 +1437,20 @@
       }
     }
 
-    // Sincronizar todos los controles del formulario con el estado
     function syncInputs() {
-      // Ejes y rótulos
       document.getElementById('inputAxisLabelX').value = state.labels.x;
       document.getElementById('inputAxisLabelY').value = state.labels.y;
 
-      // Título
+      const axisTitleSizeInput = document.getElementById('inputAxisTitleFontSize');
+      const axisTitleSizeVal = document.getElementById('axisTitleFontSizeVal');
+      if (axisTitleSizeInput) axisTitleSizeInput.value = state.labels.fontSize || 24;
+      if (axisTitleSizeVal) axisTitleSizeVal.innerText = `${state.labels.fontSize || 24}px`;
+
       document.getElementById('checkShowChartTitle').checked = state.chartTitle.visible;
       document.getElementById('inputChartTitle').value = state.chartTitle.text;
       document.getElementById('inputChartTitleSize').value = state.chartTitle.fontSize;
       document.getElementById('chartTitleSizeVal').innerText = `${state.chartTitle.fontSize}px`;
 
-      // Rangos
       document.getElementById('inputXMin').value = state.bounds.xMin;
       document.getElementById('inputXMax').value = state.bounds.xMax;
       document.getElementById('inputXStep').value = state.bounds.xStep;
@@ -1471,7 +1460,6 @@
       document.getElementById('inputSubdivisionsX').value = state.bounds.subdivisionsX;
       document.getElementById('inputSubdivisionsY').value = state.bounds.subdivisionsY;
 
-      // Tamaños de fuentes
       document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
       document.getElementById('inputFormulaFontSize').value = state.style.formulaFontSize || 13;
@@ -1479,10 +1467,8 @@
       document.getElementById('inputPointLabelFontSize').value = state.style.pointLabelFontSize || 14;
       document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 14}px`;
 
-      // Puntos
       document.getElementById('checkShowCoords').checked = state.style.showPointCoords;
 
-      // Estilos
       document.getElementById('colorBackground').value = state.style.background;
       document.getElementById('labelBgColor').innerText = state.style.background.toUpperCase();
       document.getElementById('colorAxes').value = state.style.axisColor;
@@ -1505,7 +1491,6 @@
       updateAxisLabelsPreview();
     }
 
-    // Actualizar botones de forma / aspecto
     function updateAspectButtons() {
       const btnRect = document.getElementById('btnAspectRect');
       const btnSq = document.getElementById('btnAspectSquare');
@@ -1544,7 +1529,6 @@
     document.getElementById('btnAspectRect').addEventListener('click', () => setAspectRatio('rect'));
     document.getElementById('btnAspectSquare').addEventListener('click', () => setAspectRatio('square'));
 
-    // Rótulos de los Ejes
     document.getElementById('inputAxisLabelX').addEventListener('input', (e) => {
       state.labels.x = e.target.value;
       updateAxisLabelsPreview();
@@ -1557,6 +1541,15 @@
       drawPlot();
     });
 
+    const inputAxisTitleFontSize = document.getElementById('inputAxisTitleFontSize');
+    if (inputAxisTitleFontSize) {
+      inputAxisTitleFontSize.addEventListener('input', (e) => {
+        state.labels.fontSize = parseInt(e.target.value, 10) || 24;
+        document.getElementById('axisTitleFontSizeVal').innerText = `${state.labels.fontSize}px`;
+        drawPlot();
+      });
+    }
+
     document.getElementById('btnResetLabelPos').addEventListener('click', () => {
       state.labels.posX = null;
       state.labels.posY = null;
@@ -1566,7 +1559,6 @@
       showToast('Posiciones de rótulos restablecidas');
     });
 
-    // Listeners del Título del Gráfico
     document.getElementById('checkShowChartTitle').addEventListener('change', (e) => {
       state.chartTitle.visible = e.target.checked;
       drawPlot();
@@ -1584,7 +1576,6 @@
       drawPlot();
     });
 
-    // Sliders de tamaños
     document.getElementById('inputLabelFontSize').addEventListener('input', (e) => {
       state.style.labelFontSize = parseInt(e.target.value, 10) || 13;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
@@ -1603,19 +1594,16 @@
       drawPlot();
     });
 
-    // Ticks (rayitas)
     document.getElementById('checkTicks').addEventListener('change', (e) => {
       state.style.showTicks = e.target.checked;
       drawPlot();
     });
 
-    // Coordenadas en puntos
     document.getElementById('checkShowCoords').addEventListener('change', (e) => {
       state.style.showPointCoords = e.target.checked;
       drawPlot();
     });
 
-    // Listeners de Rangos
     ['inputXMin', 'inputXMax', 'inputXStep', 'inputYMin', 'inputYMax', 'inputYStep', 'inputSubdivisionsX', 'inputSubdivisionsY'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         state.bounds.xMin = parseFloat(document.getElementById('inputXMin').value) || -10;
@@ -1630,7 +1618,6 @@
       });
     });
 
-    // Escuchadores de Colores
     document.getElementById('colorBackground').addEventListener('input', (e) => {
       state.style.background = e.target.value;
       document.getElementById('labelBgColor').innerText = e.target.value.toUpperCase();
@@ -1686,7 +1673,6 @@
       drawPlot();
     });
 
-    // Añadir nueva función
     document.getElementById('btnAddFunction').addEventListener('click', () => {
       const palette = ['#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#e11d48'];
       const nextColor = palette[state.functions.length % palette.length];
@@ -1705,7 +1691,6 @@
       drawPlot();
     });
 
-    // Añadir nuevo punto
     document.getElementById('btnAddPoint').addEventListener('click', () => {
       const pointColors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
       const nextColor = pointColors[state.points.length % pointColors.length];
@@ -1725,7 +1710,6 @@
       drawPlot();
     });
 
-    // Limpiar TODO (dejar en blanco)
     document.getElementById('btnClearAll').addEventListener('click', () => {
       state.functions = [];
       state.points = [];
@@ -1741,7 +1725,6 @@
       showToast('Plano cartesiano totalmente en blanco');
     });
 
-    // Preset temas
     document.querySelectorAll('.preset-theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const theme = btn.getAttribute('data-canvas-preset');
@@ -1766,7 +1749,6 @@
       });
     });
 
-    // Cargar Ejemplo Parábola
     document.getElementById('btnOriginalPreset').addEventListener('click', () => {
       state.chartTitle = {
         text: 'Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$',
@@ -1796,10 +1778,13 @@
         subdivisionsY: 2
       };
       state.labels = {
-        x: 'X',
-        y: 'Y',
+        x: 'x',
+        y: 'y',
+        fontSize: 24,
         posX: null,
-        posY: null
+        posY: null,
+        posX_Y: null,
+        posY_X: null
       };
       state.style.background = '#ffffff';
       state.style.axisColor = '#000000';
@@ -1832,9 +1817,6 @@
       }, 2600);
     }
 
-    // ==========================================
-    // SISTEMA DRAGGABLE DE LOS RÓTULOS EN CANVAS
-    // ==========================================
     function getCanvasCoords(evt) {
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -1873,7 +1855,6 @@
         }
         drawPlot();
       } else {
-        // Cursor interactivo
         if (checkHit(pos, labelHitBoxes.labelX) || checkHit(pos, labelHitBoxes.labelY)) {
           canvas.style.cursor = 'grab';
         } else {
@@ -1889,7 +1870,6 @@
       }
     });
 
-    // Soporte táctil
     canvas.addEventListener('touchstart', (e) => {
       const pos = getCanvasCoords(e);
       if (checkHit(pos, labelHitBoxes.labelX)) {
@@ -1920,7 +1900,6 @@
       draggedElement = null;
     });
 
-    // Exportación a PNG en alta fidelidad
     function downloadPNG(scale = 2) {
       const offscreenCanvas = document.createElement('canvas');
       offscreenCanvas.width = state.canvasWidth * scale;
@@ -1942,7 +1921,6 @@
       showToast(`Descargado PNG en escala ${scale}x (${offscreenCanvas.width}x${offscreenCanvas.height}px)`);
     }
 
-    // Exportación a SVG Vectorial Puro con Fuentes LaTeX incrustadas
     function downloadSVG() {
       const p = getPaddings();
       const w = state.canvasWidth;
@@ -1956,7 +1934,7 @@
     <style>
       @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
       .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
-      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
+      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
       .katex-chart-title { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
       .katex-math-span { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-style: italic; font-weight: normal; }
       .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: bold; }
@@ -1964,7 +1942,6 @@
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
 
-      // Título con soporte de spans
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
         const segments = parseMathText(state.chartTitle.text.trim());
         svg += `  <text x="${w / 2}" y="${p.top - 20}" class="katex-chart-title" text-anchor="middle">`;
@@ -1978,7 +1955,6 @@
         svg += `</text>\n`;
       }
 
-      // Cuadrícula menor
       if (showMinorGrid) {
         svg += `  <g stroke="${gridColor}" stroke-width="0.75" opacity="0.45">\n`;
         const stepSubX = xStep / (subdivisionsX || 2);
@@ -1994,7 +1970,6 @@
         svg += `  </g>\n`;
       }
 
-      // Cuadrícula principal
       svg += `  <g stroke="${gridColor}" stroke-width="1.25">\n`;
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
         const cx = toCanvasX(x);
@@ -2009,13 +1984,11 @@
       const originX = Math.max(p.left, Math.min(w - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(h - p.bottom, toCanvasY(0)));
 
-      // Ejes principales
       svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="square">\n`;
       svg += `    <line x1="${p.left - 24}" y1="${originY}" x2="${w - p.right + 24}" y2="${originY}"/>\n`;
       svg += `    <line x1="${originX}" y1="${h - p.bottom + 24}" x2="${originX}" y2="${p.top - 24}"/>\n`;
       svg += `  </g>\n`;
 
-      // Flechas en 4 extremos
       if (showArrows) {
         const arrowSize = 10;
         svg += `  <g fill="${axisColor}">\n`;
@@ -2026,7 +1999,6 @@
         svg += `  </g>\n`;
       }
 
-      // Rayitas (Ticks)
       if (showTicks) {
         svg += `  <g stroke="${axisColor}" stroke-width="1.6">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
@@ -2040,7 +2012,6 @@
         svg += `  </g>\n`;
       }
 
-      // Números con signo menos tipográfico
       if (showTickNumbers) {
         svg += `  <g class="katex-label">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
@@ -2056,21 +2027,24 @@
         svg += `  </g>\n`;
       }
 
-      // Rótulos editables en posición arrastrada
       if (showAxisLabels) {
-        const posX_X = state.labels.posX !== null ? state.labels.posX : (w - p.right + 30);
-        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : (originY + 7);
+        const defaultLabelY_X = originX;
+        const defaultLabelY_Y = p.top - 28;
+        const defaultLabelX_X = w - p.right + 30;
+        const defaultLabelX_Y = originY + 7;
 
-        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : originX;
-        const posY_Y = state.labels.posY !== null ? state.labels.posY : (p.top - 28);
+        const posX_X = state.labels.posX !== null ? state.labels.posX : defaultLabelX_X;
+        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : defaultLabelX_Y;
+
+        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : defaultLabelY_X;
+        const posY_Y = state.labels.posY !== null ? state.labels.posY : defaultLabelY_Y;
 
         svg += `  <g class="katex-axis-title">\n`;
-        svg += `    <text x="${posY_X}" y="${posY_Y}" text-anchor="middle">${state.labels.y.trim() || 'Y'}</text>\n`;
-        svg += `    <text x="${posX_X}" y="${posX_Y}" text-anchor="start">${state.labels.x.trim() || 'X'}</text>\n`;
+        svg += `    <text x="${posY_X}" y="${posY_Y}" text-anchor="middle">${state.labels.y.trim() || 'y'}</text>\n`;
+        svg += `    <text x="${posX_X}" y="${posX_Y}" text-anchor="start">${state.labels.x.trim() || 'x'}</text>\n`;
         svg += `  </g>\n`;
       }
 
-      // Funciones matemáticas
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
         try {
@@ -2097,7 +2071,6 @@
         } catch (e) {}
       });
 
-      // Puntos en SVG
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
         const cx = toCanvasX(pt.x);
@@ -2136,7 +2109,6 @@
       showToast('Descargado plano vectorial SVG con tipografía KaTeX');
     }
 
-    // Copiar al portapapeles
     document.getElementById('btnCopyClipboard').addEventListener('click', async () => {
       try {
         canvas.toBlob(async (blob) => {
@@ -2162,7 +2134,6 @@
       }
     });
 
-    // Menú desplegable interactivo
     const btnToggleDropdown = document.getElementById('btnToggleDropdown');
     const downloadDropdownMenu = document.getElementById('downloadDropdownMenu');
 
@@ -2194,7 +2165,6 @@
       downloadSVG();
     });
 
-    // Inicialización al cargar la ventana asegurando carga de fuentes KaTeX
     window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       syncInputs();
