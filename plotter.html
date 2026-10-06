@@ -2014,24 +2014,29 @@
     });
 
     function downloadPNG(scale = 2) {
-      const offscreenCanvas = document.createElement('canvas');
-      offscreenCanvas.width = state.canvasWidth * scale;
-      offscreenCanvas.height = state.canvasHeight * scale;
-      const offCtx = offscreenCanvas.getContext('2d');
+      // 1. Guardar dimensiones actuales
+      const origW = state.canvasWidth;
+      const origH = state.canvasHeight;
 
-      offCtx.scale(scale, scale);
-
-      const currentCtx = ctx;
-      window.ctx = offCtx;
-      drawPlot();
-      window.ctx = currentCtx;
+      // 2. Escalar temporalmente el canvas y dibujar
+      canvas.width = origW * scale;
+      canvas.height = origH * scale;
+      ctx.scale(scale, scale);
       drawPlot();
 
+      // 3. Generar archivo PNG
       const link = document.createElement('a');
       link.download = `plano-cartesiano-latex-${scale}x.png`;
-      link.href = offscreenCanvas.toDataURL('image/png');
+      link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast(`Descargado PNG en escala ${scale}x (${offscreenCanvas.width}x${offscreenCanvas.height}px)`);
+
+      // 4. Restaurar dimensiones normales
+      canvas.width = origW;
+      canvas.height = origH;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset scale
+      drawPlot();
+
+      showToast(`Descargado PNG en escala ${scale}x (${origW * scale}x${origH * scale}px)`);
     }
 
     function downloadSVG() {
