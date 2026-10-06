@@ -244,6 +244,14 @@
               </div>
               <input type="range" id="inputPointLabelFontSize" min="10" max="48" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
             </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
+              <span class="text-xs font-semibold text-slate-200">Nombres de puntos en negrita</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="checkBoldPointLabels" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
+            </div>
           </div>
 
           <!-- Contenedor de puntos -->
@@ -328,7 +336,16 @@
             <button id="btnResetLabelPos" class="w-full py-1 text-center text-[11px] text-slate-400 hover:text-white bg-slate-800 rounded border border-slate-700 transition">
               Restablecer posiciones por defecto de x e y
             </button>
-
+            
+            <!-- Toggle Negrita en Rótulos de Ejes -->
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-[11px] text-slate-300">Rótulos en negrita (mathbf)</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="checkBoldAxisLabels" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
+            </div>
+            
             <!-- Control interactivo para el tamaño de los rótulos de ejes (x, y) -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
@@ -477,23 +494,46 @@
             </div>
           </div>
 
-          <!-- Opciones de Ejes y Tipografía -->
+          <!-- Eliminar/mostrar cuadrículas -->
           <div class="pt-2 space-y-2.5">
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar rayitas (ticks) en los números de los ejes</span>
-              <input type="checkbox" id="checkTicks" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
-            </label>
-            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los 4 extremos de los ejes</span>
-              <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
-            </label>
-            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar números LaTeX en los ejes</span>
-              <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
+              <span class="text-xs text-slate-300 font-medium">Mostrar cuadrícula principal</span>
+              <input type="checkbox" id="checkMajorGrid" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
               <span class="text-xs text-slate-300 font-medium">Mostrar cuadrícula fina secundaria</span>
               <input type="checkbox" id="checkMinorGrid" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
+            </label>
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar ticks en los ejes</span>
+              <input type="checkbox" id="checkTicks" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
+            </label>
+
+            <!-- Slider Longitud de Ticks -->
+            <div class="p-2 bg-slate-900/50 rounded-lg border border-slate-800">
+              <div class="flex justify-between text-xs text-slate-400 mb-1">
+                <span>Tamaño de los ticks</span>
+                <span id="labelTickSizeVal" class="font-mono text-indigo-300 font-semibold">4.5px</span>
+              </div>
+              <input type="range" id="inputTickSize" min="2" max="25" step="0.5" value="4.5" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+
+            <!-- Flechas y Slider de Tamaño -->
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los 4 extremos de los ejes</span>
+              <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
+            </label>
+            <div class="p-2 bg-slate-900/50 rounded-lg border border-slate-800">
+              <div class="flex justify-between text-xs text-slate-400 mb-1">
+                <span>Tamaño de flechas</span>
+                <span id="labelArrowSizeVal" class="font-mono text-indigo-300 font-semibold">10px</span>
+              </div>
+              <input type="range" id="inputArrowSize" min="4" max="30" step="1" value="10" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+
+            <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Mostrar números LaTeX en los ejes</span>
+              <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
           </div>
 
@@ -580,6 +620,11 @@
         pointLabelFontSize: 14,
         axisWidth: 3.0,
         showTicks: true,          // Las rayitas en los ejes
+        tickSize: 4.5,            // Longitud de las rayitas (ticks)
+        arrowSize: 10,            // Tamaño de las flechas
+        boldAxisLabels: false,    // Negrita opcional para rótulos de ejes
+        boldPointLabels: false,   // Negrita opcional para nombres de puntos
+        showMajorGrid: true,      // Opción de cuadrícula principal
         showArrows: false,
         showTickNumbers: true,
         showMinorGrid: true,
@@ -698,8 +743,8 @@
     function drawPlot() {
       const p = getPaddings();
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
-
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
+      
       // 1. Limpiar fondo
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
@@ -739,22 +784,24 @@
       }
 
       // 3. Cuadrícula principal (Major Grid)
-      ctx.strokeStyle = gridColor;
-      ctx.lineWidth = 1.25;
-      ctx.beginPath();
+      if (showMajorGrid) {
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1.25;
+        ctx.beginPath();
 
-      for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-        const cx = toCanvasX(x);
-        ctx.moveTo(cx, p.top);
-        ctx.lineTo(cx, state.canvasHeight - p.bottom);
-      }
+        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+          const cx = toCanvasX(x);
+          ctx.moveTo(cx, p.top);
+          ctx.lineTo(cx, state.canvasHeight - p.bottom);
+        }
 
-      for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-        const cy = toCanvasY(y);
-        ctx.moveTo(p.left, cy);
-        ctx.lineTo(state.canvasWidth - p.right, cy);
+        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+          const cy = toCanvasY(y);
+          ctx.moveTo(p.left, cy);
+          ctx.lineTo(state.canvasWidth - p.right, cy);
+        }
+        ctx.stroke();
       }
-      ctx.stroke();
 
       // Coordenadas origen (0,0)
       const originX = Math.max(p.left, Math.min(state.canvasWidth - p.right, toCanvasX(0)));
@@ -777,38 +824,38 @@
 
       // Flechas en los 4 extremos de los ejes
       if (showArrows) {
-        const arrowSize = 10;
+        const aSize = arrowSize || 10;
         ctx.fillStyle = axisColor;
 
         // Flecha X Derecha (+X)
         ctx.beginPath();
         ctx.moveTo(state.canvasWidth - p.right + 24, originY);
-        ctx.lineTo(state.canvasWidth - p.right + 24 - arrowSize, originY - arrowSize * 0.55);
-        ctx.lineTo(state.canvasWidth - p.right + 24 - arrowSize, originY + arrowSize * 0.55);
+        ctx.lineTo(state.canvasWidth - p.right + 24 - aSize, originY - aSize * 0.55);
+        ctx.lineTo(state.canvasWidth - p.right + 24 - aSize, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha X Izquierda (-X)
         ctx.beginPath();
         ctx.moveTo(p.left - 24, originY);
-        ctx.lineTo(p.left - 24 + arrowSize, originY - arrowSize * 0.55);
-        ctx.lineTo(p.left - 24 + arrowSize, originY + arrowSize * 0.55);
+        ctx.lineTo(p.left - 24 + aSize, originY - aSize * 0.55);
+        ctx.lineTo(p.left - 24 + aSize, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Arriba (+Y)
         ctx.beginPath();
         ctx.moveTo(originX, p.top - 24);
-        ctx.lineTo(originX - arrowSize * 0.55, p.top - 24 + arrowSize);
-        ctx.lineTo(originX + arrowSize * 0.55, p.top - 24 + arrowSize);
+        ctx.lineTo(originX - aSize * 0.55, p.top - 24 + aSize);
+        ctx.lineTo(originX + aSize * 0.55, p.top - 24 + aSize);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Abajo (-Y)
         ctx.beginPath();
         ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
-        ctx.lineTo(originX - arrowSize * 0.55, state.canvasHeight - p.bottom + 24 - arrowSize);
-        ctx.lineTo(originX + arrowSize * 0.55, state.canvasHeight - p.bottom + 24 - arrowSize);
+        ctx.lineTo(originX - aSize * 0.55, state.canvasHeight - p.bottom + 24 - aSize);
+        ctx.lineTo(originX + aSize * 0.55, state.canvasHeight - p.bottom + 24 - aSize);
         ctx.closePath();
         ctx.fill();
       }
@@ -826,11 +873,12 @@
         const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 18 : originY + 7;
 
         if (showTicks) {
+          const tSize = tickSize || 4.5;
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
-          ctx.moveTo(cx, originY - 4.5);
-          ctx.lineTo(cx, originY + 4.5);
+          ctx.moveTo(cx, originY - tSize);
+          ctx.lineTo(cx, originY + tSize);
           ctx.stroke();
         }
 
@@ -849,11 +897,12 @@
         if (originX - 10 < 30) ctx.textAlign = 'left';
 
         if (showTicks) {
+          const tSize = tickSize || 4.5;
           ctx.beginPath();
           ctx.strokeStyle = axisColor;
           ctx.lineWidth = 1.6;
-          ctx.moveTo(originX - 4.5, cy);
-          ctx.lineTo(originX + 4.5, cy);
+          ctx.moveTo(originX - tSize, cy);
+          ctx.lineTo(originX + tSize, cy);
           ctx.stroke();
         }
 
@@ -862,10 +911,11 @@
         }
       }
 
-      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable) con tamaño dinámico
+      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable) con tamaño dinámico y bold opcional
       if (showAxisLabels) {
         const axisTitleSize = state.labels.fontSize || 24;
-        ctx.font = `bold ${axisTitleSize}px "KaTeX_Math", "KaTeX_Main", "Times New Roman", serif`;
+        const fontWeight = boldAxisLabels ? 'bold ' : '';
+        ctx.font = `${fontWeight}italic ${axisTitleSize}px "KaTeX_Math", "KaTeX_Main", serif`;
         ctx.fillStyle = axisColor;
 
         const defaultLabelY_X = originX;
@@ -1015,7 +1065,8 @@
             let curX = cx + r + 4;
 
             if (name) {
-              ctx.font = `italic bold ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+              const ptWeight = boldPointLabels ? 'bold ' : '';
+              ctx.font = `${ptWeight}italic ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
               ctx.fillText(name, curX, cy - 2);
               curX += ctx.measureText(name).width + 3;
             }
@@ -1479,9 +1530,19 @@
       document.getElementById('labelLabelsColor').innerText = state.style.labelColor.toUpperCase();
 
       document.getElementById('checkTicks').checked = state.style.showTicks;
+      document.getElementById('inputTickSize').value = state.style.tickSize || 4.5;
+      document.getElementById('labelTickSizeVal').innerText = `${state.style.tickSize || 4.5}px`;
+
       document.getElementById('checkArrows').checked = state.style.showArrows;
-      document.getElementById('checkTickNumbers').checked = state.style.showTickNumbers;
+      document.getElementById('inputArrowSize').value = state.style.arrowSize || 10;
+      document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize || 10}px`;
+
+      document.getElementById('checkMajorGrid').checked = state.style.showMajorGrid;
       document.getElementById('checkMinorGrid').checked = state.style.showMinorGrid;
+      document.getElementById('checkBoldAxisLabels').checked = state.style.boldAxisLabels;
+      document.getElementById('checkBoldPointLabels').checked = state.style.boldPointLabels;
+
+      document.getElementById('checkTickNumbers').checked = state.style.showTickNumbers;
       document.getElementById('checkAxisLabels').checked = state.style.showAxisLabels;
       document.getElementById('checkOverlayFormula').checked = state.style.showOverlayFormula;
       document.getElementById('inputAxisWidth').value = state.style.axisWidth;
@@ -1599,6 +1660,38 @@
       drawPlot();
     });
 
+    document.getElementById('inputTickSize').addEventListener('input', (e) => {
+      state.style.tickSize = parseFloat(e.target.value) || 4.5;
+      document.getElementById('labelTickSizeVal').innerText = `${state.style.tickSize}px`;
+      drawPlot();
+    });
+
+    document.getElementById('inputArrowSize').addEventListener('input', (e) => {
+      state.style.arrowSize = parseFloat(e.target.value) || 10;
+      document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize}px`;
+      drawPlot();
+    });
+
+    document.getElementById('checkMajorGrid').addEventListener('change', (e) => {
+      state.style.showMajorGrid = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkMinorGrid').addEventListener('change', (e) => {
+      state.style.showMinorGrid = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkBoldAxisLabels').addEventListener('change', (e) => {
+      state.style.boldAxisLabels = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkBoldPointLabels').addEventListener('change', (e) => {
+      state.style.boldPointLabels = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('checkShowCoords').addEventListener('change', (e) => {
       state.style.showPointCoords = e.target.checked;
       drawPlot();
@@ -1649,11 +1742,6 @@
 
     document.getElementById('checkTickNumbers').addEventListener('change', (e) => {
       state.style.showTickNumbers = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkMinorGrid').addEventListener('change', (e) => {
-      state.style.showMinorGrid = e.target.checked;
       drawPlot();
     });
 
@@ -1793,6 +1881,11 @@
       state.style.labelFontSize = 13;
       state.style.axisWidth = 3.5;
       state.style.showTicks = true;
+      state.style.tickSize = 4.5;
+      state.style.arrowSize = 10;
+      state.style.boldAxisLabels = false;
+      state.style.boldPointLabels = false;
+      state.style.showMajorGrid = true;
       state.style.showArrows = false;
       state.style.showAxisLabels = true;
       state.style.showTickNumbers = true;
@@ -1926,7 +2019,7 @@
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
@@ -1934,10 +2027,10 @@
     <style>
       @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
       .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
-      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: bold; fill: ${axisColor}; font-style: italic; }
+      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: ${boldAxisLabels ? 'bold' : 'normal'}; fill: ${axisColor}; font-style: italic; }
       .katex-chart-title { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
       .katex-math-span { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-style: italic; font-weight: normal; }
-      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: bold; }
+      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: ${boldPointLabels ? 'bold' : 'normal'}; }
     </style>
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
@@ -1970,16 +2063,18 @@
         svg += `  </g>\n`;
       }
 
-      svg += `  <g stroke="${gridColor}" stroke-width="1.25">\n`;
-      for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
-        const cx = toCanvasX(x);
-        svg += `    <line x1="${cx}" y1="${p.top}" x2="${cx}" y2="${h - p.bottom}"/>\n`;
+      if (showMajorGrid) {
+        svg += `  <g stroke="${gridColor}" stroke-width="1.25">\n`;
+        for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
+          const cx = toCanvasX(x);
+          svg += `    <line x1="${cx}" y1="${p.top}" x2="${cx}" y2="${h - p.bottom}"/>\n`;
+        }
+        for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
+          const cy = toCanvasY(y);
+          svg += `    <line x1="${p.left}" y1="${cy}" x2="${w - p.right}" y2="${cy}"/>\n`;
+        }
+        svg += `  </g>\n`;
       }
-      for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
-        const cy = toCanvasY(y);
-        svg += `    <line x1="${p.left}" y1="${cy}" x2="${w - p.right}" y2="${cy}"/>\n`;
-      }
-      svg += `  </g>\n`;
 
       const originX = Math.max(p.left, Math.min(w - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(h - p.bottom, toCanvasY(0)));
@@ -1990,24 +2085,25 @@
       svg += `  </g>\n`;
 
       if (showArrows) {
-        const arrowSize = 10;
+        const aSize = arrowSize || 10;
         svg += `  <g fill="${axisColor}">\n`;
-        svg += `    <polygon points="${w - p.right + 24},${originY} ${w - p.right + 24 - arrowSize},${originY - arrowSize * 0.55} ${w - p.right + 24 - arrowSize},${originY + arrowSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${p.left - 24},${originY} ${p.left - 24 + arrowSize},${originY - arrowSize * 0.55} ${p.left - 24 + arrowSize},${originY + arrowSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${originX},${p.top - 24} ${originX - arrowSize * 0.55},${p.top - 24 + arrowSize} ${originX + arrowSize * 0.55},${p.top - 24 + arrowSize}"/>\n`;
-        svg += `    <polygon points="${originX},${h - p.bottom + 24} ${originX - arrowSize * 0.55},${h - p.bottom + 24 - arrowSize} ${originX + arrowSize * 0.55},${h - p.bottom + 24 - arrowSize}"/>\n`;
+        svg += `    <polygon points="${w - p.right + 24},${originY} ${w - p.right + 24 - aSize},${originY - aSize * 0.55} ${w - p.right + 24 - aSize},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${p.left - 24},${originY} ${p.left - 24 + aSize},${originY - aSize * 0.55} ${p.left - 24 + aSize},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${originX},${p.top - 24} ${originX - aSize * 0.55},${p.top - 24 + aSize} ${originX + aSize * 0.55},${p.top - 24 + aSize}"/>\n`;
+        svg += `    <polygon points="${originX},${h - p.bottom + 24} ${originX - aSize * 0.55},${h - p.bottom + 24 - aSize} ${originX + aSize * 0.55},${h - p.bottom + 24 - aSize}"/>\n`;
         svg += `  </g>\n`;
       }
 
       if (showTicks) {
+        const tSize = tickSize || 4.5;
         svg += `  <g stroke="${axisColor}" stroke-width="1.6">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x);
-          svg += `    <line x1="${cx}" y1="${originY - 4.5}" x2="${cx}" y2="${originY + 4.5}"/>\n`;
+          svg += `    <line x1="${cx}" y1="${originY - tSize}" x2="${cx}" y2="${originY + tSize}"/>\n`;
         }
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y);
-          svg += `    <line x1="${originX - 4.5}" y1="${cy}" x2="${originX + 4.5}" y2="${cy}"/>\n`;
+          svg += `    <line x1="${originX - tSize}" y1="${cy}" x2="${originX + tSize}" y2="${cy}"/>\n`;
         }
         svg += `  </g>\n`;
       }
