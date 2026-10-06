@@ -802,7 +802,7 @@
         }
         ctx.stroke();
       }
-
+      
       // Coordenadas origen (0,0)
       const originX = Math.max(p.left, Math.min(state.canvasWidth - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(state.canvasHeight - p.bottom, toCanvasY(0)));
@@ -822,40 +822,45 @@
       ctx.lineTo(originX, p.top - 24);
       ctx.stroke();
 
-      // Flechas en los 4 extremos de los ejes
+      // Flechas en los 4 extremos de los ejes (rematando exactamente en la punta)
       if (showArrows) {
         const aSize = arrowSize || 10;
         ctx.fillStyle = axisColor;
 
+        const tipRightX = state.canvasWidth - p.right + 24;
+        const tipLeftX = p.left - 24;
+        const tipTopY = p.top - 24;
+        const tipBottomY = state.canvasHeight - p.bottom + 24;
+
         // Flecha X Derecha (+X)
         ctx.beginPath();
-        ctx.moveTo(state.canvasWidth - p.right + 24, originY);
-        ctx.lineTo(state.canvasWidth - p.right + 24 - aSize, originY - aSize * 0.55);
-        ctx.lineTo(state.canvasWidth - p.right + 24 - aSize, originY + aSize * 0.55);
+        ctx.moveTo(tipRightX + aSize, originY);
+        ctx.lineTo(tipRightX, originY - aSize * 0.55);
+        ctx.lineTo(tipRightX, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha X Izquierda (-X)
         ctx.beginPath();
-        ctx.moveTo(p.left - 24, originY);
-        ctx.lineTo(p.left - 24 + aSize, originY - aSize * 0.55);
-        ctx.lineTo(p.left - 24 + aSize, originY + aSize * 0.55);
+        ctx.moveTo(tipLeftX - aSize, originY);
+        ctx.lineTo(tipLeftX, originY - aSize * 0.55);
+        ctx.lineTo(tipLeftX, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Arriba (+Y)
         ctx.beginPath();
-        ctx.moveTo(originX, p.top - 24);
-        ctx.lineTo(originX - aSize * 0.55, p.top - 24 + aSize);
-        ctx.lineTo(originX + aSize * 0.55, p.top - 24 + aSize);
+        ctx.moveTo(originX, tipTopY - aSize);
+        ctx.lineTo(originX - aSize * 0.55, tipTopY);
+        ctx.lineTo(originX + aSize * 0.55, tipTopY);
         ctx.closePath();
         ctx.fill();
 
         // Flecha Y Abajo (-Y)
         ctx.beginPath();
-        ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
-        ctx.lineTo(originX - aSize * 0.55, state.canvasHeight - p.bottom + 24 - aSize);
-        ctx.lineTo(originX + aSize * 0.55, state.canvasHeight - p.bottom + 24 - aSize);
+        ctx.moveTo(originX, tipBottomY + aSize);
+        ctx.lineTo(originX - aSize * 0.55, tipBottomY);
+        ctx.lineTo(originX + aSize * 0.55, tipBottomY);
         ctx.closePath();
         ctx.fill();
       }
@@ -1677,6 +1682,21 @@
       drawPlot();
     });
 
+    document.getElementById('checkBoldAxisLabels').addEventListener('change', (e) => {
+      state.style.boldAxisLabels = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkBoldPointLabels').addEventListener('change', (e) => {
+      state.style.boldPointLabels = e.target.checked;
+      drawPlot();
+    });
+
+    document.getElementById('checkMajorGrid').addEventListener('change', (e) => {
+      state.style.showMajorGrid = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('checkMinorGrid').addEventListener('change', (e) => {
       state.style.showMinorGrid = e.target.checked;
       drawPlot();
@@ -2086,11 +2106,16 @@
 
       if (showArrows) {
         const aSize = arrowSize || 10;
+        const tipRightX = w - p.right + 24;
+        const tipLeftX = p.left - 24;
+        const tipTopY = p.top - 24;
+        const tipBottomY = h - p.bottom + 24;
+
         svg += `  <g fill="${axisColor}">\n`;
-        svg += `    <polygon points="${w - p.right + 24},${originY} ${w - p.right + 24 - aSize},${originY - aSize * 0.55} ${w - p.right + 24 - aSize},${originY + aSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${p.left - 24},${originY} ${p.left - 24 + aSize},${originY - aSize * 0.55} ${p.left - 24 + aSize},${originY + aSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${originX},${p.top - 24} ${originX - aSize * 0.55},${p.top - 24 + aSize} ${originX + aSize * 0.55},${p.top - 24 + aSize}"/>\n`;
-        svg += `    <polygon points="${originX},${h - p.bottom + 24} ${originX - aSize * 0.55},${h - p.bottom + 24 - aSize} ${originX + aSize * 0.55},${h - p.bottom + 24 - aSize}"/>\n`;
+        svg += `    <polygon points="${tipRightX + aSize},${originY} ${tipRightX},${originY - aSize * 0.55} ${tipRightX},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${tipLeftX - aSize},${originY} ${tipLeftX},${originY - aSize * 0.55} ${tipLeftX},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${originX},${tipTopY - aSize} ${originX - aSize * 0.55},${tipTopY} ${originX + aSize * 0.55},${tipTopY}"/>\n`;
+        svg += `    <polygon points="${originX},${tipBottomY + aSize} ${originX - aSize * 0.55},${tipBottomY} ${originX + aSize * 0.55},${tipBottomY}"/>\n`;
         svg += `  </g>\n`;
       }
 
