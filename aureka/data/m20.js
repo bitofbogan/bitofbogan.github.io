@@ -5,7 +5,7 @@
 
 const moduleInfo = {
   badge: "Módulo 20",
-  title: "Optimización en Sistemas Naturales y Sociales",
+  title: "Ciencias Ambientales I",
   topicVideos: {}
 };
 
