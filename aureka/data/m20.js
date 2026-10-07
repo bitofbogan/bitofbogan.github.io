@@ -12,42 +12,32 @@ const moduleInfo = {
 const questionBank = [
   {
     id: "m20-q01",
-    prompt: "Los ecosistemas de México están amenazados principalmente por uno de los siguientes factores. Identifícalo.",
+    prompt: "¿Cuál es el principal factor de amenaza para los ecosistemas de México?",
     type: "choice",
-    correct: "Crecimiento poblacional.",
+    correct: "El crecimiento poblacional.",
     distractors: [
-      "Tala de bosques para obtener madera.",
-      "Construcción de viviendas.",
-      "Extracción de materia prima para la industria."
+      "La tala de bosques para obtener madera.",
+      "La construcción de viviendas.",
+      "La extracción de materia prima para la industria."
     ],
     hint: "Piensa en el factor demográfico raíz que demanda más recursos, espacio y energía.",
     explanation: "El crecimiento poblacional es el factor principal que presiona a los ecosistemas: demanda más suelo, agua, alimentos y energía, desencadenando los demás problemas ambientales."
   },
   {
-    id: "m20-q02",
-    prompt: "¿Cómo actúas cuando platicas con alguien acerca de las acciones realizadas por parte del gobierno para evitar desde tu realidad el efecto invernadero y el calentamiento global?",
-    type: "choice",
-    correct: "Expresas tus opiniones y respetas las de los demás aun cuando no coincidan.",
-    distractors: [
-      "Puedes platicar, pero si hay diferencias prefieres dejas el tema para evitar problemas.",
-      "Buscas todo tipo de argumentos para convencer a los demás de tu postura.",
-      "No comentas sobre el tema. Piensas que los demás no son tolerantes con las diferencias."
-    ],
-    hint: "El enfoque por competencias valora el diálogo abierto, asertivo y tolerante ante distintas opiniones.",
-    explanation: "En la evaluación actitudinal se prioriza la participación constructiva y tolerante: exponer argumentos propios con claridad respetando las posturas ajenas."
-  },
-  {
     id: "m20-q03",
-    prompt: "¿Cuáles de las siguientes actividades se clasifican como actividades productivas secundarias?<br><br>1. Ganadería<br>2. Construcción<br>3. Avicultura<br>4. Minería<br>5. Transporte",
-    type: "choice",
-    correct: "2 y 4",
-    distractors: [
-      "2 y 5",
-      "1 y 5",
-      "1 y 3"
+    prompt: "¿Cuáles de las siguientes se clasifican como actividades productivas secundarias?",
+    type: "multi_select",
+    correctAnswers: [
+      "Construcción.",
+      "Minería."
     ],
-    hint: "El examen oficial clasifica la transformación y la extracción no renovable en esta categoría.",
-    explanation: "En la clave oficial del examen, la construcción (2) y la minería (4) se agrupan en este rubro (a diferencia de ganadería y avicultura que son primarias, y transporte que es terciaria)."
+    distractors: [
+      "Ganadería.",
+      "Avicultura.",
+      "Transporte."
+    ],
+    hint: "Las actividades secundarias involucran la transformación y el aprovechamiento de recursos no renovables dentro de este rubro.",
+    explanation: "La construcción y la minería se agrupan en las actividades secundarias pues generan productos. La ganadería y la avicultura pertenecen al sector primario al extraer recursos directos, mientras que el transporte corresponde al sector terciario al ofrecer servicios."
   },
   {
     id: "m20-q04",
