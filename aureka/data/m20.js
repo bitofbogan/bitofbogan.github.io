@@ -41,58 +41,70 @@ const questionBank = [
   },
   {
     id: "m20-q04",
-    prompt: "Como consecuencia del terremoto de 1985 que arrasó la Ciudad de México, varias personas decidieron cambiar su lugar de residencia. Por ejemplo, Diego y su familia se mudaron a la ciudad de Villahermosa, para evitar las zonas sísmicas, pero ahora se enfrentan a las inundaciones que ocurren en su casa por vivir en las cercanías del río Carrizal. Ya están pensando en mudarse al puerto de Acapulco, pero temen a los huracanes. El caso presentado muestra un tipo de migración por causas:",
+    prompt: "¿Cuál es el tipo de migración que ocurre a raíz de fenómenos como sismos, inundaciones o huracanes?",
     type: "choice",
-    correct: "Naturales",
+    correct: "Naturales.",
     distractors: [
-      "Personales",
-      "Económicas",
-      "Humanas"
+      "Personales.",
+      "Económicas.",
+      "Humanas."
     ],
-    hint: "Sismos, inundaciones y huracanes pertenecen a fenómenos del entorno biofísico.",
+    hint: "Sismos, inundaciones y huracanes pertenecen a fenómenos naturales.",
     explanation: "Los desplazamientos forzados o motivados por sismos, inundaciones, huracanes y sequías corresponden a causas naturales de la migración."
   },
   {
     id: "m20-q05",
-    prompt: "Completa el siguiente enunciado:<br><br>La existencia de fábricas que usan o desechan de forma no controlada de productos químicos sólidos y efluentes líquidos, puede clasificarse dentro de los factores de {0} cuando se trata de actividades humanas {1} que producen residuos industriales que contaminan principalmente {2}.",
-    type: "choice",
-    correct: "Vulnerabilidad | fuera de normatividad | suelos y aguas",
-    distractors: [
-      "Desastre ecológico | legales | las áreas rurales",
-      "Vulnerabilidad | sin normatividad | las zonas urbanas",
-      "Desastre ecológico | autorizadas legalmente | la atmósfera"
+    prompt: "Completa el siguiente enunciado:",
+    type: "fill_blanks",
+    sentence: "La existencia de fábricas que desechan productos químicos sólidos y efluentes líquidos de forma no controlada se clasifica dentro de los factores de {0} al tratarse de actividades humanas {1} que producen residuos industriales que contaminan principalmente {2}.",
+    correctOrder: [
+      "vulnerabilidad",
+      "fuera de normatividad",
+      "suelos y aguas"
     ],
-    hint: "Las emisiones no reguladas aumentan el riesgo ambiental e impactan directamente la tierra y los mantos acuíferos.",
-    explanation: "El mal manejo de desechos industriales representa una vulnerabilidad ecológica provocada por actividades fuera de normatividad que degradan suelos y cuerpos de agua."
+    distractors: [
+      "desastre ecológico",
+      "legales",
+      "autorizadas legalmente",
+      "sin normatividad",
+      "las áreas rurales",
+      "las zonas urbanas",
+      "la atmósfera"
+    ],
+    hint: "Las emisiones no reguladas incrementan el riesgo ambiental e impactan directamente la tierra y los mantos acuíferos.",
+    explanation: "El mal manejo de desechos químicos representa una vulnerabilidad ecológica derivada de actividades industriales fuera de normatividad que dañan prioritariamente suelos y aguas."
   },
   {
     id: "m20-q06",
     prompt: "Relaciona las actividades económicas con sus características:",
     type: "match_columns",
     pairs: [
-      { left: "Primarias", right: "El aprovechamiento directo de los recursos naturales renovables." },
+      { left: "Primarias", right: "Buscan el aprovechamiento directo de los recursos naturales renovables." },
       { left: "Secundarias", right: "Buscan el aprovechamiento directo de recursos naturales no renovables." },
-      { left: "Terciarias", right: "Las que satisfacen las necesidades que el hombre tiene de realizarse, divertirse." }
+      { left: "Terciarias", right: "Satisfacen las necesidades que el hombre tiene de realizarse y/o divertirse."}
     ],
-    hint: "Asocia el sector agropecuario/forestal al aprovechamiento renovable, la industria pesada/minería a los no renovables y los servicios a la recreación y bienestar.",
-    explanation: "Según la clasificación planteada en el programa: las primarias aprovechan recursos naturales renovables, las secundarias se vinculan a no renovables/transformación y las terciarias cubren servicios, realización y esparcimiento."
+    hint: null,
+    explanation: "Las actividades primarias aprovechan recursos naturales renovables, las secundarias se vinculan a los no renovables o su transformación y las terciarias cubren servicios, realización y esparcimiento."
   },
   {
     id: "m20-q07",
-    prompt: "Elige la opción que completa este enunciado:<br><br>La población ________ está formada por las personas de 12 años o más de edad, que realizan trabajos por los cuales reciben una remuneración.",
-    type: "choice",
-    correct: "Económicamente activa",
+    prompt: "Completa el siguiente enunciado:",
+    type: "fill_blanks",
+    sentence: "La población {0} está formada por las personas mayores de 12 años que realizan trabajos por los cuales reciben una remuneración.",
+    correctOrder: [
+      "económicamente activa"
+    ],
     distractors: [
-      "Económicamente inactiva",
-      "Urbana",
-      "Rural"
+      "económicamente inactiva",
+      "urbana",
+      "rural"
     ],
     hint: "Se abrevia comúnmente como PEA.",
-    explanation: "La Población Económicamente Activa (PEA) comprende a las personas en edad de trabajar (12 años o más según criterios censales tradicionales) que participan en la producción de bienes y servicios a cambio de un ingreso."
+    explanation: "La población económicamente activa (PEA) comprende a las personas en edad de laborar (mayores de 12 años) que realizan actividades productivas a cambio de una remuneración."
   },
   {
     id: "m20-q08",
-    prompt: "La definición de las fases del proceso de investigación dependen del propósito, del tipo de investigación y del paradigma que se haya elegido. Independientemente de estos aspectos, ordena correctamente las fases del proceso de investigación:",
+    prompt: "Ordena las fases del proceso de investigación:",
     type: "drag_order",
     correctOrder: [
       "Delimitación del tema",
@@ -102,65 +114,68 @@ const questionBank = [
       "Conclusiones"
     ],
     hint: "Primero se define y acota el problema; después se busca la teoría de respaldo, se formula la respuesta tentativa, se prueba y finalmente se cierra el reporte.",
-    explanation: "El orden metodológico estándar inicia delimitando el tema, revisa el marco teórico, formula la hipótesis, la comprueba con evidencia y concluye."
+    explanation: "El orden metodológico inicia delimitando el tema, luego revisa el marco teórico, formula la hipótesis, la comprueba con evidencia y concluye."
   },
   {
     id: "m20-q09",
-    prompt: "Cuando se tiene una muy alta concentración de gases que quedan atrapados en la tropósfera generando, a su vez, un incremento en la temperatura en la Tierra, ¿a qué fenómeno se hace referencia?",
+    prompt: "¿Qué fenómeno ocurre cuando se tiene una muy alta concentración de gases que quedan atrapados en la tropósfera generando un incremento en la temperatura en la Tierra?",
     type: "choice",
-    correct: "Efecto invernadero",
+    correct: "Efecto invernadero.",
     distractors: [
-      "Cambio climático",
-      "Evaporación",
-      "Contaminación ambiental"
+      "Cambio climático.",
+      "Evaporación.",
+      "Contaminación ambiental."
     ],
     hint: "Es el mecanismo físico concreto de retención de calor atmosférico en la tropósfera.",
     explanation: "El efecto invernadero es el fenómeno térmico específico donde los gases atrapan radiación infrarroja en la tropósfera, calentando la superficie planetaria."
   },
   {
     id: "m20-q10",
-    prompt: "Elige la opción que completa el siguiente enunciado:<br><br>El aumento de los niveles de temperatura de la Tierra se ha presentado principalmente por ________ que se ha venido experimentando en los últimos años.",
+    prompt: "¿Por qué se ha presentado principalmente el aumento de la temperatura de la Tierra?",
     type: "choice",
-    correct: "El cambio climático",
+    correct: "Por el cambio climático.",
     distractors: [
-      "El fenómeno del Niño",
-      "La radiación solar",
-      "La actividad volcánica"
+      "Por el fenómeno del Niño.",
+      "Por la radiación solar.",
+      "Por la actividad volcánica."
     ],
     hint: "Es la alteración global del sistema climático atribuible directa e indirectamente a la actividad humana.",
     explanation: "El incremento sostenido en las anomalías de temperatura global es la manifestación central del cambio climático contemporáneo."
   },
   {
     id: "m20-q11",
-    prompt: "Los movimientos migratorios humanos se deben a múltiples factores. ¿Cuáles causas son las que inciden primordialmente en la migración en la época actual?",
+    prompt: "¿Qué causas inciden principalmente en la migración actual?",
     type: "choice",
-    correct: "Económicas. Las personas abandonan los lugares con pocas posibilidades de vida.",
+    correct: "Económicas: las personas abandonan los lugares con pocas posibilidades de vida.",
     distractors: [
-      "Físicas. Los terremotos y erupciones volcánicas propician cambios de residencia.",
-      "Sanitarias. Las plagas inducen enfermedades y arruinan los cultivos, motivando cambios de residencia.",
-      "Naturales. Las sequías, inundaciones y otros fenómenos son motivo de movimientos migratorios."
+      "Físicas: los terremotos y erupciones volcánicas propician cambios de residencia.",
+      "Sanitarias: las plagas inducen enfermedades y arruinan los cultivos, motivando cambios de residencia.",
+      "Naturales: las sequías, inundaciones y otros fenómenos son motivo de movimientos migratorios."
     ],
     hint: "La falta de empleo, salarios bajos y búsqueda de mejores condiciones materiales constituyen el mayor motor actual.",
     explanation: "A nivel global, la búsqueda de empleo, mejores ingresos y oportunidades materiales (factores económicos) explican la gran mayoría de los flujos migratorios actuales."
   },
   {
     id: "m20-q12",
-    prompt: "Se presenta la gráfica con los países que tienen los más altos PIBC del mundo. ¿Cuál(es) de las siguientes aseveraciones son correctas?<br><br>1. Los países con mayor PIBC son los países nórdicos.<br>2. Dinamarca tiene un PIBC del orden de 50% del PIBC de Luxemburgo.<br>3. La diferencia entre el más bajo y el más alto del PIBC de los países representados es del orden de 10,000 dls.<br>4. Puede afirmarse que Luxemburgo debe ser el país menos poblado, en tanto que Dinamarca y Noruega son los más poblados.",
-    image: "img/m20_pibc_barras.png",
-    type: "choice",
-    correct: "Sólo 3",
-    distractors: [
-      "Sólo 2",
-      "2 y 3",
-      "1 y 4"
+    prompt: "Selecciona todas las afirmaciones correctas al observar la gráfica.",
+    image: "assets/m20_pibc_barras.png",
+    type: "multi_select",
+    correctAnswers: [
+      "La diferencia entre el país más alto y el más bajo es del orden de 10,000 dólares."
     ],
-    hint: "Compara el valor más alto (Luxemburgo $\\approx 43,000$) con el más bajo (Dinamarca $\\approx 33,000$).",
-    explanation: "Restando el valor mayor y el menor de la gráfica ($43,000 - 33,000 \\approx 10,000$), se comprueba que únicamente el enunciado 3 es correcto."
+    distractors: [
+      "Los países con mayor PIBC son los países nórdicos.",
+      "Dinamarca tiene un PIBC del 50% del PIBC de Luxemburgo.",
+      "Luxemburgo es el país más poblado.",
+      "Dinamarca y Noruega son los países menos poblados."
+    ],
+    hint: "Compara el valor de la barra más alta con la más baja y revisa la diferencia numérica entre ambos.",
+    explanation: "Revisando cada afirmación a partir de la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li><b>Correcta:</b> Luxemburgo ronda los $43,000\\text{ dls}$ y Dinamarca cerca de $33,000\\text{ dls}$, por lo que la diferencia entre el más alto y el más bajo es de aproximadamente $10,000\\text{ dls}$.</li>\n  <li><b>Incorrecta:</b> Los dos países con mayor PIBC son Luxemburgo y Suiza, los cuales no son países nórdicos.</li>\n  <li><b>Incorrecta:</b> El PIBC de Dinamarca representa más del $75\\%$ del de Luxemburgo, lejos de ser solo el 50%.</li>\n  <li><b>Incorrecta:</b> El PIBC (per cápita) mide el ingreso promedio por habitante, por lo que no permite determinar si un país tiene más o menos población total.</li>\n</ul>"
   },
   {
     id: "m20-q13",
     prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función:<br><br>$$y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8$$<br>Determina en qué punto cambia la concavidad de la curva.",
-    image: "img/m20_grafica_cafe.png",
+    image: "assets/m20_grafica_cafe.png",
     type: "choice",
     correct: "$y'' = -1.8x - 0.6 = 0; \\quad x = -0.333$",
     distractors: [
@@ -171,7 +186,7 @@ const questionBank = [
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
     explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
   },
-  {
+  {//FROM HERE
     id: "m20-q14",
     prompt: "Susana desarrolla un proyecto de investigación sobre las causas de la escasez de agua en la comunidad de 'Santa Cecilia'. En este momento ella plantea el siguiente enunciado:<br><br><i>'La población de la comunidad no cuenta con una cultura de optimización del agua'</i>.<br><br>¿Cuál es la etapa en la cual trabaja actualmente Susana? Justifica la respuesta.",
     type: "choice",
