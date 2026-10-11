@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaTeX Studio - Generador & Exportador de Fórmulas</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- KaTeX CSS & JS for ultra-fast and reliable formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    /* Checkerboard pattern for transparency indication */
+    .bg-checkerboard {
+      background-color: #1e293b;
+      background-image: 
+        linear-gradient(45deg, #0f172a 25%, transparent 25%), 
+        linear-gradient(-45deg, #0f172a 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #0f172a 75%), 
+        linear-gradient(-45deg, transparent 75%, #0f172a 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+    .light .bg-checkerboard {
+      background-color: #f1f5f9;
+      background-image: 
+        linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+        linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+        linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+    }
+
+    /* Grid paper pattern */
+    .bg-grid-paper {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#94a3b8 0.75px, transparent 0.75px), radial-gradient(#94a3b8 0.75px, #f8fafc 0.75px);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+    }
+
+    /* Blackboard style */
+    .bg-blackboard {
+      background: radial-gradient(circle at 50% 50%, #1a2f23 0%, #0d1a13 100%);
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    /* Blueprint style */
+    .bg-blueprint {
+      background-color: #0b2545;
+      background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.6); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200">
+
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-4 lg:px-8 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+        <i class="ph ph-function text-2xl font-bold"></i>
+      </div>
+      <div>
+        <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+          LaTeX Studio <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded-full font-medium">Export HQ</span>
+        </h1>
+        <p class="text-xs text-slate-400">Genera, estiliza y exporta fórmulas matemáticas en alta resolución</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="flex items-center gap-2">
+      <button id="btn-theme-toggle" class="p-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 rounded-lg transition" title="Alternar tema interfaz">
+        <i class="ph ph-sun-dim text-lg"></i>
+      </button>
+      <button id="btn-quick-copy-png" class="px-3.5 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 flex items-center gap-1.5 transition">
+        <i class="ph ph-copy text-base"></i>
+        <span>Copiar PNG</span>
+      </button>
+      <button id="btn-quick-download" class="px-4 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition">
+        <i class="ph ph-download-simple text-base font-bold"></i>
+        <span>Descargar</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0 overflow-hidden">
+    
+    <!-- LEFT PANEL: LaTeX Input & Presets & Controls (Col 1-5) -->
+    <section class="lg:col-span-5 border-r border-slate-800 bg-slate-900/50 flex flex-col h-[calc(100vh-61px)] overflow-y-auto">
+      
+      <!-- Preset Formulas Pill Bar -->
+      <div class="p-3 border-b border-slate-800/80 bg-slate-900">
+        <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+          <span>Fórmulas Rápidas & Ejemplos</span>
+          <span class="text-slate-500">Haz clic para cargar</span>
+        </div>
+        <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs">
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="schrodinger">Schrödinger</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="euler">Identidad de Euler</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="gaussian">Gauss / Normal</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="maxwell">Maxwell</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="fourier">Fourier</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="matrix">Matriz</button>
+          <button class="preset-btn px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700/60 whitespace-nowrap transition" data-eq="calculus">Cálculo Integral</button>
+        </div>
+      </div>
+
+      <div class="p-4 flex-1 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <label for="latex-input" class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i class="ph ph-code text-indigo-400"></i> Código LaTeX
+          </label>
+          <div class="flex items-center gap-2">
+            <button id="btn-clear-code" class="text-[11px] text-slate-400 hover:text-rose-400 transition" title="Limpiar código">Limpiar</button>
+          </div>
+        </div>
+
+        <!-- Symbol Bar -->
+        <div class="flex flex-wrap gap-1 bg-slate-950/60 p-1.5 rounded-lg border border-slate-800 text-xs">
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\int_{a}^{b} f(x) dx">\int</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\sum_{i=1}^{n}">\sum</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\frac{a}{b}">\frac</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\sqrt{x}">\sqrt</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\lim_{x \to \infty}">\lim</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\partial">\partial</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\alpha, \beta, \theta">\theta</button>
+          <button class="sym-btn px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded font-mono" data-code="\begin{pmatrix} a & b \\ c & d \end{pmatrix}">Matriz</button>
+        </div>
+
+        <!-- Code Textarea -->
+        <div class="relative flex-1 min-h-[140px]">
+          <textarea id="latex-input" spellcheck="false"
+            class="w-full h-full min-h-[140px] p-3 text-sm bg-slate-950 border border-slate-800 rounded-xl font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y transition shadow-inner leading-relaxed"
+            placeholder="Escribe tu fórmula LaTeX aquí. Por ejemplo: E = mc^2"></textarea>
+        </div>
+
+        <!-- Error notification box -->
+        <div id="latex-error" class="hidden p-2.5 bg-rose-950/60 border border-rose-800/80 rounded-lg text-rose-300 text-xs flex items-start gap-2">
+          <i class="ph ph-warning-circle text-base mt-0.5 text-rose-400 shrink-0"></i>
+          <span id="latex-error-msg" class="break-all font-mono">Error en la sintaxis</span>
+        </div>
+
+        <div class="border-t border-slate-800/80 pt-4 flex flex-col gap-4">
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="ph ph-paint-brush-broad text-indigo-400"></i> Estilo & Personalización
+          </h2>
+
+          <!-- Formula Color -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] font-medium text-slate-400 mb-1.5 block">Color de Fórmula</label>
+              <div class="flex items-center gap-2">
+                <input type="color" id="text-color-picker" value="#ffffff" class="w-8 h-8 rounded border border-slate-700 bg-transparent cursor-pointer p-0">
+                <select id="text-color-preset" class="bg-slate-950 border border-slate-800 rounded-lg text-xs py-1.5 px-2 text-slate-200 focus:outline-none flex-1">
+                  <option value="#ffffff">Blanco puro</option>
+                  <option value="#0f172a">Negro carbón</option>
+                  <option value="#60a5fa">Azul Matemático</option>
+                  <option value="#fcd34d">Oro Áureo</option>
+                  <option value="#4ade80">Verde Menta</option>
+                  <option value="#f472b6">Rosa Neón</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Background Style -->
+            <div>
+              <label class="text-[11px] font-medium text-slate-400 mb-1.5 block">Fondo del Lienzo</label>
+              <select id="bg-preset" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2.5 text-slate-200 focus:outline-none">
+                <option value="transparent">Transparente</option>
+                <option value="solid-dark">Oscuro Elegante (#0f172a)</option>
+                <option value="solid-white">Blanco Nieve</option>
+                <option value="gradient-dark">Gradiente Midnight</option>
+                <option value="gradient-sunset">Gradiente Púrpura Fuego</option>
+                <option value="gradient-ocean">Gradiente Oceánico</option>
+                <option value="blackboard">Pizarra de Tiza</option>
+                <option value="grid">Papel Milimetrado</option>
+                <option value="blueprint">Plano Técnico</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Formula Size & Padding -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-[11px] font-medium text-slate-400">Tamaño (Zoom)</label>
+                <span id="label-font-size" class="text-[10px] text-slate-500 font-mono">1.8x</span>
+              </div>
+              <input type="range" id="input-font-size" min="0.8" max="4.0" step="0.1" value="1.8" class="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-[11px] font-medium text-slate-400">Margen Interno</label>
+                <span id="label-padding" class="text-[10px] text-slate-500 font-mono">32px</span>
+              </div>
+              <input type="range" id="input-padding" min="8" max="96" step="4" value="32" class="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer">
+            </div>
+          </div>
+
+          <!-- Aspect Ratio & Border Radius -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] font-medium text-slate-400 mb-1.5 block">Aspecto / Encuadre</label>
+              <select id="aspect-ratio" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2 text-slate-200 focus:outline-none">
+                <option value="auto">Auto-Ajustado (Recorte justo)</option>
+                <option value="1:1">1:1 Cuadrado (Social/Avatar)</option>
+                <option value="16:9">16:9 Presentación (Slides)</option>
+                <option value="4:3">4:3 Clásico</option>
+                <option value="9:16">9:16 Historia / Vertical</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-[11px] font-medium text-slate-400">Esquinas Redondeadas</label>
+                <span id="label-radius" class="text-[10px] text-slate-500 font-mono">16px</span>
+              </div>
+              <input type="range" id="input-radius" min="0" max="48" step="2" value="16" class="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer">
+            </div>
+          </div>
+
+          <!-- Card Border & Shadow Options -->
+          <div class="flex items-center gap-4 bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/80">
+            <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
+              <input type="checkbox" id="check-shadow" checked class="rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-0">
+              <span>Sombra suave</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
+              <input type="checkbox" id="check-border" checked class="rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-0">
+              <span>Borde de tarjeta</span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="border-t border-slate-800/80 pt-4 flex flex-col gap-3">
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="ph ph-export text-indigo-400"></i> Ajustes de Exportación
+          </h2>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] font-medium text-slate-400 mb-1.5 block">Resolución / Escala</label>
+              <select id="export-scale" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2 text-slate-200 focus:outline-none font-mono">
+                <option value="1">1x (Estándar Web)</option>
+                <option value="2" selected>2x (Alta Definición HD)</option>
+                <option value="4">4x (Ultra HD / Impresión)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-[11px] font-medium text-slate-400 mb-1.5 block">Formato de Archivo</label>
+              <select id="export-format" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2 text-slate-200 focus:outline-none">
+                <option value="png">PNG (Transparencia)</option>
+                <option value="svg">SVG (Vectorial puro)</option>
+                <option value="jpeg">JPEG (Fondo sólido)</option>
+                <option value="webp">WebP (Optimizado)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="lg:col-span-7 bg-slate-950 flex flex-col h-[calc(100vh-61px)] relative">
+      
+      <!-- Preview Header Controls Bar -->
+      <div class="p-3 border-b border-slate-800/80 bg-slate-900/60 flex items-center justify-between z-10">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            En vivo
+          </span>
+          <span id="canvas-dim-indicator" class="text-xs text-slate-400 font-mono hidden sm:inline">0 x 0 px</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="btn-copy-svg" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 flex items-center gap-1 transition" title="Copiar código SVG al portapapeles">
+            <i class="ph ph-file-code"></i>
+            <span>Copiar SVG</span>
+          </button>
+          <button id="btn-reset-view" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 flex items-center gap-1 transition" title="Ajustar vista">
+            <i class="ph ph-arrows-out"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Viewport Container with Checkerboard Background -->
+      <div class="flex-1 overflow-auto p-4 md:p-8 flex items-center justify-center bg-checkerboard relative select-none">
+        
+        <!-- Interactive Card Preview Wrapper -->
+        <div id="preview-wrapper" class="transition-all duration-150 flex items-center justify-center relative max-w-full max-h-full">
+          <div id="math-render-target" class="transition-all flex items-center justify-center text-center">
+            <!-- KaTeX output injected here -->
+          </div>
+        </div>
+
+        <!-- Hidden canvas for raster export (PNG/JPEG/WEBP) -->
+        <canvas id="hidden-export-canvas" class="hidden"></canvas>
+      </div>
+
+      <!-- Footer floating quick notification -->
+      <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 border border-slate-700 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 z-50 text-xs">
+        <i id="toast-icon" class="ph ph-check-circle text-emerald-400 text-lg"></i>
+        <span id="toast-message">Copiado al portapapeles</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // Preset Formulas Catalog
+    const FORMULA_PRESETS = {
+      schrodinger: "i\\hbar \\frac{\\partial}{\\partial t}\\Psi(\\mathbf{r},t) = \\left[ -\\frac{\\hbar^2}{2m}\\nabla^2 + V(\\mathbf{r},t) \\right] \\Psi(\\mathbf{r},t)",
+      euler: "e^{i\\pi} + 1 = 0",
+      gaussian: "f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left( -\\frac{(x - \\mu)^2}{2\\sigma^2} \\right)",
+      maxwell: "\\begin{aligned}\n\\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\\n\\nabla \\cdot \\mathbf{B} &= 0 \\\\\n\\nabla \\times \\mathbf{E} &= -\\frac{\\partial \\mathbf{B}}{\\partial t} \\\\\n\\nabla \\times \\mathbf{B} &= \\mu_0\\mathbf{J} + \\mu_0\\varepsilon_0\\frac{\\partial \\mathbf{E}}{\\partial t}\n\\end{aligned}",
+      fourier: "\\hat{f}(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi} dx",
+      matrix: "\\mathbf{A} = \\begin{pmatrix}\n\\cos\\theta & -\\sin\\theta & 0 \\\\\n\\sin\\theta & \\cos\\theta & 0 \\\\\n0 & 0 & 1\n\\end{pmatrix}",
+      calculus: "\\int_0^\\infty \\frac{x^3}{e^x - 1} dx = \\frac{\\pi^4}{15}"
+    };
+
+    // DOM References
+    const latexInput = document.getElementById('latex-input');
+    const mathTarget = document.getElementById('math-render-target');
+    const previewWrapper = document.getElementById('preview-wrapper');
+    const errorBox = document.getElementById('latex-error');
+    const errorMsg = document.getElementById('latex-error-msg');
+    const dimIndicator = document.getElementById('canvas-dim-indicator');
+    const hiddenCanvas = document.getElementById('hidden-export-canvas');
+
+    // Controls
+    const textColorPicker = document.getElementById('text-color-picker');
+    const textColorPreset = document.getElementById('text-color-preset');
+    const bgPreset = document.getElementById('bg-preset');
+    const inputFontSize = document.getElementById('input-font-size');
+    const labelFontSize = document.getElementById('label-font-size');
+    const inputPadding = document.getElementById('input-padding');
+    const labelPadding = document.getElementById('label-padding');
+    const aspectRatioSelect = document.getElementById('aspect-ratio');
+    const inputRadius = document.getElementById('input-radius');
+    const labelRadius = document.getElementById('label-radius');
+    const checkShadow = document.getElementById('check-shadow');
+    const checkBorder = document.getElementById('check-border');
+    const exportScale = document.getElementById('export-scale');
+    const exportFormat = document.getElementById('export-format');
+
+    // Action buttons
+    const btnQuickDownload = document.getElementById('btn-quick-download');
+    const btnQuickCopyPng = document.getElementById('btn-quick-copy-png');
+    const btnCopySvg = document.getElementById('btn-copy-svg');
+    const btnClearCode = document.getElementById('btn-clear-code');
+    const btnThemeToggle = document.getElementById('btn-theme-toggle');
+
+    // Toast element
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+
+    function showToast(msg, isSuccess = true) {
+      toastMessage.textContent = msg;
+      toastIcon.className = isSuccess ? 'ph ph-check-circle text-emerald-400 text-lg' : 'ph ph-warning text-amber-400 text-lg';
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    function applyCardStyles() {
+      const bg = bgPreset.value;
+      const radius = inputRadius.value + 'px';
+      const pad = inputPadding.value + 'px';
+      const hasShadow = checkShadow.checked;
+      const hasBorder = checkBorder.checked;
+
+      // Reset base container
+      previewWrapper.className = 'transition-all duration-150 flex items-center justify-center relative';
+      previewWrapper.style.borderRadius = radius;
+      previewWrapper.style.padding = pad;
+      previewWrapper.style.background = '';
+
+      // Shadow
+      previewWrapper.style.boxShadow = hasShadow ? '0 20px 35px -10px rgba(0, 0, 0, 0.45), 0 10px 10px -5px rgba(0, 0, 0, 0.3)' : 'none';
+
+      // Border
+      if (hasBorder) {
+        previewWrapper.style.border = bg === 'transparent' ? '1px dashed rgba(255,255,255,0.2)' : '1px solid rgba(255,255,255,0.12)';
+      } else {
+        previewWrapper.style.border = 'none';
+      }
+
+      // Background logic
+      if (bg === 'transparent') {
+        previewWrapper.style.background = 'transparent';
+      } else if (bg === 'solid-dark') {
+        previewWrapper.style.backgroundColor = '#0f172a';
+      } else if (bg === 'solid-white') {
+        previewWrapper.style.backgroundColor = '#ffffff';
+        if (hasBorder) previewWrapper.style.border = '1px solid #e2e8f0';
+      } else if (bg === 'gradient-dark') {
+        previewWrapper.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%)';
+      } else if (bg === 'gradient-sunset') {
+        previewWrapper.style.background = 'linear-gradient(135deg, #4338ca 0%, #7e22ce 50%, #e11d48 100%)';
+      } else if (bg === 'gradient-ocean') {
+        previewWrapper.style.background = 'linear-gradient(135deg, #0284c7 0%, #0d9488 50%, #15803d 100%)';
+      } else if (bg === 'blackboard') {
+        previewWrapper.classList.add('bg-blackboard');
+        previewWrapper.style.border = hasBorder ? '2px solid #3d5a45' : 'none';
+      } else if (bg === 'grid') {
+        previewWrapper.classList.add('bg-grid-paper');
+        if (hasBorder) previewWrapper.style.border = '1px solid #cbd5e1';
+      } else if (bg === 'blueprint') {
+        previewWrapper.classList.add('bg-blueprint');
+        if (hasBorder) previewWrapper.style.border = '1px solid #1e40af';
+      }
+
+      // Aspect Ratio sizing
+      applyAspectRatio();
+    }
+
+    function applyAspectRatio() {
+      const ratio = aspectRatioSelect.value;
+      previewWrapper.style.width = '';
+      previewWrapper.style.height = '';
+      previewWrapper.style.aspectRatio = '';
+      previewWrapper.style.minWidth = '';
+      previewWrapper.style.minHeight = '';
+
+      if (ratio === 'auto') {
+        // Natural fit to content
+      } else if (ratio === '1:1') {
+        previewWrapper.style.aspectRatio = '1 / 1';
+        previewWrapper.style.minWidth = '340px';
+      } else if (ratio === '16:9') {
+        previewWrapper.style.aspectRatio = '16 / 9';
+        previewWrapper.style.minWidth = '460px';
+      } else if (ratio === '4:3') {
+        previewWrapper.style.aspectRatio = '4 / 3';
+        previewWrapper.style.minWidth = '380px';
+      } else if (ratio === '9:16') {
+        previewWrapper.style.aspectRatio = '9 / 16';
+        previewWrapper.style.minHeight = '420px';
+      }
+
+      // Update dimension label in viewport header
+      setTimeout(updateDimensionIndicator, 50);
+    }
+
+    function updateDimensionIndicator() {
+      const rect = previewWrapper.getBoundingClientRect();
+      const scale = parseInt(exportScale.value, 10);
+      const w = Math.round(rect.width * scale);
+      const h = Math.round(rect.height * scale);
+      dimIndicator.textContent = `${w} × ${h} px (${scale}x)`;
+    }
+
+    function renderLatex() {
+      const formula = latexInput.value.trim();
+      const textColor = textColorPicker.value;
+      const fontSize = inputFontSize.value;
+
+      if (!formula) {
+        mathTarget.innerHTML = `<span class="text-slate-600 italic select-none">La fórmula aparecerá aquí...</span>`;
+        errorBox.classList.add('hidden');
+        updateDimensionIndicator();
+        return;
+      }
+
+      try {
+        // Render display-mode math with KaTeX
+        const html = window.katex.renderToString(formula, {
+          displayMode: true,
+          throwOnError: true,
+          output: 'htmlAndMathml'
+        });
+
+        mathTarget.innerHTML = html;
+        mathTarget.style.color = textColor;
+        mathTarget.style.fontSize = `${fontSize * 1.5}rem`;
+        errorBox.classList.add('hidden');
+
+        // Refresh styles & dimensions
+        applyCardStyles();
+      } catch (err) {
+        errorBox.classList.remove('hidden');
+        errorMsg.textContent = err.message || 'Error de sintaxis de LaTeX';
+      }
+    }
+
+    function generateStandaloneSvg() {
+      const rect = previewWrapper.getBoundingClientRect();
+      const scale = parseInt(exportScale.value, 10);
+      const width = Math.max(100, Math.round(rect.width * scale));
+      const height = Math.max(60, Math.round(rect.height * scale));
+      const bg = bgPreset.value;
+      const radius = parseInt(inputRadius.value, 10) * scale;
+      const textColor = textColorPicker.value;
+
+      // Extract KaTeX inner HTML
+      const mathContent = mathTarget.innerHTML;
+
+      // Determine background fill
+      let bgSvgDef = '';
+      let bgRect = '';
+      if (bg === 'transparent') {
+        bgRect = '';
+      } else if (bg === 'solid-dark') {
+        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#0f172a" />`;
+      } else if (bg === 'solid-white') {
+        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />`;
+      } else if (bg === 'gradient-sunset') {
+        bgSvgDef = `<linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4338ca"/><stop offset="50%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>`;
+        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#grad)" />`;
+      } else if (bg === 'gradient-ocean') {
+        bgSvgDef = `<linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="50%" stop-color="#0d9488"/><stop offset="100%" stop-color="#15803d"/></linearGradient>`;
+        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#grad)" />`;
+      } else {
+        bgSvgDef = `<linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="50%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#311042"/></linearGradient>`;
+        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#grad)" />`;
+      }
+
+      // ForeignObject wrapping KaTeX with inline styles
+      const fontSizePx = Math.round(parseFloat(inputFontSize.value) * 24 * scale);
+      const svg = `<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <defs>${bgSvgDef}</defs>
+  ${bgRect}
+  <foreignObject x="0" y="0" width="${width}" height="${height}">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:${textColor};font-size:${fontSizePx}px;font-family:sans-serif;box-sizing:border-box;padding:${parseInt(inputPadding.value, 10)*scale}px;">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+      <div style="text-align:center;">
+        ${mathContent}
+      </div>
+    </div>
+  </foreignObject>
+</svg>`;
+      return svg;
+    }
+
+    function renderToCanvas(callback) {
+      const svgString = generateStandaloneSvg();
+      const rect = previewWrapper.getBoundingClientRect();
+      const scale = parseInt(exportScale.value, 10);
+      const width = Math.max(100, Math.round(rect.width * scale));
+      const height = Math.max(60, Math.round(rect.height * scale));
+
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(blob);
+
+      const image = new Image();
+      image.onload = () => {
+        hiddenCanvas.width = width;
+        hiddenCanvas.height = height;
+        const ctx = hiddenCanvas.getContext('2d');
+        ctx.clearRect(0, 0, width, height);
+
+        // If JPEG and background is transparent, draw white background
+        if (exportFormat.value === 'jpeg' && bgPreset.value === 'transparent') {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, width, height);
+        }
+
+        ctx.drawImage(image, 0, 0, width, height);
+        URL.revokeObjectURL(blobURL);
+        callback(hiddenCanvas);
+      };
+      image.onerror = () => {
+        showToast('Error al renderizar el lienzo para descarga', false);
+      };
+      image.src = blobURL;
+    }
+
+    function downloadFile(blob, filename) {
+      const a = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+      showToast(`Descargado: ${filename}`);
+    }
+
+    function handleDownload() {
+      const format = exportFormat.value;
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+      const baseFilename = `latex-formula-${timestamp}`;
+
+      if (format === 'svg') {
+        const svgData = generateStandaloneSvg();
+        const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        downloadFile(blob, `${baseFilename}.svg`);
+        return;
+      }
+
+      renderToCanvas((canvas) => {
+        const mimeType = format === 'jpeg' ? 'image/jpeg' : format === 'webp' ? 'image/webp' : 'image/png';
+        canvas.toBlob((blob) => {
+          if (blob) {
+            downloadFile(blob, `${baseFilename}.${format}`);
+          } else {
+            showToast('Error al crear el archivo de imagen', false);
+          }
+        }, mimeType, 0.95);
+      });
+    }
+
+    function handleCopyPng() {
+      renderToCanvas((canvas) => {
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            showToast('No se pudo generar el PNG', false);
+            return;
+          }
+          try {
+            if (navigator.clipboard && window.ClipboardItem) {
+              const item = new ClipboardItem({ 'image/png': blob });
+              await navigator.clipboard.write([item]);
+              showToast('¡Imagen PNG copiada al portapapeles!');
+            } else {
+              fallbackCopySvgCode();
+            }
+          } catch (err) {
+            // Fallback for iFrame restrictions
+            fallbackCopySvgCode();
+          }
+        }, 'image/png');
+      });
+    }
+
+    function fallbackCopySvgCode() {
+      const svg = generateStandaloneSvg();
+      const ta = document.createElement('textarea');
+      ta.value = svg;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Código vectorial SVG copiado al portapapeles');
+      } catch (err) {
+        showToast('No se pudo copiar automáticamente', false);
+      }
+      document.body.removeChild(ta);
+    }
+
+    function handleCopySvg() {
+      const svg = generateStandaloneSvg();
+      const ta = document.createElement('textarea');
+      ta.value = svg;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('¡Código SVG copiado al portapapeles!');
+      } catch (err) {
+        showToast('Error al copiar SVG', false);
+      }
+      document.body.removeChild(ta);
+    }
+
+    latexInput.addEventListener('input', renderLatex);
+
+    inputFontSize.addEventListener('input', (e) => {
+      labelFontSize.textContent = `${e.target.value}x`;
+      renderLatex();
+    });
+
+    inputPadding.addEventListener('input', (e) => {
+      labelPadding.textContent = `${e.target.value}px`;
+      applyCardStyles();
+    });
+
+    inputRadius.addEventListener('input', (e) => {
+      labelRadius.textContent = `${e.target.value}px`;
+      applyCardStyles();
+    });
+
+    aspectRatioSelect.addEventListener('change', applyCardStyles);
+    bgPreset.addEventListener('change', applyCardStyles);
+    checkShadow.addEventListener('change', applyCardStyles);
+    checkBorder.addEventListener('change', applyCardStyles);
+    exportScale.addEventListener('change', updateDimensionIndicator);
+
+    textColorPicker.addEventListener('input', (e) => {
+      renderLatex();
+    });
+
+    textColorPreset.addEventListener('change', (e) => {
+      textColorPicker.value = e.target.value;
+      renderLatex();
+    });
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.eq;
+        if (FORMULA_PRESETS[key]) {
+          latexInput.value = FORMULA_PRESETS[key];
+          renderLatex();
+        }
+      });
+    });
+
+    // Symbol Toolbar insertion
+    document.querySelectorAll('.sym-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const snippet = btn.dataset.code;
+        const start = latexInput.selectionStart;
+        const end = latexInput.selectionEnd;
+        const val = latexInput.value;
+        latexInput.value = val.substring(0, start) + snippet + val.substring(end);
+        latexInput.focus();
+        latexInput.selectionStart = latexInput.selectionEnd = start + snippet.length;
+        renderLatex();
+      });
+    });
+
+    // Clear code button
+    btnClearCode.addEventListener('click', () => {
+      latexInput.value = '';
+      renderLatex();
+      latexInput.focus();
+    });
+
+    // Action buttons
+    btnQuickDownload.addEventListener('click', handleDownload);
+    btnQuickCopyPng.addEventListener('click', handleCopyPng);
+    btnCopySvg.addEventListener('click', handleCopySvg);
+
+    // Reset View button
+    document.getElementById('btn-reset-view').addEventListener('click', () => {
+      aspectRatioSelect.value = 'auto';
+      inputFontSize.value = '1.8';
+      labelFontSize.textContent = '1.8x';
+      inputPadding.value = '32';
+      labelPadding.textContent = '32px';
+      applyCardStyles();
+      renderLatex();
+      showToast('Vista restablecida');
+    });
+
+    // Dark/Light Theme toggle for interface
+    btnThemeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      btnThemeToggle.innerHTML = isDark ? '<i class="ph ph-sun-dim text-lg"></i>' : '<i class="ph ph-moon-stars text-lg"></i>';
+    });
+
+    // Initialize with Schrödinger's Equation
+    window.addEventListener('DOMContentLoaded', () => {
+      latexInput.value = FORMULA_PRESETS.schrodinger;
+      applyCardStyles();
+      renderLatex();
+    });
+  </script>
+</body>
+</html>
