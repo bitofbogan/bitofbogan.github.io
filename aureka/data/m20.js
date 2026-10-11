@@ -107,11 +107,11 @@ const questionBank = [
     prompt: "Ordena las fases del proceso de investigación:",
     type: "drag_order",
     correctOrder: [
-      "Delimitación del tema",
-      "Marco teórico",
-      "Hipótesis",
-      "Comprobación",
-      "Conclusiones"
+      "Delimitación del tema.",
+      "Marco teórico.",
+      "Hipótesis.",
+      "Comprobación.",
+      "Conclusiones."
     ],
     hint: "Primero se define y acota el problema; después se busca la teoría de respaldo, se formula la respuesta tentativa, se prueba y finalmente se cierra el reporte.",
     explanation: "El orden metodológico inicia delimitando el tema, luego revisa el marco teórico, formula la hipótesis, la comprueba con evidencia y concluye."
@@ -186,127 +186,147 @@ const questionBank = [
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
     explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
   },
-  {//FROM HERE
+  {
     id: "m20-q14",
-    prompt: "Susana desarrolla un proyecto de investigación sobre las causas de la escasez de agua en la comunidad de 'Santa Cecilia'. En este momento ella plantea el siguiente enunciado:<br><br><i>'La población de la comunidad no cuenta con una cultura de optimización del agua'</i>.<br><br>¿Cuál es la etapa en la cual trabaja actualmente Susana? Justifica la respuesta.",
+    prompt: "Se desarrolla un proyecto de investigación sobre las causas de escasez de agua en una comunidad, planteando que esto ocurre porque no se tiene una cultura de optimización del agua. ¿A qué etapa del proceso de investigación corresponde el planteamiento?",
     type: "choice",
-    correct: "Hipótesis - Porque es una proposición tentativa que puede explicar el problema.",
+    correct: "Hipótesis, porque es una proposición tentativa que puede explicar el problema.",
     distractors: [
-      "Justificación - Porque se establece el impacto negativo del desabasto de agua.",
-      "Hipótesis - Debido a que se establece un objetivo para solucionar el problema.",
-      "Justificación - Porque establece el motivo del desabasto de agua en su comunidad."
+      "Justificación, porque se establece el impacto negativo del desabasto de agua.",
+      "Hipótesis, debido a que se establece un objetivo para solucionar el problema.",
+      "Justificación, porque establece el motivo del desabasto de agua en su comunidad."
     ],
     hint: "Es una respuesta o explicación provisional que debe ser contrastada empíricamente.",
     explanation: "Una hipótesis es una afirmación o respuesta tentativa planteada al inicio de la indagación para explicar la causa de un fenómeno."
   },
   {
     id: "m20-q15",
-    prompt: "La región de la Mariposa Monarca ha estado sujeta a problemas ambientales como tala clandestina, aserraderos ilegales, incendios y cambio de uso de suelo. Se requería de un programa de ordenamiento ecológico que conjuntara esfuerzos gubernamentales.<br><br>¿Cuál de las siguientes leyes contempla el establecimiento de ordenamientos ecológicos?",
+    prompt: "¿Qué ley mexicana contempla el establecimiento de ordenamientos ecológicos?",
     type: "choice",
-    correct: "General del Equilibrio Ecológico y la Protección al Ambiente.",
+    correct: "Ley General del Equilibrio Ecológico y Protección al Medio Ambiente.",
     distractors: [
-      "Agraria Reglamentaria del Art. 27 Constitucional.",
-      "General de Desarrollo Forestal Sostenible.",
-      "General de Asentamientos Humanos."
+      "Ley Agraria Reglamentaria del Artículo 27 Constitucional.",
+      "Ley General de Desarrollo Forestal Sostenible.",
+      "Ley General de Asentamientos Humanos."
     ],
-    hint: "Es la ley marco ambiental en México conocida como LGEEPA.",
-    explanation: "La LGEEPA (Ley General del Equilibrio Ecológico y la Protección al Ambiente) es el instrumento legal que norma el ordenamiento ecológico del territorio en México."
+    hint: null,
+    explanation: "La Ley General del Equilibrio Ecológico y Protección al Medio Ambiente es el instrumento legal que norma el ordenamiento ecológico del territorio en México."
   },
   {
     id: "m20-q16",
-    prompt: "Para monitorear la preferencia del público por un noticiero matutino, una empresa televisora realiza una investigación en la que pretende aplicar encuestas entre los televidentes, con la finalidad de realizar los cambios pertinentes acordes a las expectativas del público.<br><br>¿A qué etapa corresponde este trabajo de investigación?",
+    prompt: "Una empresa realiza una investigación aplicando encuestas entre sus usuarios para realizar los cambios acordes a las expectativas del público. ¿A qué etapa del proceso de investigación corresponde esta acción?",
     type: "choice",
-    correct: "Recolección de datos por medio de una encuesta para conocer las opiniones del teleauditorio.",
+    correct: "Recolección de datos por instrumento de encuesta para conocer las opiniones del auditorio.",
     distractors: [
       "Recolección de datos para tomar decisiones con respecto a las preferencias de los espectadores.",
       "Selección de la muestra para conocer el número total de encuestas que se van a aplicar.",
-      "Selección de la muestra conforme al horario y el público a quien va dirigido el noticiero."
+      "Selección de la muestra conforme al horario y el público a quien va dirigido el producto."
     ],
-    hint: "El acto de aplicar cuestionarios en campo es la fase empírica de recopilación de información.",
-    explanation: "Aplicar cuestionarios o encuestas forma parte directa de la etapa de recolección o levantamiento de datos empíricos de la muestra."
+    hint: "El acto de aplicar encuestas en campo es la fase para obtener información del proceso investigativo.",
+    explanation: "Aplicar encuestas es parte de la etapa de recolección de datos una vez que ya se seleccionó la muestra."
   },
   {
     id: "m20-q17",
-    prompt: "La temperatura ambiente puede tomar valores positivos y negativos; dependiendo de la zona geográfica estas variaciones tendrán un rango específico. ¿Cómo se clasifica la variable 'temperatura' en la descripción del fenómeno descrito? Justifica la respuesta.",
+    prompt: "¿Qué tipo de variable es la temperatura?",
     type: "choice",
-    correct: "Cuantitativa continua. Por tomar valores reales en el rango.",
+    correct: "Cuantitativa continua, pues toma valores reales en el rango.",
     distractors: [
-      "Cualitativa discreta. Porque permiten definir intervalos de calor.",
-      "Cualitativa ordinal. Porque sus valores indican grados de calor.",
-      "Cuantitativa discreta. Por tomar valores enteros en el rango."
+      "Cualitativa discreta, pues permite definir intervalos de calor.",
+      "Cualitativa ordinal, porque sus valores indican grados de calor.",
+      "Cuantitativa discreta, porque toma valores enteros en el rango."
     ],
     hint: "Se mide numéricamente y puede adoptar cualquier valor decimal dentro de una escala continua.",
-    explanation: "La temperatura es cuantitativa (numérica) y continua porque puede asumir cualquier número real o fracción decimal dentro de un intervalo medible."
+    explanation: "La temperatura es cuantitativa (numérica) y continua porque puede asumir cualquier número real, es decir, puede ser un valor entero, decimal y/o negativo."
   },
   {
     id: "m20-q18",
-    prompt: "Relaciona los artículos constitucionales con su contenido de protección ambiental:",
+    prompt: "Relaciona los artículos constitucionales con su contenido de protección ambiental.",
     type: "match_columns",
     pairs: [
-      { left: "Artículo 3°", right: "Establece el derecho a recibir educación, la cual incluye el cuidado de los recursos naturales." },
-      { left: "Artículo 4°", right: "Señala el derecho a que toda persona disfrute de un ambiente adecuado para su bienestar." },
+      { left: "Artículo 3°", right: "Establece el derecho a recibir educación que incluya el aprovechamiento y cuidado de los recursos naturales." },
+      { left: "Artículo 4°", right: "Señala el derecho a que toda persona disfrute de un ambiente adecuado para su desarrollo y bienestar." },
       { left: "Artículo 25°", right: "Obliga al Estado a apoyar empresas cuidando siempre el medio ambiente." }
     ],
-    hint: "3° = Educación ambiental; 4° = Derecho a un medio ambiente sano; 25° = Desarrollo económico sustentable.",
+    hint: null,
     explanation: "El artículo 3° integra la preservación ambiental en los planes educativos; el 4° consagra el derecho humano a un medio ambiente sano; y el 25° obliga a que la rectoría del desarrollo económico cuide el entorno."
   },
   {
     id: "m20-q19",
-    prompt: "Observa la representación del ciclo hidrológico. ¿Cuáles de las siguientes aseveraciones se concluyen de la información de la imagen?<br><br>1. En la fase [3] se realiza una condensación.<br>2. Las fases [3] y [6] son de evaporación.<br>3. En las fases [2] y [4] ocurre una sublimación.<br>4. Las fases [2] y [6] son de evaporación.<br>5. La fase [5] representa una precipitación.<br>6. En la fase [1] se inicia el ciclo hidrológico.",
-    image: "img/m20_ciclo_hidrologico.png",
-    type: "choice",
-    correct: "1, 4, 5, 6",
-    distractors: [
-      "2, 5, 6",
-      "2, 3, 5, 6",
-      "1, 3, 4"
+    prompt: "Selecciona todas las afirmaciones correctas respecto al ciclo hidrológico mostrado en la imagen.",
+    image: "assets/m20_cicloagua.png",
+    type: "multi_select",
+    correctAnswers: [
+      "En la fase **3** se realiza una condensación.",
+      "Las fases **2** y **6** son de evaporación.",
+      "La fase **5** representa una precipitación.",
+      "En la fase **1** es el inicio del ciclo hidrológico."
     ],
-    hint: "[3] forma nubes (condensación), [2] y [6] ascienden como vapor (evaporación) y [5] cae como lluvia (precipitación).",
-    explanation: "Analizando las fases: [1] agua oceánica inicial, [2] y [6] evaporación de cuerpos de agua, [3] condensación en nubes y [5] precipitación pluvial."
+    distractors: [
+      "Las fases **3** y **6** son de evaporación.",
+      "En las fases **2** y **4** ocurre una sublimación."
+    ],
+    hint: "Identifica qué proceso físico ocurre en cada etapa: formación de nubes (condensación), ascenso de vapor (evaporación) y caída de lluvia (precipitación).",
+    explanation: "Revisando el diagrama:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li><b>Correctas:</b> En la fase <b>1</b> comienza el ciclo con el agua acumulada en los océanos; las fases <b>2</b> y <b>6</b> corresponden al paso del agua líquida a vapor (evaporación); en la fase <b>3</b> el vapor se enfría formando nubes (condensación); y en la fase <b>5</b> el agua cae a la superficie (precipitación).</li>\n  <li><b>Incorrectas:</b> La fase <b>3</b> es condensación, no evaporación; y la fase <b>2</b> es evaporación, por lo que no corresponde a sublimación.</li>\n</ul>"
   },
   {
-    id: "m20-q20",
-    prompt: "Analiza la siguiente ecuación que representa la reacción entre el trióxido de azufre y el agua para formar ácido sulfúrico (lluvia ácida):<br><br>$$\\mathrm{SO_3 + H_2O \\rightarrow \\text{?}}$$<br>¿Cuál de las opciones representa la estructura y balanceo correctos de esta reacción?",
+    id: "m20-q20a",
+    prompt: "El trióxido de azufre y el agua reaccionan para formar ácido sulfúrico. ¿Cuál de las siguientes opciones representa la ecuación química balanceada correctamente?",
     type: "choice",
-    correct: "2SO₃ + 2H₂O → 2H₂SO₄ | A + B → AB",
+    correct: "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$",
     distractors: [
-      "2SO₃ + 2H₂O → 2H₂SO₄ + H₂ | A + B → C + D",
-      "2SO₃ + 3H₂O → 2H₃SO₄ | A + B → AB",
-      "2SO₃ + 2H₂O → 2H₂S + 4O₂ | A + B → C + D"
+      "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4 + \\text{H}_2$$",
+      "$$2\\text{SO}_3 + 3\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_3\\text{SO}_4$$",
+      "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{S} + 4\\text{O}_2$$"
     ],
-    hint: "Dos reactivos se unen para formar un solo producto: es una reacción de síntesis ($A + B \\rightarrow AB$).",
-    explanation: "Se trata de una reacción de adición o síntesis ($A + B \\rightarrow AB$): el óxido no metálico se hidrata formando ácido sulfúrico ($\\mathrm{H_2SO_4}$), conservando el balance de átomos."
+    hint: "Cuenta el número de átomos de cada elemento en reactivos y productos: debe haber la misma cantidad de azufre (S), hidrógeno (H) y oxígeno (O) en ambos lados.",
+    explanation: "Contando los átomos en reactivos y productos comprobamos el balance:\n$$\\begin{aligned} \\text{Azufre (S):} &\\quad 2 = 2 \\\\[4pt] \\text{Hidrógeno (H):} &\\quad 2(2) = 2(2) = 4 \\\\[4pt] \\text{Oxígeno (O):} &\\quad 2(3) + 2(1) = 2(4) = 8 \\end{aligned}$$\nAmbos miembros conservan la misma cantidad exacta de materia sin generar subproductos adicionales."
+  },
+  {
+    id: "m20-q20b",
+    prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua $$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$ ¿Qué tipo de reacción química es y cuál es su estructura general?",
+    type: "choice",
+    correct: "Reacción de síntesis: $\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
+    distractors: [
+      "Reacción de descomposición: $\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
+      "Reacción de sustitución simple: $\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
+      "Reacción de sustitución doble: $\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
+    ],
+    hint: "Dos sustancias independientes se unen para dar origen a un único compuesto final.",
+    explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de **síntesis** de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
   },
   {
     id: "m20-q21",
-    prompt: "¿Cuáles son las funciones del marco teórico en un proyecto de investigación?<br><br>1. Delimitar el tema a través de antecedentes del problema.<br>2. Establecer el impacto o beneficio que tendrá el proyecto.<br>3. Sustentar el trabajo con bibliografías que den solidez a la investigación.<br>4. Analizar e interpretar datos, investigaciones y teorías.<br>5. Establecer la meta que se pretende lograr.",
-    type: "choice",
-    correct: "1, 3, 4",
-    distractors: [
-      "2, 4, 5",
-      "2, 3, 5",
-      "1, 2, 4"
+    prompt: "Selecciona todas las funciones del marco teórico en un proyecto de investigación:",
+    type: "multi_select",
+    correctAnswers: [
+      "Delimitar el tema a través de antecedentes del problema.",
+      "Sustentar el trabajo con bibliografías que den solidez a la investigación.",
+      "Analizar e interpretar datos, investigaciones y teorías."
     ],
-    hint: "El impacto corresponde a la justificación (2) y la meta al objetivo (5); descártalas.",
-    explanation: "El marco teórico provee antecedentes (1), sustento conceptual/bibliográfico (3) y análisis de teorías previas (4). El impacto pertenece a la justificación y la meta a los objetivos."
+    distractors: [
+      "Establecer el impacto o beneficio que tendrá el proyecto.",
+      "Establecer la meta que se pretende lograr."
+    ],
+    hint: "El impacto corresponde a la justificación y las metas pertenecen a los objetivos; descarta ambas.",
+    explanation: "El marco teórico cumple con revisar antecedentes para **delimitar** el tema, **sustentar** la investigación con fuentes bibliográficas y **analizar** las teorías existentes. Establecer el beneficio o impacto es propio de la justificación, mientras que las metas corresponden al planteamiento de objetivos."
   },
   {
     id: "m20-q22",
-    prompt: "En la 'Academia de Danza Paulina' se numeran los 150 estudiantes y se sortean 30 números al azar para integrar una muestra. ¿Qué tipo de muestreo se realizó?",
+    prompt: "En una escuela se numeran 150 estudiantes y se sortean 30 números al azar para integrar una muestra. ¿Qué tipo de muestreo se realizó?",
     type: "choice",
-    correct: "Aleatorio simple porque cada miembro de la Academia tuvo la misma oportunidad de salir en el sorteo.",
+    correct: "Aleatorio simple, pues cada alumno tuvo la misma oportunidad de salir en el sorteo.",
     distractors: [
       "Aleatorio sistemático debido a que la población total se dividió en clases homogéneas.",
-      "Aleatorio simple porque se realizó una división de clases con iguales características.",
+      "Aleatorio simple, porque se realizó una división de clases con características idénticas.",
       "Aleatorio sistemático debido a que se elige uno de ellos al azar y se eligen todos los demás hasta completar la muestra."
     ],
-    hint: "Si la selección es mediante sorteo o rifa directa, todos los individuos poseen idéntica probabilidad de ser elegidos.",
-    explanation: "Es muestreo aleatorio simple cuando cada elemento de la población posee exactamente la misma probabilidad matemática de ser elegido sin aplicar intervalos."
+    hint: "Si la selección es mediante sorteo o rifa, todos los individuos poseen idéntica probabilidad de ser elegidos.",
+    explanation: "Se tiene un muestreo aleatorio simple cuando cada elemento de la población posee exactamente la misma probabilidad de ser elegido."
   },
   {
     id: "m20-q23",
-    prompt: "Observa la gráfica de usos del agua por productos y determina la aseveración correcta.",
-    image: "img/m20_usos_agua_lineas.png",
+    prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
+    image: "assets/m20_usodeagua.png",
     type: "choice",
     correct: "La producción agrícola requiere utilizar mayor cantidad de agua que la industrial.",
     distractors: [
@@ -314,12 +334,12 @@ const questionBank = [
       "La ganadería requiere una mayor cantidad de agua que la producción agrícola.",
       "El total de agua consumida por la agricultura ha ido en ascenso en todo el período."
     ],
-    hint: "Compara la curva de productos agrícolas (arriba) con la línea de productos industriales (abajo, pegada al eje).",
-    explanation: "En la gráfica, la línea de productos agrícolas se ubica entre 10,000 y 17,000 millones de litros, superando por mucho a los productos industriales (cercanos a 2,500)."
+    hint: "Compara la posición de la línea de productos agrícolas frente a la de productos industriales.",
+    explanation: "En la gráfica, la línea de productos agrícolas se mantiene entre 10,000 y más de 15,000 unidades, superando a la línea industrial, que permanece en el fondo por debajo de 5,000 a lo largo de todo el periodo."
   },
   {
     id: "m20-q24",
-    prompt: "El sector hídrico es considerado uno de los más vulnerables al cambio climático. Los siguientes son efectos de éste en la calidad del agua, EXCEPTO uno de ellos. Identifícalo.",
+    prompt: "¿Cuál de los siguientes NO es un efecto del cambio climático en la calidad del agua?",
     type: "choice",
     correct: "Conservación de las zonas de biodiversidad.",
     distractors: [
@@ -332,65 +352,65 @@ const questionBank = [
   },
   {
     id: "m20-q25",
-    prompt: "Analiza la pirámide de población de México (censo 2010). ¿Qué conclusión es correcta a partir de los datos?",
-    image: "img/m20_piramide_poblacion.png",
+    prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
+    image: "assets/m20_censo.png",
     type: "choice",
-    correct: "La población masculina entre 30-34 es mayor que la cantidad de hombres entre 35-39.",
+    correct: "La población masculina entre 30 y 34 años es mayor que la cantidad de hombres entre 35 y 39 años.",
     distractors: [
-      "Existe igual cantidad de hombres entre 10-14 años que los de 15-19 años.",
-      "La cantidad de mujeres entre 40-44 años es de 3 millones.",
+      "Existe igual cantidad de hombres entre 10 y 14 años que los de 15 a 19 años.",
+      "La cantidad de mujeres entre 40 y 44 años es de 3 millones.",
       "El total de niños menores de 4 años es de 5 millones."
     ],
     hint: "Observa las barras horizontales azules del lado izquierdo en los grupos de edad de 30 a 39 años.",
-    explanation: "Al comparar las barras del lado izquierdo (hombres), la barra de 30-34 años se extiende más hacia la izquierda que la barra de 35-39 años."
+    explanation: "Al comparar las barras del lado izquierdo (hombres), la barra de 30 a 34 años se extiende más hacia la izquierda que la barra de 35 a 39 años."
   },
   {
     id: "m20-q26",
-    prompt: "Analiza el mapa y gráfica del contraste regional entre desarrollo y disponibilidad de agua en México (2007). ¿Qué se concluye?",
-    image: "img/m20_contraste_agua_mexico.png",
+    prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
+    image: "assets/m20_agua_mexico.png",
     type: "choice",
     correct: "En zonas con mayor disponibilidad de agua, la población es menor y genera poca riqueza.",
     distractors: [
-      "La Zona Sureste tiene una menor disponibilidad de agua que la zona Norte-Centro-Noroeste.",
-      "Las zonas con mayor disponibilidad de agua, generan la mayor riqueza a nivel nacional.",
-      "La zona Norte-Centro-Noroeste es la menos productiva de todas las zonas nacionales."
+      "La zona sureste tiene una menor disponibilidad de agua que la zona norte-centro-noroeste.",
+      "Las zonas con mayor disponibilidad de agua generan la mayor riqueza a nivel nacional.",
+      "La zona norte-centro-noroeste es la menos productiva de todas las zonas nacionales."
     ],
-    hint: "El Sureste concentra el 69% del agua, pero apenas alberga al 23% de la población y produce el 13% del PIB.",
-    explanation: "La paradoja hidrológica mexicana muestra que el Sureste tiene el 69% del agua disponible pero concentra poca población (23%) y genera baja aportación al PIB (13%)."
+    hint: "El sureste concentra el 69% del agua, pero apenas alberga al 23% de la población y produce el 13% del PIB.",
+    explanation: "El resumen hidrológico del mapa muestra que el sureste tiene el 69% del agua disponible, pero concentra poca población (23%) y genera baja aportación al PIB (13%)."
   },
   {
     id: "m20-q27",
-    prompt: "Analiza la gráfica de la evolución de la población activa por sectores económicos en el siglo XX. ¿Qué conclusión es correcta?",
-    image: "img/m20_sectores_historico.png",
+    prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
+    image: "assets/m20_sectores_economicos.png",
     type: "choice",
     correct: "El incremento del sector terciario inició a partir de 1960.",
     distractors: [
       "Los sectores primario y secundario eran iguales en 1900.",
       "El sector secundario se ha mantenido estable.",
-      "El sector primario está en descenso en todo el período."
+      "El sector primario está en descenso en todo el periodo."
     ],
-    hint: "Busca el punto de inflexión donde la curva amarilla (terciario) experimenta una pendiente ascendente pronunciada.",
-    explanation: "La línea del sector terciario se dispara marcadamente hacia arriba a partir de la década de 1960 (terciarización de la economía)."
+    hint: "Busca el punto de inflexión donde la curva amarilla experimenta una pendiente ascendente pronunciada.",
+    explanation: "La línea del sector terciario se dispara marcadamente hacia arriba a partir de la década de 1960."
   },
   {
     id: "m20-q28",
     prompt: "Ordena cronológicamente los elementos de un reporte formal de investigación:",
     type: "drag_order",
     correctOrder: [
-      "Introducción",
-      "Contexto",
-      "Metodología",
-      "Hipótesis",
-      "Resultados",
-      "Conclusiones",
-      "Bibliografía"
+      "Introducción.",
+      "Contexto.",
+      "Metodología.",
+      "Hipótesis.",
+      "Resultados.",
+      "Conclusiones.",
+      "Bibliografía."
     ],
-    hint: "Inicia con la introducción y contexto; describe el método e hipótesis; presenta los hallazgos y concluye citando fuentes.",
+    hint: null,
     explanation: "La estructura formal del informe presenta: Introducción $\\rightarrow$ Contexto $\\rightarrow$ Metodología $\\rightarrow$ Hipótesis $\\rightarrow$ Resultados $\\rightarrow$ Conclusiones $\\rightarrow$ Bibliografía."
   },
   {
     id: "m20-q29",
-    prompt: "¿Cuáles de las siguientes acciones complementan una propuesta de hábitos de consumo responsable y ahorro de agua en el hogar?<br><br>1. Utilizar el agua residual del lavado de ropa en el WC.<br>2. Lavarse los dientes utilizando solo un vaso con agua.<br>3. Verter los residuos de aceite en la tarja o fregadero.<br>4. Recolectar en una cubeta el agua de la regadera mientras se espera que se caliente.<br>5. Instalar recolectores pluviales.",
+    prompt: "¿Cuáles de las siguientes acciones complementan una propuesta de hábitos de consumo responsable y ahorro de agua en el hogar?",
     type: "multi_select",
     correctAnswers: [
       "Utilizar el agua residual del lavado de ropa en el WC.",
@@ -406,15 +426,15 @@ const questionBank = [
   },
   {
     id: "m20-q30",
-    prompt: "La combustión incompleta del metano genera monóxido de carbono según la reacción:<br><br>$$2\\,\\mathrm{CH_4} + 3\\,\\mathrm{O_2} \\rightarrow 2\\,\\mathrm{CO} + 4\\,\\mathrm{H_2O}$$<br>¿Qué cantidad de CO (en gramos) se obtiene por la descomposición de 300 gramos de $\\mathrm{CH_4}$? Considere pesos moleculares: $\\mathrm{CH_4} = 16\\text{ g/mol}$, $\\mathrm{CO} = 28\\text{ g/mol}$.",
+    prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción:<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
     type: "choice",
-    correct: "(300 g) [1 mol CH₄ / 16 g] [2 mol CO / 2 mol CH₄] [28 g / 1 mol CO] = 525 g",
+    correct: "$$(300\\text{ g}) \\left[\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 525\\text{ g}$$",
     distractors: [
-      "(300 g) [14 g / 1 mol CH₄] [2 mol CO / 2 mol CH₄] [28 g / 1 mol CO] = 117600",
-      "(300 g) [1 mol CH₄ / 14 g] [2 mol CO / 2 mol CH₄] [44 g / 1 mol CO] = 942.85",
-      "(300 g) [38 g / 1 mol CO] [1 mol CH₄ / 14 g] = 814.28"
+      "$$(300\\text{ g}) \\left[\\frac{14\\text{ g}}{1\\text{ mol CH}_4}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 117,600\\text{ g}$$",
+      "$$(300\\text{ g}) \\left[\\frac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{44\\text{ g}}{1\\text{ mol CO}}\\right] = 942.85\\text{ g}$$",
+      "$$(300\\text{ g}) \\left[\\frac{38\\text{ g}}{1\\text{ mol CO}}\\right] \\left[\\frac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] = 814.28\\text{ g}$$"
     ],
-    hint: "Aplica los tres factores de conversión: gramos a moles de $\\mathrm{CH_4}$ ($16\\text{ g}$), relación molar ($2:2$) y moles a gramos de $\\mathrm{CO}$ ($28\\text{ g}$).",
-    explanation: "El análisis dimensional correcto es:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right) \\cdot \\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right) \\cdot \\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right) \\\\[6pt] &= \\frac{300 \\cdot 28}{16} = 525\\text{ g} \\end{aligned}$$"
+    hint: "Revisa las tres fracciones de conversión: peso molecular del reactivo (16 g/mol), relación molar de la ecuación (2 a 2) y peso molecular del producto (28 g/mol).",
+    explanation: "El análisis dimensional requiere multiplicar por tres factores de conversión sucesivos:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\underbrace{\\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right)}_{\\text{g} \\rightarrow \\text{mol CH}_4} \\cdot \\underbrace{\\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right)}_{\\text{relación molar}} \\cdot \\underbrace{\\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right)}_{\\text{mol CO} \\rightarrow \\text{g}} \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = \\frac{8,400}{16} = 525\\text{ g} \\end{aligned}$$"
   }
 ];
