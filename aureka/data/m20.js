@@ -170,7 +170,7 @@ const questionBank = [
       "Dinamarca y Noruega son los países menos poblados."
     ],
     hint: "Compara el valor de la barra más alta con la más baja y revisa la diferencia numérica entre ambos.",
-    explanation: "Revisando cada afirmación a partir de la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li><b>Correcta:</b> Luxemburgo ronda los $43,000\\text{ dls}$ y Dinamarca cerca de $33,000\\text{ dls}$, por lo que la diferencia entre el más alto y el más bajo es de aproximadamente $10,000\\text{ dls}$.</li>\n  <li><b>Incorrecta:</b> Los dos países con mayor PIBC son Luxemburgo y Suiza, los cuales no son países nórdicos.</li>\n  <li><b>Incorrecta:</b> El PIBC de Dinamarca representa más del $75\\%$ del de Luxemburgo, lejos de ser solo el 50%.</li>\n  <li><b>Incorrecta:</b> El PIBC (per cápita) mide el ingreso promedio por habitante, por lo que no permite determinar si un país tiene más o menos población total.</li>\n</ul>"
+    explanation: "Revisando cada afirmación a partir de la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li>Luxemburgo ronda los 43,000 dólares y Dinamarca cerca de 33,000, por lo que la diferencia entre el más alto y el más bajo es de aproximadamente 10,000 dólares.</li>\n  <li>Los dos países con mayor PIBC son Luxemburgo y Suiza, los cuales no son países nórdicos.</li>\n  <li>El PIBC de Dinamarca representa más del 75% del de Luxemburgo, lejos de ser solo el 50%.</li>\n  <li>El PIB per cápita mide el ingreso promedio por habitante, por lo que no permite determinar si un país tiene más o menos población total.</li>\n</ul>"
   },
   {
     id: "m20-q13",
@@ -256,30 +256,30 @@ const questionBank = [
     image: "assets/m20_cicloagua.png",
     type: "multi_select",
     correctAnswers: [
-      "En la fase **3** se realiza una condensación.",
-      "Las fases **2** y **6** son de evaporación.",
-      "La fase **5** representa una precipitación.",
-      "En la fase **1** es el inicio del ciclo hidrológico."
+      "En la fase <b>3</b> se realiza una condensación.",
+      "Las fases <b>2</b> y <b>6</b> son de evaporación.",
+      "La fase <b>5</b> representa una precipitación.",
+      "En la fase <b>1</b> es el inicio del ciclo hidrológico."
     ],
     distractors: [
-      "Las fases **3** y **6** son de evaporación.",
-      "En las fases **2** y **4** ocurre una sublimación."
+      "Las fases <b>3</b> y <b>6</b> son de evaporación.",
+      "En las fases <b>2</b> y <b>4</b> ocurre una sublimación."
     ],
     hint: "Identifica qué proceso físico ocurre en cada etapa: formación de nubes (condensación), ascenso de vapor (evaporación) y caída de lluvia (precipitación).",
-    explanation: "Revisando el diagrama:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li><b>Correctas:</b> En la fase <b>1</b> comienza el ciclo con el agua acumulada en los océanos; las fases <b>2</b> y <b>6</b> corresponden al paso del agua líquida a vapor (evaporación); en la fase <b>3</b> el vapor se enfría formando nubes (condensación); y en la fase <b>5</b> el agua cae a la superficie (precipitación).</li>\n  <li><b>Incorrectas:</b> La fase <b>3</b> es condensación, no evaporación; y la fase <b>2</b> es evaporación, por lo que no corresponde a sublimación.</li>\n</ul>"
+    explanation: "Revisando el diagrama:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li>En la fase <b>1</b> comienza el ciclo con el agua acumulada en los océanos; las fases <b>2</b> y <b>6</b> corresponden al paso del agua líquida a vapor (evaporación); en la fase <b>3</b> el vapor se enfría formando nubes (condensación); y en la fase <b>5</b> el agua cae a la superficie (precipitación).</li>\n  <li>La fase <b>3</b> es condensación, no evaporación; y la fase <b>2</b> es evaporación, por lo que no corresponde a sublimación.</li>\n</ul>"
   },
   {
     id: "m20-q20a",
-    prompt: "El trióxido de azufre y el agua reaccionan para formar ácido sulfúrico. ¿Cuál de las siguientes opciones representa la ecuación química balanceada correctamente?",
+    prompt: "El trióxido de azufre ($\\text{SO}_3$) y el agua ($\\text{H}_2\\text{O}$) reaccionan para formar ácido sulfúrico ($\\text{H}_2\\text{SO}_4$). ¿Cuál de las siguientes opciones representa la ecuación química balanceada correctamente?",
     type: "choice",
     correct: "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$",
     distractors: [
       "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4 + \\text{H}_2$$",
       "$$2\\text{SO}_3 + 3\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_3\\text{SO}_4$$",
-      "$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{S} + 4\\text{O}_2$$"
+      "$$2\\text{SO}_3 + \\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{S} + 4\\text{O}_2$$"
     ],
     hint: "Cuenta el número de átomos de cada elemento en reactivos y productos: debe haber la misma cantidad de azufre (S), hidrógeno (H) y oxígeno (O) en ambos lados.",
-    explanation: "Contando los átomos en reactivos y productos comprobamos el balance:\n$$\\begin{aligned} \\text{Azufre (S):} &\\quad 2 = 2 \\\\[4pt] \\text{Hidrógeno (H):} &\\quad 2(2) = 2(2) = 4 \\\\[4pt] \\text{Oxígeno (O):} &\\quad 2(3) + 2(1) = 2(4) = 8 \\end{aligned}$$\nAmbos miembros conservan la misma cantidad exacta de materia sin generar subproductos adicionales."
+    explanation: "Contando los átomos en reactivos y productos comprobamos el balance:\n$$\\begin{aligned} \\text{Azufre (S):} &\\quad 2 = 2 \\\\[4pt] \\text{Hidrógeno (H):} &\\quad 2(2) = 2(2) = 4 \\\\[4pt] \\text{Oxígeno (O):} &\\quad 2(3) + 2(1) = 8 \\end{aligned}$$\nAmbos miembros conservan la misma cantidad exacta de materia sin generar subproductos adicionales."
   },
   {
     id: "m20-q20b",
@@ -292,7 +292,7 @@ const questionBank = [
       "Reacción de sustitución doble: $\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
     ],
     hint: "Dos sustancias independientes se unen para dar origen a un único compuesto final.",
-    explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de **síntesis** de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
+    explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de <b>síntesis</b> de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
   },
   {
     id: "m20-q21",
@@ -308,7 +308,7 @@ const questionBank = [
       "Establecer la meta que se pretende lograr."
     ],
     hint: "El impacto corresponde a la justificación y las metas pertenecen a los objetivos; descarta ambas.",
-    explanation: "El marco teórico cumple con revisar antecedentes para **delimitar** el tema, **sustentar** la investigación con fuentes bibliográficas y **analizar** las teorías existentes. Establecer el beneficio o impacto es propio de la justificación, mientras que las metas corresponden al planteamiento de objetivos."
+    explanation: "El marco teórico cumple con revisar antecedentes para <b>delimitar</b> el tema, <b>sustentar</b> la investigación con fuentes bibliográficas y <b>analizar</b> las teorías existentes. Establecer el beneficio o impacto es propio de la justificación, mientras que las metas corresponden al planteamiento de objetivos."
   },
   {
     id: "m20-q22",
@@ -428,13 +428,13 @@ const questionBank = [
     id: "m20-q30",
     prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción:<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
     type: "choice",
-    correct: "$$(300\\text{ g}) \\left[\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 525\\text{ g}$$",
+    correct: "$$(300\\text{ g})\\left[\\tfrac{1\\text{ mol CH}_4}{16\\text{ g}}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 525\\text{ g}$$",
     distractors: [
-      "$$(300\\text{ g}) \\left[\\frac{14\\text{ g}}{1\\text{ mol CH}_4}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 117,600\\text{ g}$$",
-      "$$(300\\text{ g}) \\left[\\frac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] \\left[\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right] \\left[\\frac{44\\text{ g}}{1\\text{ mol CO}}\\right] = 942.85\\text{ g}$$",
-      "$$(300\\text{ g}) \\left[\\frac{38\\text{ g}}{1\\text{ mol CO}}\\right] \\left[\\frac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] = 814.28\\text{ g}$$"
+      "$$(300\\text{ g})\\left[\\tfrac{14\\text{ g}}{1\\text{ mol CH}_4}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 117{,}600\\text{ g}$$",
+      "$$(300\\text{ g})\\left[\\tfrac{1\\text{ mol CH}_4}{14\\text{ g}}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{44\\text{ g}}{1\\text{ mol CO}}\\right] = 942.85\\text{ g}$$",
+      "$$(300\\text{ g})\\left[\\tfrac{38\\text{ g}}{1\\text{ mol CO}}\\right]\\left[\\tfrac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] = 814.28\\text{ g}$$"
     ],
-    hint: "Revisa las tres fracciones de conversión: peso molecular del reactivo (16 g/mol), relación molar de la ecuación (2 a 2) y peso molecular del producto (28 g/mol).",
-    explanation: "El análisis dimensional requiere multiplicar por tres factores de conversión sucesivos:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\underbrace{\\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right)}_{\\text{g} \\rightarrow \\text{mol CH}_4} \\cdot \\underbrace{\\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right)}_{\\text{relación molar}} \\cdot \\underbrace{\\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right)}_{\\text{mol CO} \\rightarrow \\text{g}} \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = \\frac{8,400}{16} = 525\\text{ g} \\end{aligned}$$"
+    hint: "Revisa los tres factores: masa molar de reactivo (16 g/mol), proporción molar (2 a 2) y masa molar de producto (28 g/mol)[cite: 50].",
+    explanation: "El análisis dimensional requiere multiplicar sucesivamente por los tres factores de conversión[cite: 49, 50]:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right) \\cdot \\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right) \\cdot \\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right) \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = 525\\text{ g} \\end{aligned}$$"
   }
 ];
