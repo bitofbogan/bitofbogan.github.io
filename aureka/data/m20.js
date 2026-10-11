@@ -81,7 +81,7 @@ const questionBank = [
     pairs: [
       { left: "Primarias", right: "Buscan el aprovechamiento directo de los recursos naturales renovables." },
       { left: "Secundarias", right: "Buscan el aprovechamiento directo de recursos naturales no renovables." },
-      { left: "Terciarias", right: "Satisfacen las necesidades que el hombre tiene de realizarse y/o divertirse."}
+      { left: "Terciarias", right: "Satisfacen las necesidades que el hombre tiene de realizarse y/o divertirse." }
     ],
     hint: null,
     explanation: "Las actividades primarias aprovechan recursos naturales renovables, las secundarias se vinculan a los no renovables o su transformación y las terciarias cubren servicios, realización y esparcimiento."
@@ -172,9 +172,9 @@ const questionBank = [
     hint: "Compara el valor de la barra más alta con la más baja y revisa la diferencia numérica entre ambos.",
     explanation: "Revisando cada afirmación a partir de la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li>Luxemburgo ronda los 43,000 dólares y Dinamarca cerca de 33,000, por lo que la diferencia entre el más alto y el más bajo es de aproximadamente 10,000 dólares.</li>\n  <li>Los dos países con mayor PIBC son Luxemburgo y Suiza, los cuales no son países nórdicos.</li>\n  <li>El PIBC de Dinamarca representa más del 75% del de Luxemburgo, lejos de ser solo el 50%.</li>\n  <li>El PIB per cápita mide el ingreso promedio por habitante, por lo que no permite determinar si un país tiene más o menos población total.</li>\n</ul>"
   },
- {
+  {
     id: "m20-q13",
-    prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función<br><br>$${\\small y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8}$$<br>Determina en qué punto cambia la concavidad de la curva.",
+    prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función:<br><br>$${\\small y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8}$$<br>Determina en qué punto cambia la concavidad de la curva.",
     image: "assets/m20_grafica_cafe.png",
     type: "choice",
     correct: "$$y'' = -1.8x - 0.6 = 0$$<br>$$x = -0.333$$",
@@ -184,7 +184,7 @@ const questionBank = [
       "$$y'' = -0.9x^2 - 0.6x + 0.8 = 0$$<br>$$x = -1.333$$"
     ],
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
-    explanation: "Obtenemos la segunda derivada e igualamos a cero[cite: 54]:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"[cite: 54]
+    explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
   },
   {
     id: "m20-q14",
@@ -283,7 +283,7 @@ const questionBank = [
   },
   {
     id: "m20-q20b",
-    prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua $$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$ ¿Qué tipo de reacción química es y cuál es su estructura general?",
+    prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua ($2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$), ¿qué tipo de reacción química es y cuál es su estructura general?",
     type: "choice",
     correct: "Reacción de síntesis: $\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
     distractors: [
