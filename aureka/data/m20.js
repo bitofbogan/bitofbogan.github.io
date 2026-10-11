@@ -172,19 +172,19 @@ const questionBank = [
     hint: "Compara el valor de la barra más alta con la más baja y revisa la diferencia numérica entre ambos.",
     explanation: "Revisando cada afirmación a partir de la gráfica:\n<ul class=\"list-disc pl-5 space-y-1 mt-1\">\n  <li>Luxemburgo ronda los 43,000 dólares y Dinamarca cerca de 33,000, por lo que la diferencia entre el más alto y el más bajo es de aproximadamente 10,000 dólares.</li>\n  <li>Los dos países con mayor PIBC son Luxemburgo y Suiza, los cuales no son países nórdicos.</li>\n  <li>El PIBC de Dinamarca representa más del 75% del de Luxemburgo, lejos de ser solo el 50%.</li>\n  <li>El PIB per cápita mide el ingreso promedio por habitante, por lo que no permite determinar si un país tiene más o menos población total.</li>\n</ul>"
   },
-  {
+ {
     id: "m20-q13",
-    prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función:<br><br>$$y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8$$<br>Determina en qué punto cambia la concavidad de la curva.",
+    prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función<br><br>$${\\small y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8}$$<br>Determina en qué punto cambia la concavidad de la curva.",
     image: "assets/m20_grafica_cafe.png",
     type: "choice",
-    correct: "$y'' = -1.8x - 0.6 = 0; \\quad x = -0.333$",
+    correct: "$$y'' = -1.8x - 0.6 = 0$$<br>$$x = -0.333$$",
     distractors: [
-      "$y'' = -0.9x - 0.6 = 0; \\quad x = 0.666$",
-      "$y'' = 1.8x - 0.6 = 0; \\quad x = 0.333$",
-      "$y'' = -0.9x^2 - 0.6x + 0.8 = 0; \\quad x = -1.333$"
+      "$$y'' = 1.8x - 0.6 = 0$$<br>$$x = 0.333$$",
+      "$$y'' = -0.9x - 0.6 = 0$$<br>$$x = 0.666$$",
+      "$$y'' = -0.9x^2 - 0.6x + 0.8 = 0$$<br>$$x = -1.333$$"
     ],
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
-    explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
+    explanation: "Obtenemos la segunda derivada e igualamos a cero[cite: 54]:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"[cite: 54]
   },
   {
     id: "m20-q14",
@@ -406,7 +406,7 @@ const questionBank = [
       "Bibliografía."
     ],
     hint: null,
-    explanation: "La estructura formal del informe presenta: Introducción $\\rightarrow$ Contexto $\\rightarrow$ Metodología $\\rightarrow$ Hipótesis $\\rightarrow$ Resultados $\\rightarrow$ Conclusiones $\\rightarrow$ Bibliografía."
+    explanation: "La estructura formal del reporte de investigación sigue este orden:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Introducción.</li>\n  <li>Contexto.</li>\n  <li>Metodología.</li>\n  <li>Hipótesis.</li>\n  <li>Resultados.</li>\n  <li>Conclusiones.</li>\n  <li>Bibliografía.</li>\n</ol>"
   },
   {
     id: "m20-q29",
@@ -428,11 +428,11 @@ const questionBank = [
     id: "m20-q30",
     prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción:<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
     type: "choice",
-    correct: "$$(300\\text{ g})\\left[\\tfrac{1\\text{ mol CH}_4}{16\\text{ g}}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 525\\text{ g}$$",
+    correct: "$300\\text{ g} \\cdot [1\\text{ mol CH}_4 / 16\\text{ g}] \\cdot [2\\text{ mol CO} / 2\\text{ mol CH}_4] \\cdot [28\\text{ g} / 1\\text{ mol CO}] = 525\\text{ g}$",
     distractors: [
-      "$$(300\\text{ g})\\left[\\tfrac{14\\text{ g}}{1\\text{ mol CH}_4}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{28\\text{ g}}{1\\text{ mol CO}}\\right] = 117{,}600\\text{ g}$$",
-      "$$(300\\text{ g})\\left[\\tfrac{1\\text{ mol CH}_4}{14\\text{ g}}\\right]\\left[\\tfrac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right]\\left[\\tfrac{44\\text{ g}}{1\\text{ mol CO}}\\right] = 942.85\\text{ g}$$",
-      "$$(300\\text{ g})\\left[\\tfrac{38\\text{ g}}{1\\text{ mol CO}}\\right]\\left[\\tfrac{1\\text{ mol CH}_4}{14\\text{ g}}\\right] = 814.28\\text{ g}$$"
+      "$300\\text{ g} \\cdot [14\\text{ g} / 1\\text{ mol CH}_4] \\cdot [2\\text{ mol CO} / 2\\text{ mol CH}_4] \\cdot [28\\text{ g} / 1\\text{ mol CO}] = 117{,}600\\text{ g}$",
+      "$300\\text{ g} \\cdot [1\\text{ mol CH}_4 / 14\\text{ g}] \\cdot [2\\text{ mol CO} / 2\\text{ mol CH}_4] \\cdot [44\\text{ g} / 1\\text{ mol CO}] = 942.85\\text{ g}$",
+      "$300\\text{ g} \\cdot [38\\text{ g} / 1\\text{ mol CO}] \\cdot [1\\text{ mol CH}_4 / 14\\text{ g}] = 814.28\\text{ g}$"
     ],
     hint: "Revisa los tres factores: masa molar de reactivo (16 g/mol), proporción molar (2 a 2) y masa molar de producto (28 g/mol)[cite: 50].",
     explanation: "El análisis dimensional requiere multiplicar sucesivamente por los tres factores de conversión[cite: 49, 50]:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right) \\cdot \\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right) \\cdot \\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right) \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = 525\\text{ g} \\end{aligned}$$"
