@@ -428,11 +428,11 @@ const questionBank = [
     id: "m20-q30",
     prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción:<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
     type: "choice",
-    correct: "assets/m20_estequiometria_correcta.png",
+    correct: "<img src='assets/m20_estequiometria_correcta.png'>",
     distractors: [
-      "assets/m20_estequiometria_incorrecta1.png",
-      "assets/m20_estequiometria_incorrecta2.png",
-      "assets/m20_estequiometria_incorrecta3.png"
+      "<img src='assets/m20_estequiometria_incorrecta1.png'>",
+      "<img src='assets/m20_estequiometria_incorrecta2.png'>",
+      "<img src='assets/m20_estequiometria_incorrecta3.png'>"
     ],
     hint: "Revisa los tres factores: masa molar de reactivo (16 g/mol), proporción molar (2 a 2) y masa molar de producto (28 g/mol).",
     explanation: "El análisis dimensional requiere multiplicar sucesivamente por los tres factores de conversión:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right) \\cdot \\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right) \\cdot \\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right) \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = 525\\text{ g} \\end{aligned}$$"
