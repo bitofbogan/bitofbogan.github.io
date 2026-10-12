@@ -8,9 +8,9 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Carga externa desde tu repositorio: carpeta fechas/data.js -->
+  <!-- Fuente de datos relativa desde bitofbogan.github.io/fechas/data.js -->
   <script src="../fechas/data.js"></script>
-  
+
   <script>
     tailwind.config = {
       theme: {
@@ -39,7 +39,6 @@
     }
   </script>
   <style>
-    /* Estilos personalizados para scrollbars de la matriz y animaciones */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -79,20 +78,20 @@
         </div>
       </div>
 
-      <!-- Indicador de estado de datos -->
+      <!-- Indicador de estado de data.js -->
       <div class="flex items-center gap-2 text-xs bg-brand-900/40 px-3 py-1.5 rounded-lg border border-white/10">
         <span id="catalogoStatusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="catalogoStatusText" class="text-sky-100 font-medium">Cargando fechas/data.js...</span>
+        <span id="catalogoStatusText" class="text-sky-100 font-medium">Cargando ../fechas/data.js...</span>
       </div>
     </div>
   </header>
 
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
     
-    <!-- Panel de Configuración y Entrada de Datos -->
+    <!-- Panel de Configuración y Entrada -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Lado Izquierdo: Configuración y Pegado -->
+      <!-- Entrada de Datos -->
       <div class="lg:col-span-7 bg-white rounded-2xl p-5 custom-shadow border border-slate-200/80 flex flex-col justify-between">
         <div class="space-y-4">
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -108,7 +107,7 @@
             </div>
           </div>
 
-          <!-- Selector de Etapa Oficial -->
+          <!-- Selector de Etapa -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-3.5 rounded-xl border border-slate-200/60">
             <div>
               <label for="selectEtapa" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
@@ -116,7 +115,7 @@
               </label>
               <div class="relative">
                 <select id="selectEtapa" class="w-full bg-white border border-slate-300 text-slate-800 text-sm font-semibold rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block p-2.5 pr-8 appearance-none transition shadow-sm cursor-pointer">
-                  <!-- Llenado dinámicamente -->
+                  <!-- Llenado dinámico -->
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -124,7 +123,6 @@
               </div>
             </div>
 
-            <!-- Información del Periodo -->
             <div class="flex flex-col justify-center">
               <span class="text-xs font-medium text-slate-500">Periodo de aplicación:</span>
               <span id="periodoTexto" class="text-xs font-semibold text-brand-700 mt-0.5">Cargando...</span>
@@ -132,15 +130,15 @@
             </div>
           </div>
 
-          <!-- Textarea para pegar desde Google Sheets -->
+          <!-- Textarea -->
           <div>
             <div class="flex justify-between items-center mb-1">
               <label for="inputData" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider">
                 Copiar y Pegar desde Google Sheets (TSV)
               </label>
-              <span class="text-[11px] text-slate-400">Filas con columnas del alumno + hasta 4 módulos (1 a 22)</span>
+              <span class="text-[11px] text-slate-400">Primer Apellido • Segundo Apellido • Nombres • Matrícula • 1ro • 2do • 3ro • 4to</span>
             </div>
-            <textarea id="inputData" rows="6" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-700 placeholder-slate-400 transition" placeholder="Pega aquí los renglones seleccionados en Google Sheets (Ctrl + V)...&#10;Ejemplo:&#10;GARCIA    LOPEZ    JUAN    2021001    14    20    11&#10;HERNANDEZ    PEREZ    MARIA    2021002    1    4    15    21"></textarea>
+            <textarea id="inputData" rows="6" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-700 placeholder-slate-400 transition" placeholder="Pega aquí directamente tu selección de celdas desde Google Sheets (Ctrl + V)..."></textarea>
           </div>
         </div>
 
@@ -157,20 +155,19 @@
         </div>
       </div>
 
-      <!-- Lado Derecho: Instrucciones y Resumen de Estado -->
+      <!-- Resumen y Reglas -->
       <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
         
-        <!-- Tarjeta de Instrucciones -->
         <div class="bg-white rounded-2xl p-5 custom-shadow border border-slate-200/80">
           <h3 class="font-semibold text-slate-800 text-sm mb-2.5 flex items-center gap-2">
             <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            Reglas del Formato & Funcionamiento
+            Instrucciones de Uso
           </h3>
           <ul class="text-xs text-slate-600 space-y-2 list-disc list-inside">
-            <li><strong class="text-slate-700">Detección Inteligente:</strong> Toma los nombres o matrículas de las primeras columnas y busca los números de módulos (<span class="font-mono text-brand-700 font-bold">1 al 22</span>) en las columnas finales de cada fila.</li>
-            <li><strong class="text-slate-700">Orden Cronológico:</strong> Todos los turnos requeridos por el grupo se ordenan de izquierda a derecha por fecha y hora estricta.</li>
-            <li><strong class="text-slate-700">Formato de Celda:</strong> Si el alumno solicitó el módulo, se genera como <span class="font-mono bg-sky-100 text-brand-800 px-1 py-0.5 rounded font-semibold">M[id]: DD/MM H:MM</span>. Si no lo solicitó, queda vacía para Google Sheets.</li>
-            <li><strong class="text-slate-700">Compatibilidad Directa:</strong> El botón de copiado genera formato <span class="font-mono font-semibold">TSV</span> listo para presionar <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-mono shadow-sm">Ctrl + V</kbd> en la celda inicial de Sheets.</li>
+            <li><strong class="text-slate-700">Estructura Fija:</strong> Selecciona en Google Sheets desde <em>Primer Apellido</em> hasta la columna <em>4to</em> módulo y pega aquí.</li>
+            <li><strong class="text-slate-700">Ocultar Datos:</strong> Puedes desmarcar las primeras 4 columnas para copiar únicamente la matriz de exámenes hacia Sheets.</li>
+            <li><strong class="text-slate-700">Exámenes de Repuesto:</strong> Marca la casilla <span class="font-semibold text-brand-700">Repuesto</span> en la columna deseada para encerrar su texto entre signos <span class="font-mono bg-sky-100 text-brand-800 px-1 py-0.5 rounded font-bold">¿?</span>.</li>
+            <li><strong class="text-slate-700">Conteo Automático:</strong> La última fila calcula y copia la cantidad exacta de alumnos asignados por examen.</li>
           </ul>
         </div>
 
@@ -182,7 +179,7 @@
           </div>
           <div class="bg-white p-3.5 rounded-xl custom-shadow border border-slate-200/80 text-center">
             <span class="block text-2xl font-bold text-sky-600" id="statTurnos">0</span>
-            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-tight">Turnos Únicos</span>
+            <span class="text-[11px] font-medium text-slate-500 uppercase tracking-tight">Exámenes Únicos</span>
           </div>
           <div class="bg-white p-3.5 rounded-xl custom-shadow border border-slate-200/80 text-center">
             <span class="block text-2xl font-bold text-emerald-600" id="statExamenes">0</span>
@@ -193,24 +190,24 @@
       </div>
     </div>
 
+    <!-- Sección de Matriz Resultante -->
     <div id="resultadoSeccion" class="hidden bg-white rounded-2xl p-5 custom-shadow border border-slate-200/80 space-y-4">
       
-      <!-- Barra superior de resultados -->
       <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div class="flex items-center gap-2">
             <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">2</span>
             <h2 class="font-bold text-slate-800 text-base sm:text-lg">Previsualización de la Matriz</h2>
           </div>
-          <p class="text-xs text-slate-500 mt-0.5">Columnas ordenadas cronológicamente para Google Sheets</p>
+          <p class="text-xs text-slate-500 mt-0.5">Cronología ordenada de izquierda a derecha con fila final de alumnos totales</p>
         </div>
 
-        <!-- Botones de Acción de Matriz -->
+        <!-- Controles de Copiado y Visibilidad -->
         <div class="flex items-center flex-wrap gap-3">
-          <!-- Toggle para incluir encabezado o solo celdas -->
-          <label class="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-600 select-none bg-slate-50 px-3 py-2 rounded-lg border border-slate-200">
-            <input type="checkbox" id="checkIncluirHeader" checked class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-            <span>Incluir fila de encabezados al copiar</span>
+          <!-- Toggle para Ocultar/Mostrar las primeras 4 columnas -->
+          <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 select-none bg-slate-50 hover:bg-slate-100 px-3 py-2 rounded-xl border border-slate-200 transition">
+            <input type="checkbox" id="checkMostrarColumnasAlumno" checked class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+            <span>Incluir las 4 columnas del alumno</span>
           </label>
 
           <!-- Botón Principal: Copiar para Google Sheets -->
@@ -221,28 +218,30 @@
         </div>
       </div>
 
-      <!-- Contenedor con Scroll para Tabla de Google Sheets -->
-      <div class="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50/50 max-h-[500px]">
+      <!-- Tabla Responsive -->
+      <div class="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50/50 max-h-[520px]">
         <table id="matrizTabla" class="min-w-full divide-y divide-slate-200 text-left text-xs whitespace-nowrap">
           <thead id="matrizThead" class="bg-slate-100 sticky top-0 z-20">
-            <!-- Rellenado dinámico -->
+            <!-- Dinámico -->
           </thead>
           <tbody id="matrizTbody" class="divide-y divide-slate-200 bg-white">
-            <!-- Rellenado dinámico -->
+            <!-- Dinámico -->
           </tbody>
+          <tfoot id="matrizTfoot" class="bg-slate-100 sticky bottom-0 z-10 border-t-2 border-slate-300 font-bold">
+            <!-- Dinámico: fila de totales -->
+          </tfoot>
         </table>
       </div>
 
-      <!-- Nota al pie informativa -->
-      <div class="flex items-center justify-between text-xs text-slate-500 pt-2 px-1">
-        <span>💡 Las celdas vacías se pegarán como celdas en blanco en tu hoja de cálculo.</span>
+      <div class="flex items-center justify-between text-xs text-slate-500 pt-1 px-1">
+        <span>💡 El copiado solo traslada los datos de las columnas visibles y agrega la fila de totales al final.</span>
         <span id="resumenEtapaBadge" class="font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200/50"></span>
       </div>
     </div>
 
   </main>
 
-  <!-- Notificación Toast Flotante -->
+  <!-- Notificación Toast -->
   <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700">
     <div class="p-1 rounded-full bg-emerald-500 text-white flex-shrink-0">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
@@ -253,7 +252,6 @@
     </div>
   </div>
 
-  <!-- Pie de página institucional -->
   <footer class="mt-auto bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <p>Prepa Abierta — Plan 22 Módulos | Herramienta de Productividad para Servicios Escolares</p>
@@ -263,19 +261,12 @@
 
   <script>
     /**
-     * OBTENCIÓN DINÁMICA DE DATOS DESDE fechas/data.js
-     * Se accede a las variables cargadas por el archivo externo de forma segura.
+     * OBTENCIÓN DINÁMICA DE DATOS
      */
     function getDatosCalendario() {
       if (typeof window.calendarioData !== 'undefined') return window.calendarioData;
       if (typeof calendarioData !== 'undefined') return calendarioData;
       return null;
-    }
-
-    function getDatosModulos() {
-      if (typeof window.modulosData !== 'undefined') return window.modulosData;
-      if (typeof modulosData !== 'undefined') return modulosData;
-      return [];
     }
 
     const MESES_MAP = {
@@ -293,23 +284,17 @@
       'diciembre': 12, 'dic': 12
     };
 
-    /**
-     * Parsea un string en español como "Viernes 2 de Octubre" o "Lunes 28 de Septiembre" y hora "09:00"
-     * para extraer timestamp comparable, y formato estándar DD/MM y H:MM.
-     */
     function parseFechaHoraEspanol(diaStr, horaStr, anioReferencia = 2026) {
       if (!diaStr) return null;
 
-      // Normalizar texto
       const cleanDia = diaStr.toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remover acentos
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9\s]/g, " ");
 
       const tokens = cleanDia.split(/\s+/).filter(Boolean);
       let diaNum = null;
       let mesNum = null;
 
-      // Buscar número de día y nombre de mes
       for (let i = 0; i < tokens.length; i++) {
         const t = tokens[i];
         if (!diaNum && /^\d{1,2}$/.test(t)) {
@@ -319,7 +304,6 @@
         }
       }
 
-      // Horario (HH:mm)
       let horas = 0;
       let minutos = 0;
       if (horaStr) {
@@ -332,23 +316,16 @@
         const dateObj = new Date(anioReferencia, mesNum - 1, diaNum, horas, minutos);
         const diaPadded = String(diaNum).padStart(2, '0');
         const mesPadded = String(mesNum).padStart(2, '0');
-        
-        // Formato H:MM (ej. 9:00 o 13:00)
         const horaFormateada = `${horas}:${String(minutos).padStart(2, '0')}`;
         
         return {
           timestamp: dateObj.getTime(),
           dia: diaNum,
           mes: mesNum,
-          horas,
-          minutos,
           fechaFormato: `${diaPadded}/${mesPadded}`,
-          horaFormato: horaFormateada,
-          etiquetaCorta: `${diaPadded}/${mesPadded} ${horaFormateada}`,
-          diaTextoOriginal: diaStr
+          horaFormato: horaFormateada
         };
       }
-
       return null;
     }
 
@@ -362,8 +339,9 @@
     const resultadoSeccion = document.getElementById('resultadoSeccion');
     const matrizThead = document.getElementById('matrizThead');
     const matrizTbody = document.getElementById('matrizTbody');
+    const matrizTfoot = document.getElementById('matrizTfoot');
     const btnCopiarSheets = document.getElementById('btnCopiarSheets');
-    const checkIncluirHeader = document.getElementById('checkIncluirHeader');
+    const checkMostrarColumnasAlumno = document.getElementById('checkMostrarColumnasAlumno');
     const statAlumnos = document.getElementById('statAlumnos');
     const statTurnos = document.getElementById('statTurnos');
     const statExamenes = document.getElementById('statExamenes');
@@ -374,24 +352,21 @@
     const catalogoStatusText = document.getElementById('catalogoStatusText');
     const catalogoStatusDot = document.getElementById('catalogoStatusDot');
 
-    let currentMatrixData = {
-      headersTSV: [],
-      rowsTSV: [],
-      headersHTML: [],
-      rowsHTML: [],
-      totalAlumnos: 0,
-      totalTurnos: 0,
-      totalExamenes: 0
-    };
+    // Estado global de la matriz procesada
+    let parsedAlumnos = [];
+    let turnosDetallados = [];
+    let repuestoState = {}; // moduloId -> boolean (si está marcado como repuesto)
+
+    const HEADERS_ALUMNO = ["Primer Apellido", "Segundo Apellido", "Nombres", "Matrícula"];
 
     function initEtapasSelector() {
       const dataCalendario = getDatosCalendario();
       
       if (!dataCalendario || Object.keys(dataCalendario).length === 0) {
-        catalogoStatusText.textContent = "Error: no se encontró fechas/data.js";
+        catalogoStatusText.textContent = "Error: no se encontró ../fechas/data.js";
         catalogoStatusDot.className = "w-2 h-2 rounded-full bg-rose-500";
         selectEtapa.innerHTML = '<option value="">No hay etapas disponibles</option>';
-        periodoTexto.textContent = "Verifica la ruta de fechas/data.js";
+        periodoTexto.textContent = "Verifica la ruta de ../fechas/data.js";
         fechaFinTexto.textContent = "";
         return;
       }
@@ -434,6 +409,11 @@
       }
     });
 
+    /**
+     * Parsea los datos pegados con la estructura estricta de la selección de Sheets:
+     * Columnas 0 a 3: Primer Apellido, Segundo Apellido, Nombres, Matrícula.
+     * Columnas 4 en adelante: Módulos solicitados (1ro, 2do, 3ro, 4to).
+     */
     function parseFilasGoogleSheets(rawText) {
       const lineas = rawText.split(/\r?\n/).filter(line => line.trim().length > 0);
       const alumnos = [];
@@ -441,50 +421,28 @@
       lineas.forEach((linea, index) => {
         const celdas = linea.split('\t').map(c => c.trim());
         
-        const modulosIdentificados = [];
-        const columnasAlumno = [];
+        // Las primeras 4 columnas siempre son los datos de alumno
+        const col0 = celdas[0] || '';
+        const col1 = celdas[1] || '';
+        const col2 = celdas[2] || '';
+        const col3 = celdas[3] || '';
+        
+        // Las columnas restantes (índices 4 a 7 típicamente) corresponden a los módulos solicitados
+        const celdasModulos = celdas.slice(4);
+        const modulos = [];
 
-        // Evaluamos desde el final para capturar hasta 4 módulos (1 a 22)
-        let corteIndex = celdas.length;
-        for (let i = celdas.length - 1; i >= 0; i--) {
-          const val = celdas[i];
+        celdasModulos.forEach(val => {
+          if (!val) return;
           const num = parseInt(val, 10);
-          
-          if (/^\d{1,2}$/.test(val) && num >= 1 && num <= 22 && modulosIdentificados.length < 4) {
-            modulosIdentificados.unshift(num);
-            corteIndex = i;
-          } else if (val === '' && modulosIdentificados.length > 0) {
-            continue;
-          } else {
-            break;
+          if (!isNaN(num) && num >= 1 && num <= 22) {
+            modulos.push(num);
           }
-        }
-
-        if (modulosIdentificados.length === 0) {
-          celdas.forEach(val => {
-            const num = parseInt(val, 10);
-            if (/^\d{1,2}$/.test(val) && num >= 1 && num <= 22) {
-              modulosIdentificados.push(num);
-            } else {
-              columnasAlumno.push(val);
-            }
-          });
-        } else {
-          for (let i = 0; i < corteIndex; i++) {
-            columnasAlumno.push(celdas[i]);
-          }
-        }
-
-        let identificadorStr = columnasAlumno.filter(Boolean).join(' ');
-        if (!identificadorStr) {
-          identificadorStr = `Alumno #${index + 1}`;
-        }
+        });
 
         alumnos.push({
           index: index + 1,
-          identificador: identificadorStr,
-          columnasAlumno: columnasAlumno.length > 0 ? columnasAlumno : [identificadorStr],
-          modulos: Array.from(new Set(modulosIdentificados))
+          datosAlumno: [col0, col1, col2, col3],
+          modulos: Array.from(new Set(modulos))
         });
       });
 
@@ -517,14 +475,15 @@
         if (parts.length === 3) anioEtapa = parseInt(parts[0], 10);
       }
 
-      const alumnos = parseFilasGoogleSheets(rawText);
-      if (alumnos.length === 0) {
-        showToast("Atención", "No se encontraron filas con datos de alumnos.", "warn");
+      parsedAlumnos = parseFilasGoogleSheets(rawText);
+      if (parsedAlumnos.length === 0) {
+        showToast("Atención", "No se encontraron filas válidas de alumnos.", "warn");
         return;
       }
 
+      // 1. Obtener conjunto de exámenes únicos solicitados
       const todosModulosSet = new Set();
-      alumnos.forEach(al => {
+      parsedAlumnos.forEach(al => {
         al.modulos.forEach(m => todosModulosSet.add(m));
       });
 
@@ -533,7 +492,8 @@
         return;
       }
 
-      const turnosDetallados = [];
+      // 2. Resolver fechas y ordenar cronológicamente
+      turnosDetallados = [];
       todosModulosSet.forEach(moduloId => {
         const infoHorario = etapaActual.horarios[moduloId];
         let parseInfo = null;
@@ -543,25 +503,25 @@
         }
 
         const timestamp = parseInfo ? parseInfo.timestamp : 9999999999999;
-        const celdaTexto = parseInfo 
+        const textoBase = parseInfo 
           ? `M${moduloId}: ${parseInfo.fechaFormato} ${parseInfo.horaFormato}`
           : `M${moduloId}: S/H`;
 
-        const headerTexto = parseInfo 
-          ? `M${moduloId} (${parseInfo.fechaFormato} ${parseInfo.horaFormato})`
-          : `M${moduloId} (S/H)`;
+        // Conservar el estado de repuesto si ya estaba seleccionado
+        if (typeof repuestoState[moduloId] === 'undefined') {
+          repuestoState[moduloId] = false;
+        }
 
         turnosDetallados.push({
           moduloId,
           timestamp,
-          celdaTexto,
-          headerTexto,
+          textoBase,
           infoHorario: infoHorario || { dia: "Sin horario asignado", hora: "--:--" },
           parseInfo
         });
       });
 
-      // Orden Cronológico Estricto por fecha y hora real
+      // Orden Cronológico Estricto de izquierda a derecha
       turnosDetallados.sort((a, b) => {
         if (a.timestamp !== b.timestamp) {
           return a.timestamp - b.timestamp;
@@ -569,166 +529,200 @@
         return a.moduloId - b.moduloId;
       });
 
-      const maxColsAlumno = Math.max(...alumnos.map(a => a.columnasAlumno.length), 1);
-
-      const headersPre = [];
-      for (let c = 0; c < maxColsAlumno; c++) {
-        headersPre.push(c === 0 ? "Alumno / Datos" : `Columna ${c + 1}`);
-      }
-      const headersTurnos = turnosDetallados.map(t => t.headerTexto);
-      const filaHeadersTSV = [...headersPre, ...headersTurnos];
-
-      const filasTSV = [];
-      const filasHTML = [];
+      // Contabilizar asignaciones
       let totalExamenesAsignados = 0;
-
-      alumnos.forEach((alumno) => {
-        const celdasFilaTSV = [];
-        const celdasFilaHTML = [];
-
-        for (let c = 0; c < maxColsAlumno; c++) {
-          const valCol = alumno.columnasAlumno[c] || '';
-          celdasFilaTSV.push(valCol);
-          celdasFilaHTML.push({
-            tipo: 'alumno',
-            valor: valCol
-          });
-        }
-
-        turnosDetallados.forEach((turno) => {
-          const solicitaEsteModulo = alumno.modulos.includes(turno.moduloId);
-          if (solicitaEsteModulo) {
-            celdasFilaTSV.push(turno.celdaTexto);
-            celdasFilaHTML.push({
-              tipo: 'examen',
-              activo: true,
-              moduloId: turno.moduloId,
-              valor: turno.celdaTexto,
-              detalle: turno.infoHorario
-            });
-            totalExamenesAsignados++;
-          } else {
-            celdasFilaTSV.push('');
-            celdasFilaHTML.push({
-              tipo: 'examen',
-              activo: false,
-              moduloId: turno.moduloId,
-              valor: ''
-            });
-          }
-        });
-
-        filasTSV.push(celdasFilaTSV);
-        filasHTML.push({
-          idAlumno: alumno.index,
-          celdas: celdasFilaHTML
-        });
+      parsedAlumnos.forEach(a => {
+        totalExamenesAsignados += a.modulos.length;
       });
 
-      currentMatrixData = {
-        headersTSV: filaHeadersTSV,
-        rowsTSV: filasTSV,
-        turnos: turnosDetallados,
-        maxColsAlumno,
-        totalAlumnos: alumnos.length,
-        totalTurnos: turnosDetallados.length,
-        totalExamenes: totalExamenesAsignados
-      };
-
-      statAlumnos.textContent = alumnos.length;
+      statAlumnos.textContent = parsedAlumnos.length;
       statTurnos.textContent = turnosDetallados.length;
       statExamenes.textContent = totalExamenesAsignados;
 
-      renderizarTablaVisual(filaHeadersTSV, maxColsAlumno, turnosDetallados, filasHTML);
+      renderizarTablaCompleta();
 
       resultadoSeccion.classList.remove('hidden');
       resultadoSeccion.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      showToast("¡Listo!", `Se procesaron ${alumnos.length} alumnos con ${turnosDetallados.length} turnos cronológicos.`, "success");
+      showToast("¡Listo!", `Se procesaron ${parsedAlumnos.length} alumnos con ${turnosDetallados.length} exámenes únicos.`, "success");
     }
 
-    function renderizarTablaVisual(headers, numColsAlumno, turnos, filas) {
+    function renderizarTablaCompleta() {
+      const mostrarAlumno = checkMostrarColumnasAlumno.checked;
+
+      // 1. Header
       matrizThead.innerHTML = '';
       const trHead = document.createElement('tr');
-      
-      headers.forEach((headerText, colIdx) => {
+
+      if (mostrarAlumno) {
+        HEADERS_ALUMNO.forEach(h => {
+          const th = document.createElement('th');
+          th.className = "py-3 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-r border-slate-200 bg-slate-100 text-slate-700 sticky left-0 z-10 min-w-[130px]";
+          th.textContent = h;
+          trHead.appendChild(th);
+        });
+      }
+
+      turnosDetallados.forEach((turno) => {
         const th = document.createElement('th');
-        th.className = "py-3 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-r border-slate-200 select-none";
-        
-        if (colIdx < numColsAlumno) {
-          th.className += " bg-slate-100 text-slate-700 sticky left-0 z-10 min-w-[140px]";
-          th.textContent = headerText;
-        } else {
-          const turnoIdx = colIdx - numColsAlumno;
-          const turno = turnos[turnoIdx];
-          th.className += " bg-sky-50/80 text-brand-800 text-center min-w-[160px]";
-          
-          th.innerHTML = `
-            <div class="font-bold text-brand-800 flex items-center justify-center gap-1">
-              <span class="w-2 h-2 rounded-full bg-brand-500"></span>
-              M${turno.moduloId}
-            </div>
-            <div class="text-[10px] text-slate-500 font-normal lowercase first-letter:uppercase">
-              ${turno.infoHorario.dia || ''}
-            </div>
-            <div class="text-[11px] font-mono font-bold text-sky-700">
-              🕒 ${turno.infoHorario.hora || ''}
-            </div>
-          `;
-        }
+        th.className = "py-2.5 px-3 border-b border-r border-slate-200 bg-sky-50/80 text-brand-800 text-center min-w-[170px]";
+        const isRepuesto = !!repuestoState[turno.moduloId];
+
+        th.innerHTML = `
+          <div class="font-bold text-brand-900 text-sm flex items-center justify-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+            M${turno.moduloId}
+          </div>
+          <div class="text-[10px] text-slate-500 font-normal mt-0.5">
+            ${turno.infoHorario.dia || ''}
+          </div>
+          <div class="text-[11px] font-mono font-bold text-sky-700">
+            🕒 ${turno.infoHorario.hora || ''}
+          </div>
+          <div class="mt-2 pt-1 border-t border-sky-200/60 flex items-center justify-center gap-1.5">
+            <label class="inline-flex items-center gap-1 text-[10px] text-slate-600 font-semibold cursor-pointer select-none hover:text-brand-700">
+              <input type="checkbox" data-repuesto-mod="${turno.moduloId}" ${isRepuesto ? 'checked' : ''} class="w-3.5 h-3.5 text-brand-600 rounded border-slate-300 focus:ring-brand-500 repuesto-checkbox">
+              <span>Repuesto ¿ ?</span>
+            </label>
+          </div>
+        `;
         trHead.appendChild(th);
       });
       matrizThead.appendChild(trHead);
 
+      // Event listeners para los checkboxes de repuesto
+      matrizThead.querySelectorAll('.repuesto-checkbox').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const modId = parseInt(e.target.getAttribute('data-repuesto-mod'), 10);
+          repuestoState[modId] = e.target.checked;
+          renderizarTablaCompleta(); // Re-renderizar para actualizar formato en pantalla
+        });
+      });
+
+      // 2. Body
       matrizTbody.innerHTML = '';
-      filas.forEach((filaObj, rIdx) => {
+      const conteoPorTurno = new Array(turnosDetallados.length).fill(0);
+
+      parsedAlumnos.forEach((alumno, rIdx) => {
         const tr = document.createElement('tr');
         tr.className = rIdx % 2 === 0 ? "bg-white hover:bg-slate-50 transition" : "bg-slate-50/40 hover:bg-slate-100/60 transition";
 
-        filaObj.celdas.forEach((celda, cIdx) => {
-          const td = document.createElement('td');
-          td.className = "py-2.5 px-3 border-b border-r border-slate-200/80 text-xs";
+        if (mostrarAlumno) {
+          alumno.datosAlumno.forEach(val => {
+            const td = document.createElement('td');
+            td.className = "py-2 px-3 border-b border-r border-slate-200/80 text-xs font-medium text-slate-800 bg-inherit";
+            td.textContent = val || '';
+            tr.appendChild(td);
+          });
+        }
 
-          if (celda.tipo === 'alumno') {
-            td.className += " font-medium text-slate-800 bg-inherit sticky left-0 z-0";
-            td.textContent = celda.valor || '';
+        turnosDetallados.forEach((turno, tIdx) => {
+          const td = document.createElement('td');
+          td.className = "py-2 px-3 border-b border-r border-slate-200/80 text-xs text-center font-mono";
+
+          const solicitaEsteModulo = alumno.modulos.includes(turno.moduloId);
+          if (solicitaEsteModulo) {
+            conteoPorTurno[tIdx]++;
+            const esRepuesto = !!repuestoState[turno.moduloId];
+            const textoFinal = esRepuesto ? `¿${turno.textoBase}?` : turno.textoBase;
+
+            td.innerHTML = `
+              <span class="inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${esRepuesto ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-sm' : 'bg-sky-100 text-brand-800 border border-sky-300 shadow-sm'}">
+                ${textoFinal}
+              </span>
+            `;
           } else {
-            td.className += " text-center font-mono";
-            if (celda.activo) {
-              td.innerHTML = `
-                <span class="inline-block px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-100 text-brand-800 border border-sky-300 shadow-sm" title="${celda.detalle.dia} a las ${celda.detalle.hora}">
-                  ${celda.valor}
-                </span>
-              `;
-            } else {
-              td.innerHTML = `<span class="text-slate-300 select-none text-[10px]">—</span>`;
-            }
+            td.innerHTML = `<span class="text-slate-300 select-none text-[10px]">—</span>`;
           }
           tr.appendChild(td);
         });
+
         matrizTbody.appendChild(tr);
       });
+
+      // 3. Fila de Totales (Footer)
+      matrizTfoot.innerHTML = '';
+      const trFoot = document.createElement('tr');
+      trFoot.className = "bg-slate-100/90 text-slate-800 border-t-2 border-slate-300";
+
+      if (mostrarAlumno) {
+        const tdLabel = document.createElement('td');
+        tdLabel.colSpan = HEADERS_ALUMNO.length;
+        tdLabel.className = "py-2.5 px-3 border-r border-slate-300 text-right uppercase tracking-wider text-[11px] font-bold text-brand-900";
+        tdLabel.textContent = "Total Alumnos que presentan:";
+        trFoot.appendChild(tdLabel);
+      }
+
+      turnosDetallados.forEach((turno, tIdx) => {
+        const tdCount = document.createElement('td');
+        tdCount.className = "py-2.5 px-3 border-r border-slate-300 text-center font-mono text-xs font-bold text-brand-800 bg-sky-100/50";
+        tdCount.innerHTML = `<span class="inline-block px-2 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-200/60">${conteoPorTurno[tIdx]}</span>`;
+        trFoot.appendChild(tdCount);
+      });
+
+      matrizTfoot.appendChild(trFoot);
     }
 
+    checkMostrarColumnasAlumno.addEventListener('change', () => {
+      if (!resultadoSeccion.classList.contains('hidden')) {
+        renderizarTablaCompleta();
+      }
+    });
+
+    /**
+     * Construye el TSV y copia al portapapeles sin encabezados y con la fila final de totales.
+     */
     function copiarMatrizParaGoogleSheets() {
-      if (!currentMatrixData.rowsTSV || currentMatrixData.rowsTSV.length === 0) {
+      if (parsedAlumnos.length === 0 || turnosDetallados.length === 0) {
         showToast("Error", "Primero debes procesar datos válidos.", "error");
         return;
       }
 
-      const incluirHeader = checkIncluirHeader.checked;
-      const filasFinales = [];
+      const mostrarAlumno = checkMostrarColumnasAlumno.checked;
+      const filasTSV = [];
+      const conteoPorTurno = new Array(turnosDetallados.length).fill(0);
 
-      if (incluirHeader) {
-        filasFinales.push(currentMatrixData.headersTSV.join('\t'));
-      }
+      // Filas de Alumnos
+      parsedAlumnos.forEach(alumno => {
+        const celdasFila = [];
 
-      currentMatrixData.rowsTSV.forEach(row => {
-        filasFinales.push(row.join('\t'));
+        if (mostrarAlumno) {
+          alumno.datosAlumno.forEach(val => celdasFila.push(val || ''));
+        }
+
+        turnosDetallados.forEach((turno, tIdx) => {
+          if (alumno.modulos.includes(turno.moduloId)) {
+            conteoPorTurno[tIdx]++;
+            const esRepuesto = !!repuestoState[turno.moduloId];
+            const textoFinal = esRepuesto ? `¿${turno.textoBase}?` : turno.textoBase;
+            celdasFila.push(textoFinal);
+          } else {
+            celdasFila.push(''); // Celda en blanco para Google Sheets
+          }
+        });
+
+        filasTSV.push(celdasFila.join('\t'));
       });
 
-      const contenidoTSV = filasFinales.join('\n');
+      // Fila final de totales
+      const filaTotales = [];
+      if (mostrarAlumno) {
+        // Rellenar las primeras 4 columnas
+        filaTotales.push("Total Alumnos");
+        filaTotales.push("");
+        filaTotales.push("");
+        filaTotales.push("");
+      }
 
+      conteoPorTurno.forEach(total => {
+        filaTotales.push(String(total));
+      });
+
+      filasTSV.push(filaTotales.join('\t'));
+
+      const contenidoTSV = filasTSV.join('\n');
+
+      // Copiado compatible con iframe y clipboard
       const tempTextArea = document.createElement('textarea');
       tempTextArea.value = contenidoTSV;
       tempTextArea.style.position = 'fixed';
@@ -749,7 +743,7 @@
       if (copySuccess) {
         showToast(
           "📋 ¡Copiado con éxito!", 
-          `Se copiaron ${filasFinales.length} filas en formato TSV. Ve a Google Sheets y presiona Ctrl + V.`,
+          `Se copiaron ${filasTSV.length} filas (incluyendo total final). Pega en Google Sheets con Ctrl + V.`,
           "success"
         );
       } else {
@@ -780,18 +774,17 @@
       }, 4200);
     }
 
+    // Datos simulados exactos tomados de la captura de Sheets
     const EJEMPLO_SHEETS = [
-      "LOPEZ\tGARCIA\tJUAN CARLOS\t20210012\t14\t20\t11\t",
-      "HERNANDEZ\tMARTINEZ\tMARIA FERNANDA\t20210045\t1\t4\t15\t21",
-      "RAMIREZ\tTORRES\tJORGE\t20210088\t14\t3\t20\t",
-      "GONZALEZ\tSANCHEZ\tANA LUISA\t20210102\t2\t11\t\t",
-      "VAZQUEZ\tORTIZ\tPEDRO\t20210156\t4\t14\t21\t1",
-      "CRUZ\tMORALES\tSOFIA\t20210204\t15\t20\t\t"
+      "Alba\tGarcia\tReyna Ximena\t261105003880\t19\t8\t\t",
+      "Celedonio\tAlmaguer\tMaría Paola\t261105006616\t19\t8\t\t",
+      "Jasso\tAguilera\tJessica del Rocio\t261105003967\t19\t8\t\t",
+      "Martínez\tFuentes\tPaula Valeria\t261105004007\t19\t8\t\t"
     ].join('\n');
 
     btnEjemplo.addEventListener('click', () => {
       inputData.value = EJEMPLO_SHEETS;
-      showToast("Ejemplo cargado", "Se cargaron 6 filas simuladas de Google Sheets. Haz clic en 'Procesar y Calendarizar'.", "warn");
+      showToast("Ejemplo cargado", "Se cargaron los 17 alumnos de la imagen. Haz clic en 'Procesar y Calendarizar'.", "warn");
     });
 
     btnLimpiar.addEventListener('click', () => {
@@ -800,14 +793,18 @@
       statAlumnos.textContent = '0';
       statTurnos.textContent = '0';
       statExamenes.textContent = '0';
-      currentMatrixData = { headersTSV: [], rowsTSV: [] };
+      parsedAlumnos = [];
+      turnosDetallados = [];
+      repuestoState = {};
       showToast("Limpio", "Se limpiaron los datos introducidos.", "warn");
     });
 
     btnProcesar.addEventListener('click', procesarMatriz);
     btnCopiarSheets.addEventListener('click', copiarMatrizParaGoogleSheets);
 
+    // Asegurar limpieza de textarea cada vez que se carga/recarga la página
     window.addEventListener('DOMContentLoaded', () => {
+      inputData.value = '';
       initEtapasSelector();
     });
   </script>
