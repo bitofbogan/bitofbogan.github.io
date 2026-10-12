@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LaTeX Studio - Generador & Exportador de Fórmulas</title>
+  <title>LaTeX Studio - Vector HQ Math Renderer</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -30,19 +30,30 @@
     }
   </script>
 
-  <!-- KaTeX Core and mhchem extension -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/mhchem.min.js"></script>
-
-  <!-- html2canvas for 100% reliable local rasterization without CORS issues -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- MathJax 3 configured for pure SVG output (Zero baseline misalignment bug) -->
+  <script>
+    window.MathJax = {
+      loader: { load: ['[tex]/mhchem'] },
+      tex: {
+        packages: { '[+]': ['mhchem'] },
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'local' // Inline vector glyphs inside SVG
+      },
+      startup: {
+        typeset: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
-    /* Transparency pattern */
+    /* Transparency Checkerboard */
     .bg-checkerboard {
       background-color: #090d16;
       background-image: 
@@ -54,14 +65,27 @@
       background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
     }
 
-    /* Chalkboard theme */
-    .theme-blackboard {
-      background: radial-gradient(circle at 50% 50%, #1e3526 0%, #0d1c13 100%) !important;
-      border: 3px solid #2d4a36 !important;
-      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.6) !important;
+    /* MathJax generated SVG container styles */
+    mjx-container[jax="SVG"] {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      margin: 0 !important;
+      outline: none !important;
     }
 
-    /* Blueprint theme */
+    mjx-container[jax="SVG"] > svg {
+      overflow: visible !important;
+      display: block !important;
+    }
+
+    /* Custom Theme Backgrounds */
+    .theme-blackboard {
+      background: radial-gradient(circle at 50% 50%, #1c3324 0%, #0c1a12 100%) !important;
+      border: 3px solid #2d4a36 !important;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6) !important;
+    }
+
     .theme-blueprint {
       background-color: #0b2545 !important;
       background-image: 
@@ -71,7 +95,6 @@
       border: 2px solid #1e40af !important;
     }
 
-    /* Grid paper */
     .theme-grid {
       background-color: #f8fafc !important;
       background-image: 
@@ -81,7 +104,6 @@
       border: 1px solid #cbd5e1 !important;
     }
 
-    /* Gradients */
     .theme-gradient-dark {
       background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #311042 100%) !important;
     }
@@ -92,7 +114,6 @@
       background: linear-gradient(135deg, #0284c7 0%, #0d9488 50%, #15803d 100%) !important;
     }
 
-    /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); border-radius: 9999px; }
@@ -112,7 +133,7 @@
       </div>
       <div>
         <h1 class="text-sm font-bold tracking-tight text-white flex items-center gap-2">
-          LaTeX Studio <span class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">v2.1 HQ</span>
+          LaTeX Studio <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono">Vector SVG HQ</span>
         </h1>
       </div>
     </div>
@@ -207,10 +228,10 @@
             <div>
               <label class="text-[11px] font-medium text-slate-400 mb-1 block">Color de Fórmula</label>
               <div class="flex items-center gap-2">
-                <input type="color" id="text-color-picker" value="#ffffff" class="w-8 h-8 rounded border border-slate-700 bg-transparent cursor-pointer p-0">
+                <input type="color" id="text-color-picker" value="#0f172a" class="w-8 h-8 rounded border border-slate-700 bg-transparent cursor-pointer p-0">
                 <select id="text-color-preset" class="bg-slate-950 border border-slate-800 rounded-lg text-xs py-1.5 px-2 text-slate-200 focus:outline-none flex-1">
-                  <option value="#ffffff">Blanco</option>
                   <option value="#0f172a">Negro carbón</option>
+                  <option value="#ffffff">Blanco</option>
                   <option value="#60a5fa">Azul celeste</option>
                   <option value="#fcd34d">Oro áureo</option>
                   <option value="#4ade80">Verde menta</option>
@@ -222,9 +243,9 @@
             <div>
               <label class="text-[11px] font-medium text-slate-400 mb-1 block">Fondo del Lienzo</label>
               <select id="bg-preset" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2.5 text-slate-200 focus:outline-none">
+                <option value="solid-white" selected>Blanco puro</option>
                 <option value="transparent">Transparente</option>
                 <option value="solid-dark">Oscuro (#0f172a)</option>
-                <option value="solid-white">Blanco puro</option>
                 <option value="gradient-dark">Gradiente Oscuro</option>
                 <option value="gradient-sunset">Gradiente Neón Púrpura</option>
                 <option value="gradient-ocean">Gradiente Oceánico</option>
@@ -248,9 +269,9 @@
             <div>
               <div class="flex justify-between items-center mb-1">
                 <label class="text-[11px] font-medium text-slate-400">Margen (Padding)</label>
-                <span id="label-padding" class="text-[10px] text-slate-500 font-mono">32px</span>
+                <span id="label-padding" class="text-[10px] text-slate-500 font-mono">24px</span>
               </div>
-              <input type="range" id="input-padding" min="8" max="96" step="4" value="32" class="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer">
+              <input type="range" id="input-padding" min="8" max="96" step="2" value="24" class="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer">
             </div>
           </div>
 
@@ -308,7 +329,7 @@
             <div>
               <label class="text-[11px] font-medium text-slate-400 mb-1 block">Formato Predeterminado</label>
               <select id="export-format" class="w-full bg-slate-950 border border-slate-800 rounded-lg text-xs py-2 px-2 text-slate-200 focus:outline-none">
-                <option value="png">PNG (Transparencia)</option>
+                <option value="png">PNG (Transparencia / HD)</option>
                 <option value="jpeg">JPEG (Fondo Sólido)</option>
                 <option value="webp">WebP (Optimizado)</option>
                 <option value="svg">SVG (Vectorial puro)</option>
@@ -320,6 +341,7 @@
       </div>
     </section>
 
+    <!-- RIGHT PANEL: Liveview Viewport (Col 6-12) -->
     <section class="lg:col-span-7 bg-slate-950 flex flex-col h-full relative overflow-hidden select-none">
       
       <!-- Liveview Top Toolbar with Zoom Status -->
@@ -346,7 +368,7 @@
           <button id="btn-zoom-reset" class="px-2 py-0.5 hover:bg-slate-800 text-slate-300 rounded transition text-[11px]" title="Restablecer posición y zoom al 100%">
             100%
           </button>
-          <button id="btn-zoom-fit" class="p-1 hover:bg-slate-800 text-slate-300 rounded transition" title="Ajustar al centro">
+          <button id="btn-zoom-fit" class="p-1 hover:bg-slate-800 text-slate-300 rounded transition" title="Centrar encuadre">
             <i class="ph ph-arrows-in-cardinal"></i>
           </button>
         </div>
@@ -359,9 +381,9 @@
         <div id="viewport-stage" class="origin-center transition-transform duration-75 ease-out inline-flex items-center justify-center p-8">
           
           <!-- Rendered Card Container -->
-          <div id="preview-wrapper" class="flex items-center justify-center relative transition-all max-w-[90vw] max-h-[80vh]">
+          <div id="preview-wrapper" class="flex items-center justify-center relative transition-all">
             <div id="math-render-target" class="flex items-center justify-center text-center">
-              <!-- Rendered formula inserted here -->
+              <!-- Rendered vector math will appear here -->
             </div>
           </div>
 
@@ -370,7 +392,7 @@
         <!-- Floating Tip -->
         <div class="absolute bottom-3 left-3 text-[11px] text-slate-400 bg-slate-900/80 backdrop-blur px-2.5 py-1 rounded-md border border-slate-800/80 pointer-events-none flex items-center gap-1.5 shadow">
           <i class="ph ph-hand-grabbing text-indigo-400"></i>
-          <span>Arrastra para mover el lienzo • Rueda para zoom</span>
+          <span>Arrastra para mover el lienzo • Rueda del mouse para zoom</span>
         </div>
       </div>
 
@@ -387,7 +409,7 @@
   <script>
     // Formula Presets Catalog
     const FORMULA_PRESETS = {
-      quimica: "(300\\text{ g})\\left[ \\dfrac{1\\text{ mol CH}_4}{16\\text{ g}\\vphantom{\\text{CH}_4}} \\right]\\left[ \\dfrac{2\\text{ mol CO}\\vphantom{\\text{CH}_4}}{2\\text{ mol CH}_4} \\right]\\left[ \\dfrac{28\\text{ g}\\vphantom{\\text{CH}_4}}{1\\text{ mol CO}\\vphantom{\\text{CH}_4}} \\right] = 525\\text{ g}",
+      quimica: "(300\\text{ g})\\left[ \\dfrac{38\\text{ g}\\vphantom{\\text{CH}_4}}{1\\text{ mol CO}} \\right]\\left[ \\dfrac{1\\text{ mol CH}_4\\vphantom{\\text{CH}_4}}{14\\text{ g}} \\right] = 814\\text{ g}",
       schrodinger: "i\\hbar \\frac{\\partial}{\\partial t}\\Psi(\\mathbf{r},t) = \\left[ -\\frac{\\hbar^2}{2m}\\nabla^2 + V(\\mathbf{r},t) \\right] \\Psi(\\mathbf{r},t)",
       euler: "e^{i\\pi} + 1 = 0",
       maxwell: "\\begin{aligned}\n\\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\\n\\nabla \\cdot \\mathbf{B} &= 0 \\\\\n\\nabla \\times \\mathbf{E} &= -\\frac{\\partial \\mathbf{B}}{\\partial t}\n\\end{aligned}",
@@ -439,7 +461,6 @@
     const toastMessage = document.getElementById('toast-message');
     const toastIcon = document.getElementById('toast-icon');
 
-    // Toast feedback helper
     function showToast(msg, isSuccess = true) {
       toastMessage.textContent = msg;
       toastIcon.className = isSuccess ? 'ph ph-check-circle text-emerald-400 text-lg' : 'ph ph-warning text-amber-400 text-lg';
@@ -472,7 +493,6 @@
       const clamped = Math.min(Math.max(newScale, minScale), maxScale);
 
       if (focalX !== null && focalY !== null) {
-        // Zoom towards mouse cursor focal point
         const factor = clamped / zoomState.scale;
         zoomState.panX = focalX - (focalX - zoomState.panX) * factor;
         zoomState.panY = focalY - (focalY - zoomState.panY) * factor;
@@ -489,14 +509,13 @@
       const mouseX = e.clientX - rect.left - rect.width / 2;
       const mouseY = e.clientY - rect.top - rect.height / 2;
 
-      // Negative delta = zoom in, Positive = zoom out
+      // Wheel up: zoom in, Wheel down: zoom out
       const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
       setZoom(zoomState.scale * zoomFactor, mouseX, mouseY);
     }, { passive: false });
 
     // Pan / Drag Handlers
     viewportContainer.addEventListener('mousedown', (e) => {
-      // Allow dragging with primary or middle mouse button
       if (e.button === 0 || e.button === 1) {
         zoomState.isDragging = true;
         zoomState.startX = e.clientX - zoomState.panX;
@@ -521,7 +540,7 @@
       }
     });
 
-    // Touch gesture support for mobile devices
+    // Touch gesture support
     let initialTouchDistance = null;
     let initialTouchScale = 1;
 
@@ -558,7 +577,6 @@
       initialTouchDistance = null;
     });
 
-    // Zoom buttons
     btnZoomIn.addEventListener('click', () => setZoom(zoomState.scale * 1.25));
     btnZoomOut.addEventListener('click', () => setZoom(zoomState.scale * 0.8));
     btnZoomReset.addEventListener('click', () => {
@@ -590,35 +608,30 @@
       const hasShadow = checkShadow.checked;
       const hasBorder = checkBorder.checked;
 
-      // Reset classes
       previewWrapper.className = 'flex items-center justify-center relative transition-all duration-150';
       previewWrapper.style.borderRadius = radius;
       previewWrapper.style.padding = pad;
       previewWrapper.style.background = '';
       previewWrapper.style.backgroundColor = '';
 
-      // Shadow
       previewWrapper.style.boxShadow = hasShadow 
         ? '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)' 
         : 'none';
 
-      // Border
       if (hasBorder) {
         previewWrapper.style.border = (bg === 'transparent') 
           ? '1.5px dashed rgba(255, 255, 255, 0.3)' 
-          : '1px solid rgba(255, 255, 255, 0.15)';
+          : (bg === 'solid-white' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.15)');
       } else {
         previewWrapper.style.border = 'none';
       }
 
-      // Background types
       if (bg === 'transparent') {
         previewWrapper.style.background = 'transparent';
       } else if (bg === 'solid-dark') {
         previewWrapper.style.backgroundColor = '#0f172a';
       } else if (bg === 'solid-white') {
         previewWrapper.style.backgroundColor = '#ffffff';
-        if (hasBorder) previewWrapper.style.border = '1px solid #e2e8f0';
       } else if (bg === 'gradient-dark') {
         previewWrapper.classList.add('theme-gradient-dark');
       } else if (bg === 'gradient-sunset') {
@@ -658,7 +671,7 @@
         previewWrapper.style.minHeight = '420px';
       }
 
-      setTimeout(updateDimensionIndicator, 60);
+      setTimeout(updateDimensionIndicator, 50);
     }
 
     function updateDimensionIndicator() {
@@ -672,139 +685,197 @@
       dimIndicator.textContent = `${finalW} × ${finalH} px (${scaleMultiplier}x)`;
     }
 
-    // Render LaTeX using KaTeX
+    // Render LaTeX using MathJax 3 Pure SVG Output
+    let renderDebounce = null;
+    function scheduleRender() {
+      if (renderDebounce) clearTimeout(renderDebounce);
+      renderDebounce = setTimeout(renderLatex, 150);
+    }
+
     function renderLatex() {
       const formula = latexInput.value.trim();
       const textColor = textColorPicker.value;
-      const fontSize = inputFontSize.value;
+      const fontSize = parseFloat(inputFontSize.value);
 
       if (!formula) {
-        mathTarget.innerHTML = `<span class="text-slate-600 italic select-none">Ingresa una fórmula para previsualizar...</span>`;
+        mathTarget.innerHTML = `<span class="text-slate-500 italic select-none">Ingresa una fórmula para previsualizar...</span>`;
         errorBox.classList.add('hidden');
         updateDimensionIndicator();
         return;
       }
 
+      if (!window.MathJax || !window.MathJax.tex2svg) {
+        // Retry when MathJax finishes loading
+        setTimeout(renderLatex, 100);
+        return;
+      }
+
       try {
-        const html = window.katex.renderToString(formula, {
-          displayMode: true,
-          throwOnError: true,
-          output: 'htmlAndMathml'
-        });
+        // Clear previous render
+        mathTarget.innerHTML = '';
 
-        mathTarget.innerHTML = html;
-        mathTarget.style.color = textColor;
-        mathTarget.style.fontSize = `${fontSize * 1.5}rem`;
-        errorBox.classList.add('hidden');
+        // Generate MathJax SVG element directly
+        const mathNode = window.MathJax.tex2svg(formula, { display: true });
+        
+        // Check for TeX parse errors
+        const errElement = mathNode.querySelector('[data-mjx-error]');
+        if (errElement) {
+          errorBox.classList.remove('hidden');
+          errorMsg.textContent = errElement.getAttribute('title') || 'Error en sintaxis LaTeX';
+        } else {
+          errorBox.classList.add('hidden');
+        }
 
+        const svgElement = mathNode.querySelector('svg');
+        if (svgElement) {
+          // Color & sizing
+          svgElement.style.color = textColor;
+          svgElement.setAttribute('fill', 'currentColor');
+          
+          // Apply font size scale
+          const baseHeightEx = parseFloat(svgElement.getAttribute('height')) || 2.5;
+          const baseWidthEx = parseFloat(svgElement.getAttribute('width')) || 10;
+          svgElement.style.height = `${baseHeightEx * fontSize * 1.05}ex`;
+          svgElement.style.width = `${baseWidthEx * fontSize * 1.05}ex`;
+        }
+
+        mathTarget.appendChild(mathNode);
         applyCardStyles();
       } catch (err) {
         errorBox.classList.remove('hidden');
-        errorMsg.textContent = err.message || 'Error de sintaxis en LaTeX';
+        errorMsg.textContent = err.message || 'Error al procesar LaTeX';
       }
     }
 
-    // Pure Vector SVG Generator
-    function generateStandaloneSvg() {
+    // Vector SVG Card Generator (Zero baseline bug, 100% SVG Paths)
+    function buildStandaloneSvg() {
       const rect = previewWrapper.getBoundingClientRect();
       const currentScale = zoomState.scale || 1;
-      const trueWidth = Math.max(120, Math.round(rect.width / currentScale));
-      const trueHeight = Math.max(80, Math.round(rect.height / currentScale));
-      const scale = parseInt(exportScale.value, 10);
-      const width = trueWidth * scale;
-      const height = trueHeight * scale;
+      const cardWidth = Math.max(120, Math.round(rect.width / currentScale));
+      const cardHeight = Math.max(80, Math.round(rect.height / currentScale));
+      const scaleMultiplier = parseInt(exportScale.value, 10);
+      const targetW = cardWidth * scaleMultiplier;
+      const targetH = cardHeight * scaleMultiplier;
+
       const bg = bgPreset.value;
-      const radius = parseInt(inputRadius.value, 10) * scale;
+      const radius = parseInt(inputRadius.value, 10) * scaleMultiplier;
+      const hasBorder = checkBorder.checked;
+
+      // Extract raw inner SVG from MathJax
+      const mathSvg = previewWrapper.querySelector('mjx-container svg');
+      if (!mathSvg) return null;
+
+      const clonedSvg = mathSvg.cloneNode(true);
       const textColor = textColorPicker.value;
-      const fontSizePx = Math.round(parseFloat(inputFontSize.value) * 24 * scale);
-      const paddingPx = parseInt(inputPadding.value, 10) * scale;
+
+      // Ensure color and vector paths fill
+      clonedSvg.style.color = textColor;
+      clonedSvg.setAttribute('fill', 'currentColor');
+      clonedSvg.querySelectorAll('path').forEach(p => {
+        if (!p.getAttribute('fill')) p.setAttribute('fill', 'currentColor');
+      });
+
+      // Get precise bounding box of formula
+      const svgRect = mathSvg.getBoundingClientRect();
+      const svgW = (svgRect.width / currentScale) * scaleMultiplier;
+      const svgH = (svgRect.height / currentScale) * scaleMultiplier;
+
+      // Center within target card
+      const posX = (targetW - svgW) / 2;
+      const posY = (targetH - svgH) / 2;
 
       let defs = '';
-      let bgRect = '';
+      let bgShape = '';
 
-      if (bg === 'solid-dark') {
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#0f172a" />`;
-      } else if (bg === 'solid-white') {
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />`;
+      if (bg === 'solid-white') {
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="#ffffff" ${hasBorder ? 'stroke="#e2e8f0" stroke-width="2"' : ''}/>`;
+      } else if (bg === 'solid-dark') {
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="#0f172a" ${hasBorder ? 'stroke="rgba(255,255,255,0.15)" stroke-width="2"' : ''}/>`;
       } else if (bg === 'gradient-sunset') {
-        defs = `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4338ca"/><stop offset="50%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>`;
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#g)" />`;
+        defs += `<linearGradient id="sunset" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4338ca"/><stop offset="50%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#e11d48"/></linearGradient>`;
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="url(#sunset)" />`;
       } else if (bg === 'gradient-ocean') {
-        defs = `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="50%" stop-color="#0d9488"/><stop offset="100%" stop-color="#15803d"/></linearGradient>`;
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#g)" />`;
-      } else if (bg === 'blackboard') {
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#14261b" stroke="#2d4a36" stroke-width="4" />`;
-      } else if (bg === 'blueprint') {
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="#0b2545" stroke="#1e40af" stroke-width="3" />`;
+        defs += `<linearGradient id="ocean" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0284c7"/><stop offset="50%" stop-color="#0d9488"/><stop offset="100%" stop-color="#15803d"/></linearGradient>`;
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="url(#ocean)" />`;
       } else if (bg === 'gradient-dark') {
-        defs = `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="50%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#311042"/></linearGradient>`;
-        bgRect = `<rect width="${width}" height="${height}" rx="${radius}" fill="url(#g)" />`;
+        defs += `<linearGradient id="graddark" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="50%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#311042"/></linearGradient>`;
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="url(#graddark)" />`;
+      } else if (bg === 'blackboard') {
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="#162c1e" stroke="#2d4a36" stroke-width="4"/>`;
+      } else if (bg === 'blueprint') {
+        defs += `<pattern id="grid" width="${24 * scaleMultiplier}" height="${24 * scaleMultiplier}" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="${24 * scaleMultiplier}" y2="0" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><line x1="0" y1="0" x2="0" y2="${24 * scaleMultiplier}" stroke="rgba(255,255,255,0.08)" stroke-width="1"/></pattern>`;
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="#0b2545" stroke="#1e40af" stroke-width="3"/><rect width="${targetW}" height="${targetH}" rx="${radius}" fill="url(#grid)"/>`;
+      } else if (bg === 'grid') {
+        defs += `<pattern id="mathgrid" width="${20 * scaleMultiplier}" height="${20 * scaleMultiplier}" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="${20 * scaleMultiplier}" y2="0" stroke="rgba(148,163,184,0.25)" stroke-width="1"/><line x1="0" y1="0" x2="0" y2="${20 * scaleMultiplier}" stroke="rgba(148,163,184,0.25)" stroke-width="1"/></pattern>`;
+        bgShape = `<rect width="${targetW}" height="${targetH}" rx="${radius}" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/><rect width="${targetW}" height="${targetH}" rx="${radius}" fill="url(#mathgrid)"/>`;
       }
 
-      const mathHtml = mathTarget.innerHTML;
+      // Convert inner SVG into string
+      clonedSvg.setAttribute('x', posX);
+      clonedSvg.setAttribute('y', posY);
+      clonedSvg.setAttribute('width', svgW);
+      clonedSvg.setAttribute('height', svgH);
+      const mathSvgString = new XMLSerializer().serializeToString(clonedSvg);
 
-      return `<?xml version="1.0" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${targetW}" height="${targetH}" viewBox="0 0 ${targetW} ${targetH}">
   ${defs ? `<defs>${defs}</defs>` : ''}
-  ${bgRect}
-  <foreignObject x="0" y="0" width="${width}" height="${height}">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:${textColor};font-size:${fontSizePx}px;font-family:system-ui,sans-serif;box-sizing:border-box;padding:${paddingPx}px;">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
-      <div style="text-align:center;">
-        ${mathHtml}
-      </div>
-    </div>
-  </foreignObject>
+  ${bgShape}
+  <g color="${textColor}">
+    ${mathSvgString}
+  </g>
 </svg>`;
     }
 
-    // Robust rasterization using html2canvas directly on the DOM element
-    async function capturePreviewCanvas() {
-      const bg = bgPreset.value;
-      const scale = parseInt(exportScale.value, 10);
-      const isTransparent = (bg === 'transparent');
+    // High fidelity rasterization via SVG -> Image -> Canvas (Zero HTML2Canvas distortion)
+    async function renderToCanvas() {
+      const svgString = buildStandaloneSvg();
+      if (!svgString) throw new Error("Fórmula no renderizada");
 
-      // Temporarily save original transform and reset zoom to 1 to capture accurately
-      const originalTransform = viewportStage.style.transform;
-      viewportStage.style.transform = 'none';
+      const rect = previewWrapper.getBoundingClientRect();
+      const currentScale = zoomState.scale || 1;
+      const scaleMultiplier = parseInt(exportScale.value, 10);
+      const width = Math.round((rect.width / currentScale) * scaleMultiplier);
+      const height = Math.round((rect.height / currentScale) * scaleMultiplier);
 
-      // Temporarily hide border outline if transparent to avoid dashed border in output
-      const originalBorder = previewWrapper.style.border;
-      if (isTransparent) {
-        previewWrapper.style.border = 'none';
-      }
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
 
-      try {
-        const canvas = await html2canvas(previewWrapper, {
-          scale: scale,
-          backgroundColor: isTransparent ? null : undefined,
-          useCORS: true,
-          logging: false
-        });
-
-        // Restore styles
-        viewportStage.style.transform = originalTransform;
-        previewWrapper.style.border = originalBorder;
-
-        return canvas;
-      } catch (err) {
-        viewportStage.style.transform = originalTransform;
-        previewWrapper.style.border = originalBorder;
-        throw err;
-      }
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          URL.revokeObjectURL(url);
+          resolve(canvas);
+        };
+        img.onerror = (err) => {
+          URL.revokeObjectURL(url);
+          reject(err);
+        };
+        img.src = url;
+      });
     }
 
-    // Download routine
+    // Download Action Handler
     async function handleDownload() {
       const format = exportFormat.value;
       const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-      const filename = `formula-${timestamp}.${format}`;
+      const filename = `latex-formula-${timestamp}.${format}`;
 
       if (format === 'svg') {
-        const svgCode = generateStandaloneSvg();
+        const svgCode = buildStandaloneSvg();
+        if (!svgCode) {
+          showToast('Error al generar SVG', false);
+          return;
+        }
         const blob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
         saveBlob(blob, filename);
-        showToast('SVG descargado');
+        showToast('SVG Vectorial descargado');
         return;
       }
 
@@ -812,7 +883,7 @@
         btnQuickDownload.disabled = true;
         btnQuickDownload.classList.add('opacity-75');
 
-        const canvas = await capturePreviewCanvas();
+        const canvas = await renderToCanvas();
         const mimeType = (format === 'jpeg') ? 'image/jpeg' : (format === 'webp') ? 'image/webp' : 'image/png';
 
         canvas.toBlob((blob) => {
@@ -820,14 +891,15 @@
           btnQuickDownload.classList.remove('opacity-75');
           if (blob) {
             saveBlob(blob, filename);
-            showToast(`Descargado: ${filename}`);
+            showToast(`Descargado con éxito: ${filename}`);
           } else {
-            showToast('Error al generar imagen', false);
+            showToast('Error al crear archivo de imagen', false);
           }
-        }, mimeType, 0.95);
+        }, mimeType, 0.98);
       } catch (err) {
         btnQuickDownload.disabled = false;
         btnQuickDownload.classList.remove('opacity-75');
+        console.error(err);
         showToast('Error al capturar la imagen', false);
       }
     }
@@ -845,13 +917,13 @@
       }, 200);
     }
 
-    // Direct Copy PNG to clipboard
+    // Copy to Clipboard Handler
     async function handleCopyPng() {
       try {
         btnQuickCopy.disabled = true;
         btnQuickCopy.classList.add('opacity-75');
 
-        const canvas = await capturePreviewCanvas();
+        const canvas = await renderToCanvas();
         canvas.toBlob(async (blob) => {
           btnQuickCopy.disabled = false;
           btnQuickCopy.classList.remove('opacity-75');
@@ -868,27 +940,28 @@
               showToast('¡Imagen PNG copiada al portapapeles!');
               return;
             } catch (err) {
-              // Browser may restrict clipboard access in some frames, trigger download fallback
               saveBlob(blob, 'formula.png');
-              showToast('Permiso de portapapeles bloqueado. Archivo descargado en su lugar.');
+              showToast('Portapapeles restringido. Descargado como archivo.');
             }
           } else {
             saveBlob(blob, 'formula.png');
-            showToast('Portapapeles no soportado. Archivo PNG descargado.');
+            showToast('Portapapeles no disponible. Archivo PNG descargado.');
           }
         }, 'image/png');
       } catch (err) {
         btnQuickCopy.disabled = false;
         btnQuickCopy.classList.remove('opacity-75');
-        showToast('Error al procesar la imagen para copiar', false);
+        console.error(err);
+        showToast('Error al procesar para portapapeles', false);
       }
     }
 
-    latexInput.addEventListener('input', renderLatex);
+    // Event Listeners for Controls
+    latexInput.addEventListener('input', scheduleRender);
 
     inputFontSize.addEventListener('input', (e) => {
       labelFontSize.textContent = `${e.target.value}x`;
-      renderLatex();
+      scheduleRender();
     });
 
     inputPadding.addEventListener('input', (e) => {
@@ -907,25 +980,25 @@
     checkBorder.addEventListener('change', applyCardStyles);
     exportScale.addEventListener('change', updateDimensionIndicator);
 
-    textColorPicker.addEventListener('input', () => renderLatex());
+    textColorPicker.addEventListener('input', () => scheduleRender());
     textColorPreset.addEventListener('change', (e) => {
       textColorPicker.value = e.target.value;
-      renderLatex();
+      scheduleRender();
     });
 
-    // Preset buttons
+    // Preset Buttons
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const eq = btn.dataset.eq;
         if (FORMULA_PRESETS[eq]) {
           latexInput.value = FORMULA_PRESETS[eq];
-          renderLatex();
-          showToast(`Fórmula cargada`);
+          scheduleRender();
+          showToast('Fórmula cargada');
         }
       });
     });
 
-    // Symbols toolbar
+    // Symbols Toolbar
     document.querySelectorAll('.sym-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const snippet = btn.dataset.code;
@@ -935,27 +1008,30 @@
         latexInput.value = val.substring(0, start) + snippet + val.substring(end);
         latexInput.focus();
         latexInput.selectionStart = latexInput.selectionEnd = start + snippet.length;
-        renderLatex();
+        scheduleRender();
       });
     });
 
-    // Clear code
     btnClearCode.addEventListener('click', () => {
       latexInput.value = '';
-      renderLatex();
+      scheduleRender();
       latexInput.focus();
     });
 
-    // Download & Copy clicks
     btnQuickDownload.addEventListener('click', handleDownload);
     btnQuickCopy.addEventListener('click', handleCopyPng);
 
-    // Initial setup with the chemistry example
-    window.addEventListener('DOMContentLoaded', () => {
+    // Boot MathJax and render initial formula
+    window.addEventListener('load', () => {
       latexInput.value = FORMULA_PRESETS.quimica;
-      applyCardStyles();
-      renderLatex();
-      updateTransform();
+      const checkMathJax = setInterval(() => {
+        if (window.MathJax && window.MathJax.tex2svg) {
+          clearInterval(checkMathJax);
+          renderLatex();
+          applyCardStyles();
+          updateTransform();
+        }
+      }, 50);
     });
   </script>
 </body>
