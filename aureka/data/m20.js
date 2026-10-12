@@ -43,11 +43,11 @@ const questionBank = [
     id: "m20-q04",
     prompt: "¿Cuál es el tipo de migración que ocurre a raíz de fenómenos como sismos, inundaciones o huracanes?",
     type: "choice",
-    correct: "Naturales.",
+    correct: "Natural.",
     distractors: [
-      "Personales.",
-      "Económicas.",
-      "Humanas."
+      "Personal.",
+      "Económico.",
+      "Humano."
     ],
     hint: "Sismos, inundaciones y huracanes pertenecen a fenómenos naturales.",
     explanation: "Los desplazamientos forzados o motivados por sismos, inundaciones, huracanes y sequías corresponden a causas naturales de la migración."
@@ -177,11 +177,11 @@ const questionBank = [
     prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función:<br><br>$${\\small y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8}$$<br>Determina en qué punto cambia la concavidad de la curva.",
     image: "assets/m20_grafica_cafe.png",
     type: "choice",
-    correct: "$$\\begin{gathered} y'' = -1.8x - 0.6 = 0 \\\\[2pt] x = -0.333 \\end{gathered}$$",
+    correct: "$y'' = -1.8x - 0.6 = 0$<br>$x = -0.333$",
     distractors: [
-      "$$\\begin{gathered} y'' = 1.8x - 0.6 = 0 \\\\[2pt] x = 0.333 \\end{gathered}$$",
-      "$$\\begin{gathered} y'' = -0.9x - 0.6 = 0 \\\\[2pt] x = 0.666 \\end{gathered}$$",
-      "$$\\begin{gathered} y'' = -0.9x^2 - 0.6x + 0.8 = 0 \\\\[2pt] x = -1.333 \\end{gathered}$$"
+      "$y'' = 1.8x - 0.6 = 0$<br>$x = 0.333$",
+      "$y'' = -0.9x - 0.6 = 0$<br>$x = 0.666$",
+      "$y'' = -0.9x^2 - 0.6x + 0.8 = 0$<br>$x = -1.333$"
     ],
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
     explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
@@ -283,13 +283,13 @@ const questionBank = [
   },
   {
     id: "m20-q20b",
-    prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua ($2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$), ¿qué tipo de reacción química es y cuál es su estructura general?",
+    prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua:<br><br>$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$<br>¿Qué tipo de reacción química es y cuál es su estructura general?",
     type: "choice",
-    correct: "Reacción de síntesis: \n$\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
+    correct: "Reacción de síntesis<br>$\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
     distractors: [
-      "Reacción de descomposición: \n$\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
-      "Reacción de sustitución simple: \n$\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
-      "Reacción de sustitución doble: \n$\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
+      "Reacción de descomposición<br>$\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
+      "Reacción de sustitución simple<br>$\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
+      "Reacción de sustitución doble<br>$\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
     ],
     hint: "Dos sustancias independientes se unen para dar origen a un único compuesto final.",
     explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de <b>síntesis</b> de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
@@ -369,7 +369,7 @@ const questionBank = [
     prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
     image: "assets/m20_agua_mexico.png",
     type: "choice",
-    correct: "En zonas con mayor disponibilidad de agua, la población es menor y genera poca riqueza.",
+    correct: "En zonas con mayor disponibilidad de agua la población es menor y genera poca riqueza.",
     distractors: [
       "La zona sureste tiene una menor disponibilidad de agua que la zona norte-centro-noroeste.",
       "Las zonas con mayor disponibilidad de agua generan la mayor riqueza a nivel nacional.",
