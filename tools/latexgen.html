@@ -39,6 +39,12 @@
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
       },
+      options: {
+        enableMenu: false,
+        renderActions: {
+          assistiveMml: [] // Desactiva generación de nodos de texto fantasma de accesibilidad
+        }
+      },
       svg: {
         fontCache: 'local' // Inline vector glyphs inside SVG
       },
@@ -71,12 +77,29 @@
       align-items: center;
       justify-content: center;
       margin: 0 !important;
+      padding: 0 !important;
       outline: none !important;
     }
 
     mjx-container[jax="SVG"] > svg {
       overflow: visible !important;
       display: block !important;
+      margin: 0 auto !important;
+    }
+
+    /* Ocultar cualquier texto fantasma o nodo auxiliar de MathJax */
+    mjx-assistive-mml,
+    mjx-container .MJX-hidden,
+    .MathJax_Preview,
+    mjx-container span:not(:has(svg)) {
+      display: none !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
 
     /* Custom Theme Backgrounds */
@@ -698,26 +721,35 @@
       const fontSize = parseFloat(inputFontSize.value);
 
       if (!formula) {
-        mathTarget.innerHTML = `<span class="text-slate-500 italic select-none">Ingresa una fórmula para previsualizar...</span>`;
+        mathTarget.replaceChildren();
+        const placeholder = document.createElement('span');
+        placeholder.className = 'text-slate-500 italic select-none';
+        placeholder.textContent = 'Ingresa una fórmula para previsualizar...';
+        mathTarget.appendChild(placeholder);
         errorBox.classList.add('hidden');
         updateDimensionIndicator();
         return;
       }
 
       if (!window.MathJax || !window.MathJax.tex2svg) {
-        // Retry when MathJax finishes loading
         setTimeout(renderLatex, 100);
         return;
       }
 
       try {
-        // Clear previous render
-        mathTarget.innerHTML = '';
+        // Limpieza total del contenedor para prevenir duplicados residuales
+        while (mathTarget.firstChild) {
+          mathTarget.removeChild(mathTarget.firstChild);
+        }
 
-        // Generate MathJax SVG element directly
+        // Generar nodo SVG con MathJax
         const mathNode = window.MathJax.tex2svg(formula, { display: true });
         
-        // Check for TeX parse errors
+        // Eliminar cualquier nodo que no sea el SVG para erradicar texto fantasma
+        const assistiveElements = mathNode.querySelectorAll('mjx-assistive-mml, span, [style*="display: none"]');
+        assistiveElements.forEach(el => el.remove());
+
+        // Comprobar errores de sintaxis
         const errElement = mathNode.querySelector('[data-mjx-error]');
         if (errElement) {
           errorBox.classList.remove('hidden');
@@ -728,15 +760,21 @@
 
         const svgElement = mathNode.querySelector('svg');
         if (svgElement) {
-          // Color & sizing
+          // Color & dimensiones
           svgElement.style.color = textColor;
           svgElement.setAttribute('fill', 'currentColor');
           
-          // Apply font size scale
           const baseHeightEx = parseFloat(svgElement.getAttribute('height')) || 2.5;
           const baseWidthEx = parseFloat(svgElement.getAttribute('width')) || 10;
           svgElement.style.height = `${baseHeightEx * fontSize * 1.05}ex`;
           svgElement.style.width = `${baseWidthEx * fontSize * 1.05}ex`;
+
+          // Limpiar nodos hijos del mathNode que no sean el svg
+          Array.from(mathNode.childNodes).forEach(child => {
+            if (child !== svgElement) {
+              child.remove();
+            }
+          });
         }
 
         mathTarget.appendChild(mathNode);
