@@ -259,7 +259,7 @@ const questionBank = [
       "En la fase <b>3</b> se realiza una condensación.",
       "Las fases <b>2</b> y <b>6</b> son de evaporación.",
       "La fase <b>5</b> representa una precipitación.",
-      "En la fase <b>1</b> es el inicio del ciclo hidrológico."
+      "La fase <b>1</b> es el inicio del ciclo hidrológico."
     ],
     distractors: [
       "Las fases <b>3</b> y <b>6</b> son de evaporación.",
@@ -285,11 +285,11 @@ const questionBank = [
     id: "m20-q20b",
     prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua:<br><br>$$2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$$<br>¿Qué tipo de reacción química es y cuál es su estructura general?",
     type: "choice",
-    correct: "Reacción de síntesis<br>$\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
+    correct: "Reacción de síntesis:<br>$\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
     distractors: [
-      "Reacción de descomposición<br>$\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
-      "Reacción de sustitución simple<br>$\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
-      "Reacción de sustitución doble<br>$\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
+      "Reacción de descomposición:<br>$\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
+      "Reacción de sustitución simple:<br>$\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
+      "Reacción de sustitución doble:<br>$\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
     ],
     hint: "Dos sustancias independientes se unen para dar origen a un único compuesto final.",
     explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de <b>síntesis</b> de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
@@ -426,7 +426,7 @@ const questionBank = [
   },
   {
     id: "m20-q30",
-    prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción:<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
+    prompt: "El monóxido de carbono ($\\text{CO}$) se produce por la oxidación del metano ($\\text{CH}_4$) mediante la reacción<br><br>$$2\\text{CH}_4 + 3\\text{O}_2 \\rightarrow 2\\text{CO} + 4\\text{H}_2\\text{O}$$<br>¿Cuál es la expresión estequiométrica correcta para calcular la cantidad de $\\text{CO}$ (en gramos) obtenida a partir de $300\\text{ g}$ de $\\text{CH}_4$?",
     type: "choice",
     correct: "<img src='assets/m20_estequiometria_correcta.png'>",
     distractors: [
