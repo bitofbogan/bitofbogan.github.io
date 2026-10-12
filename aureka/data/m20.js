@@ -177,11 +177,11 @@ const questionBank = [
     prompt: "La hoja de cálculo presenta los precios semanales del café de Veracruz aproximados por la función:<br><br>$${\\small y = -0.3x^3 - 0.3x^2 + 0.8x + 0.8}$$<br>Determina en qué punto cambia la concavidad de la curva.",
     image: "assets/m20_grafica_cafe.png",
     type: "choice",
-    correct: "$$y'' = -1.8x - 0.6 = 0$$<br>$$x = -0.333$$",
+    correct: "$$\\begin{gathered} y'' = -1.8x - 0.6 = 0 \\\\[2pt] x = -0.333 \\end{gathered}$$",
     distractors: [
-      "$$y'' = 1.8x - 0.6 = 0$$<br>$$x = 0.333$$",
-      "$$y'' = -0.9x - 0.6 = 0$$<br>$$x = 0.666$$",
-      "$$y'' = -0.9x^2 - 0.6x + 0.8 = 0$$<br>$$x = -1.333$$"
+      "$$\\begin{gathered} y'' = 1.8x - 0.6 = 0 \\\\[2pt] x = 0.333 \\end{gathered}$$",
+      "$$\\begin{gathered} y'' = -0.9x - 0.6 = 0 \\\\[2pt] x = 0.666 \\end{gathered}$$",
+      "$$\\begin{gathered} y'' = -0.9x^2 - 0.6x + 0.8 = 0 \\\\[2pt] x = -1.333 \\end{gathered}$$"
     ],
     hint: "El cambio de concavidad se halla igualando la segunda derivada a cero ($y'' = 0$).",
     explanation: "Obtenemos la segunda derivada e igualamos a cero:\n$$\\begin{aligned} y' &= -0.9x^2 - 0.6x + 0.8 \\\\[4pt] y'' &= -1.8x - 0.6 = 0 \\\\[4pt] -1.8x &= 0.6 \\\\[4pt] x &= -\\frac{0.6}{1.8} \\approx -0.333 \\end{aligned}$$"
@@ -285,11 +285,11 @@ const questionBank = [
     id: "m20-q20b",
     prompt: "Considerando la formación de ácido sulfúrico a partir de trióxido de azufre y agua ($2\\text{SO}_3 + 2\\text{H}_2\\text{O} \\rightarrow 2\\text{H}_2\\text{SO}_4$), ¿qué tipo de reacción química es y cuál es su estructura general?",
     type: "choice",
-    correct: "Reacción de síntesis: $\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
+    correct: "Reacción de síntesis: \n$\\text{A} + \\text{B} \\rightarrow \\text{AB}$",
     distractors: [
-      "Reacción de descomposición: $\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
-      "Reacción de sustitución simple: $\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
-      "Reacción de sustitución doble: $\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
+      "Reacción de descomposición: \n$\\text{AB} \\rightarrow \\text{A} + \\text{B}$",
+      "Reacción de sustitución simple: \n$\\text{AB} + \\text{C} \\rightarrow \\text{AC} + \\text{B}$",
+      "Reacción de sustitución doble: \n$\\text{AB} + \\text{CD} \\rightarrow \\text{AD} + \\text{CB}$"
     ],
     hint: "Dos sustancias independientes se unen para dar origen a un único compuesto final.",
     explanation: "Dado que dos compuestos se combinan directamente para formar una sola sustancia resultante, el proceso corresponde a una reacción de <b>síntesis</b> de la forma $\\text{A} + \\text{B} \\rightarrow \\text{AB}$."
@@ -435,6 +435,6 @@ const questionBank = [
       "<img src='assets/m20_estequiometria_incorrecta3.png'>"
     ],
     hint: "Revisa los tres factores: masa molar de reactivo (16 g/mol), proporción molar (2 a 2) y masa molar de producto (28 g/mol).",
-    explanation: "El análisis dimensional requiere multiplicar sucesivamente por los tres factores de conversión:\n$$\\begin{aligned} m_{\\text{CO}} &= (300\\text{ g}) \\cdot \\left(\\frac{1\\text{ mol CH}_4}{16\\text{ g}}\\right) \\cdot \\left(\\frac{2\\text{ mol CO}}{2\\text{ mol CH}_4}\\right) \\cdot \\left(\\frac{28\\text{ g}}{1\\text{ mol CO}}\\right) \\\\[6pt] &= \\frac{300 \\cdot 2 \\cdot 28}{16 \\cdot 2} = 525\\text{ g} \\end{aligned}$$"
+    explanation: "El orden correcto para las fracciones de estequiometría es <b>moles-gramos</b>, <b>moles-moles</b> y <b>gramos-moles</b>, cuidando calcular correctamente el peso molecular: 16 g para el CH$_4$ y 28 g para el CO."
   }
 ];
