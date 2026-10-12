@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Matriz de Calendario de Exámenes - Prepa Abierta Plan 22</title>
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Carga externa desde tu repositorio: carpeta fechas/data.js -->
   <script src="fechas/data.js"></script>
 
-  
   <script>
     tailwind.config = {
       theme: {
@@ -80,8 +81,8 @@
 
       <!-- Indicador de estado de datos -->
       <div class="flex items-center gap-2 text-xs bg-brand-900/40 px-3 py-1.5 rounded-lg border border-white/10">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="catalogoStatusText" class="text-sky-100 font-medium">Catálogo Plan 22 cargado</span>
+        <span id="catalogoStatusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="catalogoStatusText" class="text-sky-100 font-medium">Cargando fechas/data.js...</span>
       </div>
     </div>
   </header>
@@ -139,7 +140,7 @@
               </label>
               <span class="text-[11px] text-slate-400">Filas con columnas del alumno + hasta 4 módulos (1 a 22)</span>
             </div>
-            <textarea id="inputData" rows="6" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-700 placeholder-slate-400 transition" placeholder="Pega aquí los renglones seleccionados en Google Sheets (Ctrl + V)...&#10;Ejemplo:&#10;GARCIA	LOPEZ	JUAN	2021001	14	20	11&#10;HERNANDEZ	PEREZ	MARIA	2021002	1	4	15	21"></textarea>
+            <textarea id="inputData" rows="6" class="w-full text-xs font-mono p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-700 placeholder-slate-400 transition" placeholder="Pega aquí los renglones seleccionados en Google Sheets (Ctrl + V)...&#10;Ejemplo:&#10;GARCIA    LOPEZ    JUAN    2021001    14    20    11&#10;HERNANDEZ    PEREZ    MARIA    2021002    1    4    15    21"></textarea>
           </div>
         </div>
 
@@ -262,99 +263,20 @@
 
   <script>
     /**
-     * DEFINICIÓN DE DATOS (Módulos oficiales Plan 22 y Calendarios de Examen)
-     * Si existe un archivo data.js cargado previamente en window, se respeta;
-     * de lo contrario, se proporciona el catálogo completo integrado.
+     * OBTENCIÓN DINÁMICA DE DATOS DESDE fechas/data.js
+     * Se accede a las variables cargadas por el archivo externo de forma segura.
      */
-    const DEFAULT_MODULOS_DATA = [
-      { id: 1, nombre: "De la información al conocimiento", tema: "Técnicas de estudio & aprendizaje" },
-      { id: 2, nombre: "El lenguaje en la relación del hombre con el mundo", tema: "Lengua y sociedad" },
-      { id: 3, nombre: "Representaciones simbólicas y algoritmos", tema: "Álgebra y matemáticas" },
-      { id: 4, nombre: "Ser social y sociedad", tema: "Ciencias sociales" },
-      { id: 5, nombre: "Mi mundo en otra lengua", tema: "Inglés I" },
-      { id: 6, nombre: "Tecnología de información y comunicación", tema: "TICs" },
-      { id: 7, nombre: "Textos y visiones del mundo", tema: "Literatura" },
-      { id: 8, nombre: "Matemáticas y representaciones del sistema natural", tema: "Física y Matemáticas" },
-      { id: 9, nombre: "Universo natural", tema: "Química y Biología" },
-      { id: 10, nombre: "Sociedad mexicana contemporánea", tema: "Historia de México" },
-      { id: 11, nombre: "Transformaciones en el mundo contemporáneo", tema: "Historia Universal" },
-      { id: 12, nombre: "Mi vida en otra lengua", tema: "Inglés II" },
-      { id: 13, nombre: "Argumentación", tema: "Lógica y redacción" },
-      { id: 14, nombre: "Variación en procesos sociales", tema: "Economía y estadística" },
-      { id: 15, nombre: "Cálculo en fenómenos naturales y procesos sociales", tema: "Cálculo diferencial e integral" },
-      { id: 16, nombre: "Hacia un desarrollo sustentable", tema: "Ecología y desarrollo" },
-      { id: 17, nombre: "Evolución y sus repercusiones sociales", tema: "Biología y bioética" },
-      { id: 18, nombre: "Estadística en fenómenos naturales y procesos sociales", tema: "Probabilidad y estadística" },
-      { id: 19, nombre: "Dinámica en la naturaleza: El movimiento", tema: "Física mecánica" },
-      { id: 20, nombre: "Optimización en sistemas naturales y sociales", tema: "Modelado matemático" },
-      { id: 21, nombre: "Impacto de la ciencia y la tecnología", tema: "Ciencia, tecnología y sociedad" },
-      { id: 22, nombre: "Informática", tema: "Computación aplicada" }
-    ];
+    function getDatosCalendario() {
+      if (typeof window.calendarioData !== 'undefined') return window.calendarioData;
+      if (typeof calendarioData !== 'undefined') return calendarioData;
+      return null;
+    }
 
-    const DEFAULT_CALENDARIO_DATA = {
-      "2611A": {
-        label: "Etapa 2611A",
-        periodo: "Periodo de aplicación: 03 al 09 de noviembre",
-        fechaFin: "2026-11-09",
-        horarios: {
-          1: { dia: "Martes 3 de Noviembre", hora: "09:00" },
-          2: { dia: "Miércoles 4 de Noviembre", hora: "13:00" },
-          3: { dia: "Jueves 5 de Noviembre", hora: "09:00" },
-          4: { dia: "Viernes 6 de Noviembre", hora: "13:00" },
-          5: { dia: "Lunes 9 de Noviembre", hora: "09:00" },
-          6: { dia: "Martes 3 de Noviembre", hora: "11:00" },
-          7: { dia: "Miércoles 4 de Noviembre", hora: "15:00" },
-          8: { dia: "Jueves 5 de Noviembre", hora: "15:00" },
-          9: { dia: "Viernes 6 de Noviembre", hora: "09:00" },
-          10: { dia: "Lunes 9 de Noviembre", hora: "11:00" },
-          11: { dia: "Lunes 9 de Noviembre", hora: "15:00" },
-          12: { dia: "Martes 3 de Noviembre", hora: "13:00" },
-          13: { dia: "Martes 3 de Noviembre", hora: "15:00" },
-          14: { dia: "Miércoles 4 de Noviembre", hora: "09:00" },
-          15: { dia: "Jueves 5 de Noviembre", hora: "13:00" },
-          16: { dia: "Miércoles 4 de Noviembre", hora: "11:00" },
-          17: { dia: "Viernes 6 de Noviembre", hora: "11:00" },
-          18: { dia: "Lunes 9 de Noviembre", hora: "13:00" },
-          19: { dia: "Martes 3 de Noviembre", hora: "17:00" },
-          20: { dia: "Jueves 5 de Noviembre", hora: "11:00" },
-          21: { dia: "Viernes 6 de Noviembre", hora: "15:00" },
-          22: { dia: "Miércoles 4 de Noviembre", hora: "17:00" }
-        }
-      },
-      "2611B": {
-        label: "Etapa 2611B",
-        periodo: "Periodo de aplicación: 17 al 23 de noviembre",
-        fechaFin: "2026-11-23",
-        horarios: {
-          1: { dia: "Martes 17 de Noviembre", hora: "09:00" },
-          2: { dia: "Miércoles 18 de Noviembre", hora: "13:00" },
-          3: { dia: "Jueves 19 de Noviembre", hora: "09:00" },
-          4: { dia: "Viernes 20 de Noviembre", hora: "13:00" },
-          5: { dia: "Lunes 23 de Noviembre", hora: "09:00" },
-          6: { dia: "Martes 17 de Noviembre", hora: "11:00" },
-          7: { dia: "Miércoles 18 de Noviembre", hora: "15:00" },
-          8: { dia: "Jueves 19 de Noviembre", hora: "15:00" },
-          9: { dia: "Viernes 20 de Noviembre", hora: "09:00" },
-          10: { dia: "Lunes 23 de Noviembre", hora: "11:00" },
-          11: { dia: "Lunes 23 de Noviembre", hora: "15:00" },
-          12: { dia: "Martes 17 de Noviembre", hora: "13:00" },
-          13: { dia: "Martes 17 de Noviembre", hora: "15:00" },
-          14: { dia: "Miércoles 18 de Noviembre", hora: "09:00" },
-          15: { dia: "Jueves 19 de Noviembre", hora: "13:00" },
-          16: { dia: "Miércoles 18 de Noviembre", hora: "11:00" },
-          17: { dia: "Viernes 20 de Noviembre", hora: "11:00" },
-          18: { dia: "Lunes 23 de Noviembre", hora: "13:00" },
-          19: { dia: "Martes 17 de Noviembre", hora: "17:00" },
-          20: { dia: "Jueves 19 de Noviembre", hora: "11:00" },
-          21: { dia: "Viernes 20 de Noviembre", hora: "15:00" },
-          22: { dia: "Miércoles 18 de Noviembre", hora: "17:00" }
-        }
-      }
-    };
-
-    // Vincular con window si data.js estuviese importado en el mismo ámbito
-    const modulosData = (typeof window.modulosData !== 'undefined') ? window.modulosData : DEFAULT_MODULOS_DATA;
-    const calendarioData = (typeof window.calendarioData !== 'undefined') ? window.calendarioData : DEFAULT_CALENDARIO_DATA;
+    function getDatosModulos() {
+      if (typeof window.modulosData !== 'undefined') return window.modulosData;
+      if (typeof modulosData !== 'undefined') return modulosData;
+      return [];
+    }
 
     const MESES_MAP = {
       'enero': 1, 'ene': 1,
@@ -372,7 +294,7 @@
     };
 
     /**
-     * Parsea un string en español como "Martes 3 de Noviembre" y hora "09:00"
+     * Parsea un string en español como "Viernes 2 de Octubre" o "Lunes 28 de Septiembre" y hora "09:00"
      * para extraer timestamp comparable, y formato estándar DD/MM y H:MM.
      */
     function parseFechaHoraEspanol(diaStr, horaStr, anioReferencia = 2026) {
@@ -407,12 +329,11 @@
       }
 
       if (diaNum !== null && mesNum !== null) {
-        // Timestamp para ordenamiento absoluto
         const dateObj = new Date(anioReferencia, mesNum - 1, diaNum, horas, minutos);
         const diaPadded = String(diaNum).padStart(2, '0');
         const mesPadded = String(mesNum).padStart(2, '0');
         
-        // Formato H:MM (ej. 9:00 o 13:00 sin cero a la izquierda de la hora si es 9:00, o como solicitado)
+        // Formato H:MM (ej. 9:00 o 13:00)
         const horaFormateada = `${horas}:${String(minutos).padStart(2, '0')}`;
         
         return {
@@ -450,8 +371,9 @@
     const toastNotification = document.getElementById('toastNotification');
     const toastTitle = document.getElementById('toastTitle');
     const toastMessage = document.getElementById('toastMessage');
+    const catalogoStatusText = document.getElementById('catalogoStatusText');
+    const catalogoStatusDot = document.getElementById('catalogoStatusDot');
 
-    // Estado en memoria del último resultado procesado
     let currentMatrixData = {
       headersTSV: [],
       rowsTSV: [],
@@ -463,11 +385,24 @@
     };
 
     function initEtapasSelector() {
-      selectEtapa.innerHTML = '';
-      const etapasKeys = Object.keys(calendarioData);
+      const dataCalendario = getDatosCalendario();
       
+      if (!dataCalendario || Object.keys(dataCalendario).length === 0) {
+        catalogoStatusText.textContent = "Error: no se encontró fechas/data.js";
+        catalogoStatusDot.className = "w-2 h-2 rounded-full bg-rose-500";
+        selectEtapa.innerHTML = '<option value="">No hay etapas disponibles</option>';
+        periodoTexto.textContent = "Verifica la ruta de fechas/data.js";
+        fechaFinTexto.textContent = "";
+        return;
+      }
+
+      const etapasKeys = Object.keys(dataCalendario);
+      catalogoStatusText.textContent = `data.js activo (${etapasKeys.length} etapas)`;
+      catalogoStatusDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+      
+      selectEtapa.innerHTML = '';
       etapasKeys.forEach((key) => {
-        const etapa = calendarioData[key];
+        const etapa = dataCalendario[key];
         const option = document.createElement('option');
         option.value = key;
         option.textContent = `${etapa.label || key}`;
@@ -481,7 +416,10 @@
     }
 
     function actualizarInfoEtapa(etapaKey) {
-      const etapa = calendarioData[etapaKey];
+      const dataCalendario = getDatosCalendario();
+      if (!dataCalendario) return;
+      
+      const etapa = dataCalendario[etapaKey];
       if (etapa) {
         periodoTexto.textContent = etapa.periodo || 'Periodo no especificado';
         fechaFinTexto.textContent = etapa.fechaFin ? `Fecha límite: ${etapa.fechaFin}` : '';
@@ -491,17 +429,11 @@
 
     selectEtapa.addEventListener('change', (e) => {
       actualizarInfoEtapa(e.target.value);
-      // Si ya hay datos en el input, reprocesar automáticamente si la tabla ya está visible
       if (!resultadoSeccion.classList.contains('hidden')) {
         procesarMatriz();
       }
     });
 
-    /**
-     * Procesa el texto TSV pegado desde Google Sheets.
-     * Identifica los módulos (1 al 22) en las últimas columnas de la fila,
-     * y mantiene las primeras columnas como identificación del alumno.
-     */
     function parseFilasGoogleSheets(rawText) {
       const lineas = rawText.split(/\r?\n/).filter(line => line.trim().length > 0);
       const alumnos = [];
@@ -509,33 +441,25 @@
       lineas.forEach((linea, index) => {
         const celdas = linea.split('\t').map(c => c.trim());
         
-        // Identificar qué celdas contienen módulos válidos (números 1 al 22)
-        // Normalmente vienen en las columnas de la derecha (hasta 4 módulos).
         const modulosIdentificados = [];
         const columnasAlumno = [];
 
-        // Evaluamos de derecha a izquierda para capturar módulos al final
+        // Evaluamos desde el final para capturar hasta 4 módulos (1 a 22)
         let corteIndex = celdas.length;
         for (let i = celdas.length - 1; i >= 0; i--) {
           const val = celdas[i];
           const num = parseInt(val, 10);
           
-          // Si es un número válido entre 1 y 22
           if (/^\d{1,2}$/.test(val) && num >= 1 && num <= 22 && modulosIdentificados.length < 4) {
-            modulosIdentificados.unshift(num); // Guardar conservando orden
+            modulosIdentificados.unshift(num);
             corteIndex = i;
           } else if (val === '' && modulosIdentificados.length > 0) {
-            // Podría ser una celda vacía entre módulos
             continue;
           } else {
-            // Ya no es un módulo de la cola
             break;
           }
         }
 
-        // Si la evaluación desde la derecha no encontró suficientes, hacemos barrido completo:
-        // Las primeras columnas con texto no numérico o matrícula son el alumno, 
-        // y cualquier columna numérica de 1-22 encontrada se toma como módulo.
         if (modulosIdentificados.length === 0) {
           celdas.forEach(val => {
             const num = parseInt(val, 10);
@@ -546,13 +470,11 @@
             }
           });
         } else {
-          // Tomamos todas las columnas previas a las de los módulos detectados
           for (let i = 0; i < corteIndex; i++) {
             columnasAlumno.push(celdas[i]);
           }
         }
 
-        // Si por alguna razón toda la fila eran números y se tomaron todos como módulos, asegurar al menos un identificador
         let identificadorStr = columnasAlumno.filter(Boolean).join(' ');
         if (!identificadorStr) {
           identificadorStr = `Alumno #${index + 1}`;
@@ -562,7 +484,7 @@
           index: index + 1,
           identificador: identificadorStr,
           columnasAlumno: columnasAlumno.length > 0 ? columnasAlumno : [identificadorStr],
-          modulos: Array.from(new Set(modulosIdentificados)) // eliminar posibles duplicados por alumno
+          modulos: Array.from(new Set(modulosIdentificados))
         });
       });
 
@@ -576,28 +498,31 @@
         return;
       }
 
+      const dataCalendario = getDatosCalendario();
+      if (!dataCalendario) {
+        showToast("Error", "No se encontró el archivo de datos fechas/data.js", "error");
+        return;
+      }
+
       const etapaKey = selectEtapa.value;
-      const etapaActual = calendarioData[etapaKey];
+      const etapaActual = dataCalendario[etapaKey];
       if (!etapaActual || !etapaActual.horarios) {
         showToast("Error", "No hay datos de horarios disponibles para la etapa seleccionada.", "error");
         return;
       }
 
-      // Año inferido de la etapa o fecha fin
       let anioEtapa = 2026;
       if (etapaActual.fechaFin) {
         const parts = etapaActual.fechaFin.split('-');
         if (parts.length === 3) anioEtapa = parseInt(parts[0], 10);
       }
 
-      // Parsear alumnos
       const alumnos = parseFilasGoogleSheets(rawText);
       if (alumnos.length === 0) {
         showToast("Atención", "No se encontraron filas con datos de alumnos.", "warn");
         return;
       }
 
-      // 1. Obtener conjunto de todos los módulos solicitados por todos los alumnos
       const todosModulosSet = new Set();
       alumnos.forEach(al => {
         al.modulos.forEach(m => todosModulosSet.add(m));
@@ -608,7 +533,6 @@
         return;
       }
 
-      // 2. Resolver fecha/hora de cada módulo para la etapa y preparar orden cronológico
       const turnosDetallados = [];
       todosModulosSet.forEach(moduloId => {
         const infoHorario = etapaActual.horarios[moduloId];
@@ -618,7 +542,6 @@
           parseInfo = parseFechaHoraEspanol(infoHorario.dia, infoHorario.hora, anioEtapa);
         }
 
-        // Si no tiene horario en la etapa o no se pudo parsear, se le asigna timestamp de respaldo
         const timestamp = parseInfo ? parseInfo.timestamp : 9999999999999;
         const celdaTexto = parseInfo 
           ? `M${moduloId}: ${parseInfo.fechaFormato} ${parseInfo.horaFormato}`
@@ -638,7 +561,7 @@
         });
       });
 
-      // 3. Orden Cronológico Estricto (Timestamp ascendente; desempate por ID de módulo)
+      // Orden Cronológico Estricto por fecha y hora real
       turnosDetallados.sort((a, b) => {
         if (a.timestamp !== b.timestamp) {
           return a.timestamp - b.timestamp;
@@ -646,11 +569,8 @@
         return a.moduloId - b.moduloId;
       });
 
-      // 4. Determinar columnas informativas previas de los alumnos (máximo de columnas previas encontradas)
       const maxColsAlumno = Math.max(...alumnos.map(a => a.columnasAlumno.length), 1);
 
-      // 5. Construir matrices TSV y HTML
-      // Encabezados
       const headersPre = [];
       for (let c = 0; c < maxColsAlumno; c++) {
         headersPre.push(c === 0 ? "Alumno / Datos" : `Columna ${c + 1}`);
@@ -666,7 +586,6 @@
         const celdasFilaTSV = [];
         const celdasFilaHTML = [];
 
-        // Rellenar columnas identificativas del alumno
         for (let c = 0; c < maxColsAlumno; c++) {
           const valCol = alumno.columnasAlumno[c] || '';
           celdasFilaTSV.push(valCol);
@@ -676,7 +595,6 @@
           });
         }
 
-        // Rellenar celdas de la matriz cronológica
         turnosDetallados.forEach((turno) => {
           const solicitaEsteModulo = alumno.modulos.includes(turno.moduloId);
           if (solicitaEsteModulo) {
@@ -690,7 +608,7 @@
             });
             totalExamenesAsignados++;
           } else {
-            celdasFilaTSV.push(''); // Celda vacía para Google Sheets
+            celdasFilaTSV.push('');
             celdasFilaHTML.push({
               tipo: 'examen',
               activo: false,
@@ -707,7 +625,6 @@
         });
       });
 
-      // Guardar en el estado global
       currentMatrixData = {
         headersTSV: filaHeadersTSV,
         rowsTSV: filasTSV,
@@ -718,15 +635,12 @@
         totalExamenes: totalExamenesAsignados
       };
 
-      // Actualizar Métricas
       statAlumnos.textContent = alumnos.length;
       statTurnos.textContent = turnosDetallados.length;
       statExamenes.textContent = totalExamenesAsignados;
 
-      // Renderizar tabla visual
       renderizarTablaVisual(filaHeadersTSV, maxColsAlumno, turnosDetallados, filasHTML);
 
-      // Mostrar sección de resultados
       resultadoSeccion.classList.remove('hidden');
       resultadoSeccion.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -734,7 +648,6 @@
     }
 
     function renderizarTablaVisual(headers, numColsAlumno, turnos, filas) {
-      // Header
       matrizThead.innerHTML = '';
       const trHead = document.createElement('tr');
       
@@ -746,7 +659,6 @@
           th.className += " bg-slate-100 text-slate-700 sticky left-0 z-10 min-w-[140px]";
           th.textContent = headerText;
         } else {
-          // Columna de Turno de Examen Cronológico
           const turnoIdx = colIdx - numColsAlumno;
           const turno = turnos[turnoIdx];
           th.className += " bg-sky-50/80 text-brand-800 text-center min-w-[160px]";
@@ -768,7 +680,6 @@
       });
       matrizThead.appendChild(trHead);
 
-      // Body
       matrizTbody.innerHTML = '';
       filas.forEach((filaObj, rIdx) => {
         const tr = document.createElement('tr');
@@ -782,7 +693,6 @@
             td.className += " font-medium text-slate-800 bg-inherit sticky left-0 z-0";
             td.textContent = celda.valor || '';
           } else {
-            // Celda de Examen
             td.className += " text-center font-mono";
             if (celda.activo) {
               td.innerHTML = `
@@ -819,7 +729,6 @@
 
       const contenidoTSV = filasFinales.join('\n');
 
-      // Copiado seguro usando textarea temporal compatible con el entorno iframe
       const tempTextArea = document.createElement('textarea');
       tempTextArea.value = contenidoTSV;
       tempTextArea.style.position = 'fixed';
@@ -871,7 +780,6 @@
       }, 4200);
     }
 
-    // Datos de ejemplo representativos de Google Sheets
     const EJEMPLO_SHEETS = [
       "LOPEZ\tGARCIA\tJUAN CARLOS\t20210012\t14\t20\t11\t",
       "HERNANDEZ\tMARTINEZ\tMARIA FERNANDA\t20210045\t1\t4\t15\t21",
@@ -899,7 +807,6 @@
     btnProcesar.addEventListener('click', procesarMatriz);
     btnCopiarSheets.addEventListener('click', copiarMatrizParaGoogleSheets);
 
-    // Inicialización al cargar la página
     window.addEventListener('DOMContentLoaded', () => {
       initEtapasSelector();
     });
