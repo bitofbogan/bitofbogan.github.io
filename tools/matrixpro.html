@@ -697,11 +697,23 @@
     btnVerSoledad.addEventListener('click', () => setSedeActiva('soledad'));
 
     /**
-     * Renderiza la matriz de la sede activa
+     * Obtiene únicamente los turnos que presentan los alumnos de la sede seleccionada
+     */
+    function getTurnosParaSede(alumnosSede) {
+      const modulosSede = new Set();
+      alumnosSede.forEach(al => {
+        al.modulos.forEach(m => modulosSede.add(m));
+      });
+      return turnosDetallados.filter(t => modulosSede.has(t.moduloId));
+    }
+
+    /**
+     * Renderiza la matriz de la sede activa (filtrada a sólo sus exámenes relevantes)
      */
     function renderizarMatrizSede() {
       const mostrarAlumno = checkMostrarColumnasAlumno.checked;
       const alumnosMostrar = sedeActiva === 'ermita' ? alumnosErmita : alumnosSoledad;
+      const turnosSede = getTurnosParaSede(alumnosMostrar);
 
       // 1. Header
       matrizThead.innerHTML = '';
@@ -716,7 +728,7 @@
         });
       }
 
-      turnosDetallados.forEach((turno) => {
+      turnosSede.forEach((turno) => {
         const th = document.createElement('th');
         th.className = "py-2.5 px-3 border-b border-r border-slate-200 bg-sky-50/80 text-brand-800 text-center min-w-[170px]";
         const isRepuesto = !!repuestoState[turno.moduloId];
@@ -754,14 +766,14 @@
 
       // 2. Body
       matrizTbody.innerHTML = '';
-      const conteoPorTurno = new Array(turnosDetallados.length).fill(0);
+      const conteoPorTurno = new Array(turnosSede.length).fill(0);
 
-      if (alumnosMostrar.length === 0) {
+      if (alumnosMostrar.length === 0 || turnosSede.length === 0) {
         const trVacio = document.createElement('tr');
         const tdVacio = document.createElement('td');
-        tdVacio.colSpan = (mostrarAlumno ? 4 : 0) + turnosDetallados.length;
+        tdVacio.colSpan = (mostrarAlumno ? 4 : 0) + Math.max(turnosSede.length, 1);
         tdVacio.className = "py-8 text-center text-slate-400 font-medium";
-        tdVacio.textContent = `No hay alumnos cargados en la sede ${sedeActiva === 'ermita' ? 'Ermita' : 'Soledad'}.`;
+        tdVacio.textContent = `No hay exámenes o alumnos cargados en la sede ${sedeActiva === 'ermita' ? 'Ermita' : 'Soledad'}.`;
         trVacio.appendChild(tdVacio);
         matrizTbody.appendChild(trVacio);
       } else {
@@ -778,7 +790,7 @@
             });
           }
 
-          turnosDetallados.forEach((turno, tIdx) => {
+          turnosSede.forEach((turno, tIdx) => {
             const td = document.createElement('td');
             td.className = "py-2 px-3 border-b border-r border-slate-200/80 text-xs text-center font-mono";
 
@@ -816,7 +828,7 @@
         trFoot.appendChild(tdLabel);
       }
 
-      turnosDetallados.forEach((turno, tIdx) => {
+      turnosSede.forEach((turno, tIdx) => {
         const tdCount = document.createElement('td');
         tdCount.className = "py-2.5 px-3 border-r border-slate-300 text-center font-mono text-xs font-bold text-brand-800 bg-sky-100/50";
         tdCount.innerHTML = `<span class="inline-block px-2 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-200/60">${conteoPorTurno[tIdx]}</span>`;
@@ -833,18 +845,20 @@
     });
 
     /**
-     * Copiar Matriz TSV de la Sede Activa
+     * Copiar Matriz TSV de la Sede Activa (sólo columnas relevantes de la sede)
      */
     function copiarMatrizParaGoogleSheets() {
       const alumnosMostrar = sedeActiva === 'ermita' ? alumnosErmita : alumnosSoledad;
-      if (alumnosMostrar.length === 0 || turnosDetallados.length === 0) {
-        showToast("Error", `No hay alumnos en la sede ${sedeActiva === 'ermita' ? 'Ermita' : 'Soledad'} para copiar.`, "error");
+      const turnosSede = getTurnosParaSede(alumnosMostrar);
+
+      if (alumnosMostrar.length === 0 || turnosSede.length === 0) {
+        showToast("Error", `No hay exámenes para la sede ${sedeActiva === 'ermita' ? 'Ermita' : 'Soledad'} para copiar.`, "error");
         return;
       }
 
       const mostrarAlumno = checkMostrarColumnasAlumno.checked;
       const filasTSV = [];
-      const conteoPorTurno = new Array(turnosDetallados.length).fill(0);
+      const conteoPorTurno = new Array(turnosSede.length).fill(0);
 
       alumnosMostrar.forEach(alumno => {
         const celdasFila = [];
@@ -853,7 +867,7 @@
           alumno.datosAlumno.forEach(val => celdasFila.push(val || ''));
         }
 
-        turnosDetallados.forEach((turno, tIdx) => {
+        turnosSede.forEach((turno, tIdx) => {
           if (alumno.modulos.includes(turno.moduloId)) {
             conteoPorTurno[tIdx]++;
             const esRepuesto = !!repuestoState[turno.moduloId];
@@ -889,22 +903,44 @@
 
     /**
      * Helper de formateo para listas de nombres en español (con ampersand '&')
-     * e inclusión de "TODOS" si presentan todos los alumnos de la sede
      */
-    function formatearListaSede(alumnosSedePresentan, totalAlumnosSede) {
+    function formatearNombresCadena(nombresArr) {
+      if (!nombresArr || nombresArr.length === 0) return '';
+      if (nombresArr.length === 1) return nombresArr[0];
+      if (nombresArr.length === 2) return `${nombresArr[0]} & ${nombresArr[1]}`;
+      const ult = nombresArr[nombresArr.length - 1];
+      const prev = nombresArr.slice(0, nombresArr.length - 1).join(', ');
+      return `${prev} & ${ult}`;
+    }
+
+    /**
+     * Formateador inteligente para sedes:
+     * - Si presentan todos: "TODOS."
+     * - Si los que NO presentan son <= 30% del grupo: "(TODOS excepto aaa & bbb)."
+     * - En cualquier otro caso: lista normal de quienes presentan.
+     */
+    function formatearListaSede(alumnosSedePresentan, todosAlumnosSede) {
       if (!alumnosSedePresentan || alumnosSedePresentan.length === 0) return '';
-      
-      // Si todos los alumnos cargados de la sede presentan (y son 2 o más)
-      if (totalAlumnosSede > 1 && alumnosSedePresentan.length === totalAlumnosSede) {
+      const totalSede = todosAlumnosSede.length;
+
+      // 1. Si presentan absolutamente todos (con al menos 2 alumnos)
+      if (totalSede > 1 && alumnosSedePresentan.length === totalSede) {
         return 'TODOS.';
       }
 
-      const nombresArr = alumnosSedePresentan.map(a => resolverNombreAlumno(a));
-      if (nombresArr.length === 1) return `${nombresArr[0]}.`;
-      if (nombresArr.length === 2) return `${nombresArr[0]} & ${nombresArr[1]}.`;
-      const ult = nombresArr[nombresArr.length - 1];
-      const prev = nombresArr.slice(0, nombresArr.length - 1).join(', ');
-      return `${prev} & ${ult}.`;
+      // Identificar quiénes NO presentan en este turno
+      const idsPresentan = new Set(alumnosSedePresentan.map(a => a.index));
+      const noPresentan = todosAlumnosSede.filter(a => !idsPresentan.has(a.index));
+
+      // 2. Si los que NO presentan son poquitos (<= 30% del grupo total y al menos 1)
+      if (totalSede >= 3 && noPresentan.length > 0 && (noPresentan.length / totalSede) <= 0.30) {
+        const nombresExcluidos = noPresentan.map(a => resolverNombreAlumno(a));
+        return `(TODOS excepto ${formatearNombresCadena(nombresExcluidos)}).`;
+      }
+
+      // 3. Formato normal: listar a los que presentan
+      const nombresPresentan = alumnosSedePresentan.map(a => resolverNombreAlumno(a));
+      return `${formatearNombresCadena(nombresPresentan)}.`;
     }
 
     /**
@@ -957,11 +993,11 @@
             const lineasBloque = [horaHeader, tituloExamen];
 
             if (alumnosErmitaTurno.length > 0) {
-              const textoErmita = formatearListaSede(alumnosErmitaTurno, alumnosErmita.length);
+              const textoErmita = formatearListaSede(alumnosErmitaTurno, alumnosErmita);
               lineasBloque.push(`Ermita: ${textoErmita}`);
             }
             if (alumnosSoledadTurno.length > 0) {
-              const textoSoledad = formatearListaSede(alumnosSoledadTurno, alumnosSoledad.length);
+              const textoSoledad = formatearListaSede(alumnosSoledadTurno, alumnosSoledad);
               lineasBloque.push(`Soledad: ${textoSoledad}`);
             }
 
@@ -1157,7 +1193,7 @@
       }, 4200);
     }
 
-    // Datos de Ejemplo representativos[cite: 1]
+    // Datos de Ejemplo representativos
     const EJEMPLO_ERMITA = [
       "Alba\tGarcia\tReyna Ximena\t261105003880\t19\t8\t\t",
       "Celedonio\tAlmaguer\tMaría Paola\t261105006616\t19\t8\t\t",
