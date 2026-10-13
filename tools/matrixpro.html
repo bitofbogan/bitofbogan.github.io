@@ -1012,12 +1012,14 @@
 
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between pb-2 border-b border-slate-200/80">
-              <h4 class="font-bold text-xs text-brand-900 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                ${diaObj.diaTexto}
-              </h4>
-              <button type="button" data-dia-idx="${dIdx}" class="btnCopiarDia text-[11px] font-semibold text-indigo-700 bg-white hover:bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-lg shadow-sm transition">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 gap-2">
+              <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                <input type="checkbox" data-check-dia="${dIdx}" checked class="checkDiaSemana w-3.5 h-3.5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
+                <h4 class="font-bold text-xs text-brand-900 truncate">
+                  ${diaObj.diaTexto}
+                </h4>
+              </label>
+              <button type="button" data-dia-idx="${dIdx}" class="btnCopiarDia flex-shrink-0 text-[11px] font-semibold text-indigo-700 bg-white hover:bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-lg shadow-sm transition">
                 📋 Copiar día
               </button>
             </div>
@@ -1029,12 +1031,15 @@
         contenedorDiasCalendario.appendChild(card);
       });
 
+      // Copiado individual de un día: envuelto en comillas para guardarse en una sola celda de Sheets
       contenedorDiasCalendario.querySelectorAll('.btnCopiarDia').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const idx = e.currentTarget.getAttribute('data-dia-idx');
           const txtArea = contenedorDiasCalendario.querySelector(`textarea[data-textarea-dia="${idx}"]`);
           if (txtArea) {
-            copiarTextoPortapapeles(txtArea.value, "Bloque del día copiado para su celda en Google Sheets.");
+            let val = txtArea.value;
+            const textoEnCeldaUnica = `"${val.replace(/"/g, '""')}"`;
+            copiarTextoPortapapeles(textoEnCeldaUnica, "Bloque del día copiado para una sola celda en Google Sheets.");
           }
         });
       });
@@ -1042,23 +1047,38 @@
 
     /**
      * Copiar la semana completa en una sola fila (TSV horizontal)
+     * Respetando únicamente los días marcados con el checkbox
      */
     btnCopiarSemanaCalendario.addEventListener('click', () => {
-      const txtAreas = contenedorDiasCalendario.querySelectorAll('textarea');
-      if (txtAreas.length === 0) {
+      const cards = contenedorDiasCalendario.children;
+      if (cards.length === 0) {
         showToast("Error", "No hay días generados en el calendario.", "error");
         return;
       }
 
       const celdasFila = [];
-      txtAreas.forEach(ta => {
-        let val = ta.value;
-        val = `"${val.replace(/"/g, '""')}"`;
-        celdasFila.push(val);
-      });
+      let diasIncluidos = 0;
+
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const chk = card.querySelector('.checkDiaSemana');
+        const txtArea = card.querySelector('textarea');
+
+        if (chk && chk.checked && txtArea) {
+          let val = txtArea.value;
+          val = `"${val.replace(/"/g, '""')}"`;
+          celdasFila.push(val);
+          diasIncluidos++;
+        }
+      }
+
+      if (diasIncluidos === 0) {
+        showToast("Advertencia", "No tienes ningún día seleccionado para copiar.", "warn");
+        return;
+      }
 
       const tsvSemana = celdasFila.join('\t');
-      copiarTextoPortapapeles(tsvSemana, "Fila de la semana copiada.");
+      copiarTextoPortapapeles(tsvSemana, `Fila copiada con ${diasIncluidos} días seleccionados.`);
     });
 
     /**
