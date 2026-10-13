@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador de calendario</title>
+  <title>Prepa Auge | Calendarizador de Exámenes</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -223,10 +223,10 @@
           <!-- Botones de Cambio Exclusivo: Sólo Ermita / Sólo Soledad -->
           <div class="inline-flex rounded-xl p-1 bg-slate-100 border border-slate-200" role="group">
             <button id="btnVerErmita" type="button" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition bg-white text-brand-800 shadow-sm">
-              Sólo Ermita
+              Ermita
             </button>
             <button id="btnVerSoledad" type="button" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900">
-              Sólo Soledad
+              Soledad
             </button>
           </div>
 
@@ -273,7 +273,7 @@
 
         <div class="flex items-center gap-3">
           <button id="btnCopiarSemanaCalendario" type="button" class="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             📅 Copiar fila de semana
           </button>
         </div>
@@ -300,7 +300,7 @@
 
   <footer class="mt-auto bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <p>Prepa Auge | Calendarizador de exámenes</p>
+      <p>Prepa Auge | Calendarizador de Exámenes</p>
       <p class="text-slate-400">Compatible con Google Sheets, Excel y LibreOffice Calc</p>
     </div>
   </footer>
@@ -458,11 +458,9 @@
     }
 
     function resolverNombreAlumno(alumno) {
-      // Si tiene alias configurado por matrícula
       if (alumno.matricula && aliasStore[alumno.matricula]) {
         return aliasStore[alumno.matricula];
       }
-      // Por defecto: primera palabra de la columna nombres
       if (alumno.nombres) {
         const parts = alumno.nombres.trim().split(/\s+/);
         if (parts.length > 0 && parts[0]) return parts[0];
@@ -509,7 +507,7 @@
       if (etapa) {
         periodoTexto.textContent = etapa.periodo || 'Periodo no especificado';
         fechaFinTexto.textContent = etapa.fechaFin ? `Fecha límite: ${etapa.fechaFin}` : '';
-        resumenEtapaBadge.textContent = `Etapa: ${etapa.label || etapaKey}`;
+        resumenEtapaBadge.textContent = `${etapa.label || etapaKey}`;
       }
     }
 
@@ -610,7 +608,6 @@
         return;
       }
 
-      // Conjunto único de exámenes solicitados entre ambas sedes
       const todosModulosSet = new Set();
       todosAlumnos.forEach(al => {
         al.modulos.forEach(m => todosModulosSet.add(m));
@@ -621,7 +618,6 @@
         return;
       }
 
-      // Resolver fechas y ordenar cronológicamente
       turnosDetallados = [];
       todosModulosSet.forEach(moduloId => {
         const infoHorario = etapaActual.horarios[moduloId];
@@ -649,7 +645,6 @@
         });
       });
 
-      // Orden cronológico estricto de izquierda a derecha
       turnosDetallados.sort((a, b) => {
         if (a.timestamp !== b.timestamp) {
           return a.timestamp - b.timestamp;
@@ -657,14 +652,12 @@
         return a.moduloId - b.moduloId;
       });
 
-      // Métricas
       let totalAsignaciones = 0;
       todosAlumnos.forEach(a => totalAsignaciones += a.modulos.length);
       statAlumnos.textContent = todosAlumnos.length;
       statTurnos.textContent = turnosDetallados.length;
       statExamenes.textContent = totalAsignaciones;
 
-      // Si una sede está vacía, ajustar selección inicial
       if (alumnosErmita.length === 0 && alumnosSoledad.length > 0) {
         setSedeActiva('soledad');
       } else {
@@ -717,7 +710,7 @@
       if (mostrarAlumno) {
         HEADERS_ALUMNO.forEach(h => {
           const th = document.createElement('th');
-          th.className = "py-3 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-r border-slate-200 bg-slate-100 text-slate-700 sticky left-0 z-10 min-w-[130px]";
+          th.className = "py-3 px-3 font-semibold uppercase tracking-wider text-[11px] border-b border-r border-slate-200 bg-slate-100 text-slate-700 sticky left-0 z-10 min-w-[130px] text-center";
           th.textContent = h;
           trHead.appendChild(th);
         });
@@ -750,13 +743,12 @@
       });
       matrizThead.appendChild(trHead);
 
-      // Event listeners para los checkboxes de repuesto
       matrizThead.querySelectorAll('.repuesto-checkbox').forEach(chk => {
         chk.addEventListener('change', (e) => {
           const modId = parseInt(e.target.getAttribute('data-repuesto-mod'), 10);
           repuestoState[modId] = e.target.checked;
           renderizarMatrizSede();
-          renderizarCalendarioGrupal(); // Actualiza también el calendario a "REPUESTO"
+          renderizarCalendarioGrupal();
         });
       });
 
@@ -875,7 +867,6 @@
         filasTSV.push(celdasFila.join('\t'));
       });
 
-      // Fila de Totales
       const filaTotales = [];
       if (mostrarAlumno) {
         filaTotales.push(`Total ${sedeActiva === 'ermita' ? 'Ermita' : 'Soledad'}`);
@@ -898,9 +889,17 @@
 
     /**
      * Helper de formateo para listas de nombres en español (con ampersand '&')
+     * e inclusión de "TODOS" si presentan todos los alumnos de la sede
      */
-    function formatearListaNombres(nombresArr) {
-      if (!nombresArr || nombresArr.length === 0) return '';
+    function formatearListaSede(alumnosSedePresentan, totalAlumnosSede) {
+      if (!alumnosSedePresentan || alumnosSedePresentan.length === 0) return '';
+      
+      // Si todos los alumnos cargados de la sede presentan (y son 2 o más)
+      if (totalAlumnosSede > 1 && alumnosSedePresentan.length === totalAlumnosSede) {
+        return 'TODOS.';
+      }
+
+      const nombresArr = alumnosSedePresentan.map(a => resolverNombreAlumno(a));
       if (nombresArr.length === 1) return `${nombresArr[0]}.`;
       if (nombresArr.length === 2) return `${nombresArr[0]} & ${nombresArr[1]}.`;
       const ult = nombresArr[nombresArr.length - 1];
@@ -928,7 +927,6 @@
     function renderizarCalendarioGrupal() {
       contenedorDiasCalendario.innerHTML = '';
 
-      // Agrupar turnos cronológicos por día
       const diasAgrupados = {};
       turnosDetallados.forEach(turno => {
         const diaClave = turno.infoHorario.dia || 'Sin Fecha';
@@ -948,28 +946,23 @@
         const bloquesTextoDia = [];
 
         diaObj.turnos.forEach(turno => {
-          // Filtrar alumnos de Ermita y Soledad para este turno
-          const nombresErmita = alumnosErmita
-            .filter(a => a.modulos.includes(turno.moduloId))
-            .map(a => resolverNombreAlumno(a));
+          const alumnosErmitaTurno = alumnosErmita.filter(a => a.modulos.includes(turno.moduloId));
+          const alumnosSoledadTurno = alumnosSoledad.filter(a => a.modulos.includes(turno.moduloId));
 
-          const nombresSoledad = alumnosSoledad
-            .filter(a => a.modulos.includes(turno.moduloId))
-            .map(a => resolverNombreAlumno(a));
-
-          // Solo renderizar el turno si al menos una sede presenta
-          if (nombresErmita.length > 0 || nombresSoledad.length > 0) {
+          if (alumnosErmitaTurno.length > 0 || alumnosSoledadTurno.length > 0) {
             const horaHeader = formatHoraAmPm(turno.infoHorario.hora);
             const esRepuesto = !!repuestoState[turno.moduloId];
             const tituloExamen = esRepuesto ? `Examen M${turno.moduloId} REPUESTO` : `Examen M${turno.moduloId}`;
 
             const lineasBloque = [horaHeader, tituloExamen];
 
-            if (nombresErmita.length > 0) {
-              lineasBloque.push(`Ermita: ${formatearListaNombres(nombresErmita)}`);
+            if (alumnosErmitaTurno.length > 0) {
+              const textoErmita = formatearListaSede(alumnosErmitaTurno, alumnosErmita.length);
+              lineasBloque.push(`Ermita: ${textoErmita}`);
             }
-            if (nombresSoledad.length > 0) {
-              lineasBloque.push(`Soledad: ${formatearListaNombres(nombresSoledad)}`);
+            if (alumnosSoledadTurno.length > 0) {
+              const textoSoledad = formatearListaSede(alumnosSoledadTurno, alumnosSoledad.length);
+              lineasBloque.push(`Soledad: ${textoSoledad}`);
             }
 
             bloquesTextoDia.push(lineasBloque.join('\n'));
@@ -978,7 +971,6 @@
 
         const textoCompletoDia = bloquesTextoDia.join('\n\n');
 
-        // Tarjeta Diaria
         const card = document.createElement('div');
         card.className = "bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex flex-col justify-between space-y-3";
 
@@ -1001,7 +993,6 @@
         contenedorDiasCalendario.appendChild(card);
       });
 
-      // Listener individual para botón de cada día
       contenedorDiasCalendario.querySelectorAll('.btnCopiarDia').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const idx = e.currentTarget.getAttribute('data-dia-idx');
@@ -1025,7 +1016,6 @@
 
       const celdasFila = [];
       txtAreas.forEach(ta => {
-        // Envolver en comillas para que Sheets respete los saltos de línea internos en una sola celda
         let val = ta.value;
         val = `"${val.replace(/"/g, '""')}"`;
         celdasFila.push(val);
@@ -1041,7 +1031,6 @@
     function renderizarGestorAlias(todosAlumnos) {
       listaAliasInputs.innerHTML = '';
       
-      // Eliminar duplicados por matrícula
       const alumnosUnicos = [];
       const seen = new Set();
       todosAlumnos.forEach(a => {
@@ -1076,7 +1065,7 @@
           if (mat) {
             aliasStore[mat] = val;
             saveAliasStore();
-            renderizarCalendarioGrupal(); // Actualiza al instante los nombres en el calendario
+            renderizarCalendarioGrupal();
           }
         });
       });
@@ -1211,7 +1200,6 @@
 
     btnProcesar.addEventListener('click', procesarTodo);
 
-    // Inicialización al cargar la página
     window.addEventListener('DOMContentLoaded', () => {
       inputErmita.value = '';
       inputSoledad.value = '';
