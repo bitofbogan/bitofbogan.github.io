@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Balanceo y Conservación de Masa</title>
+  <title>Simulador de Balanceo Molecular</title>
   <style>
     :root {
-      --bg: #090d16;
-      --surface: #131b2e;
+      --bg: #070b14;
+      --surface: #0f172a;
       --surface-light: #1e293b;
       --border: #334155;
       --text: #f8fafc;
@@ -272,14 +272,14 @@
     }
 
     .stage {
-      background: rgba(9, 13, 22, 0.7);
+      background: rgba(7, 11, 20, 0.85);
       border: 1px solid var(--border);
       border-radius: 0.5rem;
       padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      min-height: 380px;
+      min-height: 400px;
     }
 
     .stage-title {
@@ -296,78 +296,97 @@
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
-      gap: 1.25rem;
+      gap: 1.5rem;
       flex: 1;
     }
 
-    /* Racimo Molecular */
+    /* Racimo Molecular con respiración y flotación visible */
     .molecule-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
-      background: rgba(30, 41, 59, 0.35);
-      border: 1px dashed var(--border);
-      border-radius: 0.5rem;
-      padding: 0.6rem;
-      animation: moleculeFloat 3.8s ease-in-out infinite alternate;
+      gap: 0.5rem;
+      background: rgba(30, 41, 59, 0.25);
+      border: 1px dashed rgba(71, 85, 105, 0.6);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      animation: moleculeBreathing 3s ease-in-out infinite alternate;
+      will-change: transform;
     }
 
-    @keyframes moleculeFloat {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-4px) rotate(0.6deg); }
+    .molecule-card.paused-anim {
+      animation-play-state: paused !important;
+    }
+
+    @keyframes moleculeBreathing {
+      0% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) scale(1.03) rotate(1.2deg);
+      }
+      100% {
+        transform: translateY(4px) scale(0.98) rotate(-0.8deg);
+      }
     }
 
     .molecule-body {
       position: relative;
-      width: 110px;
-      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .molecule-caption {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.7);
-      padding: 0.15rem 0.5rem;
-      border-radius: 0.25rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.35rem;
       border: 1px solid var(--border);
+      letter-spacing: 0.02em;
     }
 
-    /* Esfera de Átomo */
+    /* Esfera de Átomo con colores vivos */
     .atom-ball {
       position: absolute;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
       user-select: none;
-      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6), 0 3px 6px rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        inset -4px -4px 8px rgba(0, 0, 0, 0.7),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.45),
+        0 4px 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.35);
       transition: transform 0.15s ease;
       z-index: 2;
     }
 
     .atom-ball:hover {
-      transform: scale(1.15) !important;
+      transform: scale(1.18) !important;
       z-index: 10;
     }
 
     .atom-pulse-missing {
-      animation: alertPulse 0.7s infinite alternate;
+      animation: alertPulse 0.5s infinite alternate !important;
     }
 
     @keyframes alertPulse {
-      0% { box-shadow: 0 0 4px #ef4444; }
-      100% { box-shadow: 0 0 16px #ef4444, inset 0 0 8px #ef4444; }
+      0% {
+        box-shadow: 0 0 6px #ef4444, inset 0 0 4px #ef4444;
+      }
+      100% {
+        box-shadow: 0 0 24px #ff0000, inset 0 0 12px #ff0000;
+        transform: scale(1.12);
+      }
     }
 
-    /* Balanza / Tug-of-war */
+    /* Balanza Tug-of-war */
     .balance-meters-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -412,12 +431,12 @@
     }
 
     .color-dot {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.4);
     }
 
-    /* Barra de desplazamiento dinámico */
     .meter-track {
       position: relative;
       height: 12px;
@@ -433,7 +452,7 @@
       bottom: 0;
       left: 50%;
       width: 2px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.45);
       transform: translateX(-50%);
       z-index: 3;
     }
@@ -459,11 +478,11 @@
       display: none;
     }
 
-    /* Modal de Inspección */
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       align-items: center;
       justify-content: center;
@@ -490,14 +509,15 @@
     }
 
     .modal-sym-badge {
-      width: 48px;
-      height: 48px;
-      border-radius: 0.5rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 0.6rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
+      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.4);
     }
 
     .modal-table {
@@ -511,7 +531,7 @@
     }
 
     .modal-table td {
-      padding: 0.4rem 0;
+      padding: 0.45rem 0;
     }
 
     .modal-table td:first-child {
@@ -531,7 +551,7 @@
       font-weight: 600;
     }
 
-    /* Capa flotante de animación física */
+    /* Contenedor flotante para clones voladores */
     #flight-canvas {
       position: fixed;
       top: 0;
@@ -539,7 +559,7 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 1500;
+      z-index: 3000;
     }
   </style>
 </head>
@@ -619,86 +639,94 @@
     </div>
   </div>
 
-  <!-- Capa invisible para los átomos voladores -->
   <div id="flight-canvas"></div>
 
   <script>
-    // Catálogo Químico con radios relativos proporcionales
+    // Paleta de colores vivos con gradientes de alto contraste
     const ELEMENTS = {
-      H:  { name: "Hidrógeno", z: 1, mass: 1, type: "No metal", state: "Gas", color: "#f8fafc", text: "#0f172a", radius: 26 },
-      C:  { name: "Carbono", z: 6, mass: 12, type: "No metal", state: "Sólido", color: "#334155", text: "#ffffff", radius: 38 },
-      N:  { name: "Nitrógeno", z: 7, mass: 14, type: "No metal", state: "Gas", color: "#2563eb", text: "#ffffff", radius: 38 },
-      O:  { name: "Oxígeno", z: 8, mass: 16, type: "No metal", state: "Gas", color: "#dc2626", text: "#ffffff", radius: 38 },
-      Na: { name: "Sodio", z: 11, mass: 23, type: "Metal alcalino", state: "Sólido", color: "#9333ea", text: "#ffffff", radius: 46 },
-      Mg: { name: "Magnesio", z: 12, mass: 24, type: "Metal alcalinotérreo", state: "Sólido", color: "#16a34a", text: "#ffffff", radius: 44 },
-      Al: { name: "Aluminio", z: 13, mass: 27, type: "Metal del bloque p", state: "Sólido", color: "#94a3b8", text: "#0f172a", radius: 44 },
-      P:  { name: "Fósforo", z: 15, mass: 31, type: "No metal", state: "Sólido", color: "#ea580c", text: "#ffffff", radius: 42 },
-      S:  { name: "Azufre", z: 16, mass: 32, type: "No metal", state: "Sólido", color: "#eab308", text: "#0f172a", radius: 44 },
-      Cl: { name: "Cloro", z: 17, mass: 35, type: "Halógeno", state: "Gas", color: "#10b981", text: "#0f172a", radius: 42 },
-      K:  { name: "Potasio", z: 19, mass: 39, type: "Metal alcalino", state: "Sólido", color: "#7c3aed", text: "#ffffff", radius: 52 },
-      Ca: { name: "Calcio", z: 20, mass: 40, type: "Metal alcalinotérreo", state: "Sólido", color: "#059669", text: "#ffffff", radius: 48 },
-      Fe: { name: "Hierro", z: 26, mass: 56, type: "Metal de transición", state: "Sólido", color: "#d97706", text: "#0f172a", radius: 46 },
-      Cu: { name: "Cobre", z: 29, mass: 64, type: "Metal de transición", state: "Sólido", color: "#b45309", text: "#ffffff", radius: 46 },
-      Zn: { name: "Zinc", z: 30, mass: 65, type: "Metal de transición", state: "Sólido", color: "#64748b", text: "#ffffff", radius: 46 },
-      Ag: { name: "Plata", z: 47, mass: 108, type: "Metal de transición", state: "Sólido", color: "#cbd5e1", text: "#0f172a", radius: 48 }
+      H:  { name: "Hidrógeno", z: 1, mass: 1, type: "No metal", state: "Gas", grad: "radial-gradient(circle at 35% 30%, #e0f2fe, #38bdf8 55%, #0284c7 95%)", dot: "#38bdf8", text: "#041427", radius: 22 },
+      C:  { name: "Carbono", z: 6, mass: 12, type: "No metal", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #64748b, #334155 55%, #0f172a 95%)", dot: "#94a3b8", text: "#ffffff", radius: 36 },
+      N:  { name: "Nitrógeno", z: 7, mass: 14, type: "No metal", state: "Gas", grad: "radial-gradient(circle at 35% 30%, #818cf8, #4f46e5 55%, #1e1b4b 95%)", dot: "#6366f1", text: "#ffffff", radius: 36 },
+      O:  { name: "Oxígeno", z: 8, mass: 16, type: "No metal", state: "Gas", grad: "radial-gradient(circle at 35% 30%, #ff6b6b, #ef4444 55%, #7f1d1d 95%)", dot: "#ef4444", text: "#ffffff", radius: 36 },
+      Na: { name: "Sodio", z: 11, mass: 23, type: "Metal alcalino", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #e879f9, #a855f7 55%, #581c87 95%)", dot: "#c084fc", text: "#ffffff", radius: 48 },
+      Mg: { name: "Magnesio", z: 12, mass: 24, type: "Metal alcalinotérreo", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #4ade80, #16a34a 55%, #14532d 95%)", dot: "#22c55e", text: "#ffffff", radius: 46 },
+      Al: { name: "Aluminio", z: 13, mass: 27, type: "Metal del bloque p", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #cbd5e1, #94a3b8 55%, #475569 95%)", dot: "#cbd5e1", text: "#0f172a", radius: 46 },
+      P:  { name: "Fósforo", z: 15, mass: 31, type: "No metal", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #fb923c, #ea580c 55%, #7c2d12 95%)", dot: "#f97316", text: "#ffffff", radius: 42 },
+      S:  { name: "Azufre", z: 16, mass: 32, type: "No metal", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #fde047, #eab308 55%, #713f12 95%)", dot: "#eab308", text: "#0f172a", radius: 44 },
+      Cl: { name: "Cloro", z: 17, mass: 35, type: "Halógeno", state: "Gas", grad: "radial-gradient(circle at 35% 30%, #6ee7b7, #10b981 55%, #064e3b 95%)", dot: "#10b981", text: "#022c22", radius: 42 },
+      K:  { name: "Potasio", z: 19, mass: 39, type: "Metal alcalino", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #c084fc, #9333ea 55%, #3b0764 95%)", dot: "#a855f7", text: "#ffffff", radius: 56 },
+      Ca: { name: "Calcio", z: 20, mass: 40, type: "Metal alcalinotérreo", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #34d399, #059669 55%, #022c22 95%)", dot: "#10b981", text: "#ffffff", radius: 52 },
+      Fe: { name: "Hierro", z: 26, mass: 56, type: "Metal de transición", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #fdba74, #ea580c 55%, #431407 95%)", dot: "#f97316", text: "#ffffff", radius: 50 },
+      Cu: { name: "Cobre", z: 29, mass: 64, type: "Metal de transición", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #fca5a5, #b45309 55%, #451a03 95%)", dot: "#d97706", text: "#ffffff", radius: 48 },
+      Zn: { name: "Zinc", z: 30, mass: 65, type: "Metal de transición", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #94a3b8, #64748b 55%, #1e293b 95%)", dot: "#94a3b8", text: "#ffffff", radius: 48 },
+      Ag: { name: "Plata", z: 47, mass: 108, type: "Metal de transición", state: "Sólido", grad: "radial-gradient(circle at 35% 30%, #ffffff, #cbd5e1 55%, #475569 95%)", dot: "#e2e8f0", text: "#0f172a", radius: 52 }
     };
 
-    // Plantillas de Geometría Molecular 2D (coordenadas relativas en px centradas en el origen)
+    // Plantillas de Geometría Molecular
     const GEOMETRIES = {
-      // Agua: Mickey Mouse clásico (O al centro, H arriba abiertos)
-      "H2O": [
-        { elem: "O", x: 0, y: 10 },
-        { elem: "H", x: -22, y: -16 },
-        { elem: "H", x: 22, y: -16 }
-      ],
-      // Dióxido de carbono: Lineal
-      "CO2": [
-        { elem: "C", x: 0, y: 0 },
-        { elem: "O", x: -34, y: 0 },
-        { elem: "O", x: 34, y: 0 }
-      ],
-      // Metano: Tetraedro proyectado en cruz
-      "CH4": [
-        { elem: "C", x: 0, y: 0 },
-        { elem: "H", x: 0, y: -28 },
-        { elem: "H", x: -28, y: 6 },
-        { elem: "H", x: 28, y: 6 },
-        { elem: "H", x: 0, y: 30 }
-      ],
-      // Amoníaco: Piramidal trigonal
-      "NH3": [
-        { elem: "N", x: 0, y: -10 },
-        { elem: "H", x: -26, y: 18 },
-        { elem: "H", x: 0, y: 26 },
-        { elem: "H", x: 26, y: 18 }
-      ],
-      // Diatómicas comunes: Dos esferas adyacentes
-      "O2":  [{ elem: "O", x: -16, y: 0 }, { elem: "O", x: 16, y: 0 }],
-      "H2":  [{ elem: "H", x: -12, y: 0 }, { elem: "H", x: 12, y: 0 }],
-      "N2":  [{ elem: "N", x: -16, y: 0 }, { elem: "N", x: 16, y: 0 }],
-      "Cl2": [{ elem: "Cl", x: -18, y: 0 }, { elem: "Cl", x: 18, y: 0 }],
-      // Monóxido de carbono
-      "CO":  [{ elem: "C", x: -16, y: 0 }, { elem: "O", x: 16, y: 0 }],
-      // Cloruro de hidrógeno
-      "HCl": [{ elem: "Cl", x: -12, y: 0 }, { elem: "H", x: 20, y: 0 }],
-      // Sales binarias
-      "NaCl": [{ elem: "Na", x: -16, y: 0 }, { elem: "Cl", x: 18, y: 0 }],
-      "MgO":  [{ elem: "Mg", x: -16, y: 0 }, { elem: "O", x: 18, y: 0 }],
-      "CaO":  [{ elem: "Ca", x: -16, y: 0 }, { elem: "O", x: 18, y: 0 }],
-      "KCl":  [{ elem: "K", x: -16, y: 0 }, { elem: "Cl", x: 18, y: 0 }],
-      "ZnCl2": [
-        { elem: "Zn", x: 0, y: 0 },
-        { elem: "Cl", x: -28, y: 0 },
-        { elem: "Cl", x: 28, y: 0 }
-      ],
-      "CaCl2": [
-        { elem: "Ca", x: 0, y: 0 },
-        { elem: "Cl", x: -28, y: 0 },
-        { elem: "Cl", x: 28, y: 0 }
-      ]
+      "H2O": {
+        size: 130,
+        nodes: [
+          { elem: "O", x: 0, y: 14 },
+          { elem: "H", x: -28, y: -20 },
+          { elem: "H", x: 28, y: -20 }
+        ]
+      },
+      "CO2": {
+        size: 150,
+        nodes: [
+          { elem: "C", x: 0, y: 0 },
+          { elem: "O", x: -44, y: 0 },
+          { elem: "O", x: 44, y: 0 }
+        ]
+      },
+      "CH4": {
+        size: 140,
+        nodes: [
+          { elem: "C", x: 0, y: 0 },
+          { elem: "H", x: 0, y: -38 },
+          { elem: "H", x: -36, y: 12 },
+          { elem: "H", x: 36, y: 12 },
+          { elem: "H", x: 0, y: 40 }
+        ]
+      },
+      "NH3": {
+        size: 130,
+        nodes: [
+          { elem: "N", x: 0, y: -12 },
+          { elem: "H", x: -32, y: 22 },
+          { elem: "H", x: 0, y: 34 },
+          { elem: "H", x: 32, y: 22 }
+        ]
+      },
+      "O2":  { size: 120, nodes: [{ elem: "O", x: -22, y: 0 }, { elem: "O", x: 22, y: 0 }] },
+      "H2":  { size: 90,  nodes: [{ elem: "H", x: -14, y: 0 }, { elem: "H", x: 14, y: 0 }] },
+      "N2":  { size: 120, nodes: [{ elem: "N", x: -22, y: 0 }, { elem: "N", x: 22, y: 0 }] },
+      "Cl2": { size: 130, nodes: [{ elem: "Cl", x: -25, y: 0 }, { elem: "Cl", x: 25, y: 0 }] },
+      "CO":  { size: 120, nodes: [{ elem: "C", x: -20, y: 0 }, { elem: "O", x: 20, y: 0 }] },
+      "HCl": { size: 120, nodes: [{ elem: "Cl", x: -16, y: 0 }, { elem: "H", x: 26, y: 0 }] },
+      "NaCl":{ size: 130, nodes: [{ elem: "Na", x: -24, y: 0 }, { elem: "Cl", x: 26, y: 0 }] },
+      "MgO": { size: 130, nodes: [{ elem: "Mg", x: -24, y: 0 }, { elem: "O", x: 24, y: 0 }] },
+      "CaO": { size: 140, nodes: [{ elem: "Ca", x: -26, y: 0 }, { elem: "O", x: 26, y: 0 }] },
+      "KCl": { size: 140, nodes: [{ elem: "K", x: -26, y: 0 }, { elem: "Cl", x: 26, y: 0 }] },
+      "ZnCl2": {
+        size: 160,
+        nodes: [
+          { elem: "Zn", x: 0, y: 0 },
+          { elem: "Cl", x: -44, y: 0 },
+          { elem: "Cl", x: 44, y: 0 }
+        ]
+      },
+      "CaCl2": {
+        size: 160,
+        nodes: [
+          { elem: "Ca", x: 0, y: 0 },
+          { elem: "Cl", x: -46, y: 0 },
+          { elem: "Cl", x: 46, y: 0 }
+        ]
+      }
     };
 
-    // 20 Reacciones representativas sin balancear
     const PRESETS = [
       { name: "1. Síntesis del agua: H2 + O2 -> H2O", eq: "H2 + O2 -> H2O" },
       { name: "2. Síntesis de amoníaco: N2 + H2 -> NH3", eq: "N2 + H2 -> NH3" },
@@ -725,13 +753,12 @@
     let currentReaction = { reactants: [], products: [] };
     let isAnimating = false;
 
-    // Generador de disposición geométrica (predefinida o radial armónica)
+    // Disposición dinámica con espaciado según la cantidad de átomos
     function getMolecularLayout(formula, composition) {
       if (GEOMETRIES[formula]) {
         return GEOMETRIES[formula];
       }
 
-      // Fallback: Si no tiene plantilla fija, desplegar radialmente
       const atoms = [];
       for (const [elem, count] of Object.entries(composition)) {
         for (let i = 0; i < count; i++) {
@@ -740,30 +767,33 @@
       }
 
       if (atoms.length === 1) {
-        return [{ elem: atoms[0], x: 0, y: 0 }];
+        return { size: 100, nodes: [{ elem: atoms[0], x: 0, y: 0 }] };
       }
 
-      const layout = [];
+      const count = atoms.length;
+      // Radio de separación progresivo para que no se encimen
+      const dist = count <= 3 ? 34 : (count <= 5 ? 48 : 68);
+      const boxSize = Math.max(130, dist * 2 + 50);
+
+      const nodes = [];
       const centerAtom = atoms[0];
-      layout.push({ elem: centerAtom, x: 0, y: 0 });
+      nodes.push({ elem: centerAtom, x: 0, y: 0 });
 
       const outerAtoms = atoms.slice(1);
-      const radius = outerAtoms.length > 4 ? 38 : 28;
       const angleStep = (2 * Math.PI) / outerAtoms.length;
 
       outerAtoms.forEach((elem, idx) => {
         const angle = idx * angleStep - Math.PI / 2;
-        layout.push({
+        nodes.push({
           elem: elem,
-          x: Math.round(Math.cos(angle) * radius),
-          y: Math.round(Math.sin(angle) * radius)
+          x: Math.round(Math.cos(angle) * dist),
+          y: Math.round(Math.sin(angle) * dist)
         });
       });
 
-      return layout;
+      return { size: boxSize, nodes };
     }
 
-    // Parser químico
     function parseFormula(raw) {
       let formula = raw.trim();
       const comp = {};
@@ -831,7 +861,6 @@
       return f.replace(/(\d+)/g, '<sub>$1</sub>');
     }
 
-    // Render de controles superiores
     function renderFormulaBar() {
       const bar = document.getElementById("equation-bar");
       bar.innerHTML = "";
@@ -896,7 +925,6 @@
       bar.appendChild(makeSide(currentReaction.products, 'products'));
     }
 
-    // Render de los racimos moleculares
     function renderStages() {
       const rCanvas = document.getElementById("canvas-reactants");
       const pCanvas = document.getElementById("canvas-products");
@@ -912,13 +940,14 @@
             molCounter++;
             const card = document.createElement("div");
             card.className = "molecule-card";
-            // Desfasar animación de flotación para que se vea orgánico
-            card.style.animationDelay = `${(molCounter * 0.35) % 2.5}s`;
+            card.style.animationDelay = `${(molCounter * 0.45) % 3}s`;
 
             const body = document.createElement("div");
             body.className = "molecule-body";
+            body.style.width = `${layout.size}px`;
+            body.style.height = `${layout.size}px`;
 
-            layout.forEach((node, aIdx) => {
+            layout.nodes.forEach((node, aIdx) => {
               const ball = document.createElement("div");
               ball.className = "atom-ball";
               ball.dataset.element = node.elem;
@@ -927,17 +956,18 @@
               ball.textContent = node.elem;
 
               const data = ELEMENTS[node.elem] || {
-                color: "#64748b", text: "#fff", radius: 36, name: node.elem, z: "-", mass: "-"
+                grad: "radial-gradient(circle at 35% 30%, #94a3b8, #475569)",
+                dot: "#64748b", text: "#fff", radius: 36, name: node.elem, z: "-", mass: "-"
               };
 
               const d = data.radius || 36;
               ball.style.width = `${d}px`;
               ball.style.height = `${d}px`;
-              ball.style.fontSize = d < 30 ? '0.75rem' : '0.85rem';
+              ball.style.fontSize = d <= 26 ? '0.65rem' : (d <= 36 ? '0.8rem' : '0.95rem');
               ball.style.left = `calc(50% + ${node.x}px - ${d/2}px)`;
               ball.style.top = `calc(50% + ${node.y}px - ${d/2}px)`;
 
-              ball.style.background = `radial-gradient(circle at 35% 35%, ${data.color}, #000000)`;
+              ball.style.background = data.grad;
               ball.style.color = data.text;
 
               ball.onclick = (e) => {
@@ -963,7 +993,6 @@
       populate(pCanvas, currentReaction.products, "P");
     }
 
-    // Balanza Tug-of-War y Verificación
     function updateMeters() {
       const rTotals = {};
       const pTotals = {};
@@ -996,17 +1025,12 @@
         const row = document.createElement("div");
         row.className = "meter-row";
 
-        const elemData = ELEMENTS[e] || { color: '#64748b' };
+        const elemData = ELEMENTS[e] || { dot: '#64748b' };
 
-        // Sesgo dinámico: calcular posición porcentual del indicador (50% = equilibrio)
         const total = r + p;
         let leftPercent = 50;
         if (total > 0) {
-          // Si r=10 y p=0 -> leftPercent = ~10%
-          // Si r=0 y p=10 -> leftPercent = ~90%
-          // Si r=p -> leftPercent = 50%
           leftPercent = (p / total) * 100;
-          // Limitar entre 10% y 90% para no salir de los bordes del track
           leftPercent = Math.max(12, Math.min(88, leftPercent));
         }
 
@@ -1015,7 +1039,7 @@
         row.innerHTML = `
           <div class="meter-top-line">
             <span class="meter-badge">
-              <span class="color-dot" style="background:${elemData.color}"></span>
+              <span class="color-dot" style="background:${elemData.dot}"></span>
               ${e}
             </span>
             <span>
@@ -1064,17 +1088,16 @@
       const btn = document.getElementById("btn-reorganize");
       btn.disabled = true;
 
-      // Limpiar estados de alerta previos
+      // Pausar la animación de flotación para garantizar precisión de coordenadas
+      document.querySelectorAll('.molecule-card').forEach(c => c.classList.add('paused-anim'));
       document.querySelectorAll('.atom-pulse-missing').forEach(el => el.classList.remove('atom-pulse-missing'));
 
       const flightContainer = document.getElementById("flight-canvas");
       flightContainer.innerHTML = "";
 
-      // Mapear todos los átomos rendered en Reactivos y Productos
       const rBalls = Array.from(document.querySelectorAll('#canvas-reactants .atom-ball'));
       const pBalls = Array.from(document.querySelectorAll('#canvas-products .atom-ball'));
 
-      // Agrupar por elemento
       const elementsInReaction = Array.from(new Set(rBalls.map(b => b.dataset.element)));
 
       for (const elem of elementsInReaction) {
@@ -1082,19 +1105,15 @@
         const pGroup = pBalls.filter(b => b.dataset.element === elem);
 
         const pairCount = Math.min(rGroup.length, pGroup.length);
-
-        // Disparar vuelos en parejas simultáneas de este elemento
         const flightPromises = [];
 
         for (let i = 0; i < pairCount; i++) {
           const rNode = rGroup[i];
           const pNode = pGroup[i];
-
-          const p = launchFlightClone(rNode, pNode, flightContainer);
-          flightPromises.push(p);
+          flightPromises.push(launchFlightClone(rNode, pNode, flightContainer));
         }
 
-        // Si sobran átomos huérfanos de este elemento, hacerlos parpadear en rojo
+        // Resaltar huérfanos si no cuadra el balance
         if (rGroup.length > pairCount) {
           for (let i = pairCount; i < rGroup.length; i++) {
             rGroup[i].classList.add('atom-pulse-missing');
@@ -1107,9 +1126,12 @@
         }
 
         await Promise.all(flightPromises);
-        // Pausa breve antes del siguiente elemento
-        await new Promise(res => setTimeout(res, 220));
+        // Pausa entre grupos de elementos (30% más pausada)
+        await new Promise(res => setTimeout(res, 380));
       }
+
+      // Reanudar flotación
+      document.querySelectorAll('.molecule-card').forEach(c => c.classList.remove('paused-anim'));
 
       isAnimating = false;
       btn.disabled = false;
@@ -1117,42 +1139,40 @@
 
     function launchFlightClone(sourceNode, targetNode, container) {
       return new Promise(resolve => {
-        const sRect = sourceNode.getBoundingClientRect();
-        const tRect = targetNode.getBoundingClientRect();
+        const sInit = sourceNode.getBoundingClientRect();
 
         const clone = document.createElement("div");
         clone.className = "atom-ball";
-        clone.style.width = `${sRect.width}px`;
-        clone.style.height = `${sRect.height}px`;
-        clone.style.left = `${sRect.left}px`;
-        clone.style.top = `${sRect.top}px`;
+        clone.style.width = `${sInit.width}px`;
+        clone.style.height = `${sInit.height}px`;
+        clone.style.left = `${sInit.left}px`;
+        clone.style.top = `${sInit.top}px`;
         clone.style.background = sourceNode.style.background;
         clone.style.color = sourceNode.style.color;
         clone.textContent = sourceNode.textContent;
+        clone.style.fontSize = sourceNode.style.fontSize;
         clone.style.transition = "none";
         clone.style.zIndex = "3000";
-        clone.style.boxShadow = "0 0 15px rgba(56, 189, 248, 0.8)";
+        clone.style.boxShadow = "0 0 20px rgba(56, 189, 248, 0.9)";
 
         container.appendChild(clone);
-
-        // Atenuar nodo original temporalmente
         sourceNode.style.opacity = "0.2";
 
-        const startX = sRect.left;
-        const startY = sRect.top;
-        const endX = tRect.left;
-        const endY = tRect.top;
-
-        // Curvatura parabólica aleatoria suave
-        const controlY = Math.min(startY, endY) - 50 - Math.random() * 40;
-        const controlX = (startX + endX) / 2;
-
-        const duration = 750; // ms
+        const startX = sInit.left;
+        const startY = sInit.top;
+        const duration = 980; // 30% más lento (antes 750ms)
         const startTime = performance.now();
 
         function step(now) {
           const progress = Math.min((now - startTime) / duration, 1);
-          // Ecuación cuadrática de Bezier
+          // Recalcular posición final del target en cada frame por si hubo scroll
+          const tCurrent = targetNode.getBoundingClientRect();
+          const endX = tCurrent.left;
+          const endY = tCurrent.top;
+
+          const controlX = (startX + endX) / 2;
+          const controlY = Math.min(startY, endY) - 60;
+
           const t = progress;
           const currentX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * controlX + t * t * endX;
           const currentY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY;
@@ -1163,13 +1183,12 @@
           if (progress < 1) {
             requestAnimationFrame(step);
           } else {
-            // Llegada exitosa
             clone.remove();
             sourceNode.style.opacity = "1";
-            targetNode.style.transform = "scale(1.3)";
+            targetNode.style.transform = "scale(1.4)";
             setTimeout(() => {
               targetNode.style.transform = "";
-            }, 180);
+            }, 200);
             resolve();
           }
         }
@@ -1203,7 +1222,7 @@
 
       const box = document.getElementById("modal-sym-box");
       box.textContent = sym;
-      box.style.background = data.color || "#334155";
+      box.style.background = data.grad || "#334155";
       box.style.color = data.text || "#fff";
 
       document.getElementById("element-modal").style.display = "flex";
@@ -1243,7 +1262,7 @@
 
     document.getElementById("btn-reorganize").onclick = runReorganizationAnimation;
 
-    // Inicialización
+    // Arranque
     loadEquation(PRESETS[0].eq);
   </script>
 </body>
