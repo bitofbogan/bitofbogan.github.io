@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Balanceo Molecular</title>
+  <title>Simulador de Balanceo Químico</title>
   <style>
     :root {
       --bg: #070b14;
@@ -604,17 +604,16 @@
 
   <header>
     <h1>Simulador de Balanceo Molecular</h1>
-    <div style="font-size: 0.85rem; color: var(--text-muted);">Conservación de Masa en Reacciones Químicas</div>
   </header>
 
   <section class="controls-panel">
     <div class="field-group">
-      <label for="select-preset">Reacciones de Ejemplo (20 catalogadas)</label>
+      <label for="select-preset">Reacciones de ejemplo</label>
       <select id="select-preset"></select>
     </div>
 
     <div class="field-group">
-      <label for="custom-input">Escribir Ecuación Libre</label>
+      <label for="custom-input">Escribir Ecuación</label>
       <div class="custom-input-wrap">
         <input type="text" id="custom-input" placeholder="Ej: Ca(OH)2 + HCl -> CaCl2 + H2O">
         <button id="btn-load-custom">Cargar</button>
@@ -630,7 +629,7 @@
     <div class="actions-bar">
       <div class="status-banner" id="status-banner">Sin balancear</div>
       <button class="btn-reorganize" id="btn-reorganize">
-        ⚡ Simular Reorganización
+        ⚡ Simular reorganización
       </button>
     </div>
 
@@ -1123,7 +1122,7 @@
       const banner = document.getElementById("status-banner");
       if (isBalanced) {
         banner.className = "status-banner status-balanced";
-        banner.textContent = "Ecuación balanceada correctamente (Conservación de masa cumplida)";
+        banner.textContent = "Ecuación balanceada correctamente: la masa se conserva.";
       } else {
         banner.className = "status-banner status-unbalanced";
         banner.textContent = "Ecuación no balanceada";
