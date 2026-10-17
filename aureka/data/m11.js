@@ -12,20 +12,20 @@ const moduleInfo = {
 const questionBank = [
   {
     id: "m11-q01",
-    prompt: "¿Cómo se clasificó la guerra que inició Estados Unidos con el argumento de que Irak disponía de armamento nuclear y se preparaba para atacarlo?",
+    prompt: "¿Cómo se clasificó la guerra que inició Estados Unidos en contra de Iraq con el argumento de que disponía de armamento nuclear?",
     type: "choice",
-    correct: "Preventiva",
+    correct: "Preventiva.",
     distractors: [
-      "Civil",
-      "Sucia",
-      "Fría"
+      "Civil.",
+      "Sucia.",
+      "Fría."
     ],
     hint: "El conflicto se justificó atacando con antelación ante una supuesta agresión futura.",
     explanation: "Una guerra preventiva es la ofensiva que inicia un país alegando neutralizar un ataque futuro antes de que este ocurra."
   },
   {
     id: "m11-q02",
-    prompt: "¿Cuál período histórico del siglo XX propició el desarrollo de la guerra de Vietnam?",
+    prompt: "¿En que período histórico del siglo XX se desarrollo la guerra de Vietnam?",
     type: "choice",
     correct: "La Guerra Fría.",
     distractors: [
@@ -34,7 +34,7 @@ const questionBank = [
       "Segunda Guerra Mundial."
     ],
     hint: "Fue el conflicto geopolítico indirecto entre el bloque capitalista y el bloque comunista.",
-    explanation: "La confrontación de Vietnam formó parte de las guerras subsidiarias de la Guerra Fría entre las superpotencias."
+    explanation: "La confrontación de Vietnam formó parte de las guerras subsidiarias de la Guerra Fría entre Estados Unidos y la Union Sovietica."
   },
   {
     id: "m11-q03",
@@ -47,18 +47,18 @@ const questionBank = [
       "La muerte del líder de Vietnam del Sur, Ngo Dinh Diem."
     ],
     hint: "Pon atención al apoyo militar decisivo y sostenido que recibió el ejército del norte.",
-    explanation: "El respaldo con armamento, asesores y suministros por parte de la URSS fortaleció al norte para tomar Saigón."
+    explanation: "El respaldo con armamento, asesores y suministros por parte de la URSS fortaleció al norte para conquistar la capital Saigón."
   },
   {
     id: "m11-q04",
-    prompt: "Ordena cronológicamente los acontecimientos ocurridos en Sudáfrica:",
+    prompt: "Ordena cronológicamente los acontecimientos ocurridos en la descolonizacion de Sudáfrica:",
     type: "drag_order",
     correctOrder: [
-      "Fundación del Congreso Nacional Africano (ANC)",
-      "Independencia del país e integración a la Commonwealth",
-      "Aplicación de la política de segregación racial Apartheid",
-      "Encarcelamiento de Nelson Mandela",
-      "Levantamiento en el barrio negro de Soweto"
+      "Fundación del Congreso Nacional Africano (ANC).",
+      "Independencia del país e integración a la Commonwealth.",
+      "Aplicación de la política apartheid de segregación racial.",
+      "Encarcelamiento de Nelson Mandela.",
+      "Levantamiento estudiantil en el barrio negro de Soweto."
     ],
     hint: "Inicia con la creación del partido en 1912 y culmina con las revueltas estudiantiles de 1976.",
     explanation: "La secuencia histórica es: fundación del ANC (1912), independencia y Commonwealth (1931/1961), instauración del Apartheid (1948), arresto de Mandela (1962) y protestas de Soweto (1976)."
@@ -78,22 +78,22 @@ const questionBank = [
   },
   {
     id: "m11-q06",
-    prompt: "El movimiento bélico ocurrido entre los años de 1978 a 1990 y que puso fin a la dictadura de la familia Somoza, se conoce como revolución sandinista y ocurrió en",
+    prompt: "¿En donde ocurrio el movimiento bélico que puso fin a la dictadura de la familia Somoza conocido como Revolución Sandinista?",
     type: "choice",
-    correct: "Nicaragua",
+    correct: "Nicaragua.",
     distractors: [
-      "Costa Rica",
-      "El Salvador",
-      "Guatemala"
+      "Costa Rica.",
+      "El Salvador.",
+      "Guatemala."
     ],
-    hint: "País centroamericano donde el FSLN tomó la capital, Managua.",
+    hint: "País centroamericano donde el FSLN tomó la capital Managua.",
     explanation: "La Revolución Sandinista tuvo lugar en Nicaragua para derrocar a la dinastía de los Somoza."
   },
   {
     id: "m11-q07",
     prompt: "Completa los espacios en blanco del siguiente texto:",
     type: "fill_blanks",
-    sentence: "Se conoce como Revolución {0} al proceso abierto en Nicaragua en 1978 y que se extendió hasta febrero de 1990, en el que se puso fin a la dictadura de la familia {1} sustituyéndolo por un gobierno de perfil progresista de izquierda.",
+    sentence: "Se conoce como Revolución {0} al proceso en Nicaragua donde se le puso fin a la dictadura de la familia {1} sustituyéndolo por un gobierno progresista de izquierda.",
     correctOrder: [
       "Sandinista",
       "Somoza"
@@ -107,7 +107,7 @@ const questionBank = [
   },
   {
     id: "m11-q08",
-    prompt: "¿Qué fue la Perestroika?",
+    prompt: "¿Qué fue la perestroika?",
     type: "choice",
     correct: "Proceso de reforma de la Unión Soviética basado en la reestructuración de la economía.",
     distractors: [
@@ -116,7 +116,7 @@ const questionBank = [
       "Término que señala el triunfo de la Revolución Rusa ante la debacle del socialismo."
     ],
     hint: "El término en ruso traduce literalmente reestructuración.",
-    explanation: "La Perestroika, impulsada por Gorbachov, buscaba descentralizar y modernizar la economía soviética."
+    explanation: "La perestroika, impulsada por Gorbachov, buscaba descentralizar y modernizar la economía soviética."
   },
   {
     id: "m11-q09",
@@ -126,26 +126,27 @@ const questionBank = [
       { left: "Glasnost", right: "Transparencia política" },
       { left: "Perestroika", right: "Restructuración económica" }
     ],
-    hint: "Glasnost combate el secreto y la censura; Perestroika reorganiza el modelo productivo.",
-    explanation: "Glasnost introdujo libertad de expresión y transparencia institucional; Perestroika reestructuró la economía."
+    hint: "La glasnost combate el secreto y la censura; la perestroika reorganiza el modelo productivo.",
+    explanation: "La glasnost introdujo libertad de expresión y transparencia institucional; la perestroika reestructuró la economía."
   },
   {
     id: "m11-q10",
     prompt: "Completa los espacios en blanco del siguiente texto:",
     type: "fill_blanks",
-    sentence: "El caso de cambio de poderes en Portugal se gestó por una revolución integrada por {0} que no solamente cambió al Estado Novo sino que condujo a la independencia de las colonias portuguesas, entre las que se encontraban: {1}.",
+    sentence: "El cambio de poderes en Portugal se gestó por una revolución integrada por {0} que cambió al Estado Novo y condujo a la independencia de las colonias portuguesas de {1}.",
     correctOrder: [
-      "Militares de izquierda",
+      "militares de izquierda",
       "Cabo Verde, Angola y Mozambique"
     ],
     distractors: [
-      "Militares de derecha",
-      "Intelectuales de izquierda",
-      "Intelectuales de derecha",
-      "Niger, Mali y Tchad"
+      "militares de derecha",
+      "intelectuales de izquierda",
+      "intelectuales de derecha",
+      "Niger, Mali y Tchad",
+        "Cabo Verde, Argelia y Mali"
     ],
-    hint: "Fue la Revolución de los Claveles, encabezada por oficiales del ejército opuestos a las guerras coloniales africanas.",
-    explanation: "Militares progresistas del MFA terminaron con el Estado Novo y reconocieron la independencia de sus posesiones en África."
+    hint: "Fue la Revolución de los Claveles encabezada por oficiales del ejército opuestos a las guerras coloniales africanas.",
+    explanation: "Militares progresistas terminaron con el Estado Novo y reconocieron la independencia de sus posesiones en África."
   },
   {
     id: "m11-q11",
@@ -182,13 +183,13 @@ const questionBank = [
   },
   {
     id: "m11-q13",
-    prompt: "¿Cuáles son los medios de comunicación que existen actualmente en esta época de globalización que ilustran los nuevos desafíos?",
+    prompt: "¿Cuáles son los medios de comunicación que existen actualmente en la época de la globalización?",
     type: "choice",
-    correct: "Radio, televisión e Internet",
+    correct: "Radio, televisión e Internet.",
     distractors: [
-      "Prensa, Internet y buscadores",
-      "Radio, televisión y prensa",
-      "Periódico, revista y radio"
+      "Prensa, Internet y buscadores.",
+      "Radio, televisión y prensa.",
+      "Periódico, revista y radio."
     ],
     hint: "Son las tres herramientas masivas predominantes a escala planetaria.",
     explanation: "La combinación de radio, televisión y la red de internet conforma la tríada de comunicación masiva contemporánea."
@@ -199,9 +200,9 @@ const questionBank = [
     type: "match_columns",
     pairs: [
       { left: "Televisión", right: "Utilizó el iconoscopio basado en el principio de emisión fotoeléctrica emitiendo electrones que originan la señal." },
-      { left: "Internet", right: "Conjunto descentralizado de redes interconectadas que garantizan un alcance mundial." },
-      { left: "Radio", right: "Las primeras transmisiones de esta tecnología aparecieron durante la década de los años veinte y treinta." },
-      { left: "Cine", right: "Técnica de proyectar fotogramas de forma rápida y sucesiva para crear la impresión de movimiento." }
+      { left: "Internet", right: "Es un conjunto descentralizado de redes interconectadas que garantizan un alcance mundial." },
+      { left: "Radio", right: "Sus primeras transmisiones aparecieron en la década de los años veinte y treinta." },
+      { left: "Cine", right: "Es la técnica de proyectar fotogramas de forma rápida y sucesiva para crear la impresión de movimiento." }
     ],
     hint: "Asocia cada concepto técnico: iconoscopio para TV, fotogramas para cine y redes globales para Internet.",
     explanation: "El iconoscopio permitió la recepción televisiva, los fotogramas en serie dan la animación del cine y las redes conectadas forman Internet."
@@ -213,7 +214,8 @@ const questionBank = [
     pairs: [
       { left: "Heinrich Hertz", right: "Difusión de impulsos electromagnéticos en el aire." },
       { left: "Nikola Tesla", right: "Comunicación inalámbrica por medio de ondas de radio." },
-      { left: "John L. Baird", right: "Invención de la televisión en blanco y negro." }
+      { left: "John L. Baird", right: "Invención de la televisión en blanco y negro." },
+      { left: "Guillermo Gonzalez Camarena", right: "Invención de la televisión a color." },    
     ],
     hint: "Hertz confirmó físicamente las ondas electromagnéticas, Tesla patentó la radio y Baird desarrolló la televisión mecánica.",
     explanation: "Hertz descubrió la propagación de ondas en el espacio, Tesla logró la transmisión inalámbrica y Baird concibió la televisión."
@@ -244,8 +246,8 @@ const questionBank = [
     type: "multi_select",
     correctAnswers: [
       "Desarrollo de nuevos medios de grabación en acetato, con discos de 45 rpm y sonido estereofónico.",
-      "Promoción de campañas antibélicas, en especial contra la guerra de Vietnam.",
-      "Inclusión de temas contra el sistema establecido en el mundo capitalista, antireligioso, contra la discriminación y con contenido erótico."
+      "Promoción de campañas antibélicas contra la guerra de Vietnam.",
+      "Inclusión de temas contra el sistema capitalista, antireligiosos, contra la discriminación y con contenido erótico."
     ],
     distractors: [
       "Impulso de la grabación por medio de cintas magnéticas monaurales de alta fidelidad.",
@@ -285,26 +287,26 @@ const questionBank = [
   },
   {
     id: "m11-q20",
-    prompt: "La migración se define como:",
+    prompt: "¿Como se define la migracion?",
     type: "choice",
-    correct: "Los movimientos de la población por obtener mejores condiciones de vida.",
+    correct: "Son los movimientos poblacionales que buscan obtener mejores condiciones de vida.",
     distractors: [
-      "Una alta concentración poblacional en ciertas regiones.",
-      "Un aumento del nivel de marginación entre las clases sociales.",
-      "El incremento de los niveles de pobreza de ciertos grupos sociales."
+      "Es una alta concentración poblacional en ciertas regiones.",
+      "Es un aumento del nivel de marginación entre las clases sociales.",
+      "Es el incremento de los niveles de pobreza de ciertos grupos sociales."
     ],
     hint: "Implica el traslado territorial de personas buscando bienestar o seguridad.",
     explanation: "El concepto describe el desplazamiento de grupos humanos orientado a mejorar su calidad de vida."
   },
   {
     id: "m11-q21",
-    prompt: "¿Cuál de las siguientes explicaciones es la más apropiada para explicar de manera coloquial qué es la inmigración?",
+    prompt: "¿Cuál es la explicacion más apropiada para la inmigración?",
     type: "choice",
-    correct: "Desplazamientos de población que conllevan cambios de residencia, más o menos permanentes.",
+    correct: "Son desplazamientos de población que conllevan cambios de residencia más o menos permanentes.",
     distractors: [
-      "Salida de individuos o grupos de personas del lugar de origen o de residencia habitual.",
-      "Desplazamiento de individuos o grupos de personas para viajar a un lugar distinto del de su residencia habitual.",
-      "Llegada de individuos o grupos de personas a un lugar diferente al de su origen o residencia habitual."
+      "Es la salida de individuos o grupos de personas del lugar de origen o de residencia habitual.",
+      "Es el desplazamiento de individuos o grupos de personas para viajar a un lugar distinto del de su residencia habitual.",
+      "Es la llegada de individuos o grupos de personas a un lugar diferente al de su origen o residencia habitual."
     ],
     hint: "La respuesta oficial del cuadernillo destaca el establecimiento semipermanente de vivienda.",
     explanation: "Se define como un cambio de residencia estable o prolongado en un nuevo territorio."
