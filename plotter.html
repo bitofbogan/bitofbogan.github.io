@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plotter LaTeX HD</title>
 
-  <!-- Google Fonts: Inter & Fira Code -->
+  <!-- Google Fonts: Inter & Latin Modern / Computer Modern with full Latin accented characters -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-  <!-- KaTeX CSS for preview and font declarations -->
+  <!-- KaTeX CSS and JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -31,8 +31,8 @@
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             mono: ['Fira Code', 'monospace'],
-            katexMain: ['KaTeX_Main', 'serif'],
-            katexMath: ['KaTeX_Math', 'serif']
+            katexMain: ['KaTeX_Main', 'Lora', 'serif'],
+            katexMath: ['KaTeX_Math', 'Lora', 'serif']
           }
         }
       }
@@ -40,7 +40,6 @@
   </script>
 
   <style>
-    /* Inyección explícita de tipografías KaTeX para Canvas y SVG */
     @font-face {
       font-family: 'KaTeX_Main';
       src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Regular.woff2') format('woff2');
@@ -66,22 +65,14 @@
       font-style: italic;
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(100, 116, 139, 0.4);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(100, 116, 139, 0.6);
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
+
     .dot-grid-bg {
-      background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1.2px, transparent 1.2px);
+      background-color: #030712;
+      background-image: radial-gradient(rgba(148, 163, 184, 0.18) 1.2px, transparent 1.2px);
       background-size: 20px 20px;
     }
     .tab-btn-active {
@@ -89,15 +80,43 @@
       color: #818cf8;
       font-weight: 600;
     }
+    .swatch-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .swatch-btn:hover {
+      transform: scale(1.15);
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+    .swatch-btn-active {
+      border-color: #ffffff !important;
+      box-shadow: 0 0 0 2px #6366f1;
+      transform: scale(1.1);
+    }
+    .color-picker-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
   </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white select-none">
 
+  <!-- Header -->
   <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-md">
     <div class="flex items-center space-x-3">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-400 flex items-center justify-center shadow-lg shadow-indigo-500/25">
         <i data-lucide="function-square" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+          Plotter LaTeX HD <span class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">v3.0 Ultra</span>
+        </h1>
       </div>
     </div>
 
@@ -149,9 +168,9 @@
     </div>
   </header>
 
-  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
     <!-- Panel Lateral de Configuración -->
-    <aside class="w-full lg:w-[470px] xl:w-[500px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-53px)] overflow-y-auto">
+    <aside class="w-full lg:w-[480px] xl:w-[510px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-53px)] overflow-y-auto">
       
       <!-- Navegación de Pestañas -->
       <div class="flex border-b border-slate-800 px-3 text-xs sticky top-0 bg-slate-900/95 backdrop-blur z-20">
@@ -175,44 +194,44 @@
         <div id="tabSectionFunctions" class="space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Funciones Matemáticas</span>
-            <button id="btnAddFunction" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 bg-indigo-500/10 px-2.5 py-1 rounded-lg border border-indigo-500/20 transition">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Añadir Función
-            </button>
+            <span class="text-[11px] text-slate-500">Arrastra rótulos en el plano</span>
           </div>
 
-          <!-- Opciones de visibilidad y tamaño de fórmulas en la imagen -->
+          <!-- Opciones de formato de rótulos de funciones -->
           <div class="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/60 space-y-3">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                  <i data-lucide="eye" class="w-3.5 h-3.5 text-indigo-400"></i>
-                  <span>Tarjeta flotante de funciones</span>
-                </div>
-                <p class="text-[11px] text-slate-400">Mostrar recuadro con fórmulas en mathmode en la imagen</p>
-              </div>
-              <label class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="checkOverlayFormula" class="sr-only peer">
-                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-              </label>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Estilo visual de los rótulos de funciones:</label>
+              <select id="selectFunctionLabelBadgeStyle" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                <option value="badge">Pastilla con fondo y color (Resalta sobre cuadrícula)</option>
+                <option value="text">Solo texto matemático puro (Minimalista)</option>
+              </select>
             </div>
 
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
-                <span class="text-slate-300 font-medium">Tamaño texto de funciones en imagen:</span>
-                <span id="formulaFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
+                <span class="text-slate-300 font-medium">Tamaño de fuente de rótulos de función:</span>
+                <span id="formulaFontSizeVal" class="font-mono text-indigo-300 font-semibold">15px</span>
               </div>
-              <input type="range" id="inputFormulaFontSize" min="10" max="48" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputFormulaFontSize" min="10" max="36" step="1" value="15" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
           <!-- Lista de Funciones -->
           <div id="functionsContainer" class="space-y-3.5"></div>
 
+          <!-- Botón de añadir al fondo -->
+          <div class="pt-2" id="bottomFunctionAnchor">
+            <button id="btnAddFunction" class="w-full py-2.5 rounded-xl text-xs font-semibold text-indigo-300 hover:text-white bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 hover:border-indigo-500 transition flex items-center justify-center gap-2 shadow-sm">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>+ Añadir Función</span>
+            </button>
+          </div>
+
           <div class="p-3 rounded-xl bg-slate-800/30 border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
             <p class="font-medium text-slate-300 flex items-center gap-1">
               <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis admitida:
             </p>
-            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>sin(x)*40</code>, <code>exp(x)</code>, <code>log(x)</code>, <code>sqrt(x)</code></p>
+            <p class="font-mono text-slate-400"><code>3*x^2 + 2*x - 5</code>, <code>0.3*x + 3</code>, <code>sin(x)</code>, <code>exp(x)</code>, <code>sqrt(x)</code></p>
           </div>
         </div>
 
@@ -220,16 +239,14 @@
         <div id="tabSectionPoints" class="space-y-4 hidden">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Puntos en el Plano</span>
-            <button id="btnAddPoint" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 bg-indigo-500/10 px-2.5 py-1 rounded-lg border border-indigo-500/20 transition">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Añadir Punto
-            </button>
+            <span class="text-[11px] text-slate-500">Arrastra nombres o puntos</span>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <div>
                 <span class="text-xs font-semibold text-slate-200">Mostrar coordenadas en etiquetas</span>
-                <p class="text-[11px] text-slate-400">Ejemplo: P(1, 0)</p>
+                <p class="text-[11px] text-slate-400">Ejemplo: A(1, 0)</p>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="checkShowCoords" class="sr-only peer">
@@ -242,7 +259,7 @@
                 <span class="text-slate-300 font-medium">Tamaño texto etiquetas de puntos:</span>
                 <span id="pointLabelFontSizeVal" class="font-mono text-indigo-300 font-semibold">14px</span>
               </div>
-              <input type="range" id="inputPointLabelFontSize" min="10" max="48" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputPointLabelFontSize" min="10" max="36" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
@@ -256,12 +273,20 @@
 
           <!-- Contenedor de puntos -->
           <div id="pointsContainer" class="space-y-3.5"></div>
+
+          <!-- Botón de añadir al fondo -->
+          <div class="pt-2" id="bottomPointAnchor">
+            <button id="btnAddPoint" class="w-full py-2.5 rounded-xl text-xs font-semibold text-indigo-300 hover:text-white bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 hover:border-indigo-500 transition flex items-center justify-center gap-2 shadow-sm">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>+ Añadir Punto</span>
+            </button>
+          </div>
         </div>
 
         <!-- PESTAÑA 3: EJES, RÓTULOS Y RANGOS -->
         <div id="tabSectionAxes" class="space-y-5 hidden">
           
-          <!-- Título opcional del gráfico con sintaxis combinada de texto y LaTeX $...$ -->
+          <!-- Título del gráfico con soporte completo de acentos latinos -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
@@ -274,8 +299,8 @@
             </div>
 
             <div>
-              <input type="text" id="inputChartTitle" value="Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$" placeholder="Usa $..$ para mathmode, ej: Gráfica de $f(x)$" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
-              <p class="text-[10px] text-slate-400 mt-1">Escribe texto normal con acentos y encierra fórmulas entre signos de pesos: <code>$y = x^2$</code></p>
+              <input type="text" id="inputChartTitle" value="Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$" placeholder="Escribe texto con acentos y $f(x)$ para mathmode" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+              <p class="text-[10px] text-slate-400 mt-1">Soporte nativo para caracteres latinos con acentos (á, é, í, ó, ú, ñ) y fórmulas con $...$.</p>
               <div class="mt-1.5 flex items-center gap-1 text-[11px] text-slate-400">
                 <span>Vista Previa:</span>
                 <span id="previewKatexChartTitle" class="text-indigo-300 font-medium"></span>
@@ -291,41 +316,45 @@
             </div>
           </div>
 
-          <!-- Rótulos de los ejes (Draggable directo en el lienzo) -->
+          <!-- Rótulos de los ejes independientes y arrastrables -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                <i data-lucide="move" class="w-3.5 h-3.5"></i> Rótulos de los Ejes (Arrastrables)
-              </h3>
-              <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
-                <input type="checkbox" id="checkAxisLabels" checked class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
-                <span>Mostrar</span>
-              </label>
-            </div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+              <i data-lucide="move" class="w-3.5 h-3.5"></i> Rótulos de los Ejes (Arrastrables)
+            </h3>
 
             <div class="p-2.5 bg-indigo-950/40 border border-indigo-800/40 rounded-lg text-[11px] text-indigo-200 flex items-center gap-2">
-              <i data-lucide="hand" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
-              <span><strong>¡Nuevo!</strong> Puedes hacer clic y arrastrar los rótulos directamente sobre la gráfica a cualquier posición.</span>
+              <i data-lucide="hand" class="w-4 h-4 text-indigo-400 shrink-0"></i>
+              <span>Haz clic y arrastra directamente <strong>x</strong>, <strong>y</strong>, o cualquier rótulo sobre el gráfico.</span>
             </div>
             
             <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Horizontal (x)</label>
-                <div class="relative">
-                  <input type="text" id="inputAxisLabelX" value="x" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              <!-- Eje X -->
+              <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-700/50 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-slate-300">Rótulo Eje X</span>
+                  <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer">
+                    <input type="checkbox" id="checkShowLabelX" checked class="w-3 h-3 rounded text-indigo-600 bg-slate-700 border-slate-600">
+                    <span>Ver</span>
+                  </label>
                 </div>
-                <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+                <input type="text" id="inputAxisLabelX" value="x" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <div class="flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
                   <span id="previewKatexLabelX" class="text-indigo-300 font-medium"></span>
                 </div>
               </div>
 
-              <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Nombre Eje Vertical (y)</label>
-                <div class="relative">
-                  <input type="text" id="inputAxisLabelY" value="y" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              <!-- Eje Y -->
+              <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-700/50 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-slate-300">Rótulo Eje Y</span>
+                  <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer">
+                    <input type="checkbox" id="checkShowLabelY" checked class="w-3 h-3 rounded text-indigo-600 bg-slate-700 border-slate-600">
+                    <span>Ver</span>
+                  </label>
                 </div>
-                <div class="mt-1 flex items-center gap-1 text-[11px] text-slate-400">
+                <input type="text" id="inputAxisLabelY" value="y" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <div class="flex items-center gap-1 text-[11px] text-slate-400">
                   <span>LaTeX:</span>
                   <span id="previewKatexLabelY" class="text-indigo-300 font-medium"></span>
                 </div>
@@ -334,7 +363,7 @@
 
             <!-- Botón para resetear posición de rótulos -->
             <button id="btnResetLabelPos" class="w-full py-1 text-center text-[11px] text-slate-400 hover:text-white bg-slate-800 rounded border border-slate-700 transition">
-              Restablecer posiciones por defecto de x e y
+              Restablecer posiciones originales de los rótulos
             </button>
             
             <!-- Toggle Negrita en Rótulos de Ejes -->
@@ -346,7 +375,7 @@
               </label>
             </div>
             
-            <!-- Control interactivo para el tamaño de los rótulos de ejes (x, y) -->
+            <!-- Tamaño rótulos de ejes -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium flex items-center gap-1">
@@ -357,7 +386,7 @@
               <input type="range" id="inputAxisTitleFontSize" min="12" max="64" step="1" value="24" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
-            <!-- Control para el tamaño de las etiquetas de números -->
+            <!-- Tamaño números de ejes -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium flex items-center gap-1">
@@ -365,11 +394,11 @@
                 </span>
                 <span id="labelFontSizeVal" class="font-mono text-indigo-300 font-semibold">13px</span>
               </div>
-              <input type="range" id="inputLabelFontSize" min="8" max="52" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputLabelFontSize" min="8" max="48" step="1" value="13" class="w-full accent-indigo-500 cursor-pointer">
             </div>
           </div>
 
-          <!-- Rango X -->
+          <!-- Rango X (Paso entero sin decimales y soporte perfecto de 0) -->
           <div>
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Dominio (Eje X)</h3>
             <div class="grid grid-cols-3 gap-2.5">
@@ -382,29 +411,29 @@
                 <input type="number" id="inputXMax" value="6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid</label>
-                <input type="number" id="inputXStep" value="1" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid (Entero)</label>
+                <input type="number" id="inputXStep" value="1" min="1" step="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
           </div>
 
           <div class="h-px bg-slate-800"></div>
 
-          <!-- Rango Y -->
+          <!-- Rango Y (Paso entero sin decimales y soporte perfecto de 0) -->
           <div>
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Rango (Eje Y)</h3>
             <div class="grid grid-cols-3 gap-2.5">
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1 font-medium">Mínimo</label>
-                <input type="number" id="inputYMin" value="-20" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <input type="number" id="inputYMin" value="-6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1 font-medium">Máximo</label>
-                <input type="number" id="inputYMax" value="160" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <input type="number" id="inputYMax" value="6" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid</label>
-                <input type="number" id="inputYStep" value="20" min="0.001" step="any" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <label class="block text-[11px] text-slate-400 mb-1 font-medium">Paso Grid (Entero)</label>
+                <input type="number" id="inputYStep" value="1" min="1" step="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
           </div>
@@ -417,11 +446,11 @@
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones en X</label>
-                <input type="number" id="inputSubdivisionsX" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <input type="number" id="inputSubdivisionsX" value="2" min="1" max="10" step="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1">Subdivisiones en Y</label>
-                <input type="number" id="inputSubdivisionsY" value="2" min="1" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                <input type="number" id="inputSubdivisionsY" value="2" min="1" max="10" step="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
               </div>
             </div>
           </div>
@@ -430,7 +459,7 @@
         <!-- PESTAÑA 4: ESTILO, FORMATO Y COLORES -->
         <div id="tabSectionStyle" class="space-y-4 hidden">
           
-          <!-- Selector de Proporción / Forma de la imagen -->
+          <!-- Selector de Proporción -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
             <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-300">Forma / Proporción del Lienzo</label>
             <div class="grid grid-cols-2 gap-2">
@@ -460,6 +489,7 @@
             </div>
           </div>
 
+          <!-- Controles de Color de UI modernos -->
           <div class="grid grid-cols-2 gap-3 pt-1">
             <div>
               <label class="block text-[11px] text-slate-400 mb-1">Fondo del Lienzo</label>
@@ -494,7 +524,7 @@
             </div>
           </div>
 
-          <!-- Eliminar/mostrar cuadrículas -->
+          <!-- Opciones de ticks, cuadrículas y flechas -->
           <div class="pt-2 space-y-2.5">
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
               <span class="text-xs text-slate-300 font-medium">Mostrar cuadrícula principal</span>
@@ -537,7 +567,7 @@
             </label>
           </div>
 
-          <!-- Grosor de los Ejes Principales con límite duplicado a 16px -->
+          <!-- Grosor de los Ejes Principales -->
           <div class="pt-2">
             <div class="flex justify-between text-xs text-slate-400 mb-1">
               <span>Grosor de Ejes X e Y</span>
@@ -551,25 +581,48 @@
       </div>
     </aside>
 
-    <!-- Contenedor del Lienzo Gráfico -->
-    <section class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-3 sm:p-6 lg:p-8 overflow-auto dot-grid-bg relative">
+    <!-- Contenedor del Lienzo Gráfico con Soporte para Zoom Pan -->
+    <section class="flex-1 bg-slate-950 flex flex-col items-center justify-center p-3 sm:p-6 lg:p-8 overflow-hidden dot-grid-bg relative select-none" id="viewportContainer">
       
       <!-- Toast notificador -->
-      <div id="toastNotification" class="absolute top-5 right-5 z-50 bg-indigo-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-20px] opacity-0 pointer-events-none">
+      <div id="toastNotification" class="absolute top-5 right-5 z-50 bg-indigo-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 -translate-y-6 opacity-0 pointer-events-none">
         <i data-lucide="check-circle-2" class="w-4 h-4"></i>
         <span id="toastMessage">Acción completada</span>
       </div>
 
-      <!-- Tarjeta del Lienzo con sombra difuminada -->
-      <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
-        <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto"></canvas>
+      <!-- Barra de Zoom y Paneo Superior Flotante -->
+      <div class="absolute top-4 left-4 z-30 flex items-center gap-1.5 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-1 text-xs shadow-xl">
+        <button id="btnZoomOut" class="p-1.5 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition" title="Reducir zoom (Ruedita abajo)">
+          <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+        </button>
+        <span id="zoomLevelIndicator" class="px-2 font-mono text-[11px] text-indigo-400 font-semibold min-w-[50px] text-center">100%</span>
+        <button id="btnZoomIn" class="p-1.5 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition" title="Aumentar zoom (Ruedita arriba)">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+        </button>
+        <div class="w-px h-3.5 bg-slate-700 mx-0.5"></div>
+        <button id="btnResetView" class="px-2 py-1 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition text-[11px] font-medium" title="Restablecer encuadre y zoom">
+          Restablecer
+        </button>
+      </div>
+
+      <!-- Capa transformable de Zoom y Pan -->
+      <div id="viewportStage" class="origin-center transition-transform duration-75 ease-out relative inline-flex items-center justify-center">
+        <!-- Tarjeta del Lienzo con sombra difuminada -->
+        <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
+          <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
+        </div>
       </div>
 
       <!-- Barra informativa inferior -->
-      <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/90 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg">
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/90 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg z-20">
         <div class="flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
           <span>Fuente LaTeX: <strong class="text-slate-200 font-serif">Computer Modern (KaTeX)</strong></span>
+        </div>
+        <span class="text-slate-700">|</span>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="mouse-simple" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Rueda: Zoom • Arrastrar fondo: Paneo • Arrastrar rótulos: Mover texto</span>
         </div>
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5">
@@ -581,16 +634,29 @@
   </main>
 
   <script>
+    // Paleta de colores preestablecida moderna
+    const MODERN_PALETTE = [
+      '#3b82f6', // azul eléctrico
+      '#ec4899', // magenta / fucsia
+      '#10b981', // esmeralda
+      '#f59e0b', // ámbar
+      '#8b5cf6', // violeta
+      '#06b6d4', // cyan
+      '#f43f5e', // rosa coral
+      '#1e293b', // carbón oscuro
+      '#ffffff'  // blanco puro
+    ];
+
     /* Estado Global Reactivo */
     const state = {
       aspectRatio: 'rect', // 'rect' (940x600) o 'square' (720x720)
       chartTitle: {
-        text: 'Gráfica de $f(x)$',
+        text: 'Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$',
         visible: false,
         fontSize: 18
       },
-      functions: [], // Vacío por defecto
-      points: [],    // Vacío por defecto
+      functions: [],
+      points: [],
       bounds: {
         xMin: -6,
         xMax: 6,
@@ -602,9 +668,11 @@
         subdivisionsY: 2
       },
       labels: {
-        x: 'x',        // minúscula por defecto
-        y: 'y',        // minúscula por defecto
-        fontSize: 24,  // tamaño configurable de rótulos de ejes
+        x: 'x',
+        y: 'y',
+        showX: true,
+        showY: true,
+        fontSize: 24,
         posX: null,
         posY: null,
         posX_Y: null,
@@ -616,69 +684,143 @@
         gridColor: '#cbd5e1',
         labelColor: '#000000',
         labelFontSize: 13,
-        formulaFontSize: 13,
+        formulaFontSize: 15,
+        functionBadgeStyle: 'badge', // 'badge' o 'text'
         pointLabelFontSize: 14,
-        axisWidth: 3.0,
-        showTicks: true,          // Las rayitas en los ejes
-        tickSize: 4.5,            // Longitud de las rayitas (ticks)
-        arrowSize: 10,            // Tamaño de las flechas
-        boldAxisLabels: false,    // Negrita opcional para rótulos de ejes
-        boldPointLabels: false,   // Negrita opcional para nombres de puntos
-        showMajorGrid: true,      // Opción de cuadrícula principal
+        axisWidth: 3.5,
+        showTicks: true,
+        tickSize: 4.5,
+        arrowSize: 10,
+        boldAxisLabels: false,
+        boldPointLabels: false,
+        showMajorGrid: true,
         showArrows: false,
         showTickNumbers: true,
         showMinorGrid: true,
-        showAxisLabels: true,
-        showOverlayFormula: false,
         showPointCoords: false
       },
       canvasWidth: 940,
       canvasHeight: 600
     };
 
+    // Estado del Viewport (Zoom y Pan con la rueda del mouse)
+    const viewportState = {
+      scale: 1,
+      panX: 0,
+      panY: 0,
+      isPanning: false,
+      startX: 0,
+      startY: 0
+    };
+
     const canvas = document.getElementById('cartesianCanvas');
     const ctx = canvas.getContext('2d');
     const functionsContainer = document.getElementById('functionsContainer');
     const pointsContainer = document.getElementById('pointsContainer');
+    const viewportContainer = document.getElementById('viewportContainer');
+    const viewportStage = document.getElementById('viewportStage');
+    const zoomLevelIndicator = document.getElementById('zoomLevelIndicator');
 
-    // Variables para el sistema de arrastre (Draggable) de rótulos
-    let draggedElement = null; // 'labelX' o 'labelY'
+    // Sistema de Hitboxes para Arrastre (Labels de Ejes, Funciones y Puntos)
+    let activeDragTarget = null;
     let labelHitBoxes = {
       labelX: { x: 0, y: 0, w: 0, h: 0 },
       labelY: { x: 0, y: 0, w: 0, h: 0 }
     };
 
+    // Parseo seguro de números que permite 0 estrictamente
+    function parseNumberSafe(val, fallback = 0) {
+      if (val === '' || val === null || val === undefined) return fallback;
+      const n = parseFloat(val);
+      return !isNaN(n) ? n : fallback;
+    }
+
+    function parseIntegerSafe(val, fallback = 1) {
+      if (val === '' || val === null || val === undefined) return fallback;
+      const n = parseInt(val, 10);
+      return !isNaN(n) ? n : fallback;
+    }
+
+    // Transformación del Viewport
+    function applyViewportTransform() {
+      viewportStage.style.transform = `translate(${viewportState.panX}px, ${viewportState.panY}px) scale(${viewportState.scale})`;
+      zoomLevelIndicator.textContent = `${Math.round(viewportState.scale * 100)}%`;
+    }
+
+    function setZoom(newScale, focalX = null, focalY = null) {
+      const minScale = 0.25;
+      const maxScale = 5.0;
+      const clamped = Math.min(Math.max(newScale, minScale), maxScale);
+
+      if (focalX !== null && focalY !== null) {
+        const factor = clamped / viewportState.scale;
+        viewportState.panX = focalX - (focalX - viewportState.panX) * factor;
+        viewportState.panY = focalY - (focalY - viewportState.panY) * factor;
+      }
+
+      viewportState.scale = clamped;
+      applyViewportTransform();
+    }
+
+    // Zoom con la Rueda del Mouse
+    viewportContainer.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const rect = viewportContainer.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left - rect.width / 2;
+      const mouseY = e.clientY - rect.top - rect.height / 2;
+      const factor = e.deltaY < 0 ? 1.12 : 0.88;
+      setZoom(viewportState.scale * factor, mouseX, mouseY);
+    }, { passive: false });
+
+    // Botones de Zoom UI
+    document.getElementById('btnZoomIn').addEventListener('click', () => setZoom(viewportState.scale * 1.25));
+    document.getElementById('btnZoomOut').addEventListener('click', () => setZoom(viewportState.scale * 0.8));
+    document.getElementById('btnResetView').addEventListener('click', () => {
+      viewportState.scale = 1;
+      viewportState.panX = 0;
+      viewportState.panY = 0;
+      applyViewportTransform();
+    });
+
     function getPaddings() {
       const topPad = (state.chartTitle.visible && state.chartTitle.text.trim()) 
         ? Math.max(75, 45 + state.chartTitle.fontSize * 1.6) 
         : 58;
-      return {
-        top: topPad,
-        bottom: 58,
-        left: 58,
-        right: 58
-      };
+      return { top: topPad, bottom: 58, left: 58, right: 58 };
     }
 
     function toCanvasX(x) {
       const p = getPaddings();
       const width = state.canvasWidth - (p.left + p.right);
-      return p.left + ((x - state.bounds.xMin) / (state.bounds.xMax - state.bounds.xMin)) * width;
+      const span = (state.bounds.xMax - state.bounds.xMin) || 1;
+      return p.left + ((x - state.bounds.xMin) / span) * width;
     }
 
     function toCanvasY(y) {
       const p = getPaddings();
       const height = state.canvasHeight - (p.top + p.bottom);
-      return (state.canvasHeight - p.bottom) - ((y - state.bounds.yMin) / (state.bounds.yMax - state.bounds.yMin)) * height;
+      const span = (state.bounds.yMax - state.bounds.yMin) || 1;
+      return (state.canvasHeight - p.bottom) - ((y - state.bounds.yMin) / span) * height;
+    }
+
+    function fromCanvasX(cx) {
+      const p = getPaddings();
+      const width = state.canvasWidth - (p.left + p.right);
+      const span = (state.bounds.xMax - state.bounds.xMin) || 1;
+      return state.bounds.xMin + ((cx - p.left) / width) * span;
+    }
+
+    function fromCanvasY(cy) {
+      const p = getPaddings();
+      const height = state.canvasHeight - (p.top + p.bottom);
+      const span = (state.bounds.yMax - state.bounds.yMin) || 1;
+      return state.bounds.yMin + (((state.canvasHeight - p.bottom) - cy) / height) * span;
     }
 
     function formatLatexNumber(val) {
       const rounded = Number(Math.abs(val) < 1e-12 ? 0 : val.toFixed(4));
       const str = rounded.toString();
-      if (str.startsWith('-')) {
-        return '\u2212' + str.slice(1);
-      }
-      return str;
+      return str.startsWith('-') ? '\u2212' + str.slice(1) : str;
     }
 
     function expressionToLatex(expr) {
@@ -690,6 +832,7 @@
       }
     }
 
+    // Segmentador de texto que respeta acentos latinos en texto y $...$ en matemáticas
     function parseMathText(text) {
       const segments = [];
       const regex = /\$([^$]+)\$/g;
@@ -708,170 +851,199 @@
       return segments;
     }
 
-    function drawRichText(ctx, segments, startX, y, fontSize, defaultColor, isBold = false) {
+    function drawRichText(targetCtx, segments, startX, y, fontSize, defaultColor, isBold = false) {
       let currentX = startX;
       segments.forEach(seg => {
         if (seg.isMath) {
-          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+          targetCtx.font = `italic ${fontSize}px "KaTeX_Math", "Lora", serif`;
           const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
-          ctx.fillText(mathStr, currentX, y);
-          currentX += ctx.measureText(mathStr).width;
+          targetCtx.fillText(mathStr, currentX, y);
+          currentX += targetCtx.measureText(mathStr).width;
         } else {
-          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Times New Roman", serif`;
-          ctx.fillText(seg.text, currentX, y);
-          currentX += ctx.measureText(seg.text).width;
+          targetCtx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Lora", "Inter", serif`;
+          targetCtx.fillText(seg.text, currentX, y);
+          currentX += targetCtx.measureText(seg.text).width;
         }
       });
       return currentX;
     }
 
-    function measureRichText(ctx, segments, fontSize, isBold = false) {
+    function measureRichText(targetCtx, segments, fontSize, isBold = false) {
       let totalW = 0;
       segments.forEach(seg => {
         if (seg.isMath) {
-          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
+          targetCtx.font = `italic ${fontSize}px "KaTeX_Math", "Lora", serif`;
           const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
-          totalW += ctx.measureText(mathStr).width;
+          totalW += targetCtx.measureText(mathStr).width;
         } else {
-          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Times New Roman", serif`;
-          totalW += ctx.measureText(seg.text).width;
+          targetCtx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "KaTeX_Main", "Lora", "Inter", serif`;
+          totalW += targetCtx.measureText(seg.text).width;
         }
       });
       return totalW;
     }
 
-    function drawPlot() {
+    // Formateador visual matemático riguroso para las etiquetas
+    function formatFunctionDisplay(fnName, expr) {
+      // Limpia operadores y asegura que signos + y - tengan espacios matemáticos correctos
+      let cleanExpr = expr.trim()
+        .replace(/\*/g, '')
+        .replace(/\^2/g, '²')
+        .replace(/\^3/g, '³')
+        .replace(/\s*\+\s*/g, ' + ')
+        .replace(/\s*-\s*/g, ' \u2212 ');
+      return `${fnName} = ${cleanExpr}`;
+    }
+
+    function roundRect(targetCtx, x, y, width, height, radius, fill, stroke) {
+      targetCtx.beginPath();
+      targetCtx.moveTo(x + radius, y);
+      targetCtx.lineTo(x + width - radius, y);
+      targetCtx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      targetCtx.lineTo(x + width, y + height - radius);
+      targetCtx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      targetCtx.lineTo(x + radius, y + height);
+      targetCtx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      targetCtx.lineTo(x, y + radius);
+      targetCtx.quadraticCurveTo(x, y, x + radius, y);
+      targetCtx.closePath();
+      if (fill) targetCtx.fill();
+      if (stroke) targetCtx.stroke();
+    }
+
+    /* Motor Principal de Dibujado (Canvas) */
+    function drawPlot(targetCtx = ctx, isExport = false, scale = 1) {
       const p = getPaddings();
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showOverlayFormula, showPointCoords } = state.style;
-      
-      // 1. Limpiar fondo
-      ctx.fillStyle = background;
-      ctx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
+      const { background, axisColor, gridColor, labelColor, labelFontSize, formulaFontSize, functionBadgeStyle, pointLabelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showPointCoords } = state.style;
+      const { showX, showY } = state.labels;
 
-      // Título opcional
+      // 1. Limpiar fondo
+      targetCtx.fillStyle = background;
+      targetCtx.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
+
+      // Título opcional con soporte de acentos
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
         const titleSegments = parseMathText(state.chartTitle.text.trim());
-        const totalTitleWidth = measureRichText(ctx, titleSegments, state.chartTitle.fontSize, true);
+        const totalTitleWidth = measureRichText(targetCtx, titleSegments, state.chartTitle.fontSize, true);
         const startX = (state.canvasWidth - totalTitleWidth) / 2;
-        ctx.fillStyle = axisColor;
-        ctx.textBaseline = 'top';
-        drawRichText(ctx, titleSegments, startX, 16, state.chartTitle.fontSize, axisColor, true);
+        targetCtx.fillStyle = axisColor;
+        targetCtx.textBaseline = 'top';
+        drawRichText(targetCtx, titleSegments, startX, 16, state.chartTitle.fontSize, axisColor, true);
       }
 
-      // 2. Cuadrícula menor (Minor Grid)
+      // 2. Cuadrícula secundaria
       if (showMinorGrid) {
-        ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 0.75;
-        ctx.globalAlpha = 0.45;
-        ctx.beginPath();
+        targetCtx.strokeStyle = gridColor;
+        targetCtx.lineWidth = 0.75;
+        targetCtx.globalAlpha = 0.45;
+        targetCtx.beginPath();
 
-        const stepSubX = xStep / (subdivisionsX || 2);
+        const stepSubX = Math.max(0.001, xStep / (subdivisionsX || 2));
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
           const cx = toCanvasX(x);
-          ctx.moveTo(cx, p.top);
-          ctx.lineTo(cx, state.canvasHeight - p.bottom);
+          targetCtx.moveTo(cx, p.top);
+          targetCtx.lineTo(cx, state.canvasHeight - p.bottom);
         }
 
-        const stepSubY = yStep / (subdivisionsY || 2);
+        const stepSubY = Math.max(0.001, yStep / (subdivisionsY || 2));
         for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
           const cy = toCanvasY(y);
-          ctx.moveTo(p.left, cy);
-          ctx.lineTo(state.canvasWidth - p.right, cy);
+          targetCtx.moveTo(p.left, cy);
+          targetCtx.lineTo(state.canvasWidth - p.right, cy);
         }
-        ctx.stroke();
-        ctx.globalAlpha = 1.0;
+        targetCtx.stroke();
+        targetCtx.globalAlpha = 1.0;
       }
 
-      // 3. Cuadrícula principal (Major Grid)
+      // 3. Cuadrícula principal
       if (showMajorGrid) {
-        ctx.strokeStyle = gridColor;
-        ctx.lineWidth = 1.25;
-        ctx.beginPath();
+        targetCtx.strokeStyle = gridColor;
+        targetCtx.lineWidth = 1.25;
+        targetCtx.beginPath();
 
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x);
-          ctx.moveTo(cx, p.top);
-          ctx.lineTo(cx, state.canvasHeight - p.bottom);
+          targetCtx.moveTo(cx, p.top);
+          targetCtx.lineTo(cx, state.canvasHeight - p.bottom);
         }
 
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y);
-          ctx.moveTo(p.left, cy);
-          ctx.lineTo(state.canvasWidth - p.right, cy);
+          targetCtx.moveTo(p.left, cy);
+          targetCtx.lineTo(state.canvasWidth - p.right, cy);
         }
-        ctx.stroke();
+        targetCtx.stroke();
       }
-      
-      // Coordenadas origen (0,0)
+
+      // Coordenadas origen (0,0) aseguradas
       const originX = Math.max(p.left, Math.min(state.canvasWidth - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(state.canvasHeight - p.bottom, toCanvasY(0)));
 
       // 4. Ejes Principales X e Y
-      ctx.strokeStyle = axisColor;
-      ctx.lineWidth = axisWidth;
-      ctx.lineCap = 'square';
-      ctx.beginPath();
+      targetCtx.strokeStyle = axisColor;
+      targetCtx.lineWidth = axisWidth;
+      targetCtx.lineCap = 'square';
+      targetCtx.beginPath();
 
       // Eje X
-      ctx.moveTo(p.left - 24, originY);
-      ctx.lineTo(state.canvasWidth - p.right + 24, originY);
+      targetCtx.moveTo(p.left - 24, originY);
+      targetCtx.lineTo(state.canvasWidth - p.right + 24, originY);
 
       // Eje Y
-      ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
-      ctx.lineTo(originX, p.top - 24);
-      ctx.stroke();
+      targetCtx.moveTo(originX, state.canvasHeight - p.bottom + 24);
+      targetCtx.lineTo(originX, p.top - 24);
+      targetCtx.stroke();
 
-      // Flechas en los 4 extremos de los ejes (rematando exactamente en la punta)
+      // Flechas en extremos
       if (showArrows) {
         const aSize = arrowSize || 10;
-        ctx.fillStyle = axisColor;
-
+        targetCtx.fillStyle = axisColor;
         const tipRightX = state.canvasWidth - p.right + 24;
         const tipLeftX = p.left - 24;
         const tipTopY = p.top - 24;
         const tipBottomY = state.canvasHeight - p.bottom + 24;
 
-        // Flecha X Derecha (+X)
-        ctx.beginPath();
-        ctx.moveTo(tipRightX + aSize, originY);
-        ctx.lineTo(tipRightX, originY - aSize * 0.55);
-        ctx.lineTo(tipRightX, originY + aSize * 0.55);
-        ctx.closePath();
-        ctx.fill();
+        // Flecha X derecha
+        targetCtx.beginPath();
+        targetCtx.moveTo(tipRightX + aSize, originY);
+        targetCtx.lineTo(tipRightX, originY - aSize * 0.55);
+        targetCtx.lineTo(tipRightX, originY + aSize * 0.55);
+        targetCtx.closePath();
+        targetCtx.fill();
 
-        // Flecha X Izquierda (-X)
-        ctx.beginPath();
-        ctx.moveTo(tipLeftX - aSize, originY);
-        ctx.lineTo(tipLeftX, originY - aSize * 0.55);
-        ctx.lineTo(tipLeftX, originY + aSize * 0.55);
-        ctx.closePath();
-        ctx.fill();
+        // Flecha X izquierda
+        targetCtx.beginPath();
+        targetCtx.moveTo(tipLeftX - aSize, originY);
+        targetCtx.lineTo(tipLeftX, originY - aSize * 0.55);
+        targetCtx.lineTo(tipLeftX, originY + aSize * 0.55);
+        targetCtx.closePath();
+        targetCtx.fill();
 
-        // Flecha Y Arriba (+Y)
-        ctx.beginPath();
-        ctx.moveTo(originX, tipTopY - aSize);
-        ctx.lineTo(originX - aSize * 0.55, tipTopY);
-        ctx.lineTo(originX + aSize * 0.55, tipTopY);
-        ctx.closePath();
-        ctx.fill();
+        // Flecha Y arriba
+        targetCtx.beginPath();
+        targetCtx.moveTo(originX, tipTopY - aSize);
+        targetCtx.lineTo(originX - aSize * 0.55, tipTopY);
+        targetCtx.lineTo(originX + aSize * 0.55, tipTopY);
+        targetCtx.closePath();
+        targetCtx.fill();
 
-        // Flecha Y Abajo (-Y)
-        ctx.beginPath();
-        ctx.moveTo(originX, tipBottomY + aSize);
-        ctx.lineTo(originX - aSize * 0.55, tipBottomY);
-        ctx.lineTo(originX + aSize * 0.55, tipBottomY);
-        ctx.closePath();
-        ctx.fill();
+        // Flecha Y abajo
+        targetCtx.beginPath();
+        targetCtx.moveTo(originX, tipBottomY + aSize);
+        targetCtx.lineTo(originX - aSize * 0.55, tipBottomY);
+        targetCtx.lineTo(originX + aSize * 0.55, tipBottomY);
+        targetCtx.closePath();
+        targetCtx.fill();
       }
 
-      // 5. Rayitas (Ticks) y Números en Tipografía KaTeX
-      ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
-      ctx.fillStyle = labelColor;
+      // 5. Ticks y Números en Tipografía KaTeX con Anticolisión en la esquina/origen
+      targetCtx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Lora", serif`;
+      targetCtx.fillStyle = labelColor;
 
       // Eje X
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
+      targetCtx.textAlign = 'center';
+      targetCtx.textBaseline = 'top';
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
         const cx = toCanvasX(x);
         const isZero = Math.abs(x) < 1e-9;
@@ -879,303 +1051,493 @@
 
         if (showTicks) {
           const tSize = tickSize || 4.5;
-          ctx.beginPath();
-          ctx.strokeStyle = axisColor;
-          ctx.lineWidth = 1.6;
-          ctx.moveTo(cx, originY - tSize);
-          ctx.lineTo(cx, originY + tSize);
-          ctx.stroke();
+          targetCtx.beginPath();
+          targetCtx.strokeStyle = axisColor;
+          targetCtx.lineWidth = 1.6;
+          targetCtx.moveTo(cx, originY - tSize);
+          targetCtx.lineTo(cx, originY + tSize);
+          targetCtx.stroke();
         }
 
         if (showTickNumbers && !isZero) {
-          ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
+          // Anticolisión: Si está a menos de 18px del cruce del eje Y en la misma esquina, desplazarlo sutilmente
+          const distToYAxis = Math.abs(cx - originX);
+          if (distToYAxis < 18) {
+            targetCtx.fillText(formatLatexNumber(x), cx + 10, labelOffsetY + 3);
+          } else {
+            targetCtx.fillText(formatLatexNumber(x), cx, labelOffsetY);
+          }
         }
       }
 
       // Eje Y
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
+      targetCtx.textAlign = 'right';
+      targetCtx.textBaseline = 'middle';
       for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
         const cy = toCanvasY(y);
         const isZero = Math.abs(y) < 1e-9;
-        const labelOffsetX = (originX - 10 < 30) ? originX + 12 : originX - 9;
-        if (originX - 10 < 30) ctx.textAlign = 'left';
+        const labelOffsetX = (originX - 10 < 30) ? originX + 14 : originX - 9;
+        if (originX - 10 < 30) targetCtx.textAlign = 'left';
 
         if (showTicks) {
           const tSize = tickSize || 4.5;
-          ctx.beginPath();
-          ctx.strokeStyle = axisColor;
-          ctx.lineWidth = 1.6;
-          ctx.moveTo(originX - tSize, cy);
-          ctx.lineTo(originX + tSize, cy);
-          ctx.stroke();
+          targetCtx.beginPath();
+          targetCtx.strokeStyle = axisColor;
+          targetCtx.lineWidth = 1.6;
+          targetCtx.moveTo(originX - tSize, cy);
+          targetCtx.lineTo(originX + tSize, cy);
+          targetCtx.stroke();
         }
 
         if (showTickNumbers && !isZero) {
-          ctx.fillText(formatLatexNumber(y), labelOffsetX, cy);
+          // Anticolisión con números del eje X
+          const distToXAxis = Math.abs(cy - originY);
+          if (distToXAxis < 18 && originX - 10 < 30) {
+            targetCtx.fillText(formatLatexNumber(y), labelOffsetX + 2, cy - 10);
+          } else {
+            targetCtx.fillText(formatLatexNumber(y), labelOffsetX, cy);
+          }
         }
       }
 
-      // 6. Rótulos de los Ejes Editables y Arrastrables (Draggable) con tamaño dinámico y bold opcional
-      if (showAxisLabels) {
-        const axisTitleSize = state.labels.fontSize || 24;
-        const fontWeight = boldAxisLabels ? 'bold ' : '';
-        ctx.font = `${fontWeight}italic ${axisTitleSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-        ctx.fillStyle = axisColor;
+      // 6. Rótulos de los Ejes Independientes y Arrastrables
+      const axisTitleSize = state.labels.fontSize || 24;
+      const fontWeight = boldAxisLabels ? 'bold ' : '';
+      targetCtx.font = `${fontWeight}italic ${axisTitleSize}px "KaTeX_Math", "KaTeX_Main", "Lora", serif`;
+      targetCtx.fillStyle = axisColor;
 
-        const defaultLabelY_X = originX;
-        const defaultLabelY_Y = p.top - 28;
+      const defaultLabelY_X = originX;
+      const defaultLabelY_Y = p.top - 28;
+      const defaultLabelX_X = state.canvasWidth - p.right + 30;
+      const defaultLabelX_Y = originY;
 
-        const defaultLabelX_X = state.canvasWidth - p.right + 30;
-        const defaultLabelX_Y = originY;
-
-        const posX_X = state.labels.posX !== null ? state.labels.posX : defaultLabelX_X;
-        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : defaultLabelX_Y;
-
-        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : defaultLabelY_X;
+      if (showY) {
+        const posY_X = state.labels.posX_Y !== null ? state.labels.posX_Y : defaultLabelY_X;
         const posY_Y = state.labels.posY !== null ? state.labels.posY : defaultLabelY_Y;
-
-        // Dibujar Rótulo Y
         const labelYText = state.labels.y.trim() || 'y';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText(labelYText, posY_X, posY_Y);
 
-        // Hitbox Y adaptado al tamaño de fuente
-        const widthY = ctx.measureText(labelYText).width;
+        targetCtx.textAlign = 'center';
+        targetCtx.textBaseline = 'bottom';
+        targetCtx.fillText(labelYText, posY_X, posY_Y);
+
+        const widthY = targetCtx.measureText(labelYText).width;
         labelHitBoxes.labelY = {
           x: posY_X - widthY / 2 - 8,
           y: posY_Y - axisTitleSize - 2,
           w: widthY + 16,
-          h: axisTitleSize + 8
+          h: axisTitleSize + 8,
+          type: 'axisY'
         };
+      } else {
+        labelHitBoxes.labelY = { x: -999, y: -999, w: 0, h: 0 };
+      }
 
-        // Dibujar Rótulo X
+      if (showX) {
+        const posX_X = state.labels.posX !== null ? state.labels.posX : defaultLabelX_X;
+        const posX_Y = state.labels.posY_X !== null ? state.labels.posY_X : defaultLabelX_Y;
         const labelXText = state.labels.x.trim() || 'x';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(labelXText, posX_X, posX_Y);
 
-        // Hitbox X adaptado al tamaño de fuente
-        const widthX = ctx.measureText(labelXText).width;
+        targetCtx.textAlign = 'left';
+        targetCtx.textBaseline = 'middle';
+        targetCtx.fillText(labelXText, posX_X, posX_Y);
+
+        const widthX = targetCtx.measureText(labelXText).width;
         labelHitBoxes.labelX = {
           x: posX_X - 6,
           y: posX_Y - axisTitleSize / 2,
           w: widthX + 16,
-          h: axisTitleSize + 8
+          h: axisTitleSize + 8,
+          type: 'axisX'
         };
+      } else {
+        labelHitBoxes.labelX = { x: -999, y: -999, w: 0, h: 0 };
       }
 
-      // 7. Trazado de las Funciones Matemáticas
+      // 7. Trazado de Funciones Matemáticas con Rango por Función
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
 
         try {
           const compiled = math.compile(fn.expr);
-          ctx.save();
+          targetCtx.save();
 
           if (fn.style === 'dashed') {
-            ctx.setLineDash([8, 6]);
+            targetCtx.setLineDash([8, 6]);
           } else if (fn.style === 'dotted') {
-            ctx.setLineDash([3, 4]);
+            targetCtx.setLineDash([3, 4]);
           } else {
-            ctx.setLineDash([]);
+            targetCtx.setLineDash([]);
           }
 
-          ctx.beginPath();
-          ctx.rect(p.left - 2, p.top - 2, state.canvasWidth - (p.left + p.right) + 4, state.canvasHeight - (p.top + p.bottom) + 4);
-          ctx.clip();
+          targetCtx.beginPath();
+          targetCtx.rect(p.left - 2, p.top - 2, state.canvasWidth - (p.left + p.right) + 4, state.canvasHeight - (p.top + p.bottom) + 4);
+          targetCtx.clip();
 
-          ctx.strokeStyle = fn.color;
-          ctx.lineWidth = fn.width || 3.5;
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
+          targetCtx.strokeStyle = fn.color;
+          targetCtx.lineWidth = fn.width || 3.5;
+          targetCtx.lineCap = 'round';
+          targetCtx.lineJoin = 'round';
 
-          let isFirst = true;
-          const samplePoints = 950;
-          const stepSize = (xMax - xMin) / samplePoints;
+          // Límites de evaluación (Dominio global vs Rango por función)
+          const evalMinX = fn.customRange ? Math.max(xMin, fn.rangeMin) : xMin;
+          const evalMaxX = fn.customRange ? Math.min(xMax, fn.rangeMax) : xMax;
 
-          ctx.beginPath();
-          for (let i = 0; i <= samplePoints; i++) {
-            const currentX = xMin + (i * stepSize);
-            let currentY;
-            try {
-              currentY = compiled.evaluate({ x: currentX });
-            } catch (err) {
-              currentY = NaN;
-            }
+          if (evalMinX < evalMaxX) {
+            let isFirst = true;
+            const samplePoints = 900;
+            const stepSize = (evalMaxX - evalMinX) / samplePoints;
 
-            if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
-              const canvasX = toCanvasX(currentX);
-              const canvasY = toCanvasY(currentY);
-
-              if (isFirst) {
-                ctx.moveTo(canvasX, canvasY);
-                isFirst = false;
-              } else {
-                ctx.lineTo(canvasX, canvasY);
+            targetCtx.beginPath();
+            for (let i = 0; i <= samplePoints; i++) {
+              const currentX = evalMinX + (i * stepSize);
+              let currentY;
+              try {
+                currentY = compiled.evaluate({ x: currentX });
+              } catch (err) {
+                currentY = NaN;
               }
-            } else {
-              isFirst = true;
+
+              if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
+                const canvasX = toCanvasX(currentX);
+                const canvasY = toCanvasY(currentY);
+
+                if (isFirst) {
+                  targetCtx.moveTo(canvasX, canvasY);
+                  isFirst = false;
+                } else {
+                  targetCtx.lineTo(canvasX, canvasY);
+                }
+              } else {
+                isFirst = true;
+              }
             }
+            targetCtx.stroke();
           }
-          ctx.stroke();
-          ctx.restore();
+          targetCtx.restore();
         } catch (error) {}
       });
 
-      // 8. Trazado de los Puntos en el Plano
+      // 8. Trazado de Puntos con Diamante
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
 
         const cx = toCanvasX(pt.x);
         const cy = toCanvasY(pt.y);
 
-        if (cx >= p.left - 15 && cx <= state.canvasWidth - p.right + 15 && cy >= p.top - 15 && cy <= state.canvasHeight - p.bottom + 15) {
-          ctx.save();
-          ctx.fillStyle = pt.color;
-          ctx.strokeStyle = pt.color;
-          ctx.lineWidth = 2.2;
-
+        if (cx >= p.left - 20 && cx <= state.canvasWidth - p.right + 20 && cy >= p.top - 20 && cy <= state.canvasHeight - p.bottom + 20) {
+          targetCtx.save();
+          targetCtx.fillStyle = pt.color;
+          targetCtx.strokeStyle = pt.color;
+          targetCtx.lineWidth = 2.2;
           const r = pt.size || 6;
 
           if (pt.symbol === 'circle') {
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, Math.PI * 2);
-            ctx.fill();
+            targetCtx.beginPath();
+            targetCtx.arc(cx, cy, r, 0, Math.PI * 2);
+            targetCtx.fill();
           } else if (pt.symbol === 'ring') {
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, Math.PI * 2);
-            ctx.fillStyle = state.style.background;
-            ctx.fill();
-            ctx.stroke();
+            targetCtx.beginPath();
+            targetCtx.arc(cx, cy, r, 0, Math.PI * 2);
+            targetCtx.fillStyle = state.style.background;
+            targetCtx.fill();
+            targetCtx.stroke();
           } else if (pt.symbol === 'cross') {
-            ctx.beginPath();
-            ctx.moveTo(cx - r, cy - r);
-            ctx.lineTo(cx + r, cy + r);
-            ctx.moveTo(cx + r, cy - r);
-            ctx.lineTo(cx - r, cy + r);
-            ctx.stroke();
+            targetCtx.beginPath();
+            targetCtx.moveTo(cx - r, cy - r);
+            targetCtx.lineTo(cx + r, cy + r);
+            targetCtx.moveTo(cx + r, cy - r);
+            targetCtx.lineTo(cx - r, cy + r);
+            targetCtx.stroke();
           } else if (pt.symbol === 'square') {
-            ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+            targetCtx.fillRect(cx - r, cy - r, r * 2, r * 2);
+          } else if (pt.symbol === 'diamond') {
+            // Símbolo Diamante / Rombo
+            targetCtx.beginPath();
+            targetCtx.moveTo(cx, cy - r * 1.25);
+            targetCtx.lineTo(cx + r * 1.25, cy);
+            targetCtx.lineTo(cx, cy + r * 1.25);
+            targetCtx.lineTo(cx - r * 1.25, cy);
+            targetCtx.closePath();
+            targetCtx.fill();
           }
-
-          const name = pt.name ? pt.name.trim() : '';
-          const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
-          const ptFontSize = state.style.pointLabelFontSize || 14;
-
-          if (name || coordText) {
-            ctx.fillStyle = pt.color;
-            ctx.textBaseline = 'bottom';
-            let curX = cx + r + 4;
-
-            if (name) {
-              const ptWeight = boldPointLabels ? 'bold ' : '';
-              ctx.font = `${ptWeight}italic ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-              ctx.fillText(name, curX, cy - 2);
-              curX += ctx.measureText(name).width + 3;
-            }
-
-            if (coordText) {
-              ctx.font = `normal ${ptFontSize - 1}px "KaTeX_Main", "Times New Roman", serif`;
-              ctx.fillText(coordText, curX, cy - 2);
-            }
-          }
-
-          ctx.restore();
+          targetCtx.restore();
         }
       });
 
-      // 9. Badge con fórmulas
-      if (showOverlayFormula) {
-        drawFormulaBadge();
-      }
-    }
+      // 9. Rótulos Arrastrables de Funciones (Con MathMode y Opción de Pastilla)
+      state.functions.forEach((fn, idx) => {
+        if (!fn.visible || !fn.showLabel || !fn.expr.trim()) return;
 
-    function drawFormulaBadge() {
-      const activeFunctions = state.functions.filter(f => f.visible && f.expr.trim());
-      if (activeFunctions.length === 0) return;
-
-      const fSize = state.style.formulaFontSize || 13;
-      const p = getPaddings();
-      const badgeX = p.left + 16;
-      const badgeY = p.top + 16;
-      const badgeWidth = 240;
-      const itemHeight = fSize + 14;
-      const badgeHeight = 12 + (activeFunctions.length * itemHeight);
-
-      ctx.save();
-      ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)';
-      ctx.strokeStyle = state.style.gridColor;
-      ctx.lineWidth = 1;
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
-      ctx.shadowBlur = 10;
-      ctx.shadowOffsetY = 3;
-
-      roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 10, true, true);
-      ctx.restore();
-
-      ctx.save();
-      activeFunctions.forEach((fn, idx) => {
-        const itemY = badgeY + 18 + (idx * itemHeight);
+        const labelText = formatFunctionDisplay(fn.name || 'f(x)', fn.expr);
+        const fSize = formulaFontSize || 15;
         
-        ctx.fillStyle = fn.color;
-        ctx.beginPath();
-        ctx.arc(badgeX + 16, itemY - 3, 5, 0, Math.PI * 2);
-        ctx.fill();
+        // Coordenada por defecto o guardada por el usuario
+        const defX = p.left + 24;
+        const defY = p.top + 28 + (idx * (fSize + 16));
+        const posX = fn.labelPosX !== null && fn.labelPosX !== undefined ? fn.labelPosX : defX;
+        const posY = fn.labelPosY !== null && fn.labelPosY !== undefined ? fn.labelPosY : defY;
 
-        ctx.fillStyle = state.style.labelColor;
-        ctx.textBaseline = 'middle';
+        targetCtx.save();
+        targetCtx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", "Lora", serif`;
+        const textWidth = targetCtx.measureText(labelText).width;
+        const padX = 10;
+        const padY = 6;
+        const totalW = textWidth + padX * 2 + 16;
+        const totalH = fSize + padY * 2;
 
-        let startTextX = badgeX + 28;
+        if (functionBadgeStyle === 'badge') {
+          // Pastilla moderna con borde y fondo suave
+          targetCtx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)';
+          targetCtx.strokeStyle = fn.color;
+          targetCtx.lineWidth = 1.5;
+          targetCtx.shadowColor = 'rgba(0, 0, 0, 0.12)';
+          targetCtx.shadowBlur = 8;
+          roundRect(targetCtx, posX, posY - totalH / 2, totalW, totalH, 8, true, true);
+          targetCtx.shadowBlur = 0;
 
-        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-        const nameText = `${fn.name || 'f(x)'} = `;
-        ctx.fillText(nameText, startTextX, itemY - 3);
-        startTextX += ctx.measureText(nameText).width;
+          // Punto indicador de color
+          targetCtx.fillStyle = fn.color;
+          targetCtx.beginPath();
+          targetCtx.arc(posX + padX + 4, posY, 4.5, 0, Math.PI * 2);
+          targetCtx.fill();
 
-        let displayExpr = fn.expr.replace(/\*/g, '').replace(/\^2/g, '²').replace(/\^3/g, '³').replace(/-/g, '\u2212');
-        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-        ctx.fillText(displayExpr, startTextX, itemY - 3);
+          // Texto en mathmode
+          targetCtx.fillStyle = state.style.labelColor;
+          targetCtx.textBaseline = 'middle';
+          targetCtx.fillText(labelText, posX + padX + 16, posY);
+        } else {
+          // Solo texto matemático puro
+          targetCtx.fillStyle = fn.color;
+          targetCtx.textBaseline = 'middle';
+          targetCtx.fillText(labelText, posX, posY);
+        }
+
+        // Guardar Hitbox para arrastrar
+        fn._hitbox = {
+          x: posX,
+          y: posY - totalH / 2,
+          w: totalW,
+          h: totalH,
+          id: fn.id,
+          type: 'function'
+        };
+
+        targetCtx.restore();
       });
-      ctx.restore();
+
+      // 10. Rótulos Arrastrables de Puntos
+      state.points.forEach(pt => {
+        if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
+
+        const cx = toCanvasX(pt.x);
+        const cy = toCanvasY(pt.y);
+        const r = pt.size || 6;
+        const ptFontSize = pointLabelFontSize || 14;
+        const name = pt.name ? pt.name.trim() : '';
+        const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
+        const fullText = name && coordText ? `${name}${coordText}` : (name || coordText);
+
+        if (!fullText) return;
+
+        const defX = cx + r + 5;
+        const defY = cy - 4;
+        const posX = pt.labelPosX !== null && pt.labelPosX !== undefined ? pt.labelPosX : defX;
+        const posY = pt.labelPosY !== null && pt.labelPosY !== undefined ? pt.labelPosY : defY;
+
+        targetCtx.save();
+        const ptWeight = boldPointLabels ? 'bold ' : '';
+        targetCtx.font = `${ptWeight}italic ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", "Lora", serif`;
+        targetCtx.fillStyle = pt.color;
+        targetCtx.textBaseline = 'bottom';
+        targetCtx.fillText(fullText, posX, posY);
+
+        const w = targetCtx.measureText(fullText).width;
+        pt._hitbox = {
+          x: posX - 4,
+          y: posY - ptFontSize - 2,
+          w: w + 8,
+          h: ptFontSize + 6,
+          id: pt.id,
+          type: 'point'
+        };
+        targetCtx.restore();
+      });
     }
 
-    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      ctx.lineTo(x + width - radius, y);
-      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-      ctx.lineTo(x + width, y + height - radius);
-      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-      ctx.lineTo(x + radius, y + height);
-      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-      ctx.lineTo(x, y + radius);
-      ctx.quadraticCurveTo(x, y, x + radius, y);
-      ctx.closePath();
-      if (fill) ctx.fill();
-      if (stroke) ctx.stroke();
+    /* Interacción con el Mouse: Arrastre de rótulos o Paneo del Lienzo */
+    function getCanvasEventCoords(evt) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
     }
 
+    function checkHit(pos, box) {
+      if (!box || box.x === undefined) return false;
+      return pos.x >= box.x && pos.x <= box.x + box.w && pos.y >= box.y && pos.y <= box.y + box.h;
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      const pos = getCanvasEventCoords(e);
+
+      // Comprobar si golpeó algún rótulo de función
+      for (const fn of state.functions) {
+        if (fn._hitbox && checkHit(pos, fn._hitbox)) {
+          activeDragTarget = { type: 'function', item: fn, offsetX: pos.x - fn._hitbox.x, offsetY: pos.y - (fn._hitbox.y + fn._hitbox.h / 2) };
+          canvas.style.cursor = 'grabbing';
+          return;
+        }
+      }
+
+      // Comprobar si golpeó algún rótulo de punto
+      for (const pt of state.points) {
+        if (pt._hitbox && checkHit(pos, pt._hitbox)) {
+          activeDragTarget = { type: 'point', item: pt, offsetX: pos.x - pt._hitbox.x, offsetY: pos.y - (pt._hitbox.y + pt._hitbox.h) };
+          canvas.style.cursor = 'grabbing';
+          return;
+        }
+      }
+
+      // Comprobar rótulos de ejes
+      if (state.labels.showX && checkHit(pos, labelHitBoxes.labelX)) {
+        activeDragTarget = { type: 'axisX' };
+        canvas.style.cursor = 'grabbing';
+        return;
+      }
+      if (state.labels.showY && checkHit(pos, labelHitBoxes.labelY)) {
+        activeDragTarget = { type: 'axisY' };
+        canvas.style.cursor = 'grabbing';
+        return;
+      }
+
+      // Si no golpeó rótulos, activar paneo general del canvas
+      viewportState.isPanning = true;
+      viewportState.startX = e.clientX - viewportState.panX;
+      viewportState.startY = e.clientY - viewportState.panY;
+      canvas.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (activeDragTarget) {
+        const pos = getCanvasEventCoords(e);
+        if (activeDragTarget.type === 'function') {
+          activeDragTarget.item.labelPosX = Math.round(pos.x - activeDragTarget.offsetX);
+          activeDragTarget.item.labelPosY = Math.round(pos.y - activeDragTarget.offsetY);
+        } else if (activeDragTarget.type === 'point') {
+          activeDragTarget.item.labelPosX = Math.round(pos.x);
+          activeDragTarget.item.labelPosY = Math.round(pos.y);
+        } else if (activeDragTarget.type === 'axisX') {
+          state.labels.posX = Math.round(pos.x);
+          state.labels.posY_X = Math.round(pos.y);
+        } else if (activeDragTarget.type === 'axisY') {
+          state.labels.posX_Y = Math.round(pos.x);
+          state.labels.posY = Math.round(pos.y);
+        }
+        drawPlot();
+      } else if (viewportState.isPanning) {
+        viewportState.panX = e.clientX - viewportState.startX;
+        viewportState.panY = e.clientY - viewportState.startY;
+        applyViewportTransform();
+      } else {
+        const pos = getCanvasEventCoords(e);
+        let hoveringLabel = false;
+        if ((state.labels.showX && checkHit(pos, labelHitBoxes.labelX)) || (state.labels.showY && checkHit(pos, labelHitBoxes.labelY))) {
+          hoveringLabel = true;
+        }
+        for (const fn of state.functions) {
+          if (fn._hitbox && checkHit(pos, fn._hitbox)) hoveringLabel = true;
+        }
+        for (const pt of state.points) {
+          if (pt._hitbox && checkHit(pos, pt._hitbox)) hoveringLabel = true;
+        }
+        canvas.style.cursor = hoveringLabel ? 'grab' : 'crosshair';
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      activeDragTarget = null;
+      viewportState.isPanning = false;
+      canvas.style.cursor = 'crosshair';
+    });
+
+    /* Constructor de Paleta de Color Moderna en el DOM */
+    function createModernColorPicker(initialColor, onColorChange) {
+      const container = document.createElement('div');
+      container.className = 'flex items-center gap-1.5 flex-wrap';
+
+      MODERN_PALETTE.forEach(c => {
+        const swatch = document.createElement('button');
+        swatch.type = 'button';
+        swatch.className = `swatch-btn ${c.toLowerCase() === initialColor.toLowerCase() ? 'swatch-btn-active' : ''}`;
+        swatch.style.backgroundColor = c;
+        swatch.title = c;
+        swatch.addEventListener('click', (e) => {
+          e.preventDefault();
+          container.querySelectorAll('.swatch-btn').forEach(btn => btn.classList.remove('swatch-btn-active'));
+          swatch.classList.add('swatch-btn-active');
+          customPicker.value = c;
+          hexLabel.innerText = c.toUpperCase();
+          onColorChange(c);
+        });
+        container.appendChild(swatch);
+      });
+
+      // Selector nativo camuflado con preview estilizado
+      const customWrapper = document.createElement('div');
+      customWrapper.className = 'flex items-center gap-1 ml-1 bg-slate-900 border border-slate-700 rounded-lg px-2 py-0.5';
+
+      const customPicker = document.createElement('input');
+      customPicker.type = 'color';
+      customPicker.value = initialColor;
+      customPicker.className = 'w-5 h-5 rounded cursor-pointer border-0 bg-transparent';
+
+      const hexLabel = document.createElement('span');
+      hexLabel.className = 'text-[10px] font-mono text-slate-300';
+      hexLabel.innerText = initialColor.toUpperCase();
+
+      customPicker.addEventListener('input', (e) => {
+        const val = e.target.value;
+        hexLabel.innerText = val.toUpperCase();
+        container.querySelectorAll('.swatch-btn').forEach(btn => btn.classList.remove('swatch-btn-active'));
+        onColorChange(val);
+      });
+
+      customWrapper.appendChild(customPicker);
+      customWrapper.appendChild(hexLabel);
+      container.appendChild(customWrapper);
+
+      return container;
+    }
+
+    /* Renderizado del Panel de Funciones */
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
       if (state.functions.length === 0) {
-        functionsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">Plano limpio: no hay funciones añadidas.<br>Haz clic en "+ Añadir Función".</p>`;
+        functionsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">No hay funciones añadidas.<br>Haz clic abajo en "+ Añadir Función".</p>`;
         return;
       }
 
-      state.functions.forEach((fn) => {
+      state.functions.forEach(fn => {
         const card = document.createElement('div');
+        card.id = `card-${fn.id}`;
         card.className = 'p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 space-y-3 transition hover:border-slate-600 shadow-sm';
-        
+
         const katexPreviewId = `katex-preview-${fn.id}`;
 
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-              <input type="color" data-color-id="${fn.id}" value="${fn.color}" title="Color de la línea" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
               <input type="text" data-name-id="${fn.id}" value="${fn.name}" title="Nombre de función" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer">
+                <input type="checkbox" data-label-toggle-id="${fn.id}" ${fn.showLabel ? 'checked' : ''} class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
+                <span>Rótulo en gráfica</span>
+              </label>
             </div>
 
             <button data-delete-id="${fn.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar función">
@@ -1183,10 +1545,35 @@
             </button>
           </div>
 
+          <!-- Paleta de Color Moderna -->
+          <div class="color-picker-container-${fn.id} pt-1"></div>
+
           <div>
             <div class="relative">
               <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 3*x^2 + 2*x - 5" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
               <span class="absolute right-2.5 top-2 text-xs text-slate-500 font-mono">f(x)</span>
+            </div>
+          </div>
+
+          <!-- Rango Personalizado / Intervalo de la Función -->
+          <div class="p-2.5 bg-slate-900/60 rounded-lg border border-slate-700/50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-semibold text-slate-300">Restringir Dominio / Intervalo</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" data-range-toggle-id="${fn.id}" ${fn.customRange ? 'checked' : ''} class="sr-only peer">
+                <div class="w-7 h-3.5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs ${fn.customRange ? '' : 'hidden'}" id="range-inputs-${fn.id}">
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-0.5">Desde x =</label>
+                <input type="number" step="any" data-range-min-id="${fn.id}" value="${fn.rangeMin}" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white font-mono">
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-400 block mb-0.5">Hasta x =</label>
+                <input type="number" step="any" data-range-max-id="${fn.id}" value="${fn.rangeMax}" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white font-mono">
+              </div>
             </div>
           </div>
 
@@ -1217,6 +1604,14 @@
 
         functionsContainer.appendChild(card);
 
+        // Inyectar Color Picker moderno
+        const colorHost = card.querySelector(`.color-picker-container-${fn.id}`);
+        colorHost.appendChild(createModernColorPicker(fn.color, (newColor) => {
+          fn.color = newColor;
+          drawPlot();
+        }));
+
+        // Renderizado KaTeX en el card
         const katexEl = document.getElementById(katexPreviewId);
         if (katexEl && window.katex) {
           try {
@@ -1229,32 +1624,146 @@
       });
 
       lucide.createIcons();
-      bindDynamicEvents();
+      bindFunctionEvents();
     }
 
+    function bindFunctionEvents() {
+      document.querySelectorAll('[data-expr-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-expr-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.expr = e.target.value;
+            const katexEl = document.getElementById(`katex-preview-${id}`);
+            if (katexEl && window.katex) {
+              const tex = expressionToLatex(fn.expr);
+              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
+            }
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-name-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-name-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.name = e.target.value;
+            const katexEl = document.getElementById(`katex-preview-${id}`);
+            if (katexEl && window.katex) {
+              const tex = expressionToLatex(fn.expr);
+              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
+            }
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-label-toggle-id]').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-label-toggle-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.showLabel = e.target.checked;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-range-toggle-id]').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-range-toggle-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.customRange = e.target.checked;
+            const rangeBox = document.getElementById(`range-inputs-${id}`);
+            if (rangeBox) rangeBox.classList.toggle('hidden', !fn.customRange);
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-range-min-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-range-min-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.rangeMin = parseNumberSafe(e.target.value, state.bounds.xMin);
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-range-max-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-range-max-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.rangeMax = parseNumberSafe(e.target.value, state.bounds.xMax);
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-width-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-width-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.width = parseFloat(e.target.value) || 2;
+            const lbl = document.querySelector(`[data-width-val-id="${id}"]`);
+            if (lbl) lbl.innerText = `${fn.width}px`;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-style-id]').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-style-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.style = e.target.value;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-delete-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-delete-id');
+          state.functions = state.functions.filter(f => f.id !== id);
+          renderFunctionInputs();
+          drawPlot();
+        });
+      });
+    }
+
+    /* Renderizado del Panel de Puntos con Diamante */
     function renderPointInputs() {
       pointsContainer.innerHTML = '';
 
       if (state.points.length === 0) {
-        pointsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">Plano limpio: no hay puntos añadidos.<br>Haz clic en "+ Añadir Punto".</p>`;
+        pointsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">No hay puntos añadidos.<br>Haz clic abajo en "+ Añadir Punto".</p>`;
         return;
       }
 
       state.points.forEach(pt => {
         const card = document.createElement('div');
+        card.id = `card-${pt.id}`;
         card.className = 'p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 space-y-3 transition hover:border-slate-600 shadow-sm';
 
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <input type="color" data-pt-color-id="${pt.id}" value="${pt.color}" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer">
-              <input type="text" data-pt-name-id="${pt.id}" value="${pt.name}" placeholder="Nombre (ej: A)" class="w-24 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
-            </div>
-
+            <input type="text" data-pt-name-id="${pt.id}" value="${pt.name}" placeholder="Nombre (ej: A)" class="w-24 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
             <button data-pt-delete-id="${pt.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar punto">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
+
+          <!-- Color Picker Moderno -->
+          <div class="color-picker-pt-container-${pt.id} pt-1"></div>
 
           <div class="grid grid-cols-2 gap-2.5">
             <div>
@@ -1283,12 +1792,19 @@
                 <option value="ring" ${pt.symbol === 'ring' ? 'selected' : ''}>Círculo Hueco</option>
                 <option value="cross" ${pt.symbol === 'cross' ? 'selected' : ''}>Cruz (x)</option>
                 <option value="square" ${pt.symbol === 'square' ? 'selected' : ''}>Cuadrado</option>
+                <option value="diamond" ${pt.symbol === 'diamond' ? 'selected' : ''}>Diamante / Rombo (◆)</option>
               </select>
             </div>
           </div>
         `;
 
         pointsContainer.appendChild(card);
+
+        const colorHost = card.querySelector(`.color-picker-pt-container-${pt.id}`);
+        colorHost.appendChild(createModernColorPicker(pt.color, (newColor) => {
+          pt.color = newColor;
+          drawPlot();
+        }));
       });
 
       lucide.createIcons();
@@ -1303,24 +1819,17 @@
         });
       });
 
-      document.querySelectorAll('[data-pt-color-id]').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-color-id'));
-          if (pt) { pt.color = e.target.value; drawPlot(); }
-        });
-      });
-
       document.querySelectorAll('[data-pt-x-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-x-id'));
-          if (pt) { pt.x = parseFloat(e.target.value) || 0; drawPlot(); }
+          if (pt) { pt.x = parseNumberSafe(e.target.value, 0); drawPlot(); }
         });
       });
 
       document.querySelectorAll('[data-pt-y-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const pt = state.points.find(p => p.id === e.target.getAttribute('data-pt-y-id'));
-          if (pt) { pt.y = parseFloat(e.target.value) || 0; drawPlot(); }
+          if (pt) { pt.y = parseNumberSafe(e.target.value, 0); drawPlot(); }
         });
       });
 
@@ -1354,119 +1863,76 @@
       });
     }
 
-    function bindDynamicEvents() {
-      document.querySelectorAll('[data-expr-id]').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const id = e.target.getAttribute('data-expr-id');
-          const fn = state.functions.find(f => f.id === id);
-          if (fn) {
-            fn.expr = e.target.value;
-            const katexEl = document.getElementById(`katex-preview-${id}`);
-            if (katexEl && window.katex) {
-              const tex = expressionToLatex(fn.expr);
-              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
-            }
-            drawPlot();
-          }
-        });
-      });
+    // Botones de añadir ubicados al fondo con desplazamiento suave
+    document.getElementById('btnAddFunction').addEventListener('click', () => {
+      const nextColor = MODERN_PALETTE[state.functions.length % (MODERN_PALETTE.length - 2)];
+      const fnNum = state.functions.length === 0 ? '' : state.functions.length + 1;
+      const newFn = {
+        id: 'fn-' + Date.now(),
+        name: `f${fnNum}(x)`,
+        expr: state.functions.length === 0 ? 'x' : (state.functions.length === 1 ? '0.3*x + 3' : '2*x - 1'),
+        color: nextColor,
+        width: 3.5,
+        style: 'solid',
+        visible: true,
+        showLabel: true,
+        customRange: false,
+        rangeMin: state.bounds.xMin,
+        rangeMax: state.bounds.xMax,
+        labelPosX: null,
+        labelPosY: null
+      };
+      state.functions.push(newFn);
+      renderFunctionInputs();
+      drawPlot();
 
-      document.querySelectorAll('[data-color-id]').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const id = e.target.getAttribute('data-color-id');
-          const fn = state.functions.find(f => f.id === id);
-          if (fn) {
-            fn.color = e.target.value;
-            drawPlot();
-          }
-        });
-      });
+      const newCard = document.getElementById(`card-${newFn.id}`);
+      if (newCard) newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
 
-      document.querySelectorAll('[data-name-id]').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const id = e.target.getAttribute('data-name-id');
-          const fn = state.functions.find(f => f.id === id);
-          if (fn) {
-            fn.name = e.target.value;
-            const katexEl = document.getElementById(`katex-preview-${id}`);
-            if (katexEl && window.katex) {
-              const tex = expressionToLatex(fn.expr);
-              katex.render(`${fn.name} = ${tex}`, katexEl, { throwOnError: false });
-            }
-            drawPlot();
-          }
-        });
-      });
+    document.getElementById('btnAddPoint').addEventListener('click', () => {
+      const nextColor = MODERN_PALETTE[state.points.length % (MODERN_PALETTE.length - 2)];
+      const charCode = 65 + (state.points.length % 26);
+      const newPoint = {
+        id: 'pt-' + Date.now(),
+        name: String.fromCharCode(charCode),
+        x: 0,
+        y: 0,
+        color: nextColor,
+        size: 6,
+        symbol: 'circle',
+        visible: true,
+        labelPosX: null,
+        labelPosY: null
+      };
+      state.points.push(newPoint);
+      renderPointInputs();
+      drawPlot();
 
-      document.querySelectorAll('[data-width-id]').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const id = e.target.getAttribute('data-width-id');
-          const fn = state.functions.find(f => f.id === id);
-          if (fn) {
-            fn.width = parseFloat(e.target.value) || 2;
-            const labelEl = document.querySelector(`[data-width-val-id="${id}"]`);
-            if (labelEl) labelEl.innerText = `${fn.width}px`;
-            drawPlot();
-          }
-        });
-      });
+      const newCard = document.getElementById(`card-${newPoint.id}`);
+      if (newCard) newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
 
-      document.querySelectorAll('[data-style-id]').forEach(select => {
-        select.addEventListener('change', (e) => {
-          const id = e.target.getAttribute('data-style-id');
-          const fn = state.functions.find(f => f.id === id);
-          if (fn) {
-            fn.style = e.target.value;
-            drawPlot();
-          }
-        });
-      });
-
-      document.querySelectorAll('[data-delete-id]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-delete-id');
-          state.functions = state.functions.filter(f => f.id !== id);
-          renderFunctionInputs();
-          drawPlot();
-        });
+    // Pestañas
+    const tabs = ['functions', 'points', 'axes', 'style'];
+    function setActiveTab(selectedTab) {
+      tabs.forEach(tab => {
+        const btn = document.getElementById(`tabBtn${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
+        const section = document.getElementById(`tabSection${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
+        if (tab === selectedTab) {
+          btn.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+          section.classList.remove('hidden');
+        } else {
+          btn.className = 'py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+          section.classList.add('hidden');
+        }
       });
     }
 
-    const tabBtnFunctions = document.getElementById('tabBtnFunctions');
-    const tabBtnPoints = document.getElementById('tabBtnPoints');
-    const tabBtnAxes = document.getElementById('tabBtnAxes');
-    const tabBtnStyle = document.getElementById('tabBtnStyle');
-
-    const tabSectionFunctions = document.getElementById('tabSectionFunctions');
-    const tabSectionPoints = document.getElementById('tabSectionPoints');
-    const tabSectionAxes = document.getElementById('tabSectionAxes');
-    const tabSectionStyle = document.getElementById('tabSectionStyle');
-
-    function setActiveTab(tab) {
-      [tabBtnFunctions, tabBtnPoints, tabBtnAxes, tabBtnStyle].forEach(btn => {
-        btn.className = 'py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
-      });
-      [tabSectionFunctions, tabSectionPoints, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
-
-      if (tab === 'functions') {
-        tabBtnFunctions.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
-        tabSectionFunctions.classList.remove('hidden');
-      } else if (tab === 'points') {
-        tabBtnPoints.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
-        tabSectionPoints.classList.remove('hidden');
-      } else if (tab === 'axes') {
-        tabBtnAxes.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
-        tabSectionAxes.classList.remove('hidden');
-      } else if (tab === 'style') {
-        tabBtnStyle.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
-        tabSectionStyle.classList.remove('hidden');
-      }
-    }
-
-    tabBtnFunctions.addEventListener('click', () => setActiveTab('functions'));
-    tabBtnPoints.addEventListener('click', () => setActiveTab('points'));
-    tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
-    tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
+    document.getElementById('tabBtnFunctions').addEventListener('click', () => setActiveTab('functions'));
+    document.getElementById('tabBtnPoints').addEventListener('click', () => setActiveTab('points'));
+    document.getElementById('tabBtnAxes').addEventListener('click', () => setActiveTab('axes'));
+    document.getElementById('tabBtnStyle').addEventListener('click', () => setActiveTab('style'));
 
     function updateAxisLabelsPreview() {
       const elX = document.getElementById('previewKatexLabelX');
@@ -1496,11 +1962,11 @@
     function syncInputs() {
       document.getElementById('inputAxisLabelX').value = state.labels.x;
       document.getElementById('inputAxisLabelY').value = state.labels.y;
+      document.getElementById('checkShowLabelX').checked = state.labels.showX;
+      document.getElementById('checkShowLabelY').checked = state.labels.showY;
 
-      const axisTitleSizeInput = document.getElementById('inputAxisTitleFontSize');
-      const axisTitleSizeVal = document.getElementById('axisTitleFontSizeVal');
-      if (axisTitleSizeInput) axisTitleSizeInput.value = state.labels.fontSize || 24;
-      if (axisTitleSizeVal) axisTitleSizeVal.innerText = `${state.labels.fontSize || 24}px`;
+      document.getElementById('inputAxisTitleFontSize').value = state.labels.fontSize || 24;
+      document.getElementById('axisTitleFontSizeVal').innerText = `${state.labels.fontSize || 24}px`;
 
       document.getElementById('checkShowChartTitle').checked = state.chartTitle.visible;
       document.getElementById('inputChartTitle').value = state.chartTitle.text;
@@ -1518,13 +1984,13 @@
 
       document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
-      document.getElementById('inputFormulaFontSize').value = state.style.formulaFontSize || 13;
-      document.getElementById('formulaFontSizeVal').innerText = `${state.style.formulaFontSize || 13}px`;
+      document.getElementById('inputFormulaFontSize').value = state.style.formulaFontSize || 15;
+      document.getElementById('formulaFontSizeVal').innerText = `${state.style.formulaFontSize || 15}px`;
+      document.getElementById('selectFunctionLabelBadgeStyle').value = state.style.functionBadgeStyle || 'badge';
       document.getElementById('inputPointLabelFontSize').value = state.style.pointLabelFontSize || 14;
       document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 14}px`;
 
       document.getElementById('checkShowCoords').checked = state.style.showPointCoords;
-
       document.getElementById('colorBackground').value = state.style.background;
       document.getElementById('labelBgColor').innerText = state.style.background.toUpperCase();
       document.getElementById('colorAxes').value = state.style.axisColor;
@@ -1546,10 +2012,7 @@
       document.getElementById('checkMinorGrid').checked = state.style.showMinorGrid;
       document.getElementById('checkBoldAxisLabels').checked = state.style.boldAxisLabels;
       document.getElementById('checkBoldPointLabels').checked = state.style.boldPointLabels;
-
       document.getElementById('checkTickNumbers').checked = state.style.showTickNumbers;
-      document.getElementById('checkAxisLabels').checked = state.style.showAxisLabels;
-      document.getElementById('checkOverlayFormula').checked = state.style.showOverlayFormula;
       document.getElementById('inputAxisWidth').value = state.style.axisWidth;
       document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
 
@@ -1595,6 +2058,16 @@
     document.getElementById('btnAspectRect').addEventListener('click', () => setAspectRatio('rect'));
     document.getElementById('btnAspectSquare').addEventListener('click', () => setAspectRatio('square'));
 
+    // Rótulos de ejes independientes
+    document.getElementById('checkShowLabelX').addEventListener('change', (e) => {
+      state.labels.showX = e.target.checked;
+      drawPlot();
+    });
+    document.getElementById('checkShowLabelY').addEventListener('change', (e) => {
+      state.labels.showY = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('inputAxisLabelX').addEventListener('input', (e) => {
       state.labels.x = e.target.value;
       updateAxisLabelsPreview();
@@ -1607,20 +2080,19 @@
       drawPlot();
     });
 
-    const inputAxisTitleFontSize = document.getElementById('inputAxisTitleFontSize');
-    if (inputAxisTitleFontSize) {
-      inputAxisTitleFontSize.addEventListener('input', (e) => {
-        state.labels.fontSize = parseInt(e.target.value, 10) || 24;
-        document.getElementById('axisTitleFontSizeVal').innerText = `${state.labels.fontSize}px`;
-        drawPlot();
-      });
-    }
+    document.getElementById('inputAxisTitleFontSize').addEventListener('input', (e) => {
+      state.labels.fontSize = parseInt(e.target.value, 10) || 24;
+      document.getElementById('axisTitleFontSizeVal').innerText = `${state.labels.fontSize}px`;
+      drawPlot();
+    });
 
     document.getElementById('btnResetLabelPos').addEventListener('click', () => {
       state.labels.posX = null;
       state.labels.posY = null;
       state.labels.posX_Y = null;
       state.labels.posY_X = null;
+      state.functions.forEach(f => { f.labelPosX = null; f.labelPosY = null; });
+      state.points.forEach(p => { p.labelPosX = null; p.labelPosY = null; });
       drawPlot();
       showToast('Posiciones de rótulos restablecidas');
     });
@@ -1637,7 +2109,7 @@
     });
 
     document.getElementById('inputChartTitleSize').addEventListener('input', (e) => {
-      state.chartTitle.fontSize = parseInt(e.target.value, 10);
+      state.chartTitle.fontSize = parseInt(e.target.value, 10) || 18;
       document.getElementById('chartTitleSizeVal').innerText = `${state.chartTitle.fontSize}px`;
       drawPlot();
     });
@@ -1649,8 +2121,13 @@
     });
 
     document.getElementById('inputFormulaFontSize').addEventListener('input', (e) => {
-      state.style.formulaFontSize = parseInt(e.target.value, 10) || 13;
+      state.style.formulaFontSize = parseInt(e.target.value, 10) || 15;
       document.getElementById('formulaFontSizeVal').innerText = `${state.style.formulaFontSize}px`;
+      drawPlot();
+    });
+
+    document.getElementById('selectFunctionLabelBadgeStyle').addEventListener('change', (e) => {
+      state.style.functionBadgeStyle = e.target.value;
       drawPlot();
     });
 
@@ -1671,24 +2148,14 @@
       drawPlot();
     });
 
+    document.getElementById('checkArrows').addEventListener('change', (e) => {
+      state.style.showArrows = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('inputArrowSize').addEventListener('input', (e) => {
       state.style.arrowSize = parseFloat(e.target.value) || 10;
       document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize}px`;
-      drawPlot();
-    });
-
-    document.getElementById('checkMajorGrid').addEventListener('change', (e) => {
-      state.style.showMajorGrid = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkBoldAxisLabels').addEventListener('change', (e) => {
-      state.style.boldAxisLabels = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkBoldPointLabels').addEventListener('change', (e) => {
-      state.style.boldPointLabels = e.target.checked;
       drawPlot();
     });
 
@@ -1712,21 +2179,36 @@
       drawPlot();
     });
 
+    document.getElementById('checkTickNumbers').addEventListener('change', (e) => {
+      state.style.showTickNumbers = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('checkShowCoords').addEventListener('change', (e) => {
       state.style.showPointCoords = e.target.checked;
       drawPlot();
     });
 
+    document.getElementById('inputAxisWidth').addEventListener('input', (e) => {
+      state.style.axisWidth = parseFloat(e.target.value) || 3.5;
+      document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
+      drawPlot();
+    });
+
+    // Control estricto de inputs de límites donde 0 es 100% admitido sin fallback erróneo
     ['inputXMin', 'inputXMax', 'inputXStep', 'inputYMin', 'inputYMax', 'inputYStep', 'inputSubdivisionsX', 'inputSubdivisionsY'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
-        state.bounds.xMin = parseFloat(document.getElementById('inputXMin').value) || -10;
-        state.bounds.xMax = parseFloat(document.getElementById('inputXMax').value) || 10;
-        state.bounds.xStep = Math.max(0.0001, parseFloat(document.getElementById('inputXStep').value) || 1);
-        state.bounds.yMin = parseFloat(document.getElementById('inputYMin').value) || -10;
-        state.bounds.yMax = parseFloat(document.getElementById('inputYMax').value) || 10;
-        state.bounds.yStep = Math.max(0.0001, parseFloat(document.getElementById('inputYStep').value) || 1);
-        state.bounds.subdivisionsX = parseInt(document.getElementById('inputSubdivisionsX').value) || 2;
-        state.bounds.subdivisionsY = parseInt(document.getElementById('inputSubdivisionsY').value) || 2;
+        state.bounds.xMin = parseNumberSafe(document.getElementById('inputXMin').value, -6);
+        state.bounds.xMax = parseNumberSafe(document.getElementById('inputXMax').value, 6);
+        state.bounds.xStep = Math.max(1, parseIntegerSafe(document.getElementById('inputXStep').value, 1));
+
+        state.bounds.yMin = parseNumberSafe(document.getElementById('inputYMin').value, -6);
+        state.bounds.yMax = parseNumberSafe(document.getElementById('inputYMax').value, 6);
+        state.bounds.yStep = Math.max(1, parseIntegerSafe(document.getElementById('inputYStep').value, 1));
+
+        state.bounds.subdivisionsX = Math.max(1, parseIntegerSafe(document.getElementById('inputSubdivisionsX').value, 2));
+        state.bounds.subdivisionsY = Math.max(1, parseIntegerSafe(document.getElementById('inputSubdivisionsY').value, 2));
+
         drawPlot();
       });
     });
@@ -1755,69 +2237,7 @@
       drawPlot();
     });
 
-    document.getElementById('checkArrows').addEventListener('change', (e) => {
-      state.style.showArrows = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkTickNumbers').addEventListener('change', (e) => {
-      state.style.showTickNumbers = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkAxisLabels').addEventListener('change', (e) => {
-      state.style.showAxisLabels = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('checkOverlayFormula').addEventListener('change', (e) => {
-      state.style.showOverlayFormula = e.target.checked;
-      drawPlot();
-    });
-
-    document.getElementById('inputAxisWidth').addEventListener('input', (e) => {
-      state.style.axisWidth = parseFloat(e.target.value);
-      document.getElementById('labelAxisWidth').innerText = `${state.style.axisWidth}px`;
-      drawPlot();
-    });
-
-    document.getElementById('btnAddFunction').addEventListener('click', () => {
-      const palette = ['#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#e11d48'];
-      const nextColor = palette[state.functions.length % palette.length];
-      const fnNum = state.functions.length === 0 ? '' : state.functions.length + 1;
-      const newFn = {
-        id: 'fn-' + Date.now(),
-        name: `f${fnNum}(x)`,
-        expr: state.functions.length === 0 ? 'x^2 - 4' : '2*x + 1',
-        color: nextColor,
-        width: 3.5,
-        style: 'solid',
-        visible: true
-      };
-      state.functions.push(newFn);
-      renderFunctionInputs();
-      drawPlot();
-    });
-
-    document.getElementById('btnAddPoint').addEventListener('click', () => {
-      const pointColors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
-      const nextColor = pointColors[state.points.length % pointColors.length];
-      const charCode = 65 + (state.points.length % 26);
-      const newPoint = {
-        id: 'pt-' + Date.now(),
-        name: String.fromCharCode(charCode),
-        x: 0,
-        y: 0,
-        color: nextColor,
-        size: 6,
-        symbol: 'circle',
-        visible: true
-      };
-      state.points.push(newPoint);
-      renderPointInputs();
-      drawPlot();
-    });
-
+    // Limpiar todo
     document.getElementById('btnClearAll').addEventListener('click', () => {
       state.functions = [];
       state.points = [];
@@ -1833,6 +2253,7 @@
       showToast('Plano cartesiano totalmente en blanco');
     });
 
+    // Plantillas de color
     document.querySelectorAll('.preset-theme-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const theme = btn.getAttribute('data-canvas-preset');
@@ -1857,6 +2278,7 @@
       });
     });
 
+    // Ejemplo original
     document.getElementById('btnOriginalPreset').addEventListener('click', () => {
       state.chartTitle = {
         text: 'Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$',
@@ -1871,7 +2293,13 @@
           color: '#3b82f6',
           width: 3.5,
           style: 'solid',
-          visible: true
+          visible: true,
+          showLabel: true,
+          customRange: false,
+          rangeMin: -6,
+          rangeMax: 6,
+          labelPosX: null,
+          labelPosY: null
         }
       ];
       state.points = [];
@@ -1888,6 +2316,8 @@
       state.labels = {
         x: 'x',
         y: 'y',
+        showX: true,
+        showY: true,
         fontSize: 24,
         posX: null,
         posY: null,
@@ -1907,180 +2337,92 @@
       state.style.boldPointLabels = false;
       state.style.showMajorGrid = true;
       state.style.showArrows = false;
-      state.style.showAxisLabels = true;
       state.style.showTickNumbers = true;
       state.style.showMinorGrid = true;
-      state.style.showOverlayFormula = false;
       state.style.showPointCoords = false;
 
       syncInputs();
       renderFunctionInputs();
       renderPointInputs();
       drawPlot();
-      showToast('Cargado el ejemplo de parábola');
+      showToast('Cargado ejemplo de parábola');
     });
 
     function showToast(message) {
       const toast = document.getElementById('toastNotification');
       const toastMsg = document.getElementById('toastMessage');
       toastMsg.innerText = message;
-      toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      toast.classList.remove('opacity-0', '-translate-y-6', 'pointer-events-none');
       setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+        toast.classList.add('opacity-0', '-translate-y-6', 'pointer-events-none');
       }, 2600);
     }
 
-    function getCanvasCoords(evt) {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
-      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
-      return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
-      };
-    }
-
-    function checkHit(pos, box) {
-      return pos.x >= box.x && pos.x <= box.x + box.w && pos.y >= box.y && pos.y <= box.y + box.h;
-    }
-
-    canvas.addEventListener('mousedown', (e) => {
-      const pos = getCanvasCoords(e);
-      if (checkHit(pos, labelHitBoxes.labelX)) {
-        draggedElement = 'labelX';
-      } else if (checkHit(pos, labelHitBoxes.labelY)) {
-        draggedElement = 'labelY';
-      }
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
-      const pos = getCanvasCoords(e);
-
-      if (draggedElement) {
-        if (draggedElement === 'labelX') {
-          state.labels.posX = Math.round(pos.x);
-          state.labels.posY_X = Math.round(pos.y);
-        } else if (draggedElement === 'labelY') {
-          state.labels.posX_Y = Math.round(pos.x);
-          state.labels.posY = Math.round(pos.y);
-        }
-        drawPlot();
-      } else {
-        if (checkHit(pos, labelHitBoxes.labelX) || checkHit(pos, labelHitBoxes.labelY)) {
-          canvas.style.cursor = 'grab';
-        } else {
-          canvas.style.cursor = 'crosshair';
-        }
-      }
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (draggedElement) {
-        draggedElement = null;
-        canvas.style.cursor = 'crosshair';
-      }
-    });
-
-    canvas.addEventListener('touchstart', (e) => {
-      const pos = getCanvasCoords(e);
-      if (checkHit(pos, labelHitBoxes.labelX)) {
-        draggedElement = 'labelX';
-        e.preventDefault();
-      } else if (checkHit(pos, labelHitBoxes.labelY)) {
-        draggedElement = 'labelY';
-        e.preventDefault();
-      }
-    }, { passive: false });
-
-    canvas.addEventListener('touchmove', (e) => {
-      if (draggedElement) {
-        const pos = getCanvasCoords(e);
-        if (draggedElement === 'labelX') {
-          state.labels.posX = Math.round(pos.x);
-          state.labels.posY_X = Math.round(pos.y);
-        } else if (draggedElement === 'labelY') {
-          state.labels.posX_Y = Math.round(pos.x);
-          state.labels.posY = Math.round(pos.y);
-        }
-        drawPlot();
-        e.preventDefault();
-      }
-    }, { passive: false });
-
-    canvas.addEventListener('touchend', () => {
-      draggedElement = null;
-    });
-
+    /* Exportador PNG HD con posiciones arrastradas intactas */
     function downloadPNG(scale = 2) {
-      // 1. Guardar dimensiones actuales
       const origW = state.canvasWidth;
       const origH = state.canvasHeight;
 
-      // 2. Escalar temporalmente el canvas y dibujar
-      canvas.width = origW * scale;
-      canvas.height = origH * scale;
-      ctx.scale(scale, scale);
-      drawPlot();
+      // Canvas fuera de pantalla para no alterar la resolución en vivo
+      const offscreen = document.createElement('canvas');
+      offscreen.width = origW * scale;
+      offscreen.height = origH * scale;
+      const offCtx = offscreen.getContext('2d');
 
-      // 3. Generar archivo PNG
+      offCtx.scale(scale, scale);
+      drawPlot(offCtx, true, scale);
+
       const link = document.createElement('a');
       link.download = `plano-cartesiano-latex-${scale}x.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.href = offscreen.toDataURL('image/png');
       link.click();
-
-      // 4. Restaurar dimensiones normales
-      canvas.width = origW;
-      canvas.height = origH;
-      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset scale
-      drawPlot();
 
       showToast(`Descargado PNG en escala ${scale}x (${origW * scale}x${origH * scale}px)`);
     }
 
+    /* Exportador SVG Vectorial con soporte KaTeX y posiciones exactas */
     function downloadSVG() {
       const p = getPaddings();
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showAxisLabels, showPointCoords } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, formulaFontSize, functionBadgeStyle, pointLabelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, showPointCoords } = state.style;
+      const { showX, showY } = state.labels;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
   <defs>
     <style>
       @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
-      .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
-      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: ${boldAxisLabels ? 'bold' : 'normal'}; fill: ${axisColor}; font-style: italic; }
-      .katex-chart-title { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
-      .katex-math-span { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-style: italic; font-weight: normal; }
-      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: ${boldPointLabels ? 'bold' : 'normal'}; }
+      .katex-label { font-family: 'KaTeX_Main', 'Lora', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
+      .katex-axis-title { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Lora', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: ${boldAxisLabels ? 'bold' : 'normal'}; fill: ${axisColor}; font-style: italic; }
+      .katex-chart-title { font-family: 'KaTeX_Main', 'Lora', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
+      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Lora', serif; font-size: ${pointLabelFontSize || 14}px; font-weight: ${boldPointLabels ? 'bold' : 'normal'}; }
+      .katex-fn-label { font-family: 'KaTeX_Math', 'KaTeX_Main', 'Lora', serif; font-size: ${formulaFontSize || 15}px; font-style: italic; }
     </style>
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
 
+      // Título
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
         const segments = parseMathText(state.chartTitle.text.trim());
         svg += `  <text x="${w / 2}" y="${p.top - 20}" class="katex-chart-title" text-anchor="middle">`;
         segments.forEach(seg => {
-          if (seg.isMath) {
-            svg += `<tspan class="katex-math-span">${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>`;
-          } else {
-            svg += seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          }
+          const safeText = seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          svg += seg.isMath ? `<tspan font-style="italic" font-family="'KaTeX_Math', serif">${safeText}</tspan>` : safeText;
         });
         svg += `</text>\n`;
       }
 
+      // Cuadrículas
       if (showMinorGrid) {
         svg += `  <g stroke="${gridColor}" stroke-width="0.75" opacity="0.45">\n`;
-        const stepSubX = xStep / (subdivisionsX || 2);
+        const stepSubX = Math.max(0.001, xStep / (subdivisionsX || 2));
         for (let x = xMin; x <= xMax + 1e-9; x += stepSubX) {
           const cx = toCanvasX(x);
           svg += `    <line x1="${cx}" y1="${p.top}" x2="${cx}" y2="${h - p.bottom}"/>\n`;
         }
-        const stepSubY = yStep / (subdivisionsY || 2);
+        const stepSubY = Math.max(0.001, yStep / (subdivisionsY || 2));
         for (let y = yMin; y <= yMax + 1e-9; y += stepSubY) {
           const cy = toCanvasY(y);
           svg += `    <line x1="${p.left}" y1="${cy}" x2="${w - p.right}" y2="${cy}"/>\n`;
@@ -2115,7 +2457,6 @@
         const tipLeftX = p.left - 24;
         const tipTopY = p.top - 24;
         const tipBottomY = h - p.bottom + 24;
-
         svg += `  <g fill="${axisColor}">\n`;
         svg += `    <polygon points="${tipRightX + aSize},${originY} ${tipRightX},${originY - aSize * 0.55} ${tipRightX},${originY + aSize * 0.55}"/>\n`;
         svg += `    <polygon points="${tipLeftX - aSize},${originY} ${tipLeftX},${originY - aSize * 0.55} ${tipLeftX},${originY + aSize * 0.55}"/>\n`;
@@ -2143,60 +2484,65 @@
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x);
           if (Math.abs(x) > 1e-9) {
-            svg += `    <text x="${cx}" y="${originY + 18}" text-anchor="middle">${formatLatexNumber(x)}</text>\n`;
+            const dist = Math.abs(cx - originX);
+            const offX = dist < 18 ? cx + 10 : cx;
+            svg += `    <text x="${offX}" y="${originY + 18}" text-anchor="middle">${formatLatexNumber(x)}</text>\n`;
           }
         }
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y);
-          svg += `    <text x="${originX - 9}" y="${cy + 4.5}" text-anchor="end">${formatLatexNumber(y)}</text>\n`;
+          if (Math.abs(y) > 1e-9) {
+            svg += `    <text x="${originX - 9}" y="${cy + 4.5}" text-anchor="end">${formatLatexNumber(y)}</text>\n`;
+          }
         }
         svg += `  </g>\n`;
       }
 
-      if (showAxisLabels) {
-        const defaultLabelY_X = originX;
-        const defaultLabelY_Y = p.top - 28;
-        const defaultLabelX_X = w - p.right + 30;
-        const defaultLabelX_Y = originY + 7;
-
-        const posX_X = state.labels.posX !== null ? state.labels.posX : defaultLabelX_X;
-        const posX_Y = state.labels.posY_X !== null && state.labels.posY_X !== undefined ? state.labels.posY_X : defaultLabelX_Y;
-
-        const posY_X = state.labels.posX_Y !== null && state.labels.posX_Y !== undefined ? state.labels.posX_Y : defaultLabelY_X;
-        const posY_Y = state.labels.posY !== null ? state.labels.posY : defaultLabelY_Y;
-
-        svg += `  <g class="katex-axis-title">\n`;
+      // Rótulos de ejes
+      svg += `  <g class="katex-axis-title">\n`;
+      if (showY) {
+        const posY_X = state.labels.posX_Y !== null ? state.labels.posX_Y : originX;
+        const posY_Y = state.labels.posY !== null ? state.labels.posY : p.top - 28;
         svg += `    <text x="${posY_X}" y="${posY_Y}" text-anchor="middle">${state.labels.y.trim() || 'y'}</text>\n`;
-        svg += `    <text x="${posX_X}" y="${posX_Y}" text-anchor="start">${state.labels.x.trim() || 'x'}</text>\n`;
-        svg += `  </g>\n`;
       }
+      if (showX) {
+        const posX_X = state.labels.posX !== null ? state.labels.posX : w - p.right + 30;
+        const posX_Y = state.labels.posY_X !== null ? state.labels.posY_X : originY;
+        svg += `    <text x="${posX_X}" y="${posX_Y}" text-anchor="start">${state.labels.x.trim() || 'x'}</text>\n`;
+      }
+      svg += `  </g>\n`;
 
+      // Curvas de funciones
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
         try {
           const compiled = math.compile(fn.expr);
-          const samplePoints = 700;
-          const stepSize = (xMax - xMin) / samplePoints;
-          let pathD = '';
+          const evalMinX = fn.customRange ? Math.max(xMin, fn.rangeMin) : xMin;
+          const evalMaxX = fn.customRange ? Math.min(xMax, fn.rangeMax) : xMax;
 
-          for (let i = 0; i <= samplePoints; i++) {
-            const currentX = xMin + (i * stepSize);
-            let currentY;
-            try { currentY = compiled.evaluate({ x: currentX }); } catch (e) { currentY = NaN; }
-
-            if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
-              const cx = toCanvasX(currentX);
-              const cy = toCanvasY(currentY);
-              pathD += (pathD === '' ? `M ${cx.toFixed(2)} ${cy.toFixed(2)}` : ` L ${cx.toFixed(2)} ${cy.toFixed(2)}`);
+          if (evalMinX < evalMaxX) {
+            const samplePoints = 700;
+            const stepSize = (evalMaxX - evalMinX) / samplePoints;
+            let pathD = '';
+            for (let i = 0; i <= samplePoints; i++) {
+              const currentX = evalMinX + (i * stepSize);
+              let currentY;
+              try { currentY = compiled.evaluate({ x: currentX }); } catch (e) { currentY = NaN; }
+              if (typeof currentY === 'number' && !isNaN(currentY) && isFinite(currentY)) {
+                const cx = toCanvasX(currentX);
+                const cy = toCanvasY(currentY);
+                pathD += (pathD === '' ? `M ${cx.toFixed(2)} ${cy.toFixed(2)}` : ` L ${cx.toFixed(2)} ${cy.toFixed(2)}`);
+              }
             }
-          }
-          if (pathD) {
-            const dashAttr = fn.style === 'dashed' ? ' stroke-dasharray="8,6"' : (fn.style === 'dotted' ? ' stroke-dasharray="3,4"' : '');
-            svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3.5}" stroke-linecap="round" stroke-linejoin="round"${dashAttr}/>\n`;
+            if (pathD) {
+              const dashAttr = fn.style === 'dashed' ? ' stroke-dasharray="8,6"' : (fn.style === 'dotted' ? ' stroke-dasharray="3,4"' : '');
+              svg += `  <path d="${pathD}" fill="none" stroke="${fn.color}" stroke-width="${fn.width || 3.5}" stroke-linecap="round" stroke-linejoin="round"${dashAttr}/>\n`;
+            }
           }
         } catch (e) {}
       });
 
+      // Puntos
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
         const cx = toCanvasX(pt.x);
@@ -2212,14 +2558,35 @@
           svg += `  <line x1="${cx + r}" y1="${cy - r}" x2="${cx - r}" y2="${cy + r}" stroke="${pt.color}" stroke-width="2.2"/>\n`;
         } else if (pt.symbol === 'square') {
           svg += `  <rect x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" fill="${pt.color}"/>\n`;
+        } else if (pt.symbol === 'diamond') {
+          svg += `  <polygon points="${cx},${cy - r * 1.25} ${cx + r * 1.25},${cy} ${cx},${cy + r * 1.25} ${cx - r * 1.25},${cy}" fill="${pt.color}"/>\n`;
         }
 
         const name = pt.name ? pt.name.trim() : '';
         const coordText = showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
-        const labelFull = name && coordText ? `${name}${coordText}` : (name || coordText);
+        const full = name && coordText ? `${name}${coordText}` : (name || coordText);
+        if (full) {
+          const posX = pt.labelPosX !== null ? pt.labelPosX : cx + r + 5;
+          const posY = pt.labelPosY !== null ? pt.labelPosY : cy - 4;
+          svg += `  <text x="${posX}" y="${posY}" class="katex-point-label" fill="${pt.color}">${full}</text>\n`;
+        }
+      });
 
-        if (labelFull) {
-          svg += `  <text x="${cx + r + 4}" y="${cy - 3}" class="katex-point-label" fill="${pt.color}">${labelFull}</text>\n`;
+      // Rótulos de funciones
+      state.functions.forEach((fn, idx) => {
+        if (!fn.visible || !fn.showLabel || !fn.expr.trim()) return;
+        const labelText = formatFunctionDisplay(fn.name || 'f(x)', fn.expr);
+        const posX = fn.labelPosX !== null ? fn.labelPosX : p.left + 24;
+        const posY = fn.labelPosY !== null ? fn.labelPosY : p.top + 28 + (idx * ((formulaFontSize || 15) + 16));
+
+        if (functionBadgeStyle === 'badge') {
+          svg += `  <g transform="translate(${posX}, ${posY})">
+    <rect x="0" y="-12" width="220" height="26" rx="6" fill="${background}" stroke="${fn.color}" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="12" cy="1" r="4.5" fill="${fn.color}"/>
+    <text x="24" y="5" class="katex-fn-label" fill="${labelColor}">${labelText}</text>
+  </g>\n`;
+        } else {
+          svg += `  <text x="${posX}" y="${posY}" class="katex-fn-label" fill="${fn.color}">${labelText}</text>\n`;
         }
       });
 
@@ -2235,9 +2602,17 @@
       showToast('Descargado plano vectorial SVG con tipografía KaTeX');
     }
 
+    // Copiar al portapapeles
     document.getElementById('btnCopyClipboard').addEventListener('click', async () => {
       try {
-        canvas.toBlob(async (blob) => {
+        const offscreen = document.createElement('canvas');
+        offscreen.width = state.canvasWidth * 2;
+        offscreen.height = state.canvasHeight * 2;
+        const offCtx = offscreen.getContext('2d');
+        offCtx.scale(2, 2);
+        drawPlot(offCtx, true, 2);
+
+        offscreen.toBlob(async (blob) => {
           if (!blob) {
             showToast('Error al procesar la imagen');
             return;
@@ -2246,11 +2621,11 @@
             await navigator.clipboard.write([
               new ClipboardItem({ 'image/png': blob })
             ]);
-            showToast('¡Imagen copiada al portapapeles!');
+            showToast('¡Imagen copiada al portapapeles en alta resolución!');
           } catch (clipErr) {
             const link = document.createElement('a');
             link.download = 'plano-cartesiano.png';
-            link.href = canvas.toDataURL();
+            link.href = offscreen.toDataURL();
             link.click();
             showToast('Descargada al no permitir acceso directo al portapapeles');
           }
@@ -2291,6 +2666,7 @@
       downloadSVG();
     });
 
+    // Carga Inicial
     window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       syncInputs();
