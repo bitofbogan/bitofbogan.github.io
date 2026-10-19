@@ -61,7 +61,7 @@ const questionBank = [
       "Levantamiento estudiantil en el barrio negro de Soweto."
     ],
     hint: "Inicia con la creación del partido en 1912 y culmina con las revueltas estudiantiles de 1976.",
-    explanation: "La secuencia histórica es: fundación del ANC (1912), independencia y Commonwealth (1931/1961), instauración del Apartheid (1948), arresto de Mandela (1962) y protestas de Soweto (1976)."
+    explanation: "La secuencia histórica de los acontecimientos es:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Fundación del Congreso Nacional Africano (ANC) (1912)</li>\n  <li>Independencia e integración a la Commonwealth (1931/1961)</li>\n  <li>Instauración de la política del Apartheid (1948)</li>\n  <li>Encarcelamiento de Nelson Mandela (1962)</li>\n  <li>Levantamiento en el barrio de Soweto (1976)</li>\n</ol>"
   },
   {
     id: "m11-q05",
@@ -102,7 +102,7 @@ const questionBank = [
       "Popular",
       "Sandino"
     ],
-    hint: "El movimiento adoptó el nombre de Augusto C. Sandino y combatió a la dinastía familiar gobernante.",
+    hint: "El movimiento adoptó el nombre de Augusto Sandino y combatió a la dinastía familiar gobernante.",
     explanation: "La lucha encabezada por el Frente Sandinista derrocó a la familia Somoza en julio de 1979."
   },
   {
@@ -120,18 +120,18 @@ const questionBank = [
   },
   {
     id: "m11-q09",
-    prompt: "Relaciona las estrategias implementadas en la URSS con sus respectivos objetivos de reforma:",
+    prompt: "Relaciona las políticas de reforma implementadas en la Unión Soviética con sus objetivos.",
     type: "match_columns",
     pairs: [
-      { left: "Glasnost", right: "Transparencia política" },
-      { left: "Perestroika", right: "Restructuración económica" }
+      { left: "Glasnost.", right: "Transparencia política." },
+      { left: "Perestroika.", right: "Restructuración económica." }
     ],
     hint: "La glasnost combate el secreto y la censura; la perestroika reorganiza el modelo productivo.",
     explanation: "La glasnost introdujo libertad de expresión y transparencia institucional; la perestroika reestructuró la economía."
   },
   {
     id: "m11-q10",
-    prompt: "Completa los espacios en blanco del siguiente texto:",
+    prompt: "Completa el enunciado:",
     type: "fill_blanks",
     sentence: "El cambio de poderes en Portugal se gestó por una revolución integrada por {0} que cambió al Estado Novo y condujo a la independencia de las colonias portuguesas de {1}.",
     correctOrder: [
@@ -150,9 +150,9 @@ const questionBank = [
   },
   {
     id: "m11-q11",
-    prompt: "Completa el texto sobre el conflicto yugoslavo:",
+    prompt: "Completa el texto:",
     type: "fill_blanks",
-    sentence: "El motivo principal del conflicto yugoslavo fueron las diferencias {0} que afloraron cuando Eslovenia y Croacia declararon su independencia. Posteriormente se independizó Macedonia. En febrero y marzo del 1992 la mayoría bosnia votó a favor de la secesión con la consiguiente guerra-represión por parte de {1} lo cual incidió en migraciones humanas masivas para huir de los conflictos. En 1995 empieza la llamada \"limpieza étnica\" hacia la población {2}. En 1996 Kosovo decide iniciar el proceso de independencia.",
+    sentence: "El motivo principal del conflicto yugoslavo fueron las diferencias {0} que afloraron cuando Eslovenia y Croacia declararon su independencia. En 1992 la mayoría bosnia votó a favor de la secesión, ocasionando una guerra por parte de {1} que provocó migraciones humanas masivas y que culminó en 1995 con una limpieza en contra de la población {2}",
     correctOrder: [
       "religiosas y étnicas",
       "Serbia",
@@ -165,8 +165,8 @@ const questionBank = [
       "Croacia",
       "católica"
     ],
-    hint: "Identifica la naturaleza de las tensiones balcánicas, el gobierno central que reprimió a las repúblicas y el grupo víctima en Srebrenica.",
-    explanation: "Las fracturas étnico-religiosas derivaron en la ofensiva de Belgrado (Serbia) y en crímenes contra la población bosnia musulmana."
+    hint: null,
+    explanation: "Las fracturas étnico-religiosas derivaron en la ofensiva de Serbia y en crímenes contra la población bosnia musulmana."
   },
   {
     id: "m11-q12",
@@ -209,24 +209,28 @@ const questionBank = [
   },
   {
     id: "m11-q15",
-    prompt: "Relaciona a los inventores y científicos con su contribución a la evolución de las telecomunicaciones:",
+    prompt: "Relaciona a los inventores con su contribución a las telecomunicaciones.",
     type: "match_columns",
     pairs: [
-      { left: "Heinrich Hertz", right: "Difusión de impulsos electromagnéticos en el aire." },
-      { left: "Nikola Tesla", right: "Comunicación inalámbrica por medio de ondas de radio." },
-      { left: "John L. Baird", right: "Invención de la televisión en blanco y negro." },
-      { left: "Guillermo Gonzalez Camarena", right: "Invención de la televisión a color." },    
+      { left: "Heinrich Hertz.", right: "Difusión de impulsos electromagnéticos en el aire." },
+      { left: "Nikola Tesla.", right: "Comunicación inalámbrica por medio de ondas de radio." },
+      { left: "John L. Baird.", right: "Invención de la televisión en blanco y negro." },
+      { left: "Guillermo Gonzalez Camarena.", right: "Invención de la televisión a color." },    
     ],
-    hint: "Hertz confirmó físicamente las ondas electromagnéticas, Tesla patentó la radio y Baird desarrolló la televisión mecánica.",
-    explanation: "Hertz descubrió la propagación de ondas en el espacio, Tesla logró la transmisión inalámbrica y Baird concibió la televisión."
+    hint: null,
+    explanation: "Hertz descubrió la propagación de ondas en el espacio, Tesla logró la transmisión inalámbrica y Baird concibió la televisión en blanco y negro, posteriormente mejorada por González Camarena."
   },
   {
     id: "m11-q16",
-    prompt: "Analiza las gráficas comparativas sobre servicios de comunicación e informática entre 2000 y 2011.<br><br>¿Qué afirmaciones son correctas a partir de la información disponible?",
-    image: "assets/m11_servicios_comunicacion.png",
+    prompt: "Analiza las gráficas servicios de comunicación e informática y selecciona las afirmaciones correctas.",
+    images: [
+      "assets/m11_servicios_comunicacion_a.png",
+      "assets/m11_servicios_comunicacion_b.png",
+      "assets/m11_servicios_comunicacion_c.png"
+    ],
     type: "multi_select",
     correctAnswers: [
-      "Internet crece en todo el mundo en el número de usuarios.",
+      "Internet ha ido en crecimiento en todo el mundo en el número de usuarios.",
       "El uso de correo postal tiene un crecimiento inferior al de Internet.",
       "Las aplicaciones de software para Internet crecen en forma exponencial a lo largo del tiempo."
     ],
@@ -237,12 +241,12 @@ const questionBank = [
       "El correo postal crece de manera similar al de Internet.",
       "Las aplicaciones de software para Internet crecen en forma aritmética a lo largo del tiempo."
     ],
-    hint: "Observa el aumento de internautas en cada continente, el estancamiento del correo físico y la curva pronunciada del software.",
+    hint: null,
     explanation: "Los datos muestran un incremento generalizado de usuarios de Internet, un crecimiento notablemente menor del correo postal y una curva exponencial de software."
   },
   {
     id: "m11-q17",
-    prompt: "¿Qué acontecimientos se ligan a la cultura del rock and roll de los años 60 para que se le considere parte de la revolución tecnológica y social del siglo XX?",
+    prompt: "¿Qué acontecimientos hacen del rock and roll parte de la revolución tecnológica y social del siglo XX?",
     type: "multi_select",
     correctAnswers: [
       "Desarrollo de nuevos medios de grabación en acetato, con discos de 45 rpm y sonido estereofónico.",
@@ -252,28 +256,41 @@ const questionBank = [
     distractors: [
       "Impulso de la grabación por medio de cintas magnéticas monaurales de alta fidelidad.",
       "Entrada al mercado estadounidense de músicos y bailarines mexicanos.",
-      "Difusión de la moda de los \"pachucos\" e incremento de peñas y cafés conciertos con música \"de protesta\".",
+      "Difusión de la moda de los pachucos e incremento de peñas y cafés con música de protesta.",
       "Nueva propuesta musical de heavy metal y punk rock."
     ],
-    hint: "Elige las opciones que combinen mejoras acústicas en vinilo con protesta política y cuestionamiento moral.",
+    hint: null,
     explanation: "El auge del rock combinó el soporte en 45 rpm y sonido estéreo con el rechazo a la guerra de Vietnam y a las normas conservadoras."
   },
   {
     id: "m11-q18",
-    prompt: "En una exhibición en honor a Andy Warhol, ¿a qué corriente artística se hace referencia y qué elementos representativos deben exhibirse?",
+    prompt: "¿Qué corriente artística fue representada por Andy Warhol?",
     type: "choice",
-    correct: "Pop — Objetos cotidianos, botellas de cerveza, latas de alimentos, cuadros de historietas.",
+    correct: "Arte pop.",
     distractors: [
-      "Surrealismo — Objetos cotidianos, botellas de cerveza, latas de alimentos, cuadros de historietas.",
-      "Pop — Objetos y animales fantásticos, relojes derritiéndose, ciudades vacías, campos desolados.",
-      "Surrealismo — Objetos y animales fantásticos, relojes derritiéndose, ciudades vacías, campos desolados."
+      "Surrealismo.",
+      "Impresionismo.",
+      "Cubismo"
     ],
     hint: "Movimiento enfocado en el consumo masivo y la publicidad popular.",
-    explanation: "Andy Warhol es el principal referente del Pop Art, famoso por utilizar imágenes comerciales y de consumo cotidiano."
+    explanation: "Andy Warhol es el principal referente del arte pop, famoso por utilizar imágenes comerciales y de consumo cotidiano."
+  },
+  {
+    id: "m11-q18",
+    prompt: "¿Qué elementos representativos suelen exhibirse en el arte pop de Andy Warhol?",
+    type: "choice",
+    correct: "Objetos cotidianos, botellas de cerveza, latas de alimentos y cuadros de historietas.",
+    distractors: [
+      "Retratos y paisajes construidos a partir de figuras geométricas básicas con líneas rectas muy marcadas y pocas curvas.",
+      "Objetos y animales fantásticos, relojes derritiéndose, ciudades vacías y campos desolados.",
+      "Retratos y paisajes con una atención extrema al detalle que buscaban ser una especie de 'fotografía pintada'."
+    ],
+    hint: "Movimiento enfocado en el consumo masivo y la publicidad popular.",
+    explanation: "Andy Warhol es el principal referente del arte pop, famoso por utilizar imágenes comerciales y de consumo cotidiano."
   },
   {
     id: "m11-q19",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Oferta.",
@@ -287,7 +304,7 @@ const questionBank = [
   },
   {
     id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Demanda.",
@@ -301,7 +318,7 @@ const questionBank = [
   },
   {
     id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Precio de mercado.",
@@ -336,18 +353,18 @@ const questionBank = [
       "Es el desplazamiento de individuos o grupos de personas para viajar a un lugar distinto del de su residencia habitual.",
       "Es la llegada de individuos o grupos de personas a un lugar diferente al de su origen o residencia habitual."
     ],
-    hint: "La respuesta oficial del cuadernillo destaca el establecimiento semipermanente de vivienda.",
+    hint: null,
     explanation: "Se define como un cambio de residencia estable o prolongado en un nuevo territorio."
   },
   {
     id: "m11-q22",
-    prompt: "Identifica a qué tipo de migración corresponde el siguiente caso:\n\nEl 11 de septiembre de 1973 se instaló en Chile una dictadura que acabó con 150 años de historia republicana y provocó la huida de un millón de personas principalmente a Europa y a otros países de América.",
+    prompt: "El 11 de septiembre de 1973 se instaló en Chile una dictadura que provocó la huida de un millón de personas hacia Europa y otros países de América. ¿Cómo se clasifica este tipo de migración?",
     type: "choice",
-    correct: "Política",
+    correct: "Política.",
     distractors: [
-      "Natural",
-      "Económica",
-      "Guerra"
+      "Natural.",
+      "Económica.",
+      "Guerra."
     ],
     hint: "El exilio masivo fue provocado por el golpe de Estado y la persecución ideológica del régimen militar.",
     explanation: "La salida forzada de personas motivada por golpes de Estado, dictaduras y represión constituye migración política."
@@ -368,41 +385,41 @@ const questionBank = [
   },
   {
     id: "m11-q24",
-    prompt: "¿Cuáles fueron los países que se consolidaron como potencias mundiales al término de la Segunda Guerra Mundial?",
+    prompt: "¿Qué países que se consolidaron como potencias mundiales tras la Segunda Guerra Mundial?",
     type: "choice",
-    correct: "Estado Unidos y URSS",
+    correct: "Estado Unidos y la URSS.",
     distractors: [
-      "Inglaterra y Francia",
-      "Francia y Alemania",
-      "Alemania y Japón"
+      "Inglaterra y Francia.",
+      "Francia y Alemania.",
+      "Alemania y Japón."
     ],
-    hint: "Fueron los dos líderes antagónicos del orden bipolar de posguerra.",
-    explanation: "Estados Unidos y la Unión Soviética emergieron con la hegemonía global e inauguraron la Guerra Fría."
+    hint: "Fueron los dos líderes que librarían la Guerra Fría.",
+    explanation: "Estados Unidos y la Unión Soviética combatieron en la Guerra Fría tras su alianza en la Segunda Guerra Mundial."
   },
   {
     id: "m11-q25",
     prompt: "Ordena cronológicamente los siguientes acontecimientos de la Guerra Fría:",
     type: "drag_order",
     correctOrder: [
-      "Firma de la carta de la Organización de Estados Americanos",
-      "Firma del tratado del Atlántico Norte",
-      "La OTAN se convirtió en el principal defensor militar de Europa occidental",
-      "Organización del Pacto de Varsovia"
+      "Firma de la carta de la Organización de Estados Americanos.",
+      "Firma del Tratado del Atlántico Norte.",
+      "La OTAN se convierte en el principal defensor militar de Europa occidental.",
+      "Organización del Pacto de Varsovia."
     ],
-    hint: "Sigue la línea temporal: OEA (1948), fundación de OTAN (1949), despliegue europeo (inicios de los 50) y alianza soviética (1955).",
-    explanation: "El orden correcto es: Carta de la OEA (1948) -> OTAN (1949) -> Consolidación militar europea -> Pacto de Varsovia (1955)."
+    hint: null,
+    explanation: "El orden cronológico de los acontecimientos es:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Firma de la carta de la Organización de Estados Americanos (1948).</li>\n  <li>Firma del tratado del Atlántico Norte (OTAN) (1949).</li>\n  <li>Consolidación militar de la OTAN en Europa occidental.</li>\n  <li>Organización del Pacto de Varsovia (1955).</li>\n</ol>"
   },
   {
     id: "m11-q26",
-    prompt: "¿Cuál fue la principal potencia económica emergente como resultado de la Guerra Fría y por qué?",
+    prompt: "¿Cuál fue la principal potencia económica emergente como resultado de la Guerra Fría?",
     type: "choice",
-    correct: "China. Líder del bloque comunista, con gran desarrollo poblacional, agrícola e industrial, balanceó la bipolaridad mundial y logró anexión de Hong Kong.",
+    correct: "China: líder del bloque comunista con gran desarrollo poblacional, agrícola e industrial.",
     distractors: [
-      "Unión Soviética. Se organizó el bloque socialista con influencia por ejemplo en Angola, Hungría, la República Democrática Alemana, Cuba y Afganistán.",
-      "Israel. Recibió protección de Europa y de los Estados Unidos para promover el desarrollo militar y su ámbito de influencia en el medio oriente.",
-      "Japón. Recibió protección de los Estados Unidos y apoyo de la política de desarrollo industrial impulsado con el modelo de ingeniería de reversa."
+      "Unión Soviética: líder del bloque socialista con influencia en Europa, África y Medio Oriente.",
+      "Israel: protegido por Europa y los Estados Unidos.",
+      "Japón: protegido por los Estados Unidos y forjando un alto desarrollo industrial."
     ],
-    hint: "Nación asiática que impulsó reformas de apertura comercial acelerando su productividad industrial y demográfica.",
+    hint: null,
     explanation: "La apertura y reformas modernizadoras en China la situaron como la principal potencia económica emergente hacia finales del siglo XX."
   },
   {
@@ -420,16 +437,29 @@ const questionBank = [
   },
   {
     id: "m11-q28",
-    prompt: "Julio Verne relata en la novela \"El piloto del Danubio\" las actividades de Serge Ladko, un independentista búlgaro cristiano ortodoxo que organiza atentados contra el gobierno turco. A su vez, el gobierno respondió con un grupo paramilitar que abatió a nacionalistas opositores al imperio otomano.\n\n¿Cómo se clasifican respectivamente las actividades terroristas de Serge Ladko y las del grupo paramilitar?",
+    prompt: "Serge Ladko es un independentista búlgaro, personaje de la novela <i>El Piloto del Danubio</i> de Verne, que organiza atentados en contra del gobierno impuesto en su tierra por Turquía. ¿Como qué tipo de terrorismo se clasifican las actividades de Ladko?",
     type: "choice",
-    correct: "Étnico-separatista — de Estado",
+    correct: "Terrorismo ético-separatista.",
     distractors: [
-      "Religioso — de Estado",
-      "Étnico-separatista — Religioso",
-      "Político-ideológico — Político-Religioso"
+      "Terrorismo religioso.",
+      "Terrorismo de Estado.",
+      "Ecoterrorismo"
     ],
-    hint: "Ladko busca independizar a su pueblo del dominio imperial; el gobierno combate la disidencia con fuerzas irregulares extrajudiciales.",
-    explanation: "La insurgencia por autodeterminación territorial es terrorismo étnico-separatista; la violencia clandestina financiada por el régimen es terrorismo de Estado."
+    hint: "Ladko busca independizar a su pueblo del dominio imperial: ¿qué tipo de terrorismo tiene este objetivo?",
+    explanation: "La insurgencia por autodeterminación territorial es terrorismo étnico-separatista."
+  },
+  {
+    id: "m11-q28",
+    prompt: "Serge Ladko es un independentista búlgaro, personaje de la novela <i>El Piloto del Danubio</i> de Verne, que es enfrentado por el gobierno turco a través de un grupo paramilitar. ¿Como qué tipo de terrorismo se clasifican las actividades del gobierno?",
+    type: "choice",
+    correct: "Terrorismo de Estado.",
+    distractors: [
+      "Terrorismo religioso.",
+      "Terrorismo étnico-separatista.",
+      "Ecoterrorismo"
+    ],
+    hint: "El gobierno combate la disidencia con fuerzas irregulares extrajudiciales: ¿qué tipo de terrorismo tiene este objetivo?.",
+    explanation: "La violencia clandestina financiada por el régimen es terrorismo de Estado."
   },
   {
     id: "m11-q29",
