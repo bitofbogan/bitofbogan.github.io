@@ -170,7 +170,7 @@ const questionBank = [
   },
   {
     id: "m11-q12",
-    prompt: "En el análisis histórico de Chile se presentan dos puntos contrastantes:\n\n1) El gobierno de Eduardo Frei llevó a cabo reformas agrarias, educativas y de salud, además de dar participación al Estado en el cobre.\n2) En el período de Frei se generó polarización social y política entre el proletariado y los empresarios, agravada luego con Salvador Allende.\n\n¿Por qué es incompatible la polarización citada en el punto (2) respecto de los regímenes políticos de ambos presidentes?",
+    prompt: "Durante su gobierno en Chile, Eduardo Frei impulsó reformas agrarias, educativas y de salud, además de hacer participar al Estado en las empresas explotadoras de cobre. ¿Por qué en su periodo se generó una polarización sociopolítica entre el proletariado y los empresarios, la cual se agravó con la elección del presidente Salvador Allende?",
     type: "choice",
     correct: "Porque Frei era del partido demócrata cristiano que se planteó como una vía neutral o moderada respecto del socialismo y el capitalismo.",
     distractors: [
@@ -179,7 +179,7 @@ const questionBank = [
       "Porque Frei era socialista al igual que Allende y la injerencia del Estado en la explotación del cobre incidió en el repudio de los grandes capitales."
     ],
     hint: "La doctrina política de Eduardo Frei buscaba una tercera vía intermedia entre extremos ideológicos.",
-    explanation: "Frei encabezó la Democracia Cristiana, corriente moderada que pretendía evitar el choque entre libre mercado y comunismo."
+    explanation: "Frei encabezó la Democracia Cristiana, una corriente moderada que pretendía evitar el choque entre el libre mercado y el socialismo."
   },
   {
     id: "m11-q13",
@@ -273,17 +273,45 @@ const questionBank = [
   },
   {
     id: "m11-q19",
-    prompt: "Un industrial produce partes para coche con un costo de inversión inicial de $3,000 pesos y $300 pesos por cada unidad producida, vendiéndose cada una en $1,000 pesos.<br><br>De acuerdo con la gráfica económica, ¿qué nombre reciben las rectas [1] y [2], y cómo se denomina el punto [P]?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
-    correct: "[1-demanda] [2-oferta] [3-precio de mercado]",
+    correct: "Oferta.",
     distractors: [
-      "[1-precio de venta] [2-precio de compra] [3-demanda efectiva]",
-      "[1-oferta] [2-demanda] [3-precio de mercado]",
-      "[1-precio de compra] [2-precio de venta] [3-demanda efectiva]"
+      "Demanda.",
+      "Precio de mercado.",
+      "Precio de venta."
     ],
-    hint: "El cruce de ambas funciones señala el punto de equilibrio donde convienen oferentes y demandantes.",
-    explanation: "El modelo teórico oficial del módulo identifica la intersección de curvas como el precio de mercado o punto de equilibrio."
+    hint: null,
+    explanation: "La recta roja presenta los costos por unidad ofrecidos a los clientes, por lo que se interpreta como la <b>oferta</b>."
+  },
+  {
+    id: "m11-q19a",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
+    image: "assets/m11_oferta_demanda_costos.png",
+    type: "choice",
+    correct: "Demanda.",
+    distractors: [
+      "Oferta.",
+      "Precio de mercado.",
+      "Precio de venta."
+    ],
+    hint: null,
+    explanation: "La recta azul presenta los costos por unidad que realiza la empresa, por lo que se interpreta como la <b>demanda</b> de producción."
+  },
+  {
+    id: "m11-q19a",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $1,000 por unidad, costando $3,000 de inversión inicial para la empresa y $300 adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
+    image: "assets/m11_oferta_demanda_costos.png",
+    type: "choice",
+    correct: "Precio de mercado.",
+    distractors: [
+      "Oferta.",
+      "Demanda.",
+      "Precio de venta."
+    ],
+    hint: null,
+    explanation: "El punto de intersección entre la oferta y la demanda es el precio de mercado."
   },
   {
     id: "m11-q20",
@@ -326,17 +354,17 @@ const questionBank = [
   },
   {
     id: "m11-q23",
-    prompt: "La tabla muestra estimaciones de residentes indocumentados en Estados Unidos y el porcentaje P. Si la diferencia de P entre dos años es menor a 0.2%, la tasa se considera constante.<br><br>¿Cuáles son los países que mantuvieron una tasa constante comparando 2007 y 2010?",
-    image: "assets/m11_tabla_residentes_ilegales.png",
+    prompt: "La tabla muestra estimaciones de residentes indocumentados en Estados Unidos. La tasa de inmigración ilegal se considera constante si la diferencia entre dos años es menor al 0.2%. Siendo así, ¿qué países han mantenido una tasa constante entre 2007 y 2010?",
+    image: "assets/m11_tabla_inmigracion.png",
     type: "choice",
     correct: "Brasil, Filipinas e India.",
     distractors: [
-      "México, El Salvador, Guatemala y Honduras.",
-      "Ecuador, Brasil, India, Corea y China.",
-      "India, Corea y China."
+      "México, Brasil, Guatemala e India.",
+      "Ecuador, Brasil, India, Filipinas y China.",
+      "Brasil, India, Corea y China."
     ],
-    hint: "Calcula la diferencia porcentual absoluta entre 2007 y 2010 para cada país; debe ser menor a 0.2%.",
-    explanation: "En Brasil (1.61% a 1.67%, dif. 0.06%), Filipinas (2.46% a 2.59%, dif. 0.13%) e India (1.87% a 1.85%, dif. 0.02%), las diferencias no superan el 0.2%."
+    hint: "Calcula la diferencia porcentual absoluta entre 2007 y 2010 para cada país: debe ser menor a 0.2%.",
+    explanation: "En Brasil (1.61% a 1.67% con dif. 0.06%), Filipinas (2.46% a 2.59% con dif. 0.13%) e India (1.87% a 1.85% con dif. 0.02%), las diferencias no superan el 0.2%."
   },
   {
     id: "m11-q24",
@@ -379,15 +407,15 @@ const questionBank = [
   },
   {
     id: "m11-q27",
-    prompt: "¿A qué países se refieren en la economía internacional con el término BRIC?",
+    prompt: "¿A qué países se refiere el término BRIC?",
     type: "choice",
     correct: "China, India, Brasil y Rusia.",
     distractors: [
-      "Rusia, México, Arabia Saudita y Corea.",
-      "México, Corea, Brasil y Sudáfrica.",
-      "Corea, México, Sudáfrica y Brasil."
+      "Rusia, Indonesia, Brasil y Corea.",
+      "Czechia, Rusia, Brasil e Irán.",
+      "Corea, India, Rusia y Brasil."
     ],
-    hint: "El acrónimo agrupa por sus iniciales a Brasil, Rusia, India y China.",
+    hint: null,
     explanation: "BRIC identifica a las economías emergentes de Brasil, Rusia, India y China."
   },
   {
@@ -405,26 +433,26 @@ const questionBank = [
   },
   {
     id: "m11-q29",
-    prompt: "Relaciona las dimensiones con las causas que detonaron la crisis y la Revolución en Nicaragua:",
+    prompt: "Relaciona las dimensiones con las causas que detonaron la revolución en Nicaragua.",
     type: "match_columns",
     pairs: [
-      { left: "Económica", right: "Capital controlado por pocas personas nacionales y extranjeras, sumado al terremoto de 1973 y destrucción masiva." },
-      { left: "Ideológico", right: "Surgimiento de movimiento nacionalista de tendencia socialista." },
-      { left: "Política", right: "Dictadura desde 1934 en poder de una familia apoyada por los Estados Unidos y aliada con la oligarquía." },
-      { left: "Social", right: "Extremos contrastes y desigualdad, desempleo y miseria en las mayorías." }
+      { left: "Económica", right: "Capital controlado por pocas personas y dictadura aliada con la oligarquía." },
+      { left: "Ideológico", right: "Surgimiento del movimiento nacionalista de tendencia socialista." },
+      { left: "Política", right: "Dictadura desde 1934 en poder de una familia apoyada por Estados Unidos." },
+      { left: "Social", right: "Terremoto de 1973 que destruyó Managua, extremos contrastes, desigualdad, desempleo y miseria en las mayorías." }
     ],
-    hint: "Revisa los incisos oficiales agrupados en el cuadernillo: 1-c,e (Económica), 2-b (Ideológico), 3-d (Política) y 4-a,f (Social).",
-    explanation: "La clave oficial asigna la concentración de capital y oligarquía a lo económico, el socialismo a lo ideológico, la dinastía militar a lo político y la miseria/terremoto a lo social."
+    hint: null,
+    explanation: "La concentración de capital y oligarquía se refieren a la dimensión económica, el socialismo a la ideológica, la dinastía militar a la política y la miseria y el terremoto a la social."
   },
   {
     id: "m11-q30",
-    prompt: "¿Cuál es el compuesto que contiene información genética de cada persona y forma parte de las células?",
+    prompt: "¿Cuál es el compuesto que contiene la información genética de una persona y que forma parte de las células?",
     type: "choice",
-    correct: "ADN",
+    correct: "ADN.",
     distractors: [
-      "Tiamina",
-      "Adenina",
-      "ARN"
+      "Timina.",
+      "Adenina.",
+      "ARN."
     ],
     hint: "Es el ácido desoxirribonucleico que almacena el código hereditario celular.",
     explanation: "El ADN (ácido desoxirribonucleico) es la macromolécula biológica que porta las instrucciones genéticas de los seres vivos."
