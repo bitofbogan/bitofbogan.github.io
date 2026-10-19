@@ -290,7 +290,7 @@ const questionBank = [
   },
   {
     id: "m11-q19",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$$1,000 por unidad, costando $\\$$3,000 de inversión inicial para la empresa y $\\$$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Oferta.",
@@ -304,7 +304,7 @@ const questionBank = [
   },
   {
     id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$$1,000 por unidad, costando $\\$$3,000 de inversión inicial para la empresa y $\\$$300 adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Demanda.",
@@ -318,7 +318,7 @@ const questionBank = [
   },
   {
     id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a \\$1,000 por unidad, costando $3,000 de inversión inicial para la empresa y \\$300 adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$$1,000 por unidad, costando $\\$$3,000 de inversión inicial para la empresa y $\\$$300 adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Precio de mercado.",
