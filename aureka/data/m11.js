@@ -25,7 +25,7 @@ const questionBank = [
   },
   {
     id: "m11-q02",
-    prompt: "¿En que período histórico del siglo XX se desarrollo la guerra de Vietnam?",
+    prompt: "¿En qué período histórico del siglo XX se desarrolló la guerra de Vietnam?",
     type: "choice",
     correct: "La Guerra Fría.",
     distractors: [
@@ -34,7 +34,7 @@ const questionBank = [
       "Segunda Guerra Mundial."
     ],
     hint: "Fue el conflicto geopolítico indirecto entre el bloque capitalista y el bloque comunista.",
-    explanation: "La confrontación de Vietnam formó parte de las guerras subsidiarias de la Guerra Fría entre Estados Unidos y la Union Sovietica."
+    explanation: "La confrontación de Vietnam formó parte de las guerras subsidiarias de la Guerra Fría entre Estados Unidos y la Unión Soviética."
   },
   {
     id: "m11-q03",
@@ -51,7 +51,7 @@ const questionBank = [
   },
   {
     id: "m11-q04",
-    prompt: "Ordena cronológicamente los acontecimientos ocurridos en la descolonizacion de Sudáfrica:",
+    prompt: "Ordena cronológicamente los acontecimientos ocurridos en la descolonización de Sudáfrica:",
     type: "drag_order",
     correctOrder: [
       "Fundación del Congreso Nacional Africano (ANC).",
@@ -61,7 +61,7 @@ const questionBank = [
       "Levantamiento estudiantil en el barrio negro de Soweto."
     ],
     hint: "Inicia con la creación del partido en 1912 y culmina con las revueltas estudiantiles de 1976.",
-    explanation: "La secuencia histórica de los acontecimientos es:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Fundación del Congreso Nacional Africano (ANC) (1912)</li>\n  <li>Independencia e integración a la Commonwealth (1931/1961)</li>\n  <li>Instauración de la política del Apartheid (1948)</li>\n  <li>Encarcelamiento de Nelson Mandela (1962)</li>\n  <li>Levantamiento en el barrio de Soweto (1976)</li>\n</ol>"
+    explanation: "La secuencia histórica de los acontecimientos es:\n<ol class=\"list-decimal pl-5 space-y-1 mt-1\">\n  <li>Fundación del Congreso Nacional Africano (ANC) (1912).</li>\n  <li>Independencia e integración a la Commonwealth (1931/1961).</li>\n  <li>Instauración de la política del Apartheid (1948).</li>\n  <li>Encarcelamiento de Nelson Mandela (1962).</li>\n  <li>Levantamiento en el barrio de Soweto (1976).</li>\n</ol>"
   },
   {
     id: "m11-q05",
@@ -78,7 +78,7 @@ const questionBank = [
   },
   {
     id: "m11-q06",
-    prompt: "¿En donde ocurrio el movimiento bélico que puso fin a la dictadura de la familia Somoza conocido como Revolución Sandinista?",
+    prompt: "¿En dónde ocurrió el movimiento bélico que puso fin a la dictadura de la familia Somoza conocido como Revolución Sandinista?",
     type: "choice",
     correct: "Nicaragua.",
     distractors: [
@@ -86,7 +86,7 @@ const questionBank = [
       "El Salvador.",
       "Guatemala."
     ],
-    hint: "País centroamericano donde el FSLN tomó la capital Managua.",
+    hint: "País centroamericano donde el FSLN tomó la capital, Managua.",
     explanation: "La Revolución Sandinista tuvo lugar en Nicaragua para derrocar a la dinastía de los Somoza."
   },
   {
@@ -143,16 +143,16 @@ const questionBank = [
       "intelectuales de izquierda",
       "intelectuales de derecha",
       "Niger, Mali y Tchad",
-        "Cabo Verde, Argelia y Mali"
+      "Cabo Verde, Argelia y Mali"
     ],
-    hint: "Fue la Revolución de los Claveles encabezada por oficiales del ejército opuestos a las guerras coloniales africanas.",
+    hint: "Fue la Revolución de los Claveles, encabezada por oficiales del ejército opuestos a las guerras coloniales africanas.",
     explanation: "Militares progresistas terminaron con el Estado Novo y reconocieron la independencia de sus posesiones en África."
   },
   {
     id: "m11-q11",
     prompt: "Completa el texto:",
     type: "fill_blanks",
-    sentence: "El motivo principal del conflicto yugoslavo fueron las diferencias {0} que afloraron cuando Eslovenia y Croacia declararon su independencia. En 1992 la mayoría bosnia votó a favor de la secesión, ocasionando una guerra por parte de {1} que provocó migraciones humanas masivas y que culminó en 1995 con una limpieza en contra de la población {2}.",
+    sentence: "El motivo principal del conflicto yugoslavo fueron las diferencias {0} que afloraron cuando Eslovenia y Croacia declararon su independencia. En 1992 la mayoría bosnia votó a favor de la secesión, ocasionando una guerra por parte de {1} que provocó migraciones humanas masivas y que culminó en 1995 con una limpieza étnica en contra de la población {2}.",
     correctOrder: [
       "religiosas y étnicas",
       "Serbia",
@@ -215,14 +215,14 @@ const questionBank = [
       { left: "Heinrich Hertz.", right: "Difusión de impulsos electromagnéticos en el aire." },
       { left: "Nikola Tesla.", right: "Comunicación inalámbrica por medio de ondas de radio." },
       { left: "John L. Baird.", right: "Invención de la televisión en blanco y negro." },
-      { left: "Guillermo Gonzalez Camarena.", right: "Invención de la televisión a color." },    
+      { left: "Guillermo González Camarena.", right: "Invención de la televisión a color." }
     ],
     hint: null,
     explanation: "Hertz descubrió la propagación de ondas en el espacio, Tesla logró la transmisión inalámbrica y Baird concibió la televisión en blanco y negro, posteriormente mejorada por González Camarena."
   },
   {
     id: "m11-q16",
-    prompt: "Analiza las gráficas servicios de comunicación e informática y selecciona las afirmaciones correctas.",
+    prompt: "Analiza las gráficas de servicios de comunicación e informática y selecciona las afirmaciones correctas.",
     images: [
       "assets/m11_servicios_comunicacion_a.png",
       "assets/m11_servicios_comunicacion_b.png",
@@ -251,7 +251,7 @@ const questionBank = [
     correctAnswers: [
       "Desarrollo de nuevos medios de grabación en acetato, con discos de 45 rpm y sonido estereofónico.",
       "Promoción de campañas antibélicas contra la guerra de Vietnam.",
-      "Inclusión de temas contra el sistema capitalista, antireligiosos, contra la discriminación y con contenido erótico."
+      "Inclusión de temas contra el sistema capitalista, antirreligiosos, contra la discriminación y con contenido erótico."
     ],
     distractors: [
       "Impulso de la grabación por medio de cintas magnéticas monaurales de alta fidelidad.",
@@ -263,20 +263,20 @@ const questionBank = [
     explanation: "El auge del rock combinó el soporte en 45 rpm y sonido estéreo con el rechazo a la guerra de Vietnam y a las normas conservadoras."
   },
   {
-    id: "m11-q18",
+    id: "m11-q18a",
     prompt: "¿Qué corriente artística fue representada por Andy Warhol?",
     type: "choice",
     correct: "Arte pop.",
     distractors: [
       "Surrealismo.",
       "Impresionismo.",
-      "Cubismo"
+      "Cubismo."
     ],
     hint: "Movimiento enfocado en el consumo masivo y la publicidad popular.",
     explanation: "Andy Warhol es el principal referente del arte pop, famoso por utilizar imágenes comerciales y de consumo cotidiano."
   },
   {
-    id: "m11-q18",
+    id: "m11-q18b",
     prompt: "¿Qué elementos representativos suelen exhibirse en el arte pop de Andy Warhol?",
     type: "choice",
     correct: "Objetos cotidianos, botellas de cerveza, latas de alimentos y cuadros de historietas.",
@@ -290,7 +290,7 @@ const questionBank = [
   },
   {
     id: "m11-q19",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1,000$ por unidad, costando $\\$3,000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1000$ por unidad, costando $\\$3000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe la recta <b>1</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Oferta.",
@@ -304,7 +304,7 @@ const questionBank = [
   },
   {
     id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1,000$ por unidad, costando $\\$3,000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1000$ por unidad, costando $\\$3000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe la recta <b>2</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Demanda.",
@@ -317,8 +317,8 @@ const questionBank = [
     explanation: "La recta azul presenta los costos por unidad que realiza la empresa, por lo que se interpreta como la <b>demanda</b> de producción."
   },
   {
-    id: "m11-q19a",
-    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1,000$ por unidad, costando $\\$3,000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
+    id: "m11-q19b",
+    prompt: "La gráfica siguiente presenta información de los costos y precios para un producto que se ofrece al público a $\\$1000$ por unidad, costando $\\$3000$ de inversión inicial para la empresa y $\\$300$ adicionales por unidad. ¿Qué nombre recibe el punto <b>P</b>?",
     image: "assets/m11_oferta_demanda_costos.png",
     type: "choice",
     correct: "Precio de mercado.",
@@ -332,7 +332,7 @@ const questionBank = [
   },
   {
     id: "m11-q20",
-    prompt: "¿Como se define la migracion?",
+    prompt: "¿Cómo se define la migración?",
     type: "choice",
     correct: "Son los movimientos poblacionales que buscan obtener mejores condiciones de vida.",
     distractors: [
@@ -345,7 +345,7 @@ const questionBank = [
   },
   {
     id: "m11-q21",
-    prompt: "¿Cuál es la explicacion más apropiada para la inmigración?",
+    prompt: "¿Cuál es la explicación más apropiada para la inmigración?",
     type: "choice",
     correct: "Son desplazamientos de población que conllevan cambios de residencia más o menos permanentes.",
     distractors: [
@@ -436,29 +436,29 @@ const questionBank = [
     explanation: "BRIC identifica a las economías emergentes de Brasil, Rusia, India y China."
   },
   {
-    id: "m11-q28",
+    id: "m11-q28a",
     prompt: "Serge Ladko es un independentista búlgaro, personaje de la novela <i>El Piloto del Danubio</i> de Verne, que organiza atentados en contra del gobierno impuesto en su tierra por Turquía. ¿Como qué tipo de terrorismo se clasifican las actividades de Ladko?",
     type: "choice",
-    correct: "Terrorismo ético-separatista.",
+    correct: "Terrorismo étnico-separatista.",
     distractors: [
       "Terrorismo religioso.",
       "Terrorismo de Estado.",
-      "Ecoterrorismo"
+      "Ecoterrorismo."
     ],
     hint: "Ladko busca independizar a su pueblo del dominio imperial: ¿qué tipo de terrorismo tiene este objetivo?",
     explanation: "La insurgencia por autodeterminación territorial es terrorismo étnico-separatista."
   },
   {
-    id: "m11-q28",
+    id: "m11-q28b",
     prompt: "Serge Ladko es un independentista búlgaro, personaje de la novela <i>El Piloto del Danubio</i> de Verne, que es enfrentado por el gobierno turco a través de un grupo paramilitar. ¿Como qué tipo de terrorismo se clasifican las actividades del gobierno?",
     type: "choice",
     correct: "Terrorismo de Estado.",
     distractors: [
       "Terrorismo religioso.",
       "Terrorismo étnico-separatista.",
-      "Ecoterrorismo"
+      "Ecoterrorismo."
     ],
-    hint: "El gobierno combate la disidencia con fuerzas irregulares extrajudiciales: ¿qué tipo de terrorismo tiene este objetivo?.",
+    hint: "El gobierno combate la disidencia con fuerzas irregulares extrajudiciales: ¿qué tipo de terrorismo tiene este objetivo?",
     explanation: "La violencia clandestina financiada por el régimen es terrorismo de Estado."
   },
   {
@@ -466,10 +466,10 @@ const questionBank = [
     prompt: "Relaciona las dimensiones con las causas que detonaron la revolución en Nicaragua.",
     type: "match_columns",
     pairs: [
-      { left: "Económica", right: "Capital controlado por pocas personas y dictadura aliada con la oligarquía." },
-      { left: "Ideológico", right: "Surgimiento del movimiento nacionalista de tendencia socialista." },
-      { left: "Política", right: "Dictadura desde 1934 en poder de una familia apoyada por Estados Unidos." },
-      { left: "Social", right: "Terremoto de 1973 que destruyó Managua, extremos contrastes, desigualdad, desempleo y miseria en las mayorías." }
+      { left: "Económica.", right: "Capital controlado por pocas personas y dictadura aliada con la oligarquía." },
+      { left: "Ideológica.", right: "Surgimiento del movimiento nacionalista de tendencia socialista." },
+      { left: "Política.", right: "Dictadura desde 1934 en poder de una familia apoyada por Estados Unidos." },
+      { left: "Social.", right: "Terremoto de 1973 que destruyó Managua, extremos contrastes, desigualdad, desempleo y miseria en las mayorías." }
     ],
     hint: null,
     explanation: "La concentración de capital y oligarquía se refieren a la dimensión económica, el socialismo a la ideológica, la dinastía militar a la política y la miseria y el terremoto a la social."
