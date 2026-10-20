@@ -5,7 +5,7 @@
 
 const moduleInfo = {
   badge: "Módulo 19",
-  title: "Dinámica en la Naturaleza. El Movimiento",
+  title: "Física II",
   topicVideos: {}
 };
 
@@ -30,7 +30,7 @@ const questionBank = [
   },
   {
     id: "m19-q03",
-    prompt: "Se tienen los tres vectores de fuerza siguientes:<br>$V_1$ de $25\\text{ N}$, en dirección Este, $V_2$ de $10\\text{ N}$ en dirección Oeste y $V_3$ de $-5\\text{ N}$ en dirección Este.<br>¿Cuál es el módulo del vector resultante?",
+    prompt: "Se tienen los tres vectores de fuerza siguientes:<br><ul class=\"list-disc pl-5 my-2 space-y-1\">\n  <li>$V_1 = 25\\text{ N}$ en dirección este.</li>\n  <li>$V_2 = 10\\text{ N}$ en dirección oeste.</li>\n  <li>$V_3 = -5\\text{ N}$ en dirección este.</li>\n</ul>¿Cuál es el módulo del vector resultante?",
     type: "choice",
     correct: "10.0 N",
     distractors: [
@@ -38,8 +38,8 @@ const questionBank = [
       "22.4 N",
       "27.4 N"
     ],
-    hint: "Toma el Este como positivo (+). Un vector de $-5\\text{ N}$ al Este en realidad apunta hacia el Oeste.",
-    explanation: "Sumando sobre el eje horizontal con el Este positivo:\n$$\\begin{aligned} R &= 25\\text{ N} - 10\\text{ N} + (-5\\text{ N}) \\\\[2pt] &= 10.0\\text{ N} \\end{aligned}$$"
+    hint: "Toma el este como positivo. Un vector de $-5\\text{ N}$ al este en realidad apunta hacia el oeste.",
+    explanation: "Sumando sobre el eje horizontal con el este como dirección positiva:\n$$\\begin{aligned} R &= 25\\text{ N} - 10\\text{ N} + (-5\\text{ N}) \\\\[2pt] &= 10.0\\text{ N} \\end{aligned}$$"
   },
   {
     id: "m19-q04",
@@ -69,13 +69,13 @@ const questionBank = [
   },
   {
     id: "m19-q06",
-    prompt: "¿Cuál es el nombre con el que se conocen los resultados de acuerdos internacionales alcanzados en las conferencias generales de pesas y medidas, en las que participan científicos de casi todos los países del mundo?",
+    prompt: "¿Cómo se conocen los acuerdos internacionales de pesos y medidas en las que participan científicos de todo el mundo?",
     type: "choice",
-    correct: "Patrones de medidas",
+    correct: "Patrones de medidas.",
     distractors: [
-      "Pesos estándares",
-      "Magnitudes físicas",
-      "Leyes de la física"
+      "Pesos estándares.",
+      "Magnitudes físicas.",
+      "Leyes de la física."
     ],
     hint: "Son las referencias materiales o definiciones oficiales que sirven para calibrar y unificar las unidades.",
     explanation: "Las convenciones internacionales establecen los <b>patrones de medida</b> oficiales para definir con precisión las unidades del Sistema Internacional."
@@ -95,15 +95,15 @@ const questionBank = [
   },
   {
     id: "m19-q08",
-    prompt: "¿Cuál de las opciones contiene una magnitud escalar que solo te indica la longitud recorrida?",
+    prompt: "¿Cuál de las siguientes es una magnitud <b>escalar</b> que sólo indica la longitud recorrida?",
     type: "choice",
-    correct: "Distancia",
+    correct: "Distancia.",
     distractors: [
-      "Desplazamiento",
-      "Longitud",
-      "Rapidez"
+      "Desplazamiento.",
+      "Longitud.",
+      "Rapidez."
     ],
-    hint: "No confundir la trayectoria escalar acumulada con el cambio vectorial de posición.",
+    hint: null,
     explanation: "La <b>distancia</b> es la longitud escalar del camino recorrido, a diferencia del desplazamiento, que es un vector que une la posición inicial con la final."
   },
   {
@@ -226,24 +226,24 @@ const questionBank = [
     id: "m19-q17",
     prompt: "Una partícula con movimiento circular da una vuelta completa en 3 segundos. Determina el ángulo descrito en un segundo en radianes.",
     type: "choice",
-    correct: "$$\\theta = \\frac{120 \\times \\pi}{180} = 2.09\\text{ rad}$$",
+    correct: "$$\\theta = \\frac{120\\pi}{180} = 2.09\\text{ rad}$$",
     distractors: [
-      "$$\\theta = \\frac{180 \\times 3}{120 \\times \\pi} = 1.43\\text{ rad}$$",
-      "$$\\theta = \\frac{180}{120 \\times \\pi} = 0.474\\text{ rad}$$",
-      "$$\\theta = \\frac{120 \\times 180}{360 \\times \\pi} = 19.09\\text{ rad}$$"
+      "$$\\theta = \\frac{180 \\cdot 3}{120 \\pi} = 1.43\\text{ rad}$$",
+      "$$\\theta = \\frac{180}{120 \\pi} = 0.474\\text{ rad}$$",
+      "$$\\theta = \\frac{120 \\times 180}{360 \\pi} = 19.09\\text{ rad}$$"
     ],
     hint: "En 1 segundo recorre la tercera parte de la circunferencia ($360^\\circ / 3 = 120^\\circ$): conviértelo a radianes.",
     explanation: "Una tercera parte de vuelta equivale a $120^\\circ$. Convirtiendo a radianes:\n$$\\theta = 120^\\circ \\left(\\frac{\\pi\\text{ rad}}{180^\\circ}\\right) = \\frac{2\\pi}{3} \\approx 2.09\\text{ rad}$$"
   },
   {
     id: "m19-q18",
-    prompt: "Citlalli sale de su casa a tomar su clase de inglés al centro de idiomas. El trayecto lo realiza caminando y recorre $50\\text{ m/min}$ en línea recta.<br>¿A cuántos metros se encuentra el centro de idiomas al que asiste Citlalli, si el tiempo que tarda en llegar es de 9.2 minutos?",
+    prompt: "Sitlali sale de su casa caminando hacia la escuela y recorre 50 m/min en línea recta. ¿A cuántos metros se encuentra su escuela si se tarda 9.2 minutos en llegar?",
     type: "choice",
-    correct: "460",
+    correct: "460 m.",
     distractors: [
-      "230",
-      "59.2",
-      "4232"
+      "230 m.",
+      "59.2 m.",
+      "4232 m."
     ],
     hint: "Aplica la relación de velocidad constante $d = v \\cdot t$.",
     explanation: "Multiplicando la rapidez constante por el tiempo transcurrido:\n$$d = (50\\text{ m/min})(9.2\\text{ min}) = 460\\text{ m}$$"
@@ -282,20 +282,20 @@ const questionBank = [
   },
   {
     id: "m19-q21",
-    prompt: "Una pelota se deja caer desde la parte más alta de un edificio y tarda 7 segundos en llegar al nivel del piso.<br>¿Cuál es la altura del edificio en metros?<br>Información física: La aceleración de la gravedad $g = 9.81\\text{ m/s}^{2}$.",
+    prompt: "Una pelota se deja caer desde un edificio y tarda 7 segundos en llegar al piso. ¿Cuál es la altura del edificio en metros?",
     type: "choice",
-    correct: "240",
+    correct: "240 m.",
     distractors: [
-      "137",
-      "343",
-      "480"
+      "137 m.",
+      "343 m.",
+      "480 m."
     ],
     hint: "En caída libre partiendo del reposo, $h = \\frac{1}{2}gt^2$.",
-    explanation: "Aplicando la ecuación de caída libre:\n$$h = \\frac{1}{2}(9.81)(7)^2 = \\frac{1}{2}(9.81)(49) \\approx 240.3\\text{ m}$$"
+    explanation: "Aplicando la ecuación de caída libre:\n$$\\begin{aligned} h &= \\frac{1}{2}(9.81)(7)^2 \\\\[3pt] &= \\frac{1}{2}(9.81)(49) \\\\[3pt] &\\approx 240.3\\text{ m} \\end{aligned}$$"
   },
   {
     id: "m19-q22",
-    prompt: "Se tienen tres vectores en un mismo plano, cuyas magnitudes son las siguientes:<br>$V_1$ de $50\\text{ N}$, en dirección Este<br>$V_2$ de $20\\text{ N}$ en dirección Oeste<br>$V_3$ de $-5\\text{ N}$ en dirección Este.<br>¿Cuál es la resultante de estos vectores en N en la dirección Este?",
+    prompt: "Se tienen tres magnitudes de vectores en un plano:<br><ul class=\"list-disc pl-5 my-2 space-y-1\">\n  <li>$V_1 = 50\\text{ N}$ en dirección este.</li>\n  <li>$V_2 = 20\\text{ N}$ en dirección oeste.</li>\n  <li>$V_3 = -5\\text{ N}$ en dirección este.</li>\n</ul>¿Cuál es la resultante de estos vectores en dirección este?",
     type: "choice",
     correct: "$$R = 50 - 20 - 5 = 25$$",
     distractors: [
@@ -303,8 +303,8 @@ const questionBank = [
       "$$R = \\sqrt{(50)^{2} + (20)^{2} + (-5)^{2}} = 53.6$$",
       "$$R = \\sqrt{(50)^{2} + (20)^{2} + (-5)^{2}} = 54.1$$"
     ],
-    hint: "Al ser colineales, los vectores hacia el oeste o con signo negativo en dirección este se restan algebraicamente.",
-    explanation: "Sumando algebraicamente con sentido positivo hacia el Este:\n$$R = 50\\text{ N} - 20\\text{ N} - 5\\text{ N} = 25\\text{ N}$$"
+    hint: "Al ser colineales, los vectores hacia el oeste o con signo negativo en dirección este se restan.",
+    explanation: "Sumando algebraicamente con sentido positivo hacia el este:\n$$R = 50\\text{ N} - 20\\text{ N} - 5\\text{ N} = 25\\text{ N}$$"
   },
   {
     id: "m19-q23",
@@ -406,7 +406,7 @@ const questionBank = [
   },
   {
     id: "m19-q30",
-    prompt: "Un ventilador tiene una hélice de $40\\text{ cm}$ de diámetro que se mueve en trayectoria circular con una rapidez angular de $648\\text{ rad/s}$. ¿Cuál es la velocidad lineal de la hélice del ventilador?",
+    prompt: "Un ventilador tiene una hélice de 40 cm de diámetro que se mueve en trayectoria circular con una rapidez angular de 648 rad/s. ¿Cuál es la velocidad lineal de la hélice del ventilador?",
     type: "choice",
     correct: "$$v = \\left(648\\frac{\\text{rad}}{\\text{s}}\\right)(0.20\\text{ m}) = 129.6\\frac{\\text{m}}{\\text{s}}$$",
     distractors: [
@@ -414,8 +414,8 @@ const questionBank = [
       "$$v = \\left(648\\frac{\\text{rad}}{\\text{s}}\\right)(0.40\\text{ m}) = 259.2\\frac{\\text{m}}{\\text{s}}$$",
       "$$v = \\frac{648\\frac{\\text{rad}}{\\text{s}}}{0.2\\text{ m}} = 3240\\frac{\\text{m}}{\\text{s}}$$"
     ],
-    hint: "Cuidado: el diámetro es $40\\text{ cm}$, por lo que el radio es la mitad ($r = 20\\text{ cm} = 0.20\\text{ m}$).",
-    explanation: "La relación lineal-angular se calcula con el radio ($r = D/2 = 0.20\\text{ m}$):\n$$v = \\omega r = \\left(648\\frac{\\text{rad}}{\\text{s}}\\right)(0.20\\text{ m}) = 129.6\\text{ m/s}$$"
+    hint: "El diámetro es $40\\text{ cm}$, por lo que el radio es la mitad ($r = 20\\text{ cm} = 0.20\\text{ m}$).",
+    explanation: "La relación se calcula con el radio en metros ($r = D/2 = 0.20\\text{ m}$):\n$$\\begin{aligned} v &= \\omega r \\\\[3pt] &= \\left(648\\frac{\\text{rad}}{\\text{s}}\\right)(0.20\\text{ m}) \\\\[3pt] &= 129.6\\text{ m/s} \\end{aligned}$$"
   }
 ];
 
