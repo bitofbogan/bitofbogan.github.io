@@ -11,27 +11,19 @@ const moduleInfo = {
 
 const questionBank = [
   {
-    id: "m19-q01",
-    prompt: "¿Qué haces con la información que aprendes en el tema de fricción?",
-    type: "choice",
-    correct: "La aplicas en tu vida diaria cada vez que hay oportunidad.",
-    distractors: [
-      "Te gustaría aplicarla en tu vida pero no le encuentras relación.",
-      "Solo la empleas en la escuela porque no le ves aplicación.",
-      "La consideras parte de tus estudios, a ver si sirve algún día."
-    ],
-    hint: "Identifica la postura que refleja un aprendizaje significativo orientado a la aplicación cotidiana.",
-    explanation: "El modelo por competencias promueve que el conocimiento adquirido se aplique de forma práctica en situaciones de la vida cotidiana."
-  },
-  {
     id: "m19-q02",
-    prompt: "Elige la opción que completa la definición:<br><br>El movimiento ________ (llamado también movimiento circunferencial) dispone de un eje de giro y radio constante describiendo una trayectoria en forma de circunferencia. Cuando la velocidad ________ es constante se tiene el movimiento ________.",
-    type: "choice",
-    correct: "circular — angular — circular uniforme",
+    prompt: "Completa la definición:",
+    type: "fill_blanks",
+    sentence: "El movimiento {0} (llamado también movimiento circunferencial) dispone de un eje de giro y radio constante describiendo una trayectoria en forma de circunferencia. Cuando la velocidad {1} es constante se tiene el movimiento {2}.",
+    correctOrder: [
+      "circular",
+      "angular",
+      "circular uniforme"
+    ],
     distractors: [
-      "circular uniforme — angular — armónico simple",
-      "circular — tangencial — armónico simple",
-      "armónico simple — centrípeta — circular uniforme"
+      "armónico simple",
+      "tangencial",
+      "centrípeta"
     ],
     hint: "La trayectoria circular con rapidez de giro constante da origen al MCU.",
     explanation: "Una trayectoria circular con velocidad angular $\\omega$ constante define al movimiento circular uniforme (MCU)."
