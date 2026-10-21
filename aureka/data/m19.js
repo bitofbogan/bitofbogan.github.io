@@ -56,16 +56,16 @@ const questionBank = [
   },
   {
     id: "m19-q05",
-    prompt: "Cuando se dice que un vector apunta hacia el sur, ¿a qué característica vectorial se refiere?",
+    prompt: "Al decir que un vector apunta hacia el sur, ¿qué característica vectorial se está mencionando?",
     type: "choice",
-    correct: "Al sentido",
+    correct: "Dirección.",
     distractors: [
-      "A la dirección",
-      "A la magnitud",
-      "Al origen"
+      "Sentido.",
+      "Magnitud.",
+      "Origen."
     ],
-    hint: "La recta sobre la que descansa es la dirección; la punta de la flecha que indica hacia dónde va es el sentido.",
-    explanation: "La recta define la dirección (eje norte-sur), mientras que la orientación específica indicada por la flecha es el <b>sentido</b> (hacia el sur)."
+    hint: null,
+    explanation: "Todos los vectores se definen a partir de qué tan grandes son (magnitud) y hacia dónde apuntan (dirección)."
   },
   {
     id: "m19-q06",
@@ -84,13 +84,13 @@ const questionBank = [
     id: "m19-q07",
     prompt: "¿Cuál de las siguientes afirmaciones es correcta?",
     type: "choice",
-    correct: "El período de un péndulo, depende de la aceleración de la gravedad.",
+    correct: "El período de un péndulo depende de la aceleración de la gravedad.",
     distractors: [
-      "El período de un péndulo, no depende de la aceleración de la gravedad.",
+      "El período de un péndulo no depende de la aceleración de la gravedad.",
       "El período de oscilación de un péndulo es dependiente de su masa.",
       "El período es inversamente proporcional a la longitud del péndulo."
     ],
-    hint: "Revisa la fórmula $T = 2\\pi\\sqrt{L/g}$ y nota qué variables intervienen.",
+    hint: "Revisa la ecuación $T = 2\\pi\\sqrt{L/g}$ y nota qué variables intervienen.",
     explanation: "De acuerdo con $T = 2\\pi\\sqrt{\\frac{L}{g}}$, el período $T$ depende de la longitud $L$ y de la gravedad $g$, y es completamente independiente de la masa."
   },
   {
@@ -107,35 +107,23 @@ const questionBank = [
     explanation: "La <b>distancia</b> es la longitud escalar del camino recorrido, a diferencia del desplazamiento, que es un vector que une la posición inicial con la final."
   },
   {
-    id: "m19-q09",
-    prompt: "Se te pide integrar un equipo para preparar una exposición donde explicarán los pasos para realizar despejes de fórmulas. Todos en el equipo se conocen bien y se llevan como amigos.<br>A cada quien asignan una actividad, en particular Andrés tiene que preparar el resumen introductorio.<br>Al terminar de asignar funciones, Andrés les pregunta: \"¿Me pueden explicar de nuevo qué me toca hacer?\".<br><br>¿Cuáles de los siguientes comentarios son aceptables que realices para contender con esta pregunta de Andrés?",
-    type: "multi_select",
-    correctAnswers: [
-      "Tienes que preparar el resumen, basta con que sigas el ejemplo de este libro que te paso... mira aquí...",
-      "En el material de ayer te entregamos una muestra. Si no la tienes búscala en tu correo electrónico.",
-      "Busca en el Internet como \"resumen de ponencia\" o \"resumen de investigación\"."
-    ],
-    distractors: [
-      "Tenía que ser Andrés, siempre preguntando lo que todos ya entendimos.",
-      "¿Por qué no dejamos a Andrés que haga algo en la medida de sus capacidades?",
-      "Mejor déjalo, yo lo hago, no te preocupes.",
-      "¿Ni eso captas? no rebuznas porque... ¡qué bárbaro!"
-    ],
-    hint: "Elige las respuestas constructivas, empáticas y de apoyo pedagógico para el trabajo colaborativo.",
-    explanation: "Los comentarios 2, 6 y 7 ofrecen alternativas constructivas y material de apoyo sin caer en descalificaciones ni exclusiones."
-  },
-  {
     id: "m19-q10",
-    prompt: "Elige la opción que completa este enunciado:<br><br>La fracción de circunferencia contenida en un sector circular de radio $r$ y ángulo $\\theta$ se denomina ________ y se calcula con la expresión ________ con el ángulo en ________.",
-    type: "choice",
-    correct: "longitud de arco — $r\\theta$ — radianes",
-    distractors: [
-      "longitud de arco — $2r\\pi\\theta/360$ — radianes",
-      "sector circular — $r\\pi\\theta/180$ — radianes",
-      "sector circular — $2r^{2}\\theta$ — grados"
+    prompt: "Completa el enunciado seleccionando los términos y fórmulas correspondientes:",
+    type: "fill_blanks",
+    sentence: "La fracción de circunferencia contenida en un sector circular de radio $r$ y ángulo $\\theta$ se denomina {0} y se calcula con la expresión {1} con el ángulo en {2}.",
+    correctOrder: [
+      "longitud de arco",
+      "$r\\theta$",
+      "radianes"
     ],
-    hint: "La fórmula más directa para la longitud de arco $s$ requiere que el ángulo central esté expresado en radianes.",
-    explanation: "La porción de curva es la <b>longitud de arco</b> y su relación directa es $s = r\\theta$, donde $\\theta$ debe expresarse forzosamente en radianes."
+    distractors: [
+      "sector circular",
+      "$2r\\pi\\theta/360$",
+      "$r\\pi\\theta/180$",
+      "grados"
+    ],
+    hint: "La ecuación para la longitud de arco $s$ requiere que el ángulo central esté expresado en radianes.",
+    explanation: "La porción de curva es la <b>longitud de arco</b> y su relación directa es $s = r\\theta$, donde $\\theta$ debe expresarse en radianes."
   },
   {
     id: "m19-q11",
@@ -153,13 +141,13 @@ const questionBank = [
   },
   {
     id: "m19-q12",
-    prompt: "Una camioneta se desplaza $8\\text{ km}$ en línea horizontal y gira hacia el norte, en esta dirección recorre $13\\text{ km}$.<br>¿Cuál es el desplazamiento resultante del automóvil en km?",
+    prompt: "Una camioneta se desplaza 8 km en línea horizontal y luego gira hacia el norte recorriendo 13 km. ¿Cuál es su desplazamiento resultante?",
     type: "choice",
-    correct: "$$R = \\sqrt{8^{2} + 13^{2}} = 15.2$$",
+    correct: "$R = \\sqrt{8^{2} + 13^{2}} = 15.2$ km.",
     distractors: [
-      "$$R = 8 + 13 = 21$$",
-      "$$R = -8 + 13 = 5$$",
-      "$$R = \\sqrt{8^{2} + 13^{2}} = 4.58$$"
+      "$R = 8 + 13 = 21$  km.",
+      "$R = -8 + 13 = 5$  km.",
+      "$R = \\sqrt{8^{2} + 13^{2}} = 4.58$ km."
     ],
     hint: "Los dos trayectos forman un triángulo rectángulo: aplica el teorema de Pitágoras.",
     explanation: "Al ser trayectorias perpendiculares, la magnitud del desplazamiento resultante es la hipotenusa:\n$$R = \\sqrt{8^2 + 13^2} = \\sqrt{64 + 169} = \\sqrt{233} \\approx 15.26\\text{ km}$$"
@@ -250,21 +238,21 @@ const questionBank = [
   },
   {
     id: "m19-q19",
-    prompt: "Para ir a la tienda más cercana, Diana debe caminar aproximadamente $340\\text{ m}$ por Carranza y $200\\text{ m}$ por Madero.<br>Si se asigna el origen de coordenadas en la casa de Diana, ¿cuáles de los siguientes enunciados se concluyen de la información disponible?<br><br>1. Diana caminó primero hacia el este y después hacia el norte.<br>2. Diana caminó primero hacia el norte y después hacia el este.<br>3. El vector desplazamiento se traza a $30^{\\circ}$ en dirección noroeste.<br>4. El vector desplazamiento se traza a $30^{\\circ}$ en dirección noreste.<br>5. El vector desplazamiento mide $400\\text{ m}$ aproximadamente.<br>6. El vector desplazamiento mide $540\\text{ m}$ aproximadamente.",
-    image: "assets/m19_croquis_diana.png",
+    prompt: "Una persona viaja desde su casa hasta un despacho caminando 340 m sobre Avenida Estrella y 200 m sobre la Calle Principal. ¿Cuáles de las siguientes afirmaciones son correctas a partir de la imagen?",
+    image: "assets/m19_croquis.png",
     type: "multi_select",
     correctAnswers: [
-      "Diana caminó primero hacia el este y después hacia el norte.",
+      "Se caminó primero hacia el este y después hacia el norte.",
       "El vector desplazamiento se traza a 30° en dirección noreste.",
-      "El vector desplazamiento mide 400 m aproximadamente."
+      "El vector desplazamiento mide aproximadamente 400 m."
     ],
     distractors: [
-      "Diana caminó primero hacia el norte y después hacia el este.",
+      "Se caminó primero hacia el norte y después hacia el este.",
       "El vector desplazamiento se traza a 30° en dirección noroeste.",
-      "El vector desplazamiento mide 540 m aproximadamente."
+      "El vector desplazamiento mide aproximadamente 540 m."
     ],
     hint: "El recorrido va a la derecha (este) y luego arriba (norte). La magnitud resultante es $\\sqrt{340^2 + 200^2} \\approx 394\\text{ m}$.",
-    explanation: "Diana avanza primero al este y luego al norte (cuadrante noreste, $\\theta \\approx 30.5^\\circ$ respecto al este) con un desplazamiento total $\\sqrt{340^2 + 200^2} \\approx 394.4\\text{ m} \\approx 400\\text{ m}$."
+    explanation: "Se avanza primero al este y luego al norte (cuadrante noreste, $\\theta \\approx 30.5^\\circ$ respecto al este) con un desplazamiento total $\\sqrt{340^2 + 200^2} \\approx 394.4\\text{ m} \\approx 400\\text{ m}$."
   },
   {
     id: "m19-q20",
@@ -322,24 +310,24 @@ const questionBank = [
   },
   {
     id: "m19-q24",
-    prompt: "Analiza la siguiente imagen que representa una grúa sosteniendo una pila de bloques de concreto y las diferentes fuerzas que se ejercen sobre ambos objetos.<br>¿Qué se concluye a partir de la información disponible?<br><br>1. $F_2$ es la fuerza de atracción que la tierra ejerce sobre los bloques.<br>2. $F_3$ es la fuerza normal entre los bloques y la grúa.<br>3. La reacción de la grúa $F_1$ es igual al peso de los bloques.<br>4. $F_4$ es la fuerza de atracción o gravedad.<br>5. La fuerza de contacto $F_1$ es igual en magnitud al peso de los bloques.",
+    prompt: "De acuerdo al diagrama de fuerzas de la imagen, ¿cuáles de las siguientes afirmaciones son correctas?",
     image: "assets/m19_grua_fuerzas.png",
     type: "multi_select",
     correctAnswers: [
-      "F2 es la fuerza de atracción que la tierra ejerce sobre los bloques.",
-      "La reacción de la grúa F1 es igual al peso de los bloques.",
-      "La fuerza de contacto F1 es igual en magnitud al peso de los bloques."
+      "$F_2$ es la fuerza de atracción que la Tierra ejerce sobre los bloques.",
+      "La reacción de la grúa $F_1$ es igual al peso total que carga.",
+      "La fuerza $F_1$ es igual en magnitud al peso de los bloques y el gancho de carga."
     ],
     distractors: [
-      "F3 es la fuerza normal entre los bloques y la grúa.",
-      "F4 es la fuerza de atracción o gravedad."
+      "$F_3$ es la fuerza normal entre los bloques y la grúa.",
+      "$F_4$ es la fuerza de atracción gravitacional."
     ],
-    hint: "F2 es el peso hacia el centro de la Tierra; F1 equilibra verticalmente todo el peso sostenido.",
-    explanation: "F2 representa el peso (fuerza gravitacional terrestre) y F1 equilibra el peso de la carga tanto en reacción como en magnitud de soporte estático."
+    hint: "$F_2$ es el peso hacia el centro de la Tierra; $F_1$ equilibra verticalmente todo el peso sostenido.",
+    explanation: "$F_2$ representa el peso (fuerza gravitacional terrestre) y $F_1$ equilibra el peso de la carga tanto en reacción como en magnitud de soporte estático."
   },
   {
     id: "m19-q25",
-    prompt: "Francisco arranca su automóvil con una aceleración constante de $5\\text{ m/s}^{2}$. ¿Qué velocidad $v$ tendrá a los 30 segundos de haber iniciado el movimiento? ¿Cuál es la distancia $d$ que habrá recorrido en ese tiempo?",
+    prompt: "Fernando arranca su automóvil con una aceleración constante de $5\\text{ m/s}^{2}$. ¿Qué velocidad $v$ tendrá a los 30 segundos de haber iniciado el movimiento? ¿Cuál es la distancia $d$ que habrá recorrido en ese tiempo?",
     type: "choice",
     correct: "$$v_f = 5 \\times 30 = 150\\text{ m/s} \\quad ; \\quad d = \\frac{5 \\times 30^{2}}{2} = 2250\\text{ m}$$",
     distractors: [
@@ -393,16 +381,16 @@ const questionBank = [
   },
   {
     id: "m19-q29",
-    prompt: "La densidad de una sustancia es de $0.525\\text{ kg/L}$. ¿A cuánto equivale este valor en $\\text{mg/ml}$?",
+    prompt: "La densidad de una sustancia es de 0.525 kg/L. ¿Cuál es la conversión de este valor en miligramos por mililitro (mg/mL)?",
     type: "choice",
-    correct: "525.0",
+    correct: "525.0 mg/mL.",
     distractors: [
-      "52.5",
-      "0.000525",
-      "525000.0"
+      "52.5 mg/mL.",
+      "0.000525 mg/mL.",
+      "525000.0 mg/mL."
     ],
     hint: "1 kg equivale a $10^6\\text{ mg}$ y 1 L equivale a $10^3\\text{ ml}$. Multiplica por $10^6 / 10^3 = 1000$.",
-    explanation: "Efectuando el análisis de conversión dimensional:\n$$0.525\\frac{\\text{kg}}{\\text{L}} \\times \\frac{10^6\\text{ mg}}{1\\text{ kg}} \\times \\frac{1\\text{ L}}{10^3\\text{ ml}} = 0.525 \\times 10^3 = 525.0\\text{ mg/ml}$$"
+    explanation: "Realizando la conversión dimensional:\n$$0.525\\frac{\\text{kg}}{\\text{L}} \\times \\frac{10^6\\text{ mg}}{1\\text{ kg}} \\times \\frac{1\\text{ L}}{10^3\\text{ ml}} = 0.525 \\times 10^3 = 525.0\\text{ mg/ml}$$"
   },
   {
     id: "m19-q30",
