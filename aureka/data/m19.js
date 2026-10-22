@@ -123,7 +123,7 @@ const questionBank = [
       "grados"
     ],
     hint: "La ecuación para la longitud de arco $s$ requiere que el ángulo central esté expresado en radianes.",
-    explanation: "La porción de curva es la <b>longitud de arco</b> y su relación directa es $s = r\\theta$, donde $\\theta$ debe expresarse en radianes."
+    explanation: "La porción de curva es la <b>longitud de arco</b> y su relación directa es $L = r\\theta$, donde $\\theta$ debe expresarse en radianes."
   },
   {
     id: "m19-q11",
@@ -167,34 +167,38 @@ const questionBank = [
   },
   {
     id: "m19-q14",
-    prompt: "Analiza la gráfica de la función seno $y = \\text{sen }\\alpha$ y selecciona los enunciados verdaderos:<br><br>1. El período se representa con la letra N<br>2. El segmento N es recíproco de la frecuencia<br>3. El segmento P representa la amplitud<br>4. El segmento M representa la amplitud<br>5. La variación de $\\text{sen }\\alpha$ es entre 1 y -1<br>6. La variación de $\\text{sen }\\alpha$ es entre 10 y -10",
+    prompt: "De acuerdo a la gráfica de la función seno, ¿cuáles de las siguientes afirmaciones son correctas?",
     image: "assets/m19_grafica_seno.png",
     type: "multi_select",
     correctAnswers: [
-      "El período se representa con la letra N",
-      "El segmento N es recíproco de la frecuencia",
-      "El segmento M representa la amplitud",
-      "La variación de sen α es entre 1 y -1"
+      "El período se representa como $N$.",
+      "El segmento $N$ es recíproco de la frecuencia.",
+      "El segmento $M$ representa la amplitud.",
+      "La variación de $\\sin(x)$ es entre $1$ y $-1$."
     ],
     distractors: [
-      "El segmento P representa la amplitud",
-      "La variación de sen α es entre 10 y -10"
+      "El segmento $M$ representa la mitad de la amplitud.",
+      "La variación de $\\sin(x)$ es entre $10$ y $-10$."
     ],
-    hint: "N es la longitud de onda/período ($T = 1/f$), M es la cresta o amplitud desde el eje, y la función oscila en $[-1, 1]$.",
-    explanation: "El período corresponde a un ciclo completo N ($T = 1/f$), la amplitud vertical es la altura M y el rango de la función seno va de $-1$ a $1$."
+    hint: null,
+    explanation: "El periodo $N$ corresponde a un ciclo completo, la amplitud vertical es la altura $M$ y el rango de la función seno va de $-1$ a $1$."
   },
   {
     id: "m19-q15",
-    prompt: "Clasifica como Verdadero (V) o Falso (F) cada uno de los enunciados referentes a los supuestos involucrados en el modelo del movimiento rectilíneo uniforme (MRU):<br><br>1. Solo describe el movimiento de un objeto que no cambia de dirección.<br>2. La distancia, el tiempo y la velocidad son independientes entre sí.<br>3. La velocidad del movimiento siempre es constante.<br>4. La variable tiempo es independiente de cualquier factor externo.<br>5. Permite describir la caída libre de un objeto.<br>6. Permite determinar el tiempo de recorrido de una pelota que se lanza hacia arriba.",
-    type: "choice",
-    correct: "V, F, V, V, F, F",
-    distractors: [
-      "F, F, V, V, V, V",
-      "C, V, V, F, V, V",
-      "V, V, F, V, V, F"
+    prompt: "Selecciona los enunciados que son verdaderos respecto a los supuestos involucrados en el modelo del movimiento rectilíneo uniforme (MRU):",
+    type: "multi_select",
+    correctAnswers: [
+      "Solo describe el movimiento de un objeto que no cambia de dirección.",
+      "La velocidad del movimiento siempre es constante.",
+      "La variable tiempo es independiente de cualquier factor externo."
     ],
-    hint: "En el MRU la velocidad no cambia (no hay aceleración); la caída libre y el tiro vertical tienen aceleración de la gravedad.",
-    explanation: "El MRU exige velocidad constante y trayectoria rectilínea; distancia, tiempo y rapidez están vinculados ($d = vt$), y no aplica a caída libre por tener aceleración gravitacional."
+    distractors: [
+      "La distancia, el tiempo y la velocidad son independientes entre sí.",
+      "Permite describir la caída libre de un objeto.",
+      "Permite determinar el tiempo de recorrido de una pelota que se lanza hacia arriba."
+    ],
+    hint: "En el MRU la velocidad no cambia (no existe aceleración); la caída libre y el tiro vertical son movimientos acelerados por la gravedad.",
+    explanation: "El MRU exige velocidad constante y trayectoria en línea recta sin cambio de dirección[cite: 35]. La distancia, velocidad y tiempo dependen entre sí ($d = vt$), mientras que la caída libre y el tiro vertical poseen aceleración gravitacional y no corresponden a este modelo[cite: 35]."
   },
   {
     id: "m19-q16",
@@ -384,14 +388,14 @@ const questionBank = [
     id: "m19-q26",
     prompt: "Las ruedas de una bicicleta tienen 30 rayos distribuidos uniformemente. ¿Cuánto mide el ángulo entre cada uno de los rayos en grados y en radianes?",
     type: "choice",
-    correct: "$$\\frac{360^{\\circ}}{30} = 12^{\\circ} \\implies 12^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{15}$$",
+    correct: "$$\\begin{aligned} \\frac{360^{\\circ}}{30} = 12^{\\circ} \\\\[4pt] \\implies 12^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{15} \\end{aligned}$$",
     distractors: [
-      "$$\\frac{180^{\\circ}}{30} = 6^{\\circ} \\implies 6^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{30}$$",
-      "$$\\frac{30}{360} = 0.083^{\\circ} \\implies 0.083^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{360^{\\circ}}\\right) = 2.89 \\times 10^{-3}\\text{ rad}$$",
-      "$$\\frac{30}{180} = 0.16^{\\circ} \\implies 0.16^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{180^{\\circ}}\\right) = 1.1 \\times 10^{-2}\\text{ rad}$$"
+      "$$\\begin{aligned} \\frac{180^{\\circ}}{30} = 6^{\\circ} \\\\[4pt] \\implies 6^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{30} \\end{aligned}$$",
+      "$$\\begin{aligned} \\frac{30}{360} = 0.083^{\\circ} \\\\[4pt] \\implies 0.083^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{360^{\\circ}}\\right) = 2.89 \\times 10^{-3}\\text{ rad} \\end{aligned}$$",
+      "$$\\begin{aligned} \\frac{30}{180} = 0.16^{\\circ} \\\\[4pt] \\implies 0.16^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{180^{\\circ}}\\right) = 1.1 \\times 10^{-2}\\text{ rad} \\end{aligned}$$"
     ],
     hint: "Divide el círculo completo ($360^\\circ$) entre los 30 sectores y simplifica la fracción en radianes.",
-    explanation: "Cada división mide $360^\\circ / 30 = 12^\\circ$. Convirtiendo a radianes:\n$$12^\\circ \\left(\\frac{\\pi}{180^\\circ}\\right) = \\frac{12\\pi}{180} = \\frac{\\pi}{15}\\text{ rad}$$"
+    explanation: "Cada sector mide $360^\\circ / 30 = 12^\\circ$. Convirtiendo a radianes:\n$$\\begin{aligned} 12^\\circ \\left(\\frac{\\pi}{180^\\circ}\\right) &= \\frac{12\\pi}{180} \\\\[3pt] &= \\frac{\\pi}{15}\\text{ rad} \\end{aligned}$$"
   },
   {
     id: "m19-q27",
