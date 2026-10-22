@@ -43,13 +43,13 @@ const questionBank = [
   },
   {
     id: "m19-q04",
-    prompt: "Una cadena sostiene una polea que tiene un peso de $30\\text{ N}$. Si se conectan dos pesos idénticos de $80\\text{ N}$ con una cuerda que pasa por la polea, ¿cuál es la tensión en la cadena?",
+    prompt: "Una cadena sostiene una polea que tiene un peso de 30 N. Si se conectan dos pesos idénticos de 80 N con una cuerda que pasa por la polea, ¿cuál es la tensión en la cadena?",
     type: "choice",
-    correct: "190 N",
+    correct: "190 N.",
     distractors: [
-      "200 N",
-      "100 N",
-      "160 N"
+      "200 N.",
+      "100 N.",
+      "160 N."
     ],
     hint: "La cadena debe equilibrar hacia arriba tanto el peso de la polea como las dos ramas de la cuerda que sostienen las cargas.",
     explanation: "En equilibrio vertical, la cadena soporta la polea y ambos extremos de la cuerda cargada:\n$$\\begin{aligned} T &= W_{\\text{polea}} + 2W \\\\[2pt] &= 30\\text{ N} + 2(80\\text{ N}) = 190\\text{ N} \\end{aligned}$$"
@@ -256,14 +256,14 @@ const questionBank = [
   },
   {
     id: "m19-q20",
-    prompt: "Se muestra una gráfica en la que se representan la relación altura-tiempo que realiza un globo aerostático durante su trayecto.<br>A partir de la información disponible, ¿cuál es el valor de la velocidad promedio del globo (en $\\text{m/s}$) al desplazarse de las coordenadas C a E?",
+    prompt: "En la siguiente gráfica se muestra la relación entre la altura y el tiempo de recorrido de un globo aerostático. ¿Cuál es la velocidad promedio del globo al desplazarse del punto $C$ al $E$?",
     image: "assets/m19_grafica_globo.png",
     type: "choice",
-    correct: "6.0",
+    correct: "6.0 m/s.",
     distractors: [
-      "12.5",
-      "3.5",
-      "8.0"
+      "12.5 m/s.",
+      "3.5 m/s.",
+      "8.0 m/s."
     ],
     hint: "Calcula la pendiente entre los puntos $C(2, 4)$ y $E(4, 16)$: $v = \\frac{\\Delta d}{\\Delta t}$.",
     explanation: "La velocidad promedio es la razón de cambio entre los puntos C y E:\n$$v_m = \\frac{16\\text{ m} - 4\\text{ m}}{4\\text{ s} - 2\\text{ s}} = \\frac{12}{2} = 6.0\\text{ m/s}$$"
@@ -294,19 +294,61 @@ const questionBank = [
     hint: "Al ser colineales, los vectores hacia el oeste o con signo negativo en dirección este se restan.",
     explanation: "Sumando algebraicamente con sentido positivo hacia el este:\n$$R = 50\\text{ N} - 20\\text{ N} - 5\\text{ N} = 25\\text{ N}$$"
   },
-  {
-    id: "m19-q23",
-    prompt: "El libro del Módulo \"Dinámica en la naturaleza: el movimiento\" sugiere trabajar con el software GeoGebra, en el cual se construyó esta figura. ¿Cuáles son las coordenadas de los puntos Q, R, T, U?",
-    image: "assets/m19_geogebra_puntos.png",
+{
+    id: "m19-q23a",
+    prompt: "¿Cuáles son las coordenadas del punto $Q$?",
+    image: "assets/m19_geogebra_puntoQ.png",
     type: "choice",
-    correct: "$$Q(-1.5,-1) \\quad R(-3.5,-1.5) \\quad T(-5.5,-2) \\quad U(-4,3)$$",
+    correct: "$$(-1.5, -1)$$",
     distractors: [
-      "$$Q(-1,-1.5) \\quad R(-1.5,-3.5) \\quad T(-2,-5.5) \\quad U(3,-4)$$",
-      "$$Q(2,-3) \\quad R(-3.5,3.5) \\quad T(-5,-2) \\quad U(3,3.5)$$",
-      "$$Q(-3,2) \\quad R(-3.5,-3.5) \\quad T(-2,-5) \\quad U(2.5,4)$$"
+      "$$(-1, -1.5)$$",
+      "$$(2, -3)$$",
+      "$$(-3, 2)$$"
     ],
-    hint: "Lee primero el eje horizontal (x) y después el eje vertical (y) de cada punto.",
-    explanation: "Revisando el plano cartesiano en GeoGebra, el orden de cada par $(x,y)$ es $Q(-1.5, -1)$, $R(-3.5, -1.5)$, $T(-5.5, -2)$ y $U(-4, 3)$."
+    hint: "Ubica primero la posición en el eje horizontal $x$ y luego en el eje vertical $y$.",
+    explanation: "El punto $Q$ se encuentra en $x = -1.5$ y desciende a $y = -1$, por lo que sus coordenadas son $(-1.5, -1)$."
+  },
+  {
+    id: "m19-q23b",
+    prompt: "¿Cuáles son las coordenadas del punto $R$?",
+    image: "assets/m19_geogebra_puntoR.png",
+    type: "choice",
+    correct: "$$(-3.5, -1.5)$$",
+    distractors: [
+      "$$(-1.5, -3.5)$$",
+      "$$(-3.5, 3.5)$$",
+      "$$(-3.5, -3.5)$$"
+    ],
+    hint: "Revisa con atención cuál valor corresponde al eje horizontal $x$ y cuál al eje vertical $y$.",
+    explanation: "El punto $R$ se proyecta en $x = -3.5$ y en $y = -1.5$, dando el par ordenado $(-3.5, -1.5)$."
+  },
+  {
+    id: "m19-q23c",
+    prompt: "¿Cuáles son las coordenadas del punto $T$?",
+    image: "assets/m19_geogebra_puntoT.png",
+    type: "choice",
+    correct: "$$(-5.5, -2)$$",
+    distractors: [
+      "$$(-2, -5.5)$$",
+      "$$(-5, -2)$$",
+      "$$(-2, -5)$$"
+    ],
+    hint: "Observa que se encuentra a la izquierda en $x = -5.5$ y baja dos unidades sobre el eje $y$.",
+    explanation: "El punto $T$ tiene un avance horizontal en $x = -5.5$ y una altura negativa de $y = -2$, formando $(-5.5, -2)$."
+  },
+  {
+    id: "m19-q23d",
+    prompt: "¿Cuáles son las coordenadas del punto $U$?",
+    image: "assets/m19_geogebra_puntoT.png",
+    type: "choice",
+    correct: "$$(-4, 3)$$",
+    distractors: [
+      "$$(3, -4)$$",
+      "$$(3, 3.5)$$",
+      "$$(2.5, 4)$$"
+    ],
+    hint: "Es el único punto en el segundo cuadrante: $x$ es negativo e $y$ es positivo.",
+    explanation: "Al ubicarse en el segundo cuadrante, el punto $U$ cruza con $x = -4$ y sube hasta $y = 3$, resultando en $(-4, 3)$."
   },
   {
     id: "m19-q24",
