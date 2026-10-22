@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plotter LaTeX HD</title>
 
-  <!-- Google Fonts: Inter, Fira Code & Lora para caracteres latinos / acentos -->
+  <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- KaTeX CSS y JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -31,9 +31,7 @@
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             mono: ['Fira Code', 'monospace'],
-            serif: ['Lora', 'KaTeX_Main', 'serif'],
-            katexMain: ['KaTeX_Main', 'serif'],
-            katexMath: ['KaTeX_Math', 'serif']
+            serif: ['"CMU Serif"', 'KaTeX_Main', 'serif']
           }
         }
       }
@@ -41,23 +39,38 @@
   </script>
 
   <style>
+    /* Inyección de la tipografía oficial Computer Modern Unicode (CMU Serif) con números lining */
+    @font-face {
+      font-family: 'CMU Serif';
+      src: url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunrm.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'CMU Serif';
+      src: url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunbx.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'CMU Serif';
+      src: url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunti.woff') format('woff');
+      font-weight: normal;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'CMU Serif';
+      src: url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts/Serif/cmunbi.woff') format('woff');
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    /* Fuentes KaTeX */
     @font-face {
       font-family: 'KaTeX_Main';
       src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Regular.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
-    }
-    @font-face {
-      font-family: 'KaTeX_Main';
-      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Bold.woff2') format('woff2');
-      font-weight: bold;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'KaTeX_Main';
-      src: url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Main-Italic.woff2') format('woff2');
-      font-weight: normal;
-      font-style: italic;
     }
     @font-face {
       font-family: 'KaTeX_Math';
@@ -93,7 +106,7 @@
       width: 22px;
       height: 22px;
       border-radius: 9999px;
-      transition: transform 0.15s, border-color 0.15s;
+      transition: transform 0.15s;
     }
     .color-swatch-btn:hover {
       transform: scale(1.15);
@@ -115,7 +128,7 @@
       </div>
       <div>
         <h1 class="text-sm font-bold text-white tracking-wide">Plotter LaTeX HD</h1>
-        <p class="text-[10px] text-slate-400 font-mono">Motor de Trazado Científico & KaTeX</p>
+        <p class="text-[10px] text-slate-400 font-mono">Motor Científico CMU Serif & KaTeX</p>
       </div>
     </div>
 
@@ -193,7 +206,7 @@
         <div id="tabSectionFunctions" class="space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Funciones Matemáticas</span>
-            <span class="text-[11px] text-slate-500">Arrastra rótulos en el plano</span>
+            <span class="text-[11px] text-slate-500">Mueve y redimensiona en el plano</span>
           </div>
 
           <!-- Lista de Funciones -->
@@ -211,7 +224,7 @@
             <p class="font-medium text-slate-300 flex items-center gap-1">
               <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis admitida:
             </p>
-            <p class="font-mono text-slate-400"><code>0.3*x + 3</code>, <code>3*x^2 + 2*x - 5</code>, <code>sin(x)</code>, <code>exp(x)</code>, <code>sqrt(x)</code></p>
+            <p class="font-mono text-slate-400"><code>3*x - 3</code>, <code>x^2</code>, <code>3*x^2 + 2*x - 5</code>, <code>sin(x)</code>, <code>sqrt(x)</code></p>
           </div>
         </div>
 
@@ -226,7 +239,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <span class="text-xs font-semibold text-slate-200">Mostrar coordenadas en etiquetas</span>
-                <p class="text-[11px] text-slate-400">Ejemplo: P(1, 0)</p>
+                <p class="text-[11px] text-slate-400">Ejemplo: (0, 0)</p>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="checkShowCoords" class="sr-only peer">
@@ -237,9 +250,9 @@
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium">Tamaño texto etiquetas de puntos:</span>
-                <span id="pointLabelFontSizeVal" class="font-mono text-indigo-300 font-semibold">14px</span>
+                <span id="pointLabelFontSizeVal" class="font-mono text-indigo-300 font-semibold">16px</span>
               </div>
-              <input type="range" id="inputPointLabelFontSize" min="10" max="48" step="1" value="14" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputPointLabelFontSize" min="10" max="48" step="1" value="16" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <div class="flex items-center justify-between pt-2 border-t border-slate-700/60">
@@ -280,7 +293,7 @@
 
             <div>
               <input type="text" id="inputChartTitle" value="Gráfica de la parábola $f(x) = 3x^2 + 2x - 5$" placeholder="Usa $..$ para mathmode, ej: Gráfica de $f(x)$" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-serif">
-              <p class="text-[10px] text-slate-400 mt-1">Escribe texto normal con acentos en español y fórmulas entre signos de pesos: <code>$y = x^2$</code></p>
+              <p class="text-[10px] text-slate-400 mt-1">Escribe texto con acentos y encierra fórmulas entre signos de pesos: <code>$y = x^2$</code></p>
               <div class="mt-1.5 flex items-center gap-1 text-[11px] text-slate-400">
                 <span>Vista Previa:</span>
                 <span id="previewKatexChartTitle" class="text-indigo-300 font-medium"></span>
@@ -296,7 +309,7 @@
             </div>
           </div>
 
-          <!-- Rótulos de los ejes (Independientes, Draggable, con opción \textnormal) -->
+          <!-- Rótulos de los ejes -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
             <div class="flex items-center justify-between">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
@@ -317,11 +330,11 @@
               </label>
             </div>
 
-            <!-- Opción textnormal (vertical/romana) vs itálica -->
+            <!-- Opción textnormal vs itálica -->
             <div class="flex items-center justify-between p-2 rounded-lg bg-slate-900/40 border border-slate-800">
               <div>
-                <span class="text-xs font-medium text-slate-200">Estilo de fuente: Texto vertical estándar (\textnormal)</span>
-                <p class="text-[10px] text-slate-400">Ideal para palabras como "Miles de pesos" o unidades</p>
+                <span class="text-xs font-medium text-slate-200">Estilo de fuente: \textnormal (romana vertical)</span>
+                <p class="text-[10px] text-slate-400">Para palabras como "Miles de pesos" o unidades</p>
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" id="checkTextNormalLabels" checked class="sr-only peer">
@@ -349,12 +362,10 @@
               </div>
             </div>
 
-            <!-- Botón para resetear posición de rótulos -->
             <button id="btnResetLabelPos" class="w-full py-1 text-center text-[11px] text-slate-400 hover:text-white bg-slate-800 rounded border border-slate-700 transition">
               Restablecer posiciones por defecto de x e y
             </button>
             
-            <!-- Toggle Negrita en Rótulos de Ejes -->
             <div class="flex items-center justify-between pt-1">
               <span class="text-[11px] text-slate-300">Rótulos en negrita (mathbf)</span>
               <label class="relative inline-flex items-center cursor-pointer">
@@ -363,7 +374,6 @@
               </label>
             </div>
             
-            <!-- Tamaño de los rótulos de ejes (x, y) -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium flex items-center gap-1">
@@ -374,7 +384,6 @@
               <input type="range" id="inputAxisTitleFontSize" min="12" max="64" step="1" value="24" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
-            <!-- Tamaño de las etiquetas de números -->
             <div class="pt-2 border-t border-slate-700/60">
               <div class="flex justify-between items-center text-xs mb-1">
                 <span class="text-slate-300 font-medium flex items-center gap-1">
@@ -386,7 +395,7 @@
             </div>
           </div>
 
-          <!-- Rango X (Con validación de 0 sin bugs y paso de entero en entero) -->
+          <!-- Rango X (Soporte seguro de 0 y pasos enteros) -->
           <div>
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Dominio (Eje X)</h3>
             <div class="grid grid-cols-3 gap-2.5">
@@ -407,7 +416,7 @@
 
           <div class="h-px bg-slate-800"></div>
 
-          <!-- Rango Y (Con validación de 0 sin bugs y paso de entero en entero) -->
+          <!-- Rango Y (Soporte seguro de 0 y pasos enteros) -->
           <div>
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Rango (Eje Y)</h3>
             <div class="grid grid-cols-3 gap-2.5">
@@ -447,7 +456,6 @@
         <!-- PESTAÑA 4: ESTILO, FORMATO Y COLORES -->
         <div id="tabSectionStyle" class="space-y-4 hidden">
           
-          <!-- Forma / Proporción del Lienzo -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
             <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-300">Forma / Proporción del Lienzo</label>
             <div class="grid grid-cols-2 gap-2">
@@ -526,7 +534,7 @@
               <input type="checkbox" id="checkTicks" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
 
-            <!-- Slider Longitud de Ticks -->
+            <!-- Slider Ticks -->
             <div class="p-2 bg-slate-900/50 rounded-lg border border-slate-800">
               <div class="flex justify-between text-xs text-slate-400 mb-1">
                 <span>Tamaño de los ticks</span>
@@ -537,15 +545,15 @@
 
             <!-- Flechas -->
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
-              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los 4 extremos de los ejes</span>
+              <span class="text-xs text-slate-300 font-medium">Mostrar flechas en los extremos de los ejes</span>
               <input type="checkbox" id="checkArrows" class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
             <div class="p-2 bg-slate-900/50 rounded-lg border border-slate-800">
               <div class="flex justify-between text-xs text-slate-400 mb-1">
                 <span>Tamaño de flechas</span>
-                <span id="labelArrowSizeVal" class="font-mono text-indigo-300 font-semibold">10px</span>
+                <span id="labelArrowSizeVal" class="font-mono text-indigo-300 font-semibold">12px</span>
               </div>
-              <input type="range" id="inputArrowSize" min="4" max="30" step="1" value="10" class="w-full accent-indigo-500 cursor-pointer">
+              <input type="range" id="inputArrowSize" min="4" max="30" step="1" value="12" class="w-full accent-indigo-500 cursor-pointer">
             </div>
 
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
@@ -553,11 +561,11 @@
               <input type="checkbox" id="checkTickNumbers" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
 
-            <!-- Anticolisión en origen/esquina -->
+            <!-- Anticolisión -->
             <label class="flex items-center justify-between p-2 rounded-lg bg-slate-800/40 border border-slate-800 cursor-pointer">
               <div>
                 <span class="text-xs text-slate-300 font-medium">Evitar colisión de números en la esquina (Antisúperposición)</span>
-                <p class="text-[10px] text-slate-400">Desplaza o limpia números encimados cerca del cruce</p>
+                <p class="text-[10px] text-slate-400">Corrige números empalmados cerca del cruce</p>
               </div>
               <input type="checkbox" id="checkAntiCollision" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-700 border-slate-600">
             </label>
@@ -612,7 +620,7 @@
       <div class="mt-4 flex flex-wrap items-center justify-center gap-3 bg-slate-900/90 backdrop-blur px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-400 shadow-lg">
         <div class="flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Fuente LaTeX: <strong class="text-slate-200 font-serif">Computer Modern (KaTeX)</strong></span>
+          <span>Fuente LaTeX: <strong class="text-slate-200 font-serif">CMU Serif (Computer Modern Unicode)</strong></span>
         </div>
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5">
@@ -622,14 +630,14 @@
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
           <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Rueda: Zoom | Clic fondo: Arrastrar lienzo | Clic etiquetas: Moverlas</span>
+          <span>Rueda: Zoom | Clic fondo: Arrastrar plano | Clic y arrastre en esquina de píldora: Redimensionar</span>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    /* Paleta de colores moderna para selectores */
+    /* Paleta moderna */
     const MODERN_PALETTE = [
       '#3b82f6', '#ec4899', '#10b981', '#f59e0b', 
       '#8b5cf6', '#06b6d4', '#e11d48', '#6366f1', '#64748b'
@@ -660,7 +668,7 @@
         y: 'y',
         showX: true,
         showY: true,
-        textNormal: true, // \textnormal vertical upright para prosa/unidades
+        textNormal: true,
         fontSize: 24,
         posX: null,
         posY: null,
@@ -673,22 +681,21 @@
         gridColor: '#cbd5e1',
         labelColor: '#000000',
         labelFontSize: 13,
-        pointLabelFontSize: 14,
+        pointLabelFontSize: 16,
         axisWidth: 3.5,
         showTicks: true,
         tickSize: 4.5,
-        arrowSize: 10,
+        showArrows: false,
+        arrowSize: 12,
         boldAxisLabels: false,
         boldPointLabels: false,
         showMajorGrid: true,
-        showArrows: false,
         showTickNumbers: true,
         showMinorGrid: true,
         antiCollision: true
       },
       canvasWidth: 940,
       canvasHeight: 600,
-      // Viewport interactivo (Zoom & Pan)
       viewport: {
         zoom: 1.0,
         panX: 0,
@@ -706,11 +713,10 @@
     const functionsContainer = document.getElementById('functionsContainer');
     const pointsContainer = document.getElementById('pointsContainer');
 
-    /* Sistema de arrastre (Draggable) de rótulos individuales */
-    let draggedTarget = null; // { type: 'axisX'|'axisY'|'fn'|'point', id: string }
+    /* Sistema de arrastre y redimensionamiento interactivo */
+    let draggedTarget = null; // { type: 'axisX'|'axisY'|'fn'|'point'|'resizeFn', id: string, initialScale: number, startX: number, startY: number }
     let hitBoxes = [];
 
-    /* Auxiliar numérico seguro que NO evalúa 0 como falsy */
     function parseNumberSafe(val, fallback) {
       if (val === '' || val === null || val === undefined) return fallback;
       const num = parseFloat(val);
@@ -727,12 +733,7 @@
       const topPad = (state.chartTitle.visible && state.chartTitle.text.trim()) 
         ? Math.max(75, 45 + state.chartTitle.fontSize * 1.6) 
         : 58;
-      return {
-        top: topPad,
-        bottom: 58,
-        left: 58,
-        right: 58
-      };
+      return { top: topPad, bottom: 58, left: 58, right: 58 };
     }
 
     function toCanvasX(x) {
@@ -769,7 +770,6 @@
       }
     }
 
-    /* Convertir nombre ej: f2(x) o f2 a TeX con subíndice formal f_{2}(x) */
     function formatFunctionNameTex(name) {
       const trimmed = (name || 'f(x)').trim();
       const m = trimmed.match(/^([a-zA-Z])(\d+)(\(x\))?$/);
@@ -779,7 +779,6 @@
       return trimmed;
     }
 
-    /* Parser de texto con soporte de acentos en español y fórmulas en mathmode $...$ */
     function parseMathText(text) {
       const segments = [];
       const regex = /\$([^$]+)\$/g;
@@ -798,16 +797,140 @@
       return segments;
     }
 
+    /* Tokenizador matemático simple para Canvas que preserva superíndices, lining numbers y menos TeX */
+    function tokenizeMathExpr(str) {
+      const tokens = [];
+      let i = 0;
+      while (i < str.length) {
+        if (str[i] === ' ') {
+          tokens.push({ type: 'space', text: ' ' });
+          i++;
+        } else if (str[i] === '^') {
+          i++;
+          let sup = '';
+          if (str[i] === '{') {
+            i++;
+            while (i < str.length && str[i] !== '}') {
+              sup += str[i];
+              i++;
+            }
+            if (str[i] === '}') i++;
+          } else if (i < str.length) {
+            sup = str[i];
+            i++;
+          }
+          tokens.push({ type: 'sup', text: sup });
+        } else if (str[i] === '+' || str[i] === '=' || str[i] === '-') {
+          const char = str[i] === '-' ? '\u2212' : str[i];
+          tokens.push({ type: 'op', text: char });
+          i++;
+        } else if (str[i] === '*' || str[i] === '·') {
+          tokens.push({ type: 'op', text: '·' });
+          i++;
+        } else if (str[i] === '(' || str[i] === ')' || str[i] === '[' || str[i] === ']' || str[i] === ',') {
+          tokens.push({ type: 'paren', text: str[i] });
+          i++;
+        } else if (/[0-9.]/.test(str[i])) {
+          let num = '';
+          while (i < str.length && /[0-9.]/.test(str[i])) {
+            num += str[i];
+            i++;
+          }
+          tokens.push({ type: 'num', text: num });
+        } else if (/[a-zA-Z]/.test(str[i])) {
+          let id = '';
+          while (i < str.length && /[a-zA-Z]/.test(str[i])) {
+            id += str[i];
+            i++;
+          }
+          tokens.push({ type: 'var', text: id });
+        } else {
+          tokens.push({ type: 'char', text: str[i] });
+          i++;
+        }
+      }
+      return tokens;
+    }
+
+    /* Dibuja tokens matemáticos en CMU Serif con alineación de línea base estricta */
+    function drawMathTokens(ctx, tokens, startX, baseY, fontSize, defaultColor) {
+      let curX = startX;
+      ctx.textBaseline = 'alphabetic';
+
+      tokens.forEach(tok => {
+        if (tok.type === 'space') {
+          curX += fontSize * 0.28;
+        } else if (tok.type === 'var') {
+          ctx.font = `italic ${fontSize}px "CMU Serif", "KaTeX_Math", serif`;
+          ctx.fillStyle = defaultColor;
+          ctx.fillText(tok.text, curX, baseY);
+          curX += ctx.measureText(tok.text).width;
+        } else if (tok.type === 'num') {
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          ctx.fillStyle = defaultColor;
+          ctx.fillText(tok.text, curX, baseY);
+          curX += ctx.measureText(tok.text).width;
+        } else if (tok.type === 'op') {
+          curX += fontSize * 0.22;
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          ctx.fillStyle = defaultColor;
+          ctx.fillText(tok.text, curX, baseY);
+          curX += ctx.measureText(tok.text).width + fontSize * 0.22;
+        } else if (tok.type === 'sup') {
+          const supSize = Math.max(9, Math.round(fontSize * 0.68));
+          ctx.font = `normal ${supSize}px "CMU Serif", "KaTeX_Main", serif`;
+          ctx.fillStyle = defaultColor;
+          const supY = baseY - (fontSize * 0.42);
+          ctx.fillText(tok.text, curX, supY);
+          curX += ctx.measureText(tok.text).width + (fontSize * 0.08);
+        } else {
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          ctx.fillStyle = defaultColor;
+          ctx.fillText(tok.text, curX, baseY);
+          curX += ctx.measureText(tok.text).width;
+        }
+      });
+
+      return curX;
+    }
+
+    function measureMathTokens(ctx, tokens, fontSize) {
+      let totalW = 0;
+      tokens.forEach(tok => {
+        if (tok.type === 'space') {
+          totalW += fontSize * 0.28;
+        } else if (tok.type === 'var') {
+          ctx.font = `italic ${fontSize}px "CMU Serif", "KaTeX_Math", serif`;
+          totalW += ctx.measureText(tok.text).width;
+        } else if (tok.type === 'num') {
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          totalW += ctx.measureText(tok.text).width;
+        } else if (tok.type === 'op') {
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          totalW += ctx.measureText(tok.text).width + fontSize * 0.44;
+        } else if (tok.type === 'sup') {
+          const supSize = Math.max(9, Math.round(fontSize * 0.68));
+          ctx.font = `normal ${supSize}px "CMU Serif", "KaTeX_Main", serif`;
+          totalW += ctx.measureText(tok.text).width + (fontSize * 0.08);
+        } else {
+          ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          totalW += ctx.measureText(tok.text).width;
+        }
+      });
+      return totalW;
+    }
+
     function drawRichText(ctx, segments, startX, y, fontSize, defaultColor, isBold = false) {
       let currentX = startX;
+      ctx.textBaseline = 'top';
       segments.forEach(seg => {
         if (seg.isMath) {
-          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-          const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
-          ctx.fillText(mathStr, currentX, y);
-          currentX += ctx.measureText(mathStr).width;
+          const tokens = tokenizeMathExpr(seg.text.replace(/\*/g, '·'));
+          const baseY = y + fontSize * 0.88;
+          currentX = drawMathTokens(ctx, tokens, currentX, baseY, fontSize, defaultColor);
         } else {
-          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "Lora", "KaTeX_Main", "Times New Roman", serif`;
+          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
+          ctx.fillStyle = defaultColor;
           ctx.fillText(seg.text, currentX, y);
           currentX += ctx.measureText(seg.text).width;
         }
@@ -819,18 +942,16 @@
       let totalW = 0;
       segments.forEach(seg => {
         if (seg.isMath) {
-          ctx.font = `italic ${fontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-          const mathStr = seg.text.replace(/\*/g, '').replace(/-/g, '\u2212').replace(/\^2/g, '²').replace(/\^3/g, '³');
-          totalW += ctx.measureText(mathStr).width;
+          const tokens = tokenizeMathExpr(seg.text.replace(/\*/g, '·'));
+          totalW += measureMathTokens(ctx, tokens, fontSize);
         } else {
-          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "Lora", "KaTeX_Main", "Times New Roman", serif`;
+          ctx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
           totalW += ctx.measureText(seg.text).width;
         }
       });
       return totalW;
     }
 
-    /* Dibuja símbolo de punto en canvas (incluye Diamante) */
     function drawSymbolCanvas(ctx, symbol, cx, cy, r, color, bgColor) {
       ctx.fillStyle = color;
       ctx.strokeStyle = color;
@@ -887,7 +1008,7 @@
       hitBoxes = [];
       const p = getPaddings();
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid, antiCollision } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, showArrows, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showTickNumbers, showMinorGrid, antiCollision } = state.style;
       
       // 1. Limpiar fondo
       ctx.fillStyle = background;
@@ -899,11 +1020,10 @@
         const totalTitleWidth = measureRichText(ctx, titleSegments, state.chartTitle.fontSize, true);
         const startX = (state.canvasWidth - totalTitleWidth) / 2;
         ctx.fillStyle = axisColor;
-        ctx.textBaseline = 'top';
         drawRichText(ctx, titleSegments, startX, 16, state.chartTitle.fontSize, axisColor, true);
       }
 
-      // 2. Cuadrícula secundaria (Minor Grid)
+      // 2. Cuadrícula menor
       if (showMinorGrid) {
         ctx.strokeStyle = gridColor;
         ctx.lineWidth = 0.75;
@@ -927,7 +1047,7 @@
         ctx.globalAlpha = 1.0;
       }
 
-      // 3. Cuadrícula principal (Major Grid)
+      // 3. Cuadrícula principal
       if (showMajorGrid) {
         ctx.strokeStyle = gridColor;
         ctx.lineWidth = 1.25;
@@ -947,7 +1067,6 @@
         ctx.stroke();
       }
       
-      // Coordenadas origen en píxeles (con clamp para no perderse si el 0 queda fuera)
       const originX = Math.max(p.left, Math.min(state.canvasWidth - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(state.canvasHeight - p.bottom, toCanvasY(0)));
 
@@ -957,65 +1076,65 @@
       ctx.lineCap = 'square';
       ctx.beginPath();
 
+      const axisExtXLeft = p.left - 24;
+      const axisExtXRight = state.canvasWidth - p.right + 24;
+      const axisExtYTop = p.top - 24;
+      const axisExtYBottom = state.canvasHeight - p.bottom + 24;
+
       // Eje X
-      ctx.moveTo(p.left - 24, originY);
-      ctx.lineTo(state.canvasWidth - p.right + 24, originY);
+      ctx.moveTo(axisExtXLeft, originY);
+      ctx.lineTo(axisExtXRight, originY);
 
       // Eje Y
-      ctx.moveTo(originX, state.canvasHeight - p.bottom + 24);
-      ctx.lineTo(originX, p.top - 24);
+      ctx.moveTo(originX, axisExtYBottom);
+      ctx.lineTo(originX, axisExtYTop);
       ctx.stroke();
 
-      // Flechas en los 4 extremos
+      // Flechas en los 4 extremos de los ejes
       if (showArrows) {
-        const aSize = arrowSize || 10;
+        const aSize = arrowSize || 12;
         ctx.fillStyle = axisColor;
 
-        const tipRightX = state.canvasWidth - p.right + 24;
-        const tipLeftX = p.left - 24;
-        const tipTopY = p.top - 24;
-        const tipBottomY = state.canvasHeight - p.bottom + 24;
-
-        // Flecha X Derecha
+        // Flecha +X
         ctx.beginPath();
-        ctx.moveTo(tipRightX + aSize, originY);
-        ctx.lineTo(tipRightX, originY - aSize * 0.55);
-        ctx.lineTo(tipRightX, originY + aSize * 0.55);
+        ctx.moveTo(axisExtXRight + aSize, originY);
+        ctx.lineTo(axisExtXRight, originY - aSize * 0.55);
+        ctx.lineTo(axisExtXRight, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
-        // Flecha X Izquierda
+        // Flecha -X
         ctx.beginPath();
-        ctx.moveTo(tipLeftX - aSize, originY);
-        ctx.lineTo(tipLeftX, originY - aSize * 0.55);
-        ctx.lineTo(tipLeftX, originY + aSize * 0.55);
+        ctx.moveTo(axisExtXLeft - aSize, originY);
+        ctx.lineTo(axisExtXLeft, originY - aSize * 0.55);
+        ctx.lineTo(axisExtXLeft, originY + aSize * 0.55);
         ctx.closePath();
         ctx.fill();
 
-        // Flecha Y Arriba
+        // Flecha +Y
         ctx.beginPath();
-        ctx.moveTo(originX, tipTopY - aSize);
-        ctx.lineTo(originX - aSize * 0.55, tipTopY);
-        ctx.lineTo(originX + aSize * 0.55, tipTopY);
+        ctx.moveTo(originX, axisExtYTop - aSize);
+        ctx.lineTo(originX - aSize * 0.55, axisExtYTop);
+        ctx.lineTo(originX + aSize * 0.55, axisExtYTop);
         ctx.closePath();
         ctx.fill();
 
-        // Flecha Y Abajo
+        // Flecha -Y
         ctx.beginPath();
-        ctx.moveTo(originX, tipBottomY + aSize);
-        ctx.lineTo(originX - aSize * 0.55, tipBottomY);
-        ctx.lineTo(originX + aSize * 0.55, tipBottomY);
+        ctx.moveTo(originX, axisExtYBottom + aSize);
+        ctx.lineTo(originX - aSize * 0.55, axisExtYBottom);
+        ctx.lineTo(originX + aSize * 0.55, axisExtYBottom);
         ctx.closePath();
         ctx.fill();
       }
 
-      // 5. Ticks y Números en Ejes con Anticolisión
-      ctx.font = `normal ${labelFontSize || 13}px "KaTeX_Main", "Times New Roman", serif`;
+      // 5. Ticks y Números en Ejes con tipografía CMU Serif
+      ctx.font = `normal ${labelFontSize || 13}px "CMU Serif", "KaTeX_Main", serif`;
       ctx.fillStyle = labelColor;
 
       const originCrossingNear = Math.abs(originX - p.left) < 30 && Math.abs(originY - (state.canvasHeight - p.bottom)) < 30;
 
-      // Eje X Ticks y Números
+      // Eje X
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
@@ -1034,16 +1153,15 @@
         }
 
         if (showTickNumbers && !isZero) {
-          // Anticolisión: si coincide exactamente con la esquina o con el número de Y
           if (antiCollision && Math.abs(cx - originX) < 16 && originCrossingNear) {
-            // Omitir o desplazar ligeramente para evitar superposición
+            // Omitir superposición en esquina
           } else {
             ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
           }
         }
       }
 
-      // Eje Y Ticks y Números
+      // Eje Y
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
       for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
@@ -1067,15 +1185,13 @@
         }
       }
 
-      // 6. Rótulos de los Ejes (Independientes, Draggable, \textnormal soportado)
+      // 6. Rótulos de los Ejes
       const axisTitleSize = state.labels.fontSize || 24;
       const fontVariant = state.labels.textNormal ? 'normal' : 'italic';
-      const fontFam = state.labels.textNormal ? '"Lora", "KaTeX_Main", serif' : '"KaTeX_Math", "KaTeX_Main", serif';
       const fontWeight = boldAxisLabels ? 'bold ' : '';
-      ctx.font = `${fontWeight}${fontVariant} ${axisTitleSize}px ${fontFam}`;
+      ctx.font = `${fontWeight}${fontVariant} ${axisTitleSize}px "CMU Serif", "KaTeX_Main", serif`;
       ctx.fillStyle = axisColor;
 
-      // Rótulo Eje Y
       if (state.labels.showY) {
         const defaultLabelY_X = originX;
         const defaultLabelY_Y = p.top - 28;
@@ -1098,7 +1214,6 @@
         });
       }
 
-      // Rótulo Eje X
       if (state.labels.showX) {
         const defaultLabelX_X = state.canvasWidth - p.right + 30;
         const defaultLabelX_Y = originY;
@@ -1121,8 +1236,8 @@
         });
       }
 
-      // 7. Trazado de Funciones Matemáticas (con soporte de Dominio restringido)
-      state.functions.forEach((fn, idx) => {
+      // 7. Trazado de Funciones Matemáticas
+      state.functions.forEach((fn) => {
         if (!fn.visible || !fn.expr.trim()) return;
 
         try {
@@ -1146,7 +1261,6 @@
           ctx.lineCap = 'round';
           ctx.lineJoin = 'round';
 
-          // Rango de graficación (acotado si fn.useRange está activo)
           const fXMin = fn.useRange ? Math.max(xMin, parseNumberSafe(fn.rangeMin, xMin)) : xMin;
           const fXMax = fn.useRange ? Math.min(xMax, parseNumberSafe(fn.rangeMax, xMax)) : xMax;
 
@@ -1185,7 +1299,7 @@
         } catch (error) {}
       });
 
-      // 8. Trazado de Puntos
+      // 8. Trazado de Puntos y Rótulos con CMU Serif
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
 
@@ -1196,37 +1310,38 @@
           ctx.save();
           drawSymbolCanvas(ctx, pt.symbol || 'circle', cx, cy, pt.size || 6, pt.color, state.style.background);
 
-          // Rótulo individual de punto si está activo
           if (pt.showLabel !== false) {
             const name = pt.name ? pt.name.trim() : '';
             const coordText = state.style.showPointCoords ? `(${formatLatexNumber(pt.x)}, ${formatLatexNumber(pt.y)})` : '';
-            const ptFontSize = state.style.pointLabelFontSize || 14;
+            const ptFontSize = state.style.pointLabelFontSize || 16;
 
             if (name || coordText) {
-              const ptWeight = boldPointLabels ? 'bold ' : '';
-              ctx.font = `${ptWeight}italic ${ptFontSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-              ctx.fillStyle = pt.color;
-              ctx.textBaseline = 'middle';
-
-              const defaultX = cx + (pt.size || 6) + 6;
+              const defaultX = cx + (pt.size || 6) + 8;
               const defaultY = cy - 2;
 
               const labelX = pt.labelX !== null && pt.labelX !== undefined ? pt.labelX : defaultX;
               const labelY = pt.labelY !== null && pt.labelY !== undefined ? pt.labelY : defaultY;
 
-              let fullText = name;
-              if (coordText) fullText += (fullText ? ' ' : '') + coordText;
+              const tokens = [];
+              if (name) {
+                tokens.push({ type: 'var', text: name });
+                if (coordText) tokens.push({ type: 'space', text: ' ' });
+              }
+              if (coordText) {
+                tokens.push(...tokenizeMathExpr(coordText));
+              }
 
-              ctx.fillText(fullText, labelX, labelY);
-              const textW = ctx.measureText(fullText).width;
+              const totalW = measureMathTokens(ctx, tokens, ptFontSize);
+              const baseY = labelY + ptFontSize * 0.35;
+              drawMathTokens(ctx, tokens, labelX, baseY, ptFontSize, pt.color);
 
               hitBoxes.push({
                 type: 'point',
                 id: pt.id,
                 x: labelX - 4,
-                y: labelY - ptFontSize / 2 - 2,
-                w: textW + 8,
-                h: ptFontSize + 6
+                y: labelY - ptFontSize / 2 - 4,
+                w: totalW + 8,
+                h: ptFontSize + 8
               });
             }
           }
@@ -1234,72 +1349,73 @@
         }
       });
 
-      // 9. Rótulos individuales de Funciones en MathMode Real con opción de Pastilla
+      // 9. Rótulos de Funciones en MathMode Real con redimensionamiento directo en esquina
       state.functions.forEach((fn, idx) => {
         if (!fn.visible || !fn.expr.trim() || !fn.showLabel) return;
 
-        const fSize = fn.labelFontSize || 14;
+        const scaleMultiplier = fn.labelScale || 1.0;
+        const fSize = Math.max(10, Math.round((fn.labelFontSize || 16) * scaleMultiplier));
         const defaultPosX = p.left + 30;
-        const defaultPosY = p.top + 30 + (idx * (fSize + 24));
+        const defaultPosY = p.top + 30 + (idx * (fSize + 28));
 
         const posX = fn.labelX !== null && fn.labelX !== undefined ? fn.labelX : defaultPosX;
         const posY = fn.labelY !== null && fn.labelY !== undefined ? fn.labelY : defaultPosY;
 
-        // Renderizado MathMode con KaTeX Tipografía Nítida
-        const formattedFnName = formatFunctionNameTex(fn.name);
-        const mathNamePart = `${formattedFnName} = `;
-        const mathExprPart = fn.expr.replace(/\*/g, ' ').replace(/-/g, ' \u2212 ').replace(/\+/g, ' + ');
+        const fnNameTex = formatFunctionNameTex(fn.name);
+        const rawLatexStr = `${fnNameTex} = ${fn.expr}`;
+        const tokens = tokenizeMathExpr(rawLatexStr);
 
         ctx.save();
-        
-        // Medir ancho de la fórmula completa
-        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-        const widthName = ctx.measureText(mathNamePart).width;
-        
-        // Medir expresión
-        ctx.font = `normal ${fSize}px "KaTeX_Main", serif`;
-        const widthExpr = ctx.measureText(mathExprPart).width;
-        
-        const padX = 10;
-        const padY = 6;
-        const circleGap = 18;
-        const totalW = padX * 2 + circleGap + widthName + widthExpr;
+        const contentW = measureMathTokens(ctx, tokens, fSize);
+
+        const padX = Math.round(12 * scaleMultiplier);
+        const padY = Math.round(8 * scaleMultiplier);
+        const circleGap = Math.round(18 * scaleMultiplier);
+        const totalW = padX * 2 + circleGap + contentW;
         const totalH = fSize + padY * 2;
 
-        // Si tiene la opción de Pastilla (badge estilizado)
         if (fn.badgeStyle === 'pill') {
-          ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)';
+          // Fondo de la píldora
+          ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.96)' : 'rgba(15, 23, 42, 0.96)';
           ctx.strokeStyle = fn.color;
           ctx.lineWidth = 1.5;
           ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
           ctx.shadowBlur = 8;
           ctx.shadowOffsetY = 2;
 
-          roundRect(ctx, posX, posY, totalW, totalH, 8, true, true);
+          roundRect(ctx, posX, posY, totalW, totalH, Math.round(8 * scaleMultiplier), true, true);
 
-          // Círculo indicador de color adentro a la izquierda
+          // Círculo de color alineado
           ctx.shadowColor = 'transparent';
           ctx.fillStyle = fn.color;
           ctx.beginPath();
-          ctx.arc(posX + padX + 5, posY + totalH / 2, 4.5, 0, Math.PI * 2);
+          ctx.arc(posX + padX + 5, posY + totalH / 2, Math.max(3, 4.5 * scaleMultiplier), 0, Math.PI * 2);
           ctx.fill();
+
+          // Manejador interactivo de redimensionamiento en la esquina inferior derecha
+          const handleSize = 7;
+          ctx.fillStyle = fn.color;
+          ctx.beginPath();
+          ctx.arc(posX + totalW - handleSize, posY + totalH - handleSize, 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          hitBoxes.push({
+            type: 'resizeFn',
+            id: fn.id,
+            x: posX + totalW - 14,
+            y: posY + totalH - 14,
+            w: 14,
+            h: 14,
+            parentW: totalW,
+            parentH: totalH
+          });
         }
 
-        // Dibujar Texto Matemático alineado
+        // Texto matemático en CMU Serif perfectamente nivelado sobre línea base
         const textStartX = (fn.badgeStyle === 'pill') ? posX + padX + circleGap : posX;
-        const textCenterY = (fn.badgeStyle === 'pill') ? posY + totalH / 2 : posY + fSize / 2;
+        const baseY = posY + padY + fSize * 0.88;
 
-        ctx.textBaseline = 'middle';
-        
-        // 1. Nombre de función f_{2}(x) =
-        ctx.fillStyle = fn.color;
-        ctx.font = `italic ${fSize}px "KaTeX_Math", "KaTeX_Main", serif`;
-        ctx.fillText(mathNamePart, textStartX, textCenterY);
-
-        // 2. Expresión matemática con números nivelados y operadores correctos
-        ctx.fillStyle = state.style.labelColor;
-        ctx.font = `normal ${fSize}px "KaTeX_Main", serif`;
-        ctx.fillText(mathExprPart, textStartX + widthName, textCenterY);
+        drawMathTokens(ctx, tokens, textStartX, baseY, fSize, state.style.labelColor);
 
         hitBoxes.push({
           type: 'fn',
@@ -1314,7 +1430,7 @@
       });
     }
 
-    /* RENDER DE LA LISTA DE FUNCIONES EN EL PANEL LATERAL */
+    /* RENDER DE FUNCIONES EN EL PANEL */
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
@@ -1330,7 +1446,6 @@
         
         const katexPreviewId = `katex-preview-${fn.id}`;
 
-        // Selector moderno de colores
         const swatchesHtml = MODERN_PALETTE.map(c => `
           <button type="button" data-swatch-color="${c}" data-swatch-target="${fn.id}" class="color-swatch-btn ${fn.color === c ? 'color-swatch-active' : ''}" style="background-color: ${c}"></button>
         `).join('');
@@ -1338,7 +1453,7 @@
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-              <input type="text" data-name-id="${fn.id}" value="${fn.name}" title="Nombre de función (ej: f2(x))" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
+              <input type="text" data-name-id="${fn.id}" value="${fn.name}" title="Nombre de función (ej: f(x))" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs font-mono text-indigo-300 font-semibold focus:outline-none">
               <div class="flex items-center gap-1.5 bg-slate-900/80 p-1 rounded-lg border border-slate-800">
                 ${swatchesHtml}
               </div>
@@ -1351,12 +1466,12 @@
 
           <div>
             <div class="relative">
-              <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 0.3*x + 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
+              <input type="text" data-expr-id="${fn.id}" value="${fn.expr}" placeholder="ej: 3*x - 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-3 pr-8 py-2 text-xs font-mono text-white focus:outline-none focus:border-indigo-500 shadow-inner">
               <span class="absolute right-2.5 top-2 text-xs text-slate-500 font-mono">f(x)</span>
             </div>
           </div>
 
-          <!-- Rango por función (Dominio restringido) -->
+          <!-- Rango por función -->
           <div class="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-[11px] font-medium text-slate-300">Restringir dominio a intervalo [x₁, x₂]</span>
@@ -1380,18 +1495,24 @@
           <!-- Rótulo flotante arrastrable de esta función -->
           <div class="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-medium text-slate-300">Mostrar rótulo arrastrable en el plano</span>
+              <span class="text-[11px] font-medium text-slate-300">Mostrar rótulo / píldora en el plano</span>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" data-label-toggle-id="${fn.id}" ${fn.showLabel ? 'checked' : ''} class="sr-only peer">
                 <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
               </label>
             </div>
-            <div class="flex items-center gap-2 pt-1 border-t border-slate-800/60 ${fn.showLabel ? '' : 'hidden'}" id="label-style-options-${fn.id}">
-              <span class="text-[10px] text-slate-400">Estilo:</span>
-              <select data-badge-style-id="${fn.id}" class="bg-slate-800 border border-slate-700 rounded px-2 py-0.5 text-xs text-slate-200">
-                <option value="pill" ${fn.badgeStyle === 'pill' ? 'selected' : ''}>Pastilla estilizada</option>
-                <option value="raw" ${fn.badgeStyle === 'raw' ? 'selected' : ''}>Texto matemático puro</option>
-              </select>
+            <div class="grid grid-cols-2 gap-2 pt-1 border-t border-slate-800/60 ${fn.showLabel ? '' : 'hidden'}" id="label-style-options-${fn.id}">
+              <div>
+                <span class="text-[10px] text-slate-400 block mb-0.5">Estilo:</span>
+                <select data-badge-style-id="${fn.id}" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200">
+                  <option value="pill" ${fn.badgeStyle === 'pill' ? 'selected' : ''}>Pastilla estilizada</option>
+                  <option value="raw" ${fn.badgeStyle === 'raw' ? 'selected' : ''}>Texto matemático puro</option>
+                </select>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block mb-0.5">Escala / Tamaño:</span>
+                <input type="range" data-label-scale-id="${fn.id}" min="0.6" max="2.5" step="0.05" value="${fn.labelScale || 1.0}" class="w-full accent-indigo-500 cursor-pointer">
+              </div>
             </div>
           </div>
 
@@ -1439,9 +1560,8 @@
     }
 
     function bindDynamicFunctionEvents() {
-      // Swatches de color
       document.querySelectorAll('[data-swatch-color]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', () => {
           const fnId = btn.getAttribute('data-swatch-target');
           const color = btn.getAttribute('data-swatch-color');
           const fn = state.functions.find(f => f.id === fnId);
@@ -1453,7 +1573,6 @@
         });
       });
 
-      // Inputs de expresión y nombre
       document.querySelectorAll('[data-expr-id]').forEach(input => {
         input.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-expr-id');
@@ -1488,7 +1607,6 @@
         });
       });
 
-      // Intervalos de Dominio
       document.querySelectorAll('[data-range-toggle-id]').forEach(chk => {
         chk.addEventListener('change', (e) => {
           const id = e.target.getAttribute('data-range-toggle-id');
@@ -1524,7 +1642,6 @@
         });
       });
 
-      // Rótulos de funciones
       document.querySelectorAll('[data-label-toggle-id]').forEach(chk => {
         chk.addEventListener('change', (e) => {
           const id = e.target.getAttribute('data-label-toggle-id');
@@ -1544,6 +1661,17 @@
           const fn = state.functions.find(f => f.id === id);
           if (fn) {
             fn.badgeStyle = e.target.value;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-label-scale-id]').forEach(slider => {
+        slider.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-label-scale-id');
+          const fn = state.functions.find(f => f.id === id);
+          if (fn) {
+            fn.labelScale = parseFloat(e.target.value) || 1.0;
             drawPlot();
           }
         });
@@ -1583,7 +1711,7 @@
       });
     }
 
-    /* RENDER DE LA LISTA DE PUNTOS EN EL PANEL LATERAL */
+    /* RENDER DE PUNTOS EN EL PANEL */
     function renderPointInputs() {
       pointsContainer.innerHTML = '';
 
@@ -1720,7 +1848,7 @@
       });
     }
 
-    /* Pestañas del Panel Lateral */
+    /* Pestañas */
     const tabBtnFunctions = document.getElementById('tabBtnFunctions');
     const tabBtnPoints = document.getElementById('tabBtnPoints');
     const tabBtnAxes = document.getElementById('tabBtnAxes');
@@ -1818,8 +1946,8 @@
 
       document.getElementById('inputLabelFontSize').value = state.style.labelFontSize;
       document.getElementById('labelFontSizeVal').innerText = `${state.style.labelFontSize}px`;
-      document.getElementById('inputPointLabelFontSize').value = state.style.pointLabelFontSize || 14;
-      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 14}px`;
+      document.getElementById('inputPointLabelFontSize').value = state.style.pointLabelFontSize || 16;
+      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 16}px`;
 
       document.getElementById('checkShowCoords').checked = state.style.showPointCoords;
 
@@ -1837,8 +1965,8 @@
       document.getElementById('labelTickSizeVal').innerText = `${state.style.tickSize || 4.5}px`;
 
       document.getElementById('checkArrows').checked = state.style.showArrows;
-      document.getElementById('inputArrowSize').value = state.style.arrowSize || 10;
-      document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize || 10}px`;
+      document.getElementById('inputArrowSize').value = state.style.arrowSize || 12;
+      document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize || 12}px`;
 
       document.getElementById('checkMajorGrid').checked = state.style.showMajorGrid;
       document.getElementById('checkMinorGrid').checked = state.style.showMinorGrid;
@@ -1962,8 +2090,8 @@
     });
 
     document.getElementById('inputPointLabelFontSize').addEventListener('input', (e) => {
-      state.style.pointLabelFontSize = parseInt(e.target.value, 10) || 14;
-      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize}px`;
+      state.style.pointLabelFontSize = parseInt(e.target.value, 10) || 16;
+      document.getElementById('pointLabelFontSizeVal').innerText = `${state.style.pointLabelFontSize || 16}px`;
       drawPlot();
     });
 
@@ -1978,8 +2106,14 @@
       drawPlot();
     });
 
+    // Evento de flechas centralizado y reactivo
+    document.getElementById('checkArrows').addEventListener('change', (e) => {
+      state.style.showArrows = e.target.checked;
+      drawPlot();
+    });
+
     document.getElementById('inputArrowSize').addEventListener('input', (e) => {
-      state.style.arrowSize = parseFloat(e.target.value) || 10;
+      state.style.arrowSize = parseFloat(e.target.value) || 12;
       document.getElementById('labelArrowSizeVal').innerText = `${state.style.arrowSize}px`;
       drawPlot();
     });
@@ -2019,7 +2153,6 @@
       drawPlot();
     });
 
-    // Inputs de límites y pasos con soporte exacto de 0 y pasos enteros
     ['inputXMin', 'inputXMax', 'inputXStep', 'inputYMin', 'inputYMax', 'inputYStep', 'inputSubdivisionsX', 'inputSubdivisionsY'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         state.bounds.xMin = parseNumberSafe(document.getElementById('inputXMin').value, -6);
@@ -2064,14 +2197,14 @@
       drawPlot();
     });
 
-    // Botón AÑADIR FUNCIÓN (Ubicado abajo con scroll suave)
+    // Botón AÑADIR FUNCIÓN
     document.getElementById('btnAddFunction').addEventListener('click', () => {
       const nextColor = MODERN_PALETTE[state.functions.length % MODERN_PALETTE.length];
       const fnNum = state.functions.length === 0 ? '' : (state.functions.length + 1);
       const newFn = {
         id: 'fn-' + Date.now(),
         name: `f${fnNum}(x)`,
-        expr: state.functions.length === 0 ? 'x' : '0.3*x + 3',
+        expr: state.functions.length === 0 ? '3*x - 3' : 'x^2',
         color: nextColor,
         width: 3.5,
         style: 'solid',
@@ -2081,9 +2214,10 @@
         rangeMax: 10,
         showLabel: true,
         badgeStyle: 'pill',
+        labelScale: 1.0,
         labelX: null,
         labelY: null,
-        labelFontSize: 14
+        labelFontSize: 16
       };
       state.functions.push(newFn);
       renderFunctionInputs();
@@ -2093,7 +2227,7 @@
       if (newEl) newEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
-    // Botón AÑADIR PUNTO (Ubicado abajo con scroll suave)
+    // Botón AÑADIR PUNTO
     document.getElementById('btnAddPoint').addEventListener('click', () => {
       const nextColor = MODERN_PALETTE[state.points.length % MODERN_PALETTE.length];
       const charCode = 65 + (state.points.length % 26);
@@ -2177,12 +2311,27 @@
           rangeMax: 6,
           showLabel: true,
           badgeStyle: 'pill',
+          labelScale: 1.0,
           labelX: null,
           labelY: null,
-          labelFontSize: 14
+          labelFontSize: 16
         }
       ];
-      state.points = [];
+      state.points = [
+        {
+          id: 'pt-origin',
+          name: 'A',
+          x: 0,
+          y: 0,
+          color: '#3b82f6',
+          size: 6,
+          symbol: 'circle',
+          visible: true,
+          showLabel: true,
+          labelX: null,
+          labelY: null
+        }
+      ];
       state.bounds = {
         xMin: -6,
         xMax: 6,
@@ -2213,11 +2362,11 @@
       state.style.axisWidth = 3.5;
       state.style.showTicks = true;
       state.style.tickSize = 4.5;
-      state.style.arrowSize = 10;
+      state.style.showArrows = true;
+      state.style.arrowSize = 12;
       state.style.boldAxisLabels = false;
       state.style.boldPointLabels = false;
       state.style.showMajorGrid = true;
-      state.style.showArrows = false;
       state.style.showTickNumbers = true;
       state.style.showMinorGrid = true;
       state.style.antiCollision = true;
@@ -2226,7 +2375,7 @@
       renderFunctionInputs();
       renderPointInputs();
       drawPlot();
-      showToast('Cargado el ejemplo de parábola');
+      showToast('Cargado ejemplo parábola');
     });
 
     function showToast(message) {
@@ -2239,13 +2388,13 @@
       }, 2600);
     }
 
-    /* SISTEMA DE ZOOM Y PANEO INTERACTIVO */
+    /* SISTEMA DE ZOOM Y PANEO */
     function updateViewportTransform() {
       transformWrapper.style.transform = `translate(${state.viewport.panX}px, ${state.viewport.panY}px) scale(${state.viewport.zoom})`;
       document.getElementById('labelZoomPercent').innerText = `${Math.round(state.viewport.zoom * 100)}%`;
     }
 
-    function setZoom(newZoom, centerX = null, centerY = null) {
+    function setZoom(newZoom) {
       const clamped = Math.max(0.25, Math.min(5.0, newZoom));
       state.viewport.zoom = clamped;
       updateViewportTransform();
@@ -2260,14 +2409,12 @@
       updateViewportTransform();
     });
 
-    // Zoom con la rueda del mouse en el viewport
     viewportSection.addEventListener('wheel', (e) => {
       e.preventDefault();
       const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
       setZoom(state.viewport.zoom * zoomFactor);
     }, { passive: false });
 
-    // Detección de coordenadas reales en el Canvas
     function getCanvasCoords(evt) {
       const rect = canvas.getBoundingClientRect();
       const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
@@ -2286,22 +2433,38 @@
       return pos.x >= box.x && pos.x <= box.x + box.w && pos.y >= box.y && pos.y <= box.y + box.h;
     }
 
-    // Eventos de ratón para Arrastre de Rótulos vs Paneo del Viewport
     canvas.addEventListener('mousedown', (e) => {
       const pos = getCanvasCoords(e);
       let hit = null;
 
+      // Buscar si se hizo clic en el tirador de redimensionamiento de píldora
       for (let i = hitBoxes.length - 1; i >= 0; i--) {
-        if (checkHit(pos, hitBoxes[i])) {
+        if (hitBoxes[i].type === 'resizeFn' && checkHit(pos, hitBoxes[i])) {
           hit = hitBoxes[i];
           break;
         }
       }
 
+      if (!hit) {
+        for (let i = hitBoxes.length - 1; i >= 0; i--) {
+          if (hitBoxes[i].type !== 'resizeFn' && checkHit(pos, hitBoxes[i])) {
+            hit = hitBoxes[i];
+            break;
+          }
+        }
+      }
+
       if (hit) {
-        draggedTarget = hit;
+        draggedTarget = {
+          ...hit,
+          startX: pos.x,
+          startY: pos.y
+        };
+        if (hit.type === 'resizeFn') {
+          const fn = state.functions.find(f => f.id === hit.id);
+          draggedTarget.initialScale = fn ? (fn.labelScale || 1.0) : 1.0;
+        }
       } else {
-        // Clic en el fondo del plano para arrastrar todo el lienzo (Pan)
         state.viewport.isPanning = true;
         state.viewport.startX = e.clientX - state.viewport.panX;
         state.viewport.startY = e.clientY - state.viewport.panY;
@@ -2331,6 +2494,16 @@
             pt.labelX = Math.round(pos.x);
             pt.labelY = Math.round(pos.y);
           }
+        } else if (draggedTarget.type === 'resizeFn') {
+          const fn = state.functions.find(f => f.id === draggedTarget.id);
+          if (fn) {
+            const dx = pos.x - draggedTarget.startX;
+            const deltaRatio = dx / (draggedTarget.parentW || 120);
+            const newScale = Math.max(0.6, Math.min(2.8, draggedTarget.initialScale + deltaRatio));
+            fn.labelScale = Number(newScale.toFixed(2));
+            const slider = document.querySelector(`[data-label-scale-id="${fn.id}"]`);
+            if (slider) slider.value = fn.labelScale;
+          }
         }
         drawPlot();
       } else if (state.viewport.isPanning) {
@@ -2339,14 +2512,19 @@
         updateViewportTransform();
       } else {
         const pos = getCanvasCoords(e);
-        let hoverHit = false;
+        let cursorType = 'crosshair';
+
         for (let i = 0; i < hitBoxes.length; i++) {
           if (checkHit(pos, hitBoxes[i])) {
-            hoverHit = true;
+            if (hitBoxes[i].type === 'resizeFn') {
+              cursorType = 'nwse-resize';
+            } else {
+              cursorType = 'grab';
+            }
             break;
           }
         }
-        canvas.style.cursor = hoverHit ? 'grab' : 'crosshair';
+        canvas.style.cursor = cursorType;
       }
     });
 
@@ -2360,7 +2538,7 @@
       }
     });
 
-    /* EXPORTACIÓN PNG CON NITIDEZ MATEMÁTICA */
+    /* EXPORTACIÓN PNG */
     function downloadPNG(scale = 2) {
       const origW = state.canvasWidth;
       const origH = state.canvasHeight;
@@ -2383,34 +2561,34 @@
       showToast(`Descargado PNG en escala ${scale}x (${origW * scale}x${origH * scale}px)`);
     }
 
-    /* EXPORTACIÓN SVG VECTORIAL (NITIDEZ PURA INFINITA) */
+    /* EXPORTACIÓN SVG */
     function downloadSVG() {
       const p = getPaddings();
       const w = state.canvasWidth;
       const h = state.canvasHeight;
       const { xMin, xMax, xStep, yMin, yMax, yStep, subdivisionsX, subdivisionsY } = state.bounds;
-      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showArrows, showTickNumbers, showMinorGrid } = state.style;
+      const { background, axisColor, gridColor, labelColor, labelFontSize, axisWidth, showTicks, tickSize, showArrows, arrowSize, boldAxisLabels, boldPointLabels, showMajorGrid, showTickNumbers, showMinorGrid } = state.style;
 
       let svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
   <defs>
     <style>
-      @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
-      .katex-label { font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
-      .katex-axis-title { font-family: ${state.labels.textNormal ? "'Lora', 'KaTeX_Main', serif" : "'KaTeX_Math', 'KaTeX_Main', serif"}; font-size: ${state.labels.fontSize || 24}px; font-weight: ${boldAxisLabels ? 'bold' : 'normal'}; fill: ${axisColor}; font-style: ${state.labels.textNormal ? 'normal' : 'italic'}; }
-      .katex-chart-title { font-family: 'Lora', 'KaTeX_Main', 'Times New Roman', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
-      .katex-math-span { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-style: italic; font-weight: normal; }
-      .katex-point-label { font-family: 'KaTeX_Math', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 14}px; font-weight: ${boldPointLabels ? 'bold' : 'normal'}; }
+      @import url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css');
+      .cmu-label { font-family: 'CMU Serif', 'KaTeX_Main', serif; font-size: ${labelFontSize || 13}px; fill: ${labelColor}; }
+      .cmu-axis-title { font-family: 'CMU Serif', 'KaTeX_Main', serif; font-size: ${state.labels.fontSize || 24}px; font-weight: ${boldAxisLabels ? 'bold' : 'normal'}; fill: ${axisColor}; font-style: ${state.labels.textNormal ? 'normal' : 'italic'}; }
+      .cmu-chart-title { font-family: 'CMU Serif', 'KaTeX_Main', serif; font-size: ${state.chartTitle.fontSize || 18}px; font-weight: bold; fill: ${axisColor}; }
+      .cmu-math-span { font-style: italic; }
+      .cmu-point-label { font-family: 'CMU Serif', 'KaTeX_Main', serif; font-size: ${state.style.pointLabelFontSize || 16}px; font-weight: ${boldPointLabels ? 'bold' : 'normal'}; }
     </style>
   </defs>
   <rect width="100%" height="100%" fill="${background}"/>\n`;
 
       if (state.chartTitle.visible && state.chartTitle.text.trim()) {
         const segments = parseMathText(state.chartTitle.text.trim());
-        svg += `  <text x="${w / 2}" y="${p.top - 20}" class="katex-chart-title" text-anchor="middle">`;
+        svg += `  <text x="${w / 2}" y="${p.top - 20}" class="cmu-chart-title" text-anchor="middle">`;
         segments.forEach(seg => {
           if (seg.isMath) {
-            svg += `<tspan class="katex-math-span">${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>`;
+            svg += `<tspan class="cmu-math-span">${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>`;
           } else {
             svg += seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
           }
@@ -2449,23 +2627,23 @@
       const originX = Math.max(p.left, Math.min(w - p.right, toCanvasX(0)));
       const originY = Math.max(p.top, Math.min(h - p.bottom, toCanvasY(0)));
 
+      const axisExtXLeft = p.left - 24;
+      const axisExtXRight = w - p.right + 24;
+      const axisExtYTop = p.top - 24;
+      const axisExtYBottom = h - p.bottom + 24;
+
       svg += `  <g stroke="${axisColor}" stroke-width="${axisWidth}" stroke-linecap="square">\n`;
-      svg += `    <line x1="${p.left - 24}" y1="${originY}" x2="${w - p.right + 24}" y2="${originY}"/>\n`;
-      svg += `    <line x1="${originX}" y1="${h - p.bottom + 24}" x2="${originX}" y2="${p.top - 24}"/>\n`;
+      svg += `    <line x1="${axisExtXLeft}" y1="${originY}" x2="${axisExtXRight}" y2="${originY}"/>\n`;
+      svg += `    <line x1="${originX}" y1="${axisExtYBottom}" x2="${originX}" y2="${axisExtYTop}"/>\n`;
       svg += `  </g>\n`;
 
       if (showArrows) {
-        const aSize = arrowSize || 10;
-        const tipRightX = w - p.right + 24;
-        const tipLeftX = p.left - 24;
-        const tipTopY = p.top - 24;
-        const tipBottomY = h - p.bottom + 24;
-
+        const aSize = arrowSize || 12;
         svg += `  <g fill="${axisColor}">\n`;
-        svg += `    <polygon points="${tipRightX + aSize},${originY} ${tipRightX},${originY - aSize * 0.55} ${tipRightX},${originY + aSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${tipLeftX - aSize},${originY} ${tipLeftX},${originY - aSize * 0.55} ${tipLeftX},${originY + aSize * 0.55}"/>\n`;
-        svg += `    <polygon points="${originX},${tipTopY - aSize} ${originX - aSize * 0.55},${tipTopY} ${originX + aSize * 0.55},${tipTopY}"/>\n`;
-        svg += `    <polygon points="${originX},${tipBottomY + aSize} ${originX - aSize * 0.55},${tipBottomY} ${originX + aSize * 0.55},${tipBottomY}"/>\n`;
+        svg += `    <polygon points="${axisExtXRight + aSize},${originY} ${axisExtXRight},${originY - aSize * 0.55} ${axisExtXRight},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${axisExtXLeft - aSize},${originY} ${axisExtXLeft},${originY - aSize * 0.55} ${axisExtXLeft},${originY + aSize * 0.55}"/>\n`;
+        svg += `    <polygon points="${originX},${axisExtYTop - aSize} ${originX - aSize * 0.55},${axisExtYTop} ${originX + aSize * 0.55},${axisExtYTop}"/>\n`;
+        svg += `    <polygon points="${originX},${axisExtYBottom + aSize} ${originX - aSize * 0.55},${axisExtYBottom} ${originX + aSize * 0.55},${axisExtYBottom}"/>\n`;
         svg += `  </g>\n`;
       }
 
@@ -2484,7 +2662,7 @@
       }
 
       if (showTickNumbers) {
-        svg += `  <g class="katex-label">\n`;
+        svg += `  <g class="cmu-label">\n`;
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x);
           if (Math.abs(x) > 1e-9) {
@@ -2498,20 +2676,18 @@
         svg += `  </g>\n`;
       }
 
-      // Rótulos de ejes
       if (state.labels.showY) {
         const posY_X = state.labels.posX_Y !== null ? state.labels.posX_Y : originX;
         const posY_Y = state.labels.posY !== null ? state.labels.posY : (p.top - 28);
-        svg += `  <text x="${posY_X}" y="${posY_Y}" class="katex-axis-title" text-anchor="middle">${state.labels.y.trim() || 'y'}</text>\n`;
+        svg += `  <text x="${posY_X}" y="${posY_Y}" class="cmu-axis-title" text-anchor="middle">${state.labels.y.trim() || 'y'}</text>\n`;
       }
 
       if (state.labels.showX) {
         const posX_X = state.labels.posX !== null ? state.labels.posX : (w - p.right + 30);
         const posX_Y = state.labels.posY_X !== null ? state.labels.posY_X : (originY + 7);
-        svg += `  <text x="${posX_X}" y="${posX_Y}" class="katex-axis-title" text-anchor="start">${state.labels.x.trim() || 'x'}</text>\n`;
+        svg += `  <text x="${posX_X}" y="${posX_Y}" class="cmu-axis-title" text-anchor="start">${state.labels.x.trim() || 'x'}</text>\n`;
       }
 
-      // Curvas de funciones
       state.functions.forEach(fn => {
         if (!fn.visible || !fn.expr.trim()) return;
         try {
@@ -2543,7 +2719,6 @@
         } catch (e) {}
       });
 
-      // Puntos
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
         const cx = toCanvasX(pt.x);
@@ -2570,10 +2745,10 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'plano-cartesiano-latex-vector.svg';
+      link.download = 'plano-cartesiano-cmu-vector.svg';
       link.click();
       URL.revokeObjectURL(url);
-      showToast('Descargado plano vectorial SVG con tipografía KaTeX');
+      showToast('Descargado SVG con tipografía CMU');
     }
 
     // Copiar al portapapeles
