@@ -84,18 +84,18 @@ const questionBank = [
     id: "m19-q07",
     prompt: "¿Cuál de las siguientes afirmaciones es correcta?",
     type: "choice",
-    correct: "El período de un péndulo depende de la aceleración de la gravedad.",
+    correct: "El periodo de un péndulo depende de la aceleración de la gravedad.",
     distractors: [
-      "El período de un péndulo no depende de la aceleración de la gravedad.",
-      "El período de oscilación de un péndulo es dependiente de su masa.",
-      "El período es inversamente proporcional a la longitud del péndulo."
+      "El periodo de un péndulo no depende de la aceleración de la gravedad.",
+      "El periodo de oscilación de un péndulo es dependiente de su masa.",
+      "El periodo es inversamente proporcional a la longitud del péndulo."
     ],
     hint: "Revisa la ecuación $T = 2\\pi\\sqrt{L/g}$ y nota qué variables intervienen.",
-    explanation: "De acuerdo con $T = 2\\pi\\sqrt{\\frac{L}{g}}$, el período $T$ depende de la longitud $L$ y de la gravedad $g$, y es completamente independiente de la masa."
+    explanation: "De acuerdo con $T = 2\\pi\\sqrt{\\frac{L}{g}}$, el periodo $T$ depende de la longitud $L$ y de la gravedad $g$, y es completamente independiente de la masa."
   },
   {
     id: "m19-q08",
-    prompt: "¿Cuál de las siguientes es una magnitud <b>escalar</b> que sólo indica la longitud recorrida?",
+    prompt: "¿Cuál de las siguientes es una magnitud <b>escalar</b> que solo indica la longitud recorrida?",
     type: "choice",
     correct: "Distancia.",
     distractors: [
@@ -139,18 +139,18 @@ const questionBank = [
     hint: "Ambas barren el mismo ángulo (media vuelta) en exactamente el mismo intervalo de tiempo.",
     explanation: "Al barrer el mismo ángulo de la curva en el mismo lapso (4 s), su rapidez angular $\\omega = \\frac{\\Delta\\theta}{\\Delta t}$ es idéntica; la que tiene mayor radio solo tiene mayor rapidez lineal ($v = \\omega r$)."
   },
-  {
+      {
     id: "m19-q12",
     prompt: "Una camioneta se desplaza 8 km en línea horizontal y luego gira hacia el norte recorriendo 13 km. ¿Cuál es su desplazamiento resultante?",
     type: "choice",
-    correct: "$R = \\sqrt{8^{2} + 13^{2}} = 15.2$ km.",
+    correct: "$$R = \\sqrt{8^{2} + 13^{2}} = 15.2\\text{ km}$$",
     distractors: [
-      "$R = 8 + 13 = 21$  km.",
-      "$R = -8 + 13 = 5$  km.",
-      "$R = \\sqrt{8^{2} + 13^{2}} = 4.58$ km."
+      "$$R = 8 + 13 = 21\\text{ km}$$",
+      "$$R = -8 + 13 = 5\\text{ km}$$",
+      "$$R = \\sqrt{8^{2} + 13^{2}} = 4.58\\text{ km}$$"
     ],
     hint: "Los dos trayectos forman un triángulo rectángulo: aplica el teorema de Pitágoras.",
-    explanation: "Al ser trayectorias perpendiculares, la magnitud del desplazamiento resultante es la hipotenusa:\n$$R = \\sqrt{8^2 + 13^2} = \\sqrt{64 + 169} = \\sqrt{233} \\approx 15.26\\text{ km}$$"
+    explanation: "Al ser trayectorias perpendiculares, la magnitud del desplazamiento resultante es la hipotenusa:\n$$\\begin{aligned} R &= \\sqrt{8^2 + 13^2} \\\\[3pt] &= \\sqrt{64 + 169} \\\\[3pt] &= \\sqrt{233} \\\\[3pt] &\\approx 15.26\\text{ km} \\end{aligned}$$"
   },
   {
     id: "m19-q13",
@@ -171,7 +171,7 @@ const questionBank = [
     image: "assets/m19_grafica_seno.png",
     type: "multi_select",
     correctAnswers: [
-      "El período se representa como $N$.",
+      "El periodo se representa como $N$.",
       "El segmento $N$ es recíproco de la frecuencia.",
       "El segmento $M$ representa la amplitud.",
       "La variación de $\\sin(x)$ es entre $1$ y $-1$."
@@ -185,24 +185,24 @@ const questionBank = [
   },
   {
     id: "m19-q15",
-    prompt: "Selecciona los enunciados que son verdaderos respecto a los supuestos involucrados en el modelo del movimiento rectilíneo uniforme (MRU):",
+    prompt: "Selecciona las afirmaciones correctas respecto al modelo del movimiento rectilíneo uniforme.",
     type: "multi_select",
     correctAnswers: [
       "Solo describe el movimiento de un objeto que no cambia de dirección.",
       "La velocidad del movimiento siempre es constante.",
-      "La variable tiempo es independiente de cualquier factor externo."
+      "La variable temporal es independiente de cualquier factor externo."
     ],
     distractors: [
       "La distancia, el tiempo y la velocidad son independientes entre sí.",
       "Permite describir la caída libre de un objeto.",
       "Permite determinar el tiempo de recorrido de una pelota que se lanza hacia arriba."
     ],
-    hint: "En el MRU la velocidad no cambia (no existe aceleración); la caída libre y el tiro vertical son movimientos acelerados por la gravedad.",
-    explanation: "El MRU exige velocidad constante y trayectoria en línea recta sin cambio de dirección[cite: 35]. La distancia, velocidad y tiempo dependen entre sí ($d = vt$), mientras que la caída libre y el tiro vertical poseen aceleración gravitacional y no corresponden a este modelo[cite: 35]."
+    hint: "En el MRU la velocidad no cambia pues no existe aceleración; la caída libre y el tiro vertical son movimientos acelerados por la gravedad.",
+    explanation: "El MRU exige velocidad constante y trayectoria en línea recta sin cambio de dirección. La distancia, velocidad y tiempo dependen entre sí ($d = vt$), mientras que la caída libre y el tiro vertical poseen aceleración gravitacional y no corresponden a este modelo."
   },
-  {
+    {
     id: "m19-q16",
-    prompt: "Una caja de masa $M_1 = 4\\text{ kg}$, amarrada a una caja de menor masa $M_2 = 2\\text{ kg}$, es jalada con una fuerza $F_1$.<br><br>Calcula la intensidad de la fuerza $F_1$ si se logra mover a ambos bloques con una aceleración de $5\\text{ m/s}^{2}$ en la dirección de dicha fuerza.",
+    prompt: "Dos cajas de masa $M_1 = 4\\text{ kg}$ y $M_2 = 2\\text{ kg}$ se amarran y se jalan con una fuerza $F$. ¿Cuál es la magnitud de la fuerza si las cajas se mueven con una aceleración de $5\\text{ m/s}^{2}$?",
     image: "assets/m19_bloques_fuerza.png",
     type: "choice",
     correct: "$$F = (M_1 + M_2)a = (4 + 2)5 = 30\\text{ N}$$",
@@ -212,7 +212,7 @@ const questionBank = [
       "$$F = (M_2)a = (2)5 = 10\\text{ N}$$"
     ],
     hint: "La fuerza aplicada acelera la masa total del conjunto.",
-    explanation: "Por la segunda ley de Newton aplicada al sistema completo:\n$$F = m_{\\text{total}} \\cdot a = (4\\text{ kg} + 2\\text{ kg})(5\\text{ m/s}^2) = 30\\text{ N}$$"
+    explanation: "Por la segunda ley de Newton aplicada al sistema completo:\n$$\\begin{aligned} F &= m_{\\text{total}} \\cdot a \\\\[3pt] &= (4\\text{ kg} + 2\\text{ kg})(5\\text{ m/s}^2) \\\\[3pt] &= 30\\text{ N} \\end{aligned}$$"
   },
   {
     id: "m19-q17",
@@ -331,9 +331,9 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $T$?",
     image: "assets/m19_geogebra_puntoT.png",
     type: "choice",
-    correct: "$$(-5.5, -2)$$",
+    correct: "$$(-2, -5.5)$$",
     distractors: [
-      "$$(-2, -5.5)$$",
+      "$$(-5.5, -2)$$",
       "$$(-5, -2)$$",
       "$$(-2, -5)$$"
     ],
@@ -343,7 +343,7 @@ const questionBank = [
   {
     id: "m19-q23d",
     prompt: "¿Cuáles son las coordenadas del punto $U$?",
-    image: "assets/m19_geogebra_puntoT.png",
+    image: "assets/m19_geogebra_puntoU.png",
     type: "choice",
     correct: "$$(-4, 3)$$",
     distractors: [
@@ -371,35 +371,48 @@ const questionBank = [
     hint: "$F_2$ es el peso hacia el centro de la Tierra; $F_1$ equilibra verticalmente todo el peso sostenido.",
     explanation: "$F_2$ representa el peso (fuerza gravitacional terrestre) y $F_1$ equilibra el peso de la carga tanto en reacción como en magnitud de soporte estático."
   },
-  {
-    id: "m19-q25",
-    prompt: "Fernando arranca su automóvil con una aceleración constante de $5\\text{ m/s}^{2}$. ¿Qué velocidad $v$ tendrá a los 30 segundos de haber iniciado el movimiento? ¿Cuál es la distancia $d$ que habrá recorrido en ese tiempo?",
+   {
+    id: "m19-q25a",
+    prompt: "Fernando acelera su automóvil a $5\\text{ m/s}^{2}$. ¿Qué velocidad $v$ tendrá a los 30 segundos de haber iniciado el movimiento?",
     type: "choice",
-    correct: "$$v_f = 5 \\times 30 = 150\\text{ m/s} \\quad ; \\quad d = \\frac{5 \\times 30^{2}}{2} = 2250\\text{ m}$$",
+    correct: "$$v_f = 5 \\times 30 = 150\\text{ m/s}$$",
     distractors: [
-      "$$v_f = 5 \\times 30 = 150\\text{ m/s} \\quad ; \\quad d = 5 \\times 30^{2} = 4500\\text{ m}$$",
-      "$$v_f = 5 \\times 30^{2} = 4500\\text{ m/s} \\quad ; \\quad d = \\frac{5 \\times 30^{2}}{2} = 2250\\text{ m}$$",
-      "$$v_f = 5 \\times 30^{2} = 4500\\text{ m/s} \\quad ; \\quad d = 5 \\times 30 = 150\\text{ m}$$"
+      "$$v_f = 5 \\times 30^{2} = 4500\\text{ m/s}$$",
+      "$$v_f = \\frac{5 \\times 30}{2} = 75\\text{ m/s}$$",
+      "$$v_f = \\frac{30}{5} = 6\\text{ m/s}$$"
     ],
-    hint: "Al partir del reposo ($v_0 = 0$): $v_f = a \\cdot t$ y $d = \\frac{1}{2}at^2$.",
-    explanation: "Aplicando las fórmulas de aceleración constante:\n$$\\begin{aligned} v_f &= a \\cdot t = (5)(30) = 150\\text{ m/s} \\\\[4pt] d &= \\frac{1}{2}at^2 = \\frac{5(900)}{2} = 2250\\text{ m} \\end{aligned}$$"
+    hint: "Al partir del reposo ($v_0 = 0$), la velocidad final es el producto de la aceleración por el tiempo ($v_f = a \\cdot t$).",
+    explanation: "Aplicando la fórmula de cinemática con aceleración constante:\n$$\\begin{aligned} v_f &= a \\cdot t \\\\[3pt] &= (5\\text{ m/s}^2)(30\\text{ s}) \\\\[3pt] &= 150\\text{ m/s} \\end{aligned}$$"
   },
   {
+    id: "m19-q25b",
+    prompt: "Fernando acelera su automóvil a $5\\text{ m/s}^{2}$. ¿Cuál es la distancia $d$ que habrá recorrido en ese tiempo?",
+    type: "choice",
+    correct: "$$d = \\frac{5 \\times 30^{2}}{2} = 2250\\text{ m}$$",
+    distractors: [
+      "$$d = 5 \\times 30^{2} = 4500\\text{ m}$$",
+      "$$d = 5 \\times 30 = 150\\text{ m}$$",
+      "$$d = \\frac{5 \\times 30}{2} = 75\\text{ m}$$"
+    ],
+    hint: "Partiendo del reposo ($v_0 = 0$), la distancia recorrida es $d = \\frac{1}{2}at^2$.",
+    explanation: "Calculando la distancia recorrida desde el reposo:\n$$\\begin{aligned} d &= \\frac{1}{2}at^2 \\\\[3pt] &= \\frac{5(30)^2}{2} \\\\[3pt] &= \\frac{5(900)}{2} = 2250\\text{ m} \\end{aligned}$$"
+  },
+    {
     id: "m19-q26",
     prompt: "Las ruedas de una bicicleta tienen 30 rayos distribuidos uniformemente. ¿Cuánto mide el ángulo entre cada uno de los rayos en grados y en radianes?",
     type: "choice",
-    correct: "$$\\begin{aligned} \\frac{360^{\\circ}}{30} = 12^{\\circ} \\\\[4pt] \\implies 12^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{15} \\end{aligned}$$",
+    correct: "$$\\small\\begin{gathered} \\frac{360^{\\circ}}{30} = 12^{\\circ} \\\\[3pt] \\implies 12^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{15} \\end{gathered}$$",
     distractors: [
-      "$$\\begin{aligned} \\frac{180^{\\circ}}{30} = 6^{\\circ} \\\\[4pt] \\implies 6^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{30} \\end{aligned}$$",
-      "$$\\begin{aligned} \\frac{30}{360} = 0.083^{\\circ} \\\\[4pt] \\implies 0.083^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{360^{\\circ}}\\right) = 2.89 \\times 10^{-3}\\text{ rad} \\end{aligned}$$",
-      "$$\\begin{aligned} \\frac{30}{180} = 0.16^{\\circ} \\\\[4pt] \\implies 0.16^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{180^{\\circ}}\\right) = 1.1 \\times 10^{-2}\\text{ rad} \\end{aligned}$$"
+      "$$\\small\\begin{gathered} \\frac{180^{\\circ}}{30} = 6^{\\circ} \\\\[3pt] \\implies 6^{\\circ}\\left(\\frac{\\pi\\text{ rad}}{180^{\\circ}}\\right) = \\frac{\\pi\\text{ rad}}{30} \\end{gathered}$$",
+      "$$\\small\\begin{gathered} \\frac{30}{360} = 0.083^{\\circ} \\\\[3pt] \\implies 0.083^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{360^{\\circ}}\\right) = 2.89 \\times 10^{-3}\\text{ rad} \\end{gathered}$$",
+      "$$\\small\\begin{gathered} \\frac{30}{180} = 0.16^{\\circ} \\\\[3pt] \\implies 0.16^{\\circ}\\left(\\frac{2\\pi\\text{ rad}}{180^{\\circ}}\\right) = 1.1 \\times 10^{-2}\\text{ rad} \\end{gathered}$$"
     ],
     hint: "Divide el círculo completo ($360^\\circ$) entre los 30 sectores y simplifica la fracción en radianes.",
-    explanation: "Cada sector mide $360^\\circ / 30 = 12^\\circ$. Convirtiendo a radianes:\n$$\\begin{aligned} 12^\\circ \\left(\\frac{\\pi}{180^\\circ}\\right) &= \\frac{12\\pi}{180} \\\\[3pt] &= \\frac{\\pi}{15}\\text{ rad} \\end{aligned}$$"
+    explanation: "Cada sector mide $360^\\circ / 30 = 12^\\circ$. Convirtiendo a radianes:\n$$\\small\\begin{aligned} 12^\\circ \\left(\\frac{\\pi}{180^\\circ}\\right) &= \\frac{12\\pi}{180} \\\\[3pt] &= \\frac{\\pi}{15}\\text{ rad} \\end{aligned}$$"
   },
   {
     id: "m19-q27",
-    prompt: "Miguel jala la caja con sus juguetes cuyo peso es de $10\\text{ kg}$ y la fuerza que ejerce es de $1\\text{ N}$, ¿cuánto vale el coeficiente de fricción entre la caja y el piso?",
+    prompt: "Se jala una caja con juguetes que pesan $10\\text{ kg}$ con una fuerza de $1\\text{ N}$. ¿Cuál es el coeficiente de fricción entre la caja y el piso?",
     image: "assets/m19_caja_friccion.png",
     type: "choice",
     correct: "$$\\mu_s = \\frac{F}{W} = 0.1000$$",
@@ -408,13 +421,12 @@ const questionBank = [
       "$$\\mu_s = \\frac{FN}{W} = 0.102$$",
       "$$\\mu_s = \\frac{F}{W} = 0.0102$$"
     ],
-    hint: "El examen asume directamente el cociente $\\mu = F / W$ usando los valores numéricos dados (1 / 10).",
-    explanation: "El modelo del examen calcula la relación directa entre la fuerza horizontal aplicada y el peso reportado en el enunciado:\n$$\\mu = \\frac{F}{W} = \\frac{1}{10} = 0.1000$$"
+    hint: null,
+    explanation: "Se calcula la relación directa entre la fuerza horizontal aplicada y el peso de los juguetes, obtenido al multiplicar su masa por la aceleración gravitacional:\n$$\\mu = \\frac{F}{W} = \\frac{1}{10} = 0.1000$$"
   },
   {
     id: "m19-q28",
-    prompt: "La maestra Margarita aborda el tema de rapidez angular en clase y los alumnos calculan el período del minutero, el segundero y la manecilla de las horas de un reloj de pared. Posteriormente, con estos datos deben calcular la rapidez angular del segundero y del minutero.<br><br>Conforme a los cálculos que deben realizarse, ¿cuál de las siguientes conclusiones es verdadera?",
-    image: "assets/m19_caso_reloj.png",
+    prompt: "Considerando el periodo del minutero y segundero en un reloj, ¿qué conclusión es correcta respecto a su rapidez angular?",
     type: "choice",
     correct: "La mayor rapidez angular de los valores obtenidos es la del segundero.",
     distractors: [
@@ -423,11 +435,11 @@ const questionBank = [
       "El periodo del segundero es mayor que el periodo del minutero."
     ],
     hint: "La manecilla que da una vuelta completa en menor tiempo es la que gira con mayor velocidad angular ($\\\\omega = 2\\\\pi / T$).",
-    explanation: "El segundero tiene el menor período ($T = 60\\text{ s}$), por lo que al ser $\\omega = \\frac{2\\pi}{T}$, posee la mayor rapidez angular de todas las manecillas."
+    explanation: "El segundero tiene el menor periodo al dar una vuelta en 60 segundos, por lo que posee la mayor rapidez angular de las manecillas."
   },
-  {
+    {
     id: "m19-q29",
-    prompt: "La densidad de una sustancia es de 0.525 kg/L. ¿Cuál es la conversión de este valor en miligramos por mililitro (mg/mL)?",
+    prompt: "La densidad de una sustancia es de 0.525 kg/L. ¿Cuál es la conversión en miligramos por mililitro (mg/mL)?",
     type: "choice",
     correct: "525.0 mg/mL.",
     distractors: [
@@ -436,8 +448,9 @@ const questionBank = [
       "525000.0 mg/mL."
     ],
     hint: "1 kg equivale a $10^6\\text{ mg}$ y 1 L equivale a $10^3\\text{ ml}$. Multiplica por $10^6 / 10^3 = 1000$.",
-    explanation: "Realizando la conversión dimensional:\n$$0.525\\frac{\\text{kg}}{\\text{L}} \\times \\frac{10^6\\text{ mg}}{1\\text{ kg}} \\times \\frac{1\\text{ L}}{10^3\\text{ ml}} = 0.525 \\times 10^3 = 525.0\\text{ mg/ml}$$"
+    explanation: "Realizando la conversión dimensional:\n$$\\begin{aligned} 0.525\\,\\frac{\\text{kg}}{\\text{L}} &= 0.525\\,\\frac{\\text{kg}}{\\text{L}} \\times \\frac{10^6\\text{ mg}}{1\\text{ kg}} \\times \\frac{1\\text{ L}}{10^3\\text{ mL}} \\\\[4pt] &= 0.525 \\times 10^3 \\\\[4pt] &= 525.0\\text{ mg/mL} \\end{aligned}$$"
   },
+
   {
     id: "m19-q30",
     prompt: "Un ventilador tiene una hélice de 40 cm de diámetro que se mueve en trayectoria circular con una rapidez angular de 648 rad/s. ¿Cuál es la velocidad lineal de la hélice del ventilador?",
