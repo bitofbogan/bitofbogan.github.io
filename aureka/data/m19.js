@@ -303,11 +303,11 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $Q$?",
     image: "assets/m19_geogebra_puntoQ.png",
     type: "choice",
-    correct: "$$(-1, -1.5)$$",
+    correct: "$(-1, -1.5)$",
     distractors: [
-      "$$(-1.5, -1)$$",
-      "$$(2, -3)$$",
-      "$$(-3, 2)$$"
+      "$(-1.5, -1)$",
+      "$(2, -3)$",
+      "$(-3, 2)$"
     ],
     hint: null,
     explanation: "El punto $Q$ se encuentra en $x = -1$ y desciende a $y = -1.5$, por lo que sus coordenadas son $(-1, -1.5)$."
@@ -317,11 +317,11 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $R$?",
     image: "assets/m19_geogebra_puntoR.png",
     type: "choice",
-    correct: "$$(-1.5, -3.5)$$",
+    correct: "$(-1.5, -3.5)$",
     distractors: [
-      "$$(-3.5, -1.5)$$",
-      "$$(-3.5, 3.5)$$",
-      "$$(-3.5, -3.5)$$"
+      "$(-3.5, -1.5)$",
+      "$(-3.5, 3.5)$",
+      "$(-3.5, -3.5)$"
     ],
     hint: null,
     explanation: "El punto $R$ se proyecta en $x = -1.5$ y en $y = -3.5$, dando el par ordenado $(-1.5, -3.5)$."
@@ -331,11 +331,11 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $T$?",
     image: "assets/m19_geogebra_puntoT.png",
     type: "choice",
-    correct: "$$(-2, -5.5)$$",
+    correct: "$(-2, -5.5)$$",
     distractors: [
-      "$$(-5.5, -2)$$",
-      "$$(-5, -2)$$",
-      "$$(-2, -5)$$"
+      "$(-5.5, -2)$",
+      "$(-5, -2)$",
+      "$(-2, -5)$"
     ],
     hint: null,
     explanation: "El punto $T$ tiene un avance horizontal en $x = -2$ y una altura negativa de $y = -5.5$, formando $(-2, -5.5)$."
@@ -345,11 +345,11 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $U$?",
     image: "assets/m19_geogebra_puntoU.png",
     type: "choice",
-    correct: "$$(3, -4)$$",
+    correct: "$(3, -4)$",
     distractors: [
-      "$$(4, -3)$$",
-      "$$(3, 3.5)$$",
-      "$$(2.5, 4)$$"
+      "$(4, -3)$",
+      "$(3, 3.5)$",
+      "$(2.5, 4)$"
     ],
     hint: null,
     explanation: "Al ubicarse en el cuarto cuadrante, el punto $U$ cruza con $x = 3$ y baja hasta $y = -4$, resultando en $(3, -4)$."
