@@ -303,28 +303,28 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $Q$?",
     image: "assets/m19_geogebra_puntoQ.png",
     type: "choice",
-    correct: "$$(-1.5, -1)$$",
+    correct: "$$(-1, -1.5)$$",
     distractors: [
-      "$$(-1, -1.5)$$",
+      "$$(-1.5, -1)$$",
       "$$(2, -3)$$",
       "$$(-3, 2)$$"
     ],
-    hint: "Ubica primero la posición en el eje horizontal $x$ y luego en el eje vertical $y$.",
-    explanation: "El punto $Q$ se encuentra en $x = -1.5$ y desciende a $y = -1$, por lo que sus coordenadas son $(-1.5, -1)$."
+    hint: null,
+    explanation: "El punto $Q$ se encuentra en $x = -1$ y desciende a $y = -1.5$, por lo que sus coordenadas son $(-1, -1.5)$."
   },
   {
     id: "m19-q23b",
     prompt: "¿Cuáles son las coordenadas del punto $R$?",
     image: "assets/m19_geogebra_puntoR.png",
     type: "choice",
-    correct: "$$(-3.5, -1.5)$$",
+    correct: "$$(-1.5, -3.5)$$",
     distractors: [
-      "$$(-1.5, -3.5)$$",
+      "$$(-3.5, -1.5)$$",
       "$$(-3.5, 3.5)$$",
       "$$(-3.5, -3.5)$$"
     ],
-    hint: "Revisa con atención cuál valor corresponde al eje horizontal $x$ y cuál al eje vertical $y$.",
-    explanation: "El punto $R$ se proyecta en $x = -3.5$ y en $y = -1.5$, dando el par ordenado $(-3.5, -1.5)$."
+    hint: null,
+    explanation: "El punto $R$ se proyecta en $x = -1.5$ y en $y = -3.5$, dando el par ordenado $(-1.5, -3.5)$."
   },
   {
     id: "m19-q23c",
@@ -337,22 +337,22 @@ const questionBank = [
       "$$(-5, -2)$$",
       "$$(-2, -5)$$"
     ],
-    hint: "Observa que se encuentra a la izquierda en $x = -5.5$ y baja dos unidades sobre el eje $y$.",
-    explanation: "El punto $T$ tiene un avance horizontal en $x = -5.5$ y una altura negativa de $y = -2$, formando $(-5.5, -2)$."
+    hint: null,
+    explanation: "El punto $T$ tiene un avance horizontal en $x = -2$ y una altura negativa de $y = -5.5$, formando $(-2, -5.5)$."
   },
   {
     id: "m19-q23d",
     prompt: "¿Cuáles son las coordenadas del punto $U$?",
     image: "assets/m19_geogebra_puntoU.png",
     type: "choice",
-    correct: "$$(-4, 3)$$",
+    correct: "$$(3, -4)$$",
     distractors: [
-      "$$(3, -4)$$",
+      "$$(4, -3)$$",
       "$$(3, 3.5)$$",
       "$$(2.5, 4)$$"
     ],
-    hint: "Es el único punto en el segundo cuadrante: $x$ es negativo e $y$ es positivo.",
-    explanation: "Al ubicarse en el segundo cuadrante, el punto $U$ cruza con $x = -4$ y sube hasta $y = 3$, resultando en $(-4, 3)$."
+    hint: null,
+    explanation: "Al ubicarse en el cuarto cuadrante, el punto $U$ cruza con $x = 3$ y baja hasta $y = -4$, resultando en $(3, -4)$."
   },
   {
     id: "m19-q24",
