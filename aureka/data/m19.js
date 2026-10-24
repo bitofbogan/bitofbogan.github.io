@@ -127,14 +127,14 @@ const questionBank = [
   },
   {
     id: "m19-q11",
-    prompt: "Analiza el siguiente caso y contesta lo que se pregunta.<br><br>Dos corredoras olímpicas corren en la pista y al llegar a la curva Laura se ubica en el último carril en el punto B y Vanesa ocupa el primer carril en el punto A.<br>Si ambas recorren la curva en 4 segundos, ¿qué se puede afirmar respecto de este caso?<br><br>Información física y geométrica:<br>Radio $A = 20\\text{ m}$<br>Radio $B = 30\\text{ m}$",
+    prompt: "En una carrera, Lauren ocupa el primer carril y Vania ocupa el quinto. Si ambas inician desde el mismo punto y ambas recorren la curva en 4 segundos, ¿qué se puede afirmar respecto a sus velocidades?",
     image: "assets/m19_pista_corredoras.png",
     type: "choice",
-    correct: "Laura y Vanesa corren con la misma velocidad angular.",
+    correct: "Lauren y Vania corren con la misma velocidad angular.",
     distractors: [
-      "La velocidad angular de Laura es mayor que la de Vanesa.",
+      "La velocidad angular de Lauren es mayor que la de Vania.",
       "La rapidez angular de ambas es proporcional al radio.",
-      "Laura y Vanesa corren con la misma velocidad lineal."
+      "Lauren y Vania corren con la misma velocidad lineal."
     ],
     hint: "Ambas barren el mismo ángulo (media vuelta) en exactamente el mismo intervalo de tiempo.",
     explanation: "Al barrer el mismo ángulo de la curva en el mismo lapso (4 s), su rapidez angular $\\omega = \\frac{\\Delta\\theta}{\\Delta t}$ es idéntica; la que tiene mayor radio solo tiene mayor rapidez lineal ($v = \\omega r$)."
@@ -437,7 +437,7 @@ const questionBank = [
     hint: "La manecilla que da una vuelta completa en menor tiempo es la que gira con mayor velocidad angular ($\\\\omega = 2\\\\pi / T$).",
     explanation: "El segundero tiene el menor periodo al dar una vuelta en 60 segundos, por lo que posee la mayor rapidez angular de las manecillas."
   },
-    {
+   {
     id: "m19-q29",
     prompt: "La densidad de una sustancia es de 0.525 kg/L. ¿Cuál es la conversión en miligramos por mililitro (mg/mL)?",
     type: "choice",
@@ -448,9 +448,8 @@ const questionBank = [
       "525000.0 mg/mL."
     ],
     hint: "1 kg equivale a $10^6\\text{ mg}$ y 1 L equivale a $10^3\\text{ ml}$. Multiplica por $10^6 / 10^3 = 1000$.",
-    explanation: "Realizando la conversión dimensional:\n$$\\begin{aligned} 0.525\\,\\frac{\\text{kg}}{\\text{L}} &= 0.525\\,\\frac{\\text{kg}}{\\text{L}} \\times \\frac{10^6\\text{ mg}}{1\\text{ kg}} \\times \\frac{1\\text{ L}}{10^3\\text{ mL}} \\\\[4pt] &= 0.525 \\times 10^3 \\\\[4pt] &= 525.0\\text{ mg/mL} \\end{aligned}$$"
+    explanation: "Realizando la conversión dimensional:\n$$\\small\\begin{aligned} \\rho &= 0.525\\,\\frac{\\text{kg}}{\\text{L}} \\\\[3pt] &= 0.525\\,\\frac{\\text{kg}}{\\text{L}} \\times \\left(\\frac{10^6\\text{ mg}}{1\\text{ kg}}\\right) \\\\[3pt] &\\quad \\times \\left(\\frac{1\\text{ L}}{10^3\\text{ mL}}\\right) \\\\[3pt] &= 0.525 \\times 10^3 \\\\[3pt] &= 525.0\\text{ mg/mL} \\end{aligned}$$"
   },
-
   {
     id: "m19-q30",
     prompt: "Un ventilador tiene una hélice de 40 cm de diámetro que se mueve en trayectoria circular con una rapidez angular de 648 rad/s. ¿Cuál es la velocidad lineal de la hélice del ventilador?",
