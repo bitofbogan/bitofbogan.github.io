@@ -181,21 +181,24 @@
 
   <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
     <!-- Panel Lateral de Configuración -->
-    <aside class="w-full lg:w-[490px] xl:w-[520px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-53px)] overflow-y-auto">
+    <aside class="w-full lg:w-[490px] xl:w-[530px] border-r border-slate-800 bg-slate-900/60 backdrop-blur flex flex-col max-h-none lg:max-h-[calc(100vh-53px)] overflow-y-auto">
       
-      <!-- Pestañas -->
-      <div class="flex border-b border-slate-800 px-3 text-xs sticky top-0 bg-slate-900/95 backdrop-blur z-20">
-        <button id="tabBtnFunctions" class="py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5">
+      <!-- Pestañas con Pestaña TEXTOS añadida -->
+      <div class="flex border-b border-slate-800 px-2 text-xs sticky top-0 bg-slate-900/95 backdrop-blur z-20">
+        <button id="tabBtnFunctions" class="py-3 px-3 tab-btn-active transition flex items-center gap-1.5">
           <i data-lucide="activity" class="w-3.5 h-3.5"></i> Funciones
         </button>
-        <button id="tabBtnPoints" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+        <button id="tabBtnPoints" class="py-3 px-3 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
           <i data-lucide="dot" class="w-4 h-4"></i> Puntos
         </button>
-        <button id="tabBtnAxes" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+        <button id="tabBtnTexts" class="py-3 px-3 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="type" class="w-3.5 h-3.5"></i> Textos
+        </button>
+        <button id="tabBtnAxes" class="py-3 px-3 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
           <i data-lucide="move" class="w-3.5 h-3.5"></i> Ejes & Rótulos
         </button>
-        <button id="tabBtnStyle" class="py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
-          <i data-lucide="palette" class="w-3.5 h-3.5"></i> Estilo & Formato
+        <button id="tabBtnStyle" class="py-3 px-3 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+          <i data-lucide="palette" class="w-3.5 h-3.5"></i> Formato
         </button>
       </div>
 
@@ -223,7 +226,7 @@
             <p class="font-medium text-slate-300 flex items-center gap-1">
               <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis admitida:
             </p>
-            <p class="font-mono text-slate-400"><code>x^2</code>, <code>3*x - 3</code>, <code>3*x^2 + 2*x - 5</code>, <code>sin(x)</code>, <code>sqrt(x)</code></p>
+            <p class="font-mono text-slate-400"><code>x^2</code>, <code>3*x - 3</code>, <code>-x^2 - 2*x - 8</code>, <code>sin(x)</code>, <code>sqrt(x)</code></p>
           </div>
         </div>
 
@@ -275,7 +278,32 @@
           </div>
         </div>
 
-        <!-- PESTAÑA 3: EJES, RÓTULOS Y RANGOS -->
+        <!-- PESTAÑA 3: TEXTOS LIBRES (TIPO POWERPOINT / EDITABLE) -->
+        <div id="tabSectionTexts" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Cuadros de Texto Libres</span>
+            <span class="text-[11px] text-slate-500">Haz clic y escala con las esquinas</span>
+          </div>
+
+          <div id="textsContainer" class="space-y-3.5"></div>
+
+          <!-- Botón Añadir Texto ABAJO -->
+          <div class="pt-2">
+            <button id="btnAddText" class="w-full py-2.5 rounded-xl border border-dashed border-indigo-500/40 hover:border-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-semibold flex items-center justify-center gap-2 transition shadow-sm">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>Añadir Cuadro de Texto Libre</span>
+            </button>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-800/30 border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
+            <p class="font-medium text-slate-300 flex items-center gap-1">
+              <i data-lucide="help-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Sintaxis combinada CMU:
+            </p>
+            <p class="text-slate-400">Escribe texto normal con acentos y fórmulas entre signos de pesos: <code>Vértice en $V(h, k)$</code> o <code>Área $= 14\\text{ m}^2$</code>.</p>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 4: EJES, RÓTULOS, UNIDADES Y RANGOS -->
         <div id="tabSectionAxes" class="space-y-5 hidden">
           
           <!-- Título del gráfico -->
@@ -305,6 +333,25 @@
                 <span id="chartTitleSizeVal" class="font-mono text-indigo-300 font-semibold">18px</span>
               </div>
               <input type="range" id="inputChartTitleSize" min="12" max="64" step="1" value="18" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+          </div>
+
+          <!-- Unidades personalizadas en los números de los ejes -->
+          <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+              <i data-lucide="tag" class="w-3.5 h-3.5"></i> Unidades en Números de Ejes
+            </h3>
+            <p class="text-[11px] text-slate-400">Escribe unidades en texto normal (ej: <code>%</code>, <code>$</code>, <code>s</code>, <code>m</code>, <code>°C</code>). El símbolo <code>$</code> actuará automáticamente como prefijo (<code>$10</code>) y el resto como sufijo (<code>10%</code>, <code>10 s</code>).</p>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] text-slate-300 mb-1">Unidad en Eje X</label>
+                <input type="text" id="inputUnitX" placeholder="ej: s, m, %" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-300 mb-1">Unidad en Eje Y</label>
+                <input type="text" id="inputUnitY" placeholder="ej: $, %, m/s" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              </div>
             </div>
           </div>
 
@@ -451,19 +498,20 @@
           </div>
         </div>
 
-        <!-- PESTAÑA 4: ESTILO, FORMATO Y COLORES -->
+        <!-- PESTAÑA 5: ESTILO, FORMATO Y COLORES -->
         <div id="tabSectionStyle" class="space-y-4 hidden">
           
+          <!-- Selector Proporción: Cuadrada seleccionada por defecto -->
           <div class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
             <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-300">Forma / Proporción del Lienzo</label>
             <div class="grid grid-cols-2 gap-2">
-              <button id="btnAspectRect" type="button" class="aspect-btn py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5 bg-indigo-600 border-indigo-500 text-white">
-                <i data-lucide="rectangle-horizontal" class="w-4 h-4"></i>
-                <span>Rectangular (16:10)</span>
-              </button>
-              <button id="btnAspectSquare" type="button" class="aspect-btn py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-slate-700">
+              <button id="btnAspectSquare" type="button" class="aspect-btn py-2 px-3 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5 bg-indigo-600 border-indigo-500 text-white shadow-md">
                 <i data-lucide="square" class="w-4 h-4"></i>
                 <span>Cuadrada (1:1)</span>
+              </button>
+              <button id="btnAspectRect" type="button" class="aspect-btn py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-slate-700">
+                <i data-lucide="rectangle-horizontal" class="w-4 h-4"></i>
+                <span>Rectangular (16:10)</span>
               </button>
             </div>
           </div>
@@ -630,7 +678,8 @@
       <!-- Capa de Transformación del Viewport -->
       <div id="canvasTransformWrapper" class="transition-transform duration-75 origin-center will-change-transform">
         <div class="relative bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/20 max-w-full">
-          <canvas id="cartesianCanvas" width="940" height="600" class="block max-w-full h-auto cursor-crosshair"></canvas>
+          <!-- Canvas con tamaño cuadrado de inicio (720x720) -->
+          <canvas id="cartesianCanvas" width="720" height="720" class="block max-w-full h-auto cursor-crosshair"></canvas>
         </div>
       </div>
 
@@ -643,27 +692,27 @@
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5">
           <i data-lucide="aspect-ratio" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span id="infoCanvasDims">940 &times; 600 px (Rectangular)</span>
+          <span id="infoCanvasDims">720 &times; 720 px (Cuadrada)</span>
         </div>
         <span class="text-slate-700">|</span>
         <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
           <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Rueda: Zoom | Clic fondo: Arrastrar plano | Arrastre de rótulos y píldoras</span>
+          <span>Rueda: Zoom | Clic fondo: Arrastrar | Clic textos/píldoras: Mover y redimensionar</span>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    /* Paleta moderna con Negro Carbón (#000000) incluido */
+    /* Paleta moderna con Negro Carbón (#000000) */
     const MODERN_PALETTE = [
       '#000000', '#3b82f6', '#ec4899', '#10b981', '#f59e0b', 
       '#8b5cf6', '#06b6d4', '#e11d48', '#6366f1', '#64748b'
     ];
 
-    /* Estado Global con valores por defecto solicitados: x^2 entre -10 y 10, números a 24px */
+    /* Estado Global con Outlay Cuadrado por defecto (720x720) */
     const state = {
-      aspectRatio: 'rect',
+      aspectRatio: 'square', // INICIA CUADRADO
       chartTitle: {
         text: 'Gráfica de $f(x) = x^2$',
         visible: false,
@@ -690,6 +739,12 @@
         }
       ],
       points: [],
+      freeTexts: [], // Textos libres interactivos tipo PowerPoint
+      selectedTextId: null, // Texto actualmente seleccionado en lienzo
+      units: {
+        x: '', // Unidad en eje X (ej: %, s, m)
+        y: ''  // Unidad en eje Y (ej: $, %, m/s)
+      },
       bounds: {
         xMin: -10,
         xMax: 10,
@@ -722,7 +777,6 @@
         axisWidth: 3.5,
         showTicks: true,
         tickSize: 4.5,
-        // Flechitas independientes
         arrows: {
           right: true,
           left: false,
@@ -738,8 +792,8 @@
         antiCollision: true,
         showPointCoords: false
       },
-      canvasWidth: 940,
-      canvasHeight: 600,
+      canvasWidth: 720,
+      canvasHeight: 720,
       viewport: {
         zoom: 1.0,
         panX: 0,
@@ -756,6 +810,7 @@
     const transformWrapper = document.getElementById('canvasTransformWrapper');
     const functionsContainer = document.getElementById('functionsContainer');
     const pointsContainer = document.getElementById('pointsContainer');
+    const textsContainer = document.getElementById('textsContainer');
 
     /* Sistema de arrastre y redimensionamiento */
     let draggedTarget = null;
@@ -805,6 +860,21 @@
       return str;
     }
 
+    /* Formatea números en ejes con soporte de unidades (prefijo para $ y sufijo para %, s, etc.) */
+    function formatNumberWithUnit(val, unit) {
+      const numStr = formatLatexNumber(val);
+      const u = (unit || '').trim();
+      if (!u) return numStr;
+
+      if (u === '$') {
+        return numStr.startsWith('\u2212') ? `\u2212$${numStr.slice(1)}` : `$${numStr}`;
+      } else if (u === '%') {
+        return `${numStr}%`;
+      } else {
+        return `${numStr} ${u}`;
+      }
+    }
+
     function expressionToLatex(expr) {
       try {
         const parsed = math.parse(expr);
@@ -841,7 +911,7 @@
       return segments;
     }
 
-    /* Tokenizador matemático seguro: números con signo negativo atómico para evitar solapamientos */
+    /* Tokenizador matemático seguro con soporte atómico de signos negativos */
     function tokenizeMathExpr(str) {
       const tokens = [];
       let i = 0;
@@ -870,8 +940,10 @@
         } else if (str[i] === ',') {
           tokens.push({ type: 'comma', text: ',' });
           i++;
+        } else if (str[i] === '%' || str[i] === '$') {
+          tokens.push({ type: 'unit', text: str[i] });
+          i++;
         } else if (str[i] === '-' && (i + 1 < str.length) && /[0-9.]/.test(str[i + 1])) {
-          // Número negativo atómico
           i++;
           let num = '\u2212';
           while (i < str.length && /[0-9.]/.test(str[i])) {
@@ -925,7 +997,7 @@
           ctx.fillStyle = defaultColor;
           ctx.fillText(tok.text, curX, baseY);
           curX += ctx.measureText(tok.text).width;
-        } else if (tok.type === 'num') {
+        } else if (tok.type === 'num' || tok.type === 'unit') {
           ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
           ctx.fillStyle = defaultColor;
           ctx.fillText(tok.text, curX, baseY);
@@ -970,7 +1042,7 @@
         } else if (tok.type === 'var') {
           ctx.font = `italic ${fontSize}px "CMU Serif", "KaTeX_Math", serif`;
           totalW += ctx.measureText(tok.text).width;
-        } else if (tok.type === 'num') {
+        } else if (tok.type === 'num' || tok.type === 'unit') {
           ctx.font = `normal ${fontSize}px "CMU Serif", "KaTeX_Main", serif`;
           totalW += ctx.measureText(tok.text).width;
         } else if (tok.type === 'paren') {
@@ -1094,7 +1166,7 @@
         drawRichText(ctx, titleSegments, startX, 16, state.chartTitle.fontSize, axisColor, true);
       }
 
-      // 2. Cuadrícula secundaria
+      // 2. Cuadrícula menor
       if (showMinorGrid) {
         ctx.strokeStyle = gridColor;
         ctx.lineWidth = 0.75;
@@ -1161,7 +1233,7 @@
       ctx.lineTo(originX, axisExtYTop);
       ctx.stroke();
 
-      // Flechas independientes en los 4 extremos de los ejes
+      // Flechas independientes en los 4 extremos
       const aSize = arrowSize || 12;
       ctx.fillStyle = axisColor;
 
@@ -1173,7 +1245,6 @@
         ctx.closePath();
         ctx.fill();
       }
-
       if (arrows.left) {
         ctx.beginPath();
         ctx.moveTo(axisExtXLeft - aSize, originY);
@@ -1182,7 +1253,6 @@
         ctx.closePath();
         ctx.fill();
       }
-
       if (arrows.top) {
         ctx.beginPath();
         ctx.moveTo(originX, axisExtYTop - aSize);
@@ -1191,7 +1261,6 @@
         ctx.closePath();
         ctx.fill();
       }
-
       if (arrows.bottom) {
         ctx.beginPath();
         ctx.moveTo(originX, axisExtYBottom + aSize);
@@ -1201,7 +1270,7 @@
         ctx.fill();
       }
 
-      // 5. Ticks y Números en Ejes (Inicia en 24px)
+      // 5. Ticks y Números en Ejes con Unidades Personalizadas (%, $, s, m, etc.)
       ctx.font = `normal ${labelFontSize || 24}px "CMU Serif", "KaTeX_Main", serif`;
       ctx.fillStyle = labelColor;
 
@@ -1213,7 +1282,7 @@
       for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
         const cx = toCanvasX(x);
         const isZero = Math.abs(x) < 1e-9;
-        const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 26 : originY + 8;
+        const labelOffsetY = (originY + 16 > state.canvasHeight - 16) ? originY - 28 : originY + 8;
 
         if (showTicks) {
           const tSize = tickSize || 4.5;
@@ -1226,10 +1295,11 @@
         }
 
         if (showTickNumbers && !isZero) {
-          if (antiCollision && Math.abs(cx - originX) < 20 && originCrossingNear) {
-            // Evitar encimado en esquina
+          if (antiCollision && Math.abs(cx - originX) < 22 && originCrossingNear) {
+            // Omitir en esquina si colisiona
           } else {
-            ctx.fillText(formatLatexNumber(x), cx, labelOffsetY);
+            const formattedVal = formatNumberWithUnit(x, state.units.x);
+            ctx.fillText(formattedVal, cx, labelOffsetY);
           }
         }
       }
@@ -1254,7 +1324,8 @@
         }
 
         if (showTickNumbers && !isZero) {
-          ctx.fillText(formatLatexNumber(y), labelOffsetX, cy);
+          const formattedVal = formatNumberWithUnit(y, state.units.y);
+          ctx.fillText(formattedVal, labelOffsetX, cy);
         }
       }
 
@@ -1372,7 +1443,7 @@
         } catch (error) {}
       });
 
-      // 8. Trazado de Puntos y Rótulos con CMU Serif (Sin bug al ocultar coordenadas y sin números encimados)
+      // 8. Trazado de Puntos y Rótulos con CMU Serif
       state.points.forEach(pt => {
         if (!pt.visible || isNaN(pt.x) || isNaN(pt.y)) return;
 
@@ -1408,7 +1479,6 @@
               const baseY = labelY + ptFontSize * 0.35;
               drawMathTokens(ctx, tokens, labelX, baseY, ptFontSize, pt.color);
 
-              // Hitbox siempre exacta para permitir arrastrar solo el nombre o nombre + coordenadas
               hitBoxes.push({
                 type: 'point',
                 id: pt.id,
@@ -1423,7 +1493,7 @@
         }
       });
 
-      // 9. Rótulos de Funciones en MathMode Real con redimensionamiento
+      // 9. Rótulos de Funciones en MathMode (SIN EL PUNTITO DE LA ESQUINA VISIBLE)
       state.functions.forEach((fn, idx) => {
         if (!fn.visible || !fn.expr.trim() || !fn.showLabel) return;
 
@@ -1464,12 +1534,7 @@
           ctx.arc(posX + padX + 5, posY + totalH / 2, Math.max(3, 4.5 * scaleMultiplier), 0, Math.PI * 2);
           ctx.fill();
 
-          const handleSize = 7;
-          ctx.fillStyle = fn.color;
-          ctx.beginPath();
-          ctx.arc(posX + totalW - handleSize, posY + totalH - handleSize, 3, 0, Math.PI * 2);
-          ctx.fill();
-
+          // Hitbox activa pero PUNTITO VISIBLE ELIMINADO COMPLETAMENTE
           hitBoxes.push({
             type: 'resizeFn',
             id: fn.id,
@@ -1498,9 +1563,70 @@
 
         ctx.restore();
       });
+
+      // 10. Cuadros de Texto Libres (Interactivos tipo PowerPoint / Draggables & Escalables)
+      state.freeTexts.forEach(item => {
+        if (!item.text.trim()) return;
+
+        const tScale = item.scale || 1.0;
+        const fSize = Math.max(10, Math.round((item.fontSize || 18) * tScale));
+        const posX = item.x !== null ? item.x : p.left + 50;
+        const posY = item.y !== null ? item.y : p.top + 50;
+
+        const segments = parseMathText(item.text);
+        const totalW = measureRichText(ctx, segments, fSize, item.bold);
+        const totalH = fSize + 10;
+
+        ctx.save();
+
+        if (item.hasBackground) {
+          ctx.fillStyle = state.style.background === '#ffffff' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(15, 23, 42, 0.95)';
+          ctx.strokeStyle = item.isSelected ? '#6366f1' : 'rgba(148, 163, 184, 0.3)';
+          ctx.lineWidth = 1;
+          roundRect(ctx, posX - 6, posY - 4, totalW + 12, totalH + 8, 6, true, true);
+        } else if (item.isSelected) {
+          // Borde punteado de selección sutil tipo PowerPoint
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = '#6366f1';
+          ctx.lineWidth = 1.2;
+          ctx.strokeRect(posX - 6, posY - 4, totalW + 12, totalH + 8);
+          ctx.setLineDash([]);
+        }
+
+        drawRichText(ctx, segments, posX, posY, fSize, item.color, item.bold);
+
+        // Si está seleccionado, mostrar tirador de redimensionamiento
+        if (item.isSelected) {
+          const hX = posX + totalW + 6;
+          const hY = posY + totalH + 4;
+          ctx.fillStyle = '#6366f1';
+          ctx.fillRect(hX - 4, hY - 4, 8, 8);
+
+          hitBoxes.push({
+            type: 'resizeText',
+            id: item.id,
+            x: hX - 6,
+            y: hY - 6,
+            w: 12,
+            h: 12,
+            parentW: totalW
+          });
+        }
+
+        hitBoxes.push({
+          type: 'textItem',
+          id: item.id,
+          x: posX - 6,
+          y: posY - 4,
+          w: totalW + 12,
+          h: totalH + 8
+        });
+
+        ctx.restore();
+      });
     }
 
-    /* RENDER DE FUNCIONES EN EL PANEL CON SELECTOR HEXADECIMAL */
+    /* RENDER DE FUNCIONES */
     function renderFunctionInputs() {
       functionsContainer.innerHTML = '';
 
@@ -1535,7 +1661,6 @@
               </button>
             </div>
 
-            <!-- Paleta de círculos (Incluye Negro) -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/50 p-1.5 rounded-lg border border-slate-800/80">
               ${swatchesHtml}
             </div>
@@ -1548,10 +1673,9 @@
             </div>
           </div>
 
-          <!-- Rango por función -->
           <div class="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-medium text-slate-300">Restringir dominio a intervalo [x₁, x₂]</span>
+              <span class="text-[11px] font-medium text-slate-300">Restringir dominio [x₁, x₂]</span>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" data-range-toggle-id="${fn.id}" ${fn.useRange ? 'checked' : ''} class="sr-only peer">
                 <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
@@ -1569,10 +1693,9 @@
             </div>
           </div>
 
-          <!-- Rótulo / Píldora -->
           <div class="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-medium text-slate-300">Mostrar rótulo / píldora en el plano</span>
+              <span class="text-[11px] font-medium text-slate-300">Mostrar rótulo / píldora en plano</span>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" data-label-toggle-id="${fn.id}" ${fn.showLabel ? 'checked' : ''} class="sr-only peer">
                 <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
@@ -1637,7 +1760,6 @@
     }
 
     function bindDynamicFunctionEvents() {
-      // Swatches predefinidos
       document.querySelectorAll('[data-swatch-color]').forEach(btn => {
         btn.addEventListener('click', () => {
           const fnId = btn.getAttribute('data-swatch-target');
@@ -1651,7 +1773,6 @@
         });
       });
 
-      // Input color nativo y campo hexa
       document.querySelectorAll('[data-custom-color-id]').forEach(colorPicker => {
         colorPicker.addEventListener('input', (e) => {
           const id = e.target.getAttribute('data-custom-color-id');
@@ -1818,7 +1939,7 @@
       });
     }
 
-    /* RENDER DE PUNTOS EN EL PANEL CON SELECTOR HEXADECIMAL */
+    /* RENDER DE PUNTOS */
     function renderPointInputs() {
       pointsContainer.innerHTML = '';
 
@@ -1851,7 +1972,6 @@
               </button>
             </div>
 
-            <!-- Paleta de círculos (Incluye Negro) -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/50 p-1.5 rounded-lg border border-slate-800/80">
               ${swatchesHtml}
             </div>
@@ -1990,40 +2110,235 @@
       });
     }
 
+    /* RENDER DE TEXTOS LIBRES (TIPO POWERPOINT) */
+    function renderTextInputs() {
+      textsContainer.innerHTML = '';
+
+      if (state.freeTexts.length === 0) {
+        textsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4 bg-slate-900/40 rounded-xl border border-slate-800">No hay cuadros de texto libres.<br>Haz clic en el botón de abajo para añadir uno.</p>`;
+        return;
+      }
+
+      state.freeTexts.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `p-3.5 rounded-xl bg-slate-800/70 border ${item.isSelected ? 'border-indigo-500' : 'border-slate-700/80'} space-y-3 transition hover:border-slate-600 shadow-sm`;
+
+        const swatchesHtml = MODERN_PALETTE.map(c => `
+          <button type="button" data-text-swatch-color="${c}" data-text-swatch-target="${item.id}" class="color-swatch-btn ${item.color.toLowerCase() === c.toLowerCase() ? 'color-swatch-active' : ''}" style="background-color: ${c}"></button>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-semibold text-indigo-300">Cuadro de Texto</span>
+            <div class="flex items-center gap-1.5 bg-slate-900/80 px-2 py-1 rounded-lg border border-slate-800">
+              <input type="color" data-text-custom-color-id="${item.id}" value="${item.color}" class="w-5 h-5 rounded border-0 bg-transparent cursor-pointer">
+              <input type="text" data-text-hex-id="${item.id}" value="${item.color}" maxlength="7" class="w-16 bg-transparent text-[11px] font-mono text-slate-200 focus:outline-none">
+            </div>
+            <button data-text-delete-id="${item.id}" class="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-700 transition" title="Eliminar texto">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/50 p-1.5 rounded-lg border border-slate-800/80">
+            ${swatchesHtml}
+          </div>
+
+          <div>
+            <input type="text" data-text-val-id="${item.id}" value="${item.text}" placeholder="ej: Vértice $V(0, -8)$" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-serif">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-1 border-t border-slate-700/50 text-xs">
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                <span>Tamaño:</span>
+                <span data-text-size-val-id="${item.id}" class="font-mono text-indigo-300 font-semibold">${item.fontSize}px</span>
+              </div>
+              <input type="range" data-text-size-id="${item.id}" value="${item.fontSize}" min="10" max="64" step="1" class="w-full accent-indigo-500 cursor-pointer">
+            </div>
+
+            <div class="space-y-1.5 pt-1">
+              <label class="flex items-center justify-between cursor-pointer text-[11px] text-slate-300">
+                <span>Negrita:</span>
+                <input type="checkbox" data-text-bold-id="${item.id}" ${item.bold ? 'checked' : ''} class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
+              </label>
+              <label class="flex items-center justify-between cursor-pointer text-[11px] text-slate-300">
+                <span>Fondo de tarjeta:</span>
+                <input type="checkbox" data-text-bg-id="${item.id}" ${item.hasBackground ? 'checked' : ''} class="w-3.5 h-3.5 rounded text-indigo-600 bg-slate-700 border-slate-600">
+              </label>
+            </div>
+          </div>
+        `;
+
+        textsContainer.appendChild(card);
+      });
+
+      lucide.createIcons();
+      bindTextEvents();
+    }
+
+    function bindTextEvents() {
+      document.querySelectorAll('[data-text-swatch-color]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-text-swatch-target');
+          const color = btn.getAttribute('data-text-swatch-color');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.color = color;
+            renderTextInputs();
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-custom-color-id]').forEach(colorPicker => {
+        colorPicker.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-text-custom-color-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.color = e.target.value;
+            const hex = document.querySelector(`[data-text-hex-id="${id}"]`);
+            if (hex) hex.value = item.color.toUpperCase();
+            renderTextInputs();
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-hex-id]').forEach(hexInput => {
+        hexInput.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-text-hex-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          let val = e.target.value.trim();
+          if (!val.startsWith('#')) val = '#' + val;
+          if (/^#[0-9A-Fa-f]{6}$/.test(val) && item) {
+            item.color = val;
+            renderTextInputs();
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-val-id]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-text-val-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.text = e.target.value;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-size-id]').forEach(slider => {
+        slider.addEventListener('input', (e) => {
+          const id = e.target.getAttribute('data-text-size-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.fontSize = parseInt(e.target.value, 10) || 18;
+            const lbl = document.querySelector(`[data-text-size-val-id="${id}"]`);
+            if (lbl) lbl.innerText = `${item.fontSize}px`;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-bold-id]').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-text-bold-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.bold = e.target.checked;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-bg-id]').forEach(chk => {
+        chk.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-text-bg-id');
+          const item = state.freeTexts.find(t => t.id === id);
+          if (item) {
+            item.hasBackground = e.target.checked;
+            drawPlot();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-text-delete-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-text-delete-id');
+          state.freeTexts = state.freeTexts.filter(t => t.id !== id);
+          if (state.selectedTextId === id) state.selectedTextId = null;
+          renderTextInputs();
+          drawPlot();
+        });
+      });
+    }
+
+    // Botón AÑADIR TEXTO LIBRE
+    document.getElementById('btnAddText').addEventListener('click', () => {
+      const nextColor = MODERN_PALETTE[(state.freeTexts.length + 1) % MODERN_PALETTE.length];
+      const newText = {
+        id: 'txt-' + Date.now(),
+        text: 'Texto libre $V(h, k)$',
+        color: nextColor,
+        fontSize: 18,
+        bold: false,
+        hasBackground: true,
+        scale: 1.0,
+        x: 100,
+        y: 100 + (state.freeTexts.length * 35),
+        isSelected: true
+      };
+
+      state.freeTexts.forEach(t => t.isSelected = false);
+      state.freeTexts.push(newText);
+      state.selectedTextId = newText.id;
+      renderTextInputs();
+      drawPlot();
+      showToast('Añadido cuadro de texto. Arrástralo o escálalo en el lienzo.');
+    });
+
     /* Pestañas */
     const tabBtnFunctions = document.getElementById('tabBtnFunctions');
     const tabBtnPoints = document.getElementById('tabBtnPoints');
+    const tabBtnTexts = document.getElementById('tabBtnTexts');
     const tabBtnAxes = document.getElementById('tabBtnAxes');
     const tabBtnStyle = document.getElementById('tabBtnStyle');
 
     const tabSectionFunctions = document.getElementById('tabSectionFunctions');
     const tabSectionPoints = document.getElementById('tabSectionPoints');
+    const tabSectionTexts = document.getElementById('tabSectionTexts');
     const tabSectionAxes = document.getElementById('tabSectionAxes');
     const tabSectionStyle = document.getElementById('tabSectionStyle');
 
     function setActiveTab(tab) {
-      [tabBtnFunctions, tabBtnPoints, tabBtnAxes, tabBtnStyle].forEach(btn => {
-        btn.className = 'py-3 px-3.5 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+      [tabBtnFunctions, tabBtnPoints, tabBtnTexts, tabBtnAxes, tabBtnStyle].forEach(btn => {
+        btn.className = 'py-3 px-3 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
       });
-      [tabSectionFunctions, tabSectionPoints, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
+      [tabSectionFunctions, tabSectionPoints, tabSectionTexts, tabSectionAxes, tabSectionStyle].forEach(sec => sec.classList.add('hidden'));
 
       if (tab === 'functions') {
-        tabBtnFunctions.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+        tabBtnFunctions.className = 'py-3 px-3 tab-btn-active transition flex items-center gap-1.5';
         tabSectionFunctions.classList.remove('hidden');
       } else if (tab === 'points') {
-        tabBtnPoints.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+        tabBtnPoints.className = 'py-3 px-3 tab-btn-active transition flex items-center gap-1.5';
         tabSectionPoints.classList.remove('hidden');
+      } else if (tab === 'texts') {
+        tabBtnTexts.className = 'py-3 px-3 tab-btn-active transition flex items-center gap-1.5';
+        tabSectionTexts.classList.remove('hidden');
       } else if (tab === 'axes') {
-        tabBtnAxes.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+        tabBtnAxes.className = 'py-3 px-3 tab-btn-active transition flex items-center gap-1.5';
         tabSectionAxes.classList.remove('hidden');
       } else if (tab === 'style') {
-        tabBtnStyle.className = 'py-3 px-3.5 tab-btn-active transition flex items-center gap-1.5';
+        tabBtnStyle.className = 'py-3 px-3 tab-btn-active transition flex items-center gap-1.5';
         tabSectionStyle.classList.remove('hidden');
       }
     }
 
     tabBtnFunctions.addEventListener('click', () => setActiveTab('functions'));
     tabBtnPoints.addEventListener('click', () => setActiveTab('points'));
+    tabBtnTexts.addEventListener('click', () => setActiveTab('texts'));
     tabBtnAxes.addEventListener('click', () => setActiveTab('axes'));
     tabBtnStyle.addEventListener('click', () => setActiveTab('style'));
 
@@ -2067,6 +2382,9 @@
       document.getElementById('checkAxisLabelY').checked = state.labels.showY;
       document.getElementById('checkTextNormalLabels').checked = state.labels.textNormal;
 
+      document.getElementById('inputUnitX').value = state.units.x;
+      document.getElementById('inputUnitY').value = state.units.y;
+
       const axisTitleSizeInput = document.getElementById('inputAxisTitleFontSize');
       const axisTitleSizeVal = document.getElementById('axisTitleFontSizeVal');
       if (axisTitleSizeInput) axisTitleSizeInput.value = state.labels.fontSize || 24;
@@ -2106,7 +2424,6 @@
       document.getElementById('inputTickSize').value = state.style.tickSize || 4.5;
       document.getElementById('labelTickSizeVal').innerText = `${state.style.tickSize || 4.5}px`;
 
-      // Flechas independientes
       document.getElementById('checkArrowRight').checked = state.style.arrows.right;
       document.getElementById('checkArrowLeft').checked = state.style.arrows.left;
       document.getElementById('checkArrowTop').checked = state.style.arrows.top;
@@ -2165,6 +2482,16 @@
 
     document.getElementById('btnAspectRect').addEventListener('click', () => setAspectRatio('rect'));
     document.getElementById('btnAspectSquare').addEventListener('click', () => setAspectRatio('square'));
+
+    document.getElementById('inputUnitX').addEventListener('input', (e) => {
+      state.units.x = e.target.value;
+      drawPlot();
+    });
+
+    document.getElementById('inputUnitY').addEventListener('input', (e) => {
+      state.units.y = e.target.value;
+      drawPlot();
+    });
 
     document.getElementById('inputAxisLabelX').addEventListener('input', (e) => {
       state.labels.x = e.target.value;
@@ -2252,7 +2579,6 @@
       drawPlot();
     });
 
-    // Flechas independientes listeners
     document.getElementById('checkArrowRight').addEventListener('change', (e) => {
       state.style.arrows.right = e.target.checked;
       drawPlot();
@@ -2355,14 +2681,13 @@
       drawPlot();
     });
 
-    // Botón AÑADIR FUNCIÓN
     document.getElementById('btnAddFunction').addEventListener('click', () => {
       const nextColor = MODERN_PALETTE[state.functions.length % MODERN_PALETTE.length];
       const fnNum = state.functions.length === 0 ? '' : (state.functions.length + 1);
       const newFn = {
         id: 'fn-' + Date.now(),
         name: `f${fnNum}(x)`,
-        expr: state.functions.length === 0 ? 'x^2' : '3*x - 3',
+        expr: state.functions.length === 0 ? 'x^2' : '-x^2 - 2*x - 8',
         color: nextColor,
         width: 3.5,
         style: 'solid',
@@ -2385,7 +2710,6 @@
       if (newEl) newEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
-    // Botón AÑADIR PUNTO
     document.getElementById('btnAddPoint').addEventListener('click', () => {
       const nextColor = MODERN_PALETTE[state.points.length % MODERN_PALETTE.length];
       const charCode = 65 + (state.points.length % 26);
@@ -2413,6 +2737,8 @@
     document.getElementById('btnClearAll').addEventListener('click', () => {
       state.functions = [];
       state.points = [];
+      state.freeTexts = [];
+      state.selectedTextId = null;
       state.chartTitle.visible = false;
       state.labels.posX = null;
       state.labels.posY = null;
@@ -2421,6 +2747,7 @@
       syncInputs();
       renderFunctionInputs();
       renderPointInputs();
+      renderTextInputs();
       drawPlot();
       showToast('Plano cartesiano totalmente en blanco');
     });
@@ -2490,6 +2817,8 @@
           labelY: null
         }
       ];
+      state.freeTexts = [];
+      state.selectedTextId = null;
       state.bounds = {
         xMin: -10,
         xMax: 10,
@@ -2512,6 +2841,7 @@
         posX_Y: null,
         posY_X: null
       };
+      state.units = { x: '', y: '' };
       state.style.background = '#ffffff';
       state.style.axisColor = '#000000';
       state.style.gridColor = '#cbd5e1';
@@ -2533,8 +2863,9 @@
       syncInputs();
       renderFunctionInputs();
       renderPointInputs();
+      renderTextInputs();
       drawPlot();
-      showToast('Cargado ejemplo de f(x) = x^2 [-10, 10]');
+      showToast('Cargado ejemplo de f(x) = x^2');
     });
 
     function showToast(message) {
@@ -2595,16 +2926,18 @@
       const pos = getCanvasCoords(e);
       let hit = null;
 
+      // 1. Prioridad: Manillas de redimensionamiento
       for (let i = hitBoxes.length - 1; i >= 0; i--) {
-        if (hitBoxes[i].type === 'resizeFn' && checkHit(pos, hitBoxes[i])) {
+        if ((hitBoxes[i].type === 'resizeFn' || hitBoxes[i].type === 'resizeText') && checkHit(pos, hitBoxes[i])) {
           hit = hitBoxes[i];
           break;
         }
       }
 
+      // 2. Elementos draggables
       if (!hit) {
         for (let i = hitBoxes.length - 1; i >= 0; i--) {
-          if (hitBoxes[i].type !== 'resizeFn' && checkHit(pos, hitBoxes[i])) {
+          if (hitBoxes[i].type !== 'resizeFn' && hitBoxes[i].type !== 'resizeText' && checkHit(pos, hitBoxes[i])) {
             hit = hitBoxes[i];
             break;
           }
@@ -2617,17 +2950,28 @@
           startX: pos.x,
           startY: pos.y
         };
-        if (hit.type === 'resizeFn') {
+
+        if (hit.type === 'textItem') {
+          state.selectedTextId = hit.id;
+          state.freeTexts.forEach(t => t.isSelected = (t.id === hit.id));
+          renderTextInputs();
+        } else if (hit.type === 'resizeFn') {
           const fn = state.functions.find(f => f.id === hit.id);
           draggedTarget.initialScale = fn ? (fn.labelScale || 1.0) : 1.0;
-        } else if (hit.type === 'point') {
-          const pt = state.points.find(p => p.id === hit.id);
-          if (pt) {
-            draggedTarget.initLabelX = (pt.labelX !== null && pt.labelX !== undefined) ? pt.labelX : hit.x;
-            draggedTarget.initLabelY = (pt.labelY !== null && pt.labelY !== undefined) ? pt.labelY : hit.y;
-          }
+        } else if (hit.type === 'resizeText') {
+          const item = state.freeTexts.find(t => t.id === hit.id);
+          draggedTarget.initialScale = item ? (item.scale || 1.0) : 1.0;
         }
+        drawPlot();
       } else {
+        // Deseleccionar textos si se hace clic afuera
+        if (state.selectedTextId) {
+          state.selectedTextId = null;
+          state.freeTexts.forEach(t => t.isSelected = false);
+          renderTextInputs();
+          drawPlot();
+        }
+
         state.viewport.isPanning = true;
         state.viewport.startX = e.clientX - state.viewport.panX;
         state.viewport.startY = e.clientY - state.viewport.panY;
@@ -2657,6 +3001,12 @@
             pt.labelX = Math.round(pos.x - draggedTarget.w / 2);
             pt.labelY = Math.round(pos.y);
           }
+        } else if (draggedTarget.type === 'textItem') {
+          const item = state.freeTexts.find(t => t.id === draggedTarget.id);
+          if (item) {
+            item.x = Math.round(pos.x - draggedTarget.w / 2);
+            item.y = Math.round(pos.y - draggedTarget.h / 2);
+          }
         } else if (draggedTarget.type === 'resizeFn') {
           const fn = state.functions.find(f => f.id === draggedTarget.id);
           if (fn) {
@@ -2666,6 +3016,14 @@
             fn.labelScale = Number(newScale.toFixed(2));
             const slider = document.querySelector(`[data-label-scale-id="${fn.id}"]`);
             if (slider) slider.value = fn.labelScale;
+          }
+        } else if (draggedTarget.type === 'resizeText') {
+          const item = state.freeTexts.find(t => t.id === draggedTarget.id);
+          if (item) {
+            const dx = pos.x - draggedTarget.startX;
+            const deltaRatio = dx / (draggedTarget.parentW || 100);
+            const newScale = Math.max(0.5, Math.min(3.5, draggedTarget.initialScale + deltaRatio));
+            item.scale = Number(newScale.toFixed(2));
           }
         }
         drawPlot();
@@ -2679,7 +3037,7 @@
 
         for (let i = 0; i < hitBoxes.length; i++) {
           if (checkHit(pos, hitBoxes[i])) {
-            if (hitBoxes[i].type === 'resizeFn') {
+            if (hitBoxes[i].type === 'resizeFn' || hitBoxes[i].type === 'resizeText') {
               cursorType = 'nwse-resize';
             } else {
               cursorType = 'grab';
@@ -2724,7 +3082,7 @@
       showToast(`Descargado PNG en escala ${scale}x (${origW * scale}x${origH * scale}px)`);
     }
 
-    /* EXPORTACIÓN SVG */
+    /* EXPORTACIÓN SVG VECTORIAL CON UNIDADES Y TEXTOS LIBRES */
     function downloadSVG() {
       const p = getPaddings();
       const w = state.canvasWidth;
@@ -2834,12 +3192,16 @@
         for (let x = xMin; x <= xMax + 1e-9; x += xStep) {
           const cx = toCanvasX(x);
           if (Math.abs(x) > 1e-9) {
-            svg += `    <text x="${cx}" y="${originY + 22}" text-anchor="middle">${formatLatexNumber(x)}</text>\n`;
+            const formatted = formatNumberWithUnit(x, state.units.x);
+            svg += `    <text x="${cx}" y="${originY + 22}" text-anchor="middle">${formatted}</text>\n`;
           }
         }
         for (let y = yMin; y <= yMax + 1e-9; y += yStep) {
           const cy = toCanvasY(y);
-          svg += `    <text x="${originX - 11}" y="${cy + 6}" text-anchor="end">${formatLatexNumber(y)}</text>\n`;
+          if (Math.abs(y) > 1e-9) {
+            const formatted = formatNumberWithUnit(y, state.units.y);
+            svg += `    <text x="${originX - 11}" y="${cy + 6}" text-anchor="end">${formatted}</text>\n`;
+          }
         }
         svg += `  </g>\n`;
       }
@@ -2905,6 +3267,22 @@
         } else if (pt.symbol === 'square') {
           svg += `  <rect x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" fill="${pt.color}"/>\n`;
         }
+      });
+
+      // Textos Libres en SVG
+      state.freeTexts.forEach(item => {
+        if (!item.text.trim()) return;
+        const fSize = Math.max(10, Math.round((item.fontSize || 18) * (item.scale || 1.0)));
+        const segments = parseMathText(item.text);
+        svg += `  <text x="${item.x}" y="${item.y + fSize * 0.85}" font-family="CMU Serif" font-size="${fSize}px" fill="${item.color}" ${item.bold ? 'font-weight="bold"' : ''}>\n`;
+        segments.forEach(seg => {
+          if (seg.isMath) {
+            svg += `    <tspan style="font-style:italic">${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>\n`;
+          } else {
+            svg += `    <tspan>${seg.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</tspan>\n`;
+          }
+        });
+        svg += `  </text>\n`;
       });
 
       svg += `</svg>`;
@@ -2980,6 +3358,7 @@
       syncInputs();
       renderFunctionInputs();
       renderPointInputs();
+      renderTextInputs();
 
       if (document.fonts && document.fonts.ready) {
         await document.fonts.ready;
