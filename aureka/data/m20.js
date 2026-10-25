@@ -355,13 +355,13 @@ const questionBank = [
     prompt: "¿Cuál de las siguientes es una conclusión correcta a partir de la gráfica?",
     image: "assets/m20_censo.png",
     type: "choice",
-    correct: "La población masculina entre 30 y 34 años es mayor que la cantidad de hombres entre 35 y 39 años.",
+    correct: "Existe igual cantidad de hombres entre 10 y 14 años que los de 15 a 19 años.",
     distractors: [
-      "Existe igual cantidad de hombres entre 10 y 14 años que los de 15 a 19 años.",
+      "La población masculina entre 30 y 34 años es mayor que la cantidad de hombres entre 35 y 39 años.",
       "La cantidad de mujeres entre 40 y 44 años es de 3 millones.",
       "El total de niños menores de 4 años es de 5 millones."
     ],
-    hint: "Observa las barras horizontales azules del lado izquierdo en los grupos de edad de 30 a 39 años.",
+    hint: null,
     explanation: "Al comparar las barras del lado izquierdo (hombres), la barra de 30 a 34 años se extiende más hacia la izquierda que la barra de 35 a 39 años."
   },
   {
