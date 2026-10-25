@@ -5,26 +5,26 @@
 
 const moduleInfo = {
   badge: "Módulo 16",
-  title: "Hacia un desarrollo sustentable",
+  title: "Ciencias Ambientales II",
   topicVideos: {
     "distribucion-especies": {
-      title: "Distribución de especies (nativas, endémicas, exóticas e invasoras)",
+      title: "Distribución de especies",
       url: "https://youtu.be/4CYjU9vH69E"
     },
     "redes-troficas": {
-      title: "Energía en redes tróficas y productividad neta",
+      title: "Energía en redes tróficas",
       url: "https://youtu.be/TmrgXGaP1uU"
     },
     "balance-redox": {
-      title: "Balance de reacciones por método redox",
+      title: "Balance de reacciones redox",
       url: "https://youtu.be/y5zldrwg5O4"
     },
     "intro-redox": {
-      title: "Introducción al balance redox y conservación de masa",
+      title: "Introducción al balance redox",
       url: "https://youtu.be/U1bX9VBycFU"
     },
     "numero-oxidacion": {
-      title: "Reglas para determinar números de oxidación",
+      title: "Números de oxidación",
       url: "https://youtu.be/IEAHFmiUREc"
     },
     "dispersiones": {
@@ -32,7 +32,7 @@ const moduleInfo = {
       url: "https://youtu.be/_UTHW76Jopo"
     },
     "clasificacion-materia": {
-      title: "Clasificación de la materia (elementos, compuestos y mezclas)",
+      title: "Clasificación de la materia",
       url: "https://youtu.be/Y86mFkyIz-k"
     }
   }
@@ -42,7 +42,7 @@ const questionBank = [
   {
     id: "m16-q01",
     topicId: "intro-redox",
-    prompt: "¿Cuál es la fórmula química y coeficiente que representa a la glucosa dentro de la siguiente reacción química?<br>$$6\\text{H}_2\\text{O} + 6\\text{CO}_2 \\rightarrow \\underline{\\quad}\\text{ (glucosa)} + 6\\text{O}_2$$",
+    prompt: "¿Cuál es la ecuación química para la glucosa?",
     type: "choice",
     correct: "$$\\text{C}_6\\text{H}_{12}\\text{O}_6$$",
     distractors: [
@@ -50,25 +50,28 @@ const questionBank = [
       "$$4\\text{C}_6\\text{H}_{12}\\text{O}_6$$",
       "$$3\\text{C}_6\\text{H}_{12}\\text{O}_6$$"
     ],
-    hint: "Contabiliza los átomos de carbono, hidrógeno y oxígeno en los reactivos para conservar la masa.",
+    hint: null,
     explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$. Al restar los $12\\text{ O}$ de las $6\\text{ O}_2$, el compuesto resultante debe contener exactamente $\\text{C}_6\\text{H}_{12}\\text{O}_6$ con coeficiente $1$."
   },
   {
     id: "m16-q02",
-    prompt: "Completa la siguiente oración:<br><br>En la biomasa natural se encuentran productos como el petróleo, el gas natural y los minerales que son recursos energéticos ________.",
-    type: "choice",
-    correct: "No renovables.",
+    prompt: "Completa la oración seleccionando el término correspondiente:",
+    type: "fill_blanks",
+    sentence: "En la biomasa natural se encuentran productos como el petróleo, el gas natural y los minerales que son recursos energéticos {0}.",
+    correctOrder: [
+      "no renovables"
+    ],
     distractors: [
-      "Renovables.",
-      "Artificiales.",
-      "Finitos."
+      "renovables",
+      "artificiales",
+      "finitos"
     ],
     hint: "Se trata de recursos cuyos depósitos tardaron millones de años en formarse y no se regeneran a escala humana.",
     explanation: "El petróleo, el gas natural y los minerales requieren escalas de tiempo geológicas para formarse, por lo que su tasa de consumo excede su reposición natural y se clasifican como no renovables."
   },
   {
     id: "m16-q03",
-    prompt: "¿Cómo se le llama a los beneficios que los seres humanos obtienen del medio ambiente y que pueden ser económicos o culturales?",
+    prompt: "¿Cómo se le llama a los beneficios que los seres humanos obtienen del medio ambiente, sean económicos o culturales?",
     type: "choice",
     correct: "Ecosistémicos.",
     distractors: [
@@ -85,19 +88,19 @@ const questionBank = [
     type: "match_columns",
     pairs: [
       {
-        left: "Recursos naturales",
+        left: "Recursos naturales.",
         right: "Los materiales de la tierra que se usan para sostener la vida."
       },
       {
-        left: "No renovables",
-        right: "Un ejemplo de ellos son los metales que no pueden reponerse."
+        left: "Recursos no renovables.",
+        right: "Son recursos que no pueden reponerse."
       },
       {
-        left: "Servicios ecosistémicos",
+        left: "Servicios ecosistémicos.",
         right: "Son los beneficios que las personas obtienen de los ecosistemas."
       },
       {
-        left: "Renovables",
+        left: "Recursos renovables.",
         right: "Son recursos que pueden reponerse en un nuevo ciclo natural."
       }
     ],
@@ -105,21 +108,8 @@ const questionBank = [
     explanation: "Los recursos naturales sostienen las necesidades biológicas y sociales; los renovables se regeneran cíclicamente; los no renovables existen en reservas finitas; y los servicios ecosistémicos representan los beneficios ecológicos obtenidos."
   },
   {
-    id: "m16-q05",
-    prompt: "¿Cómo realizas una crítica al tema de la sobreexplotación de los recursos maderables en los bosques mexicanos?",
-    type: "choice",
-    correct: "Analizas el tema y emites tu opinión con base en tus propios argumentos y los de otros autores.",
-    distractors: [
-      "Analizas los elementos principales y después expresas tu gusto o disgusto sobre el tema.",
-      "Buscas la opinión de otros autores sobre el mismo tema antes de leer el documento para tener una visión previa.",
-      "Empleas las críticas que otros autores reconocidos hayan hecho sobre el tema para garantizar su aprobación."
-    ],
-    hint: "Una postura crítica constructiva requiere fundamentar ideas propias contrastadas con fuentes sólidas.",
-    explanation: "El pensamiento crítico implica contrastar evidencia documental con razonamientos propios para construir una postura argumentada y objetiva."
-  },
-  {
     id: "m16-q06",
-    prompt: "Los límites de los recursos naturales sugieren reglas básicas en relación con los ritmos de desarrollo sustentables. Identifica cuál de las siguientes opciones forma parte para un desarrollo sustentable.",
+    prompt: "¿Qué opción forma parte de un desarrollo sustentable de acuerdo a los límites de los recursos naturales?",
     type: "choice",
     correct: "Ningún contaminante debe producirse a un ritmo superior al que pueda ser reciclado, neutralizado o absorbido por el medio ambiente.",
     distractors: [
@@ -127,18 +117,21 @@ const questionBank = [
       "Ningún recurso no renovable debe aprovecharse hasta sustituirlo por un recurso renovable utilizado de manera sustentable.",
       "Todos los recursos naturales deben utilizarse a un ritmo que corresponda con el que necesita la naturaleza para producirlos."
     ],
-    hint: "Recuerda las reglas de Herman Daly sobre la capacidad de asimilación de la biosfera.",
+    hint: null,
     explanation: "El principio de sustentabilidad ecológica estipula que la emisión de desechos y contaminantes debe mantenerse por debajo de la capacidad de asimilación y depuración natural del entorno."
   },
   {
     id: "m16-q07",
-    prompt: "Selecciona la opción que completa la siguiente oración:<br><br>Un ejemplo del concepto de sustentabilidad corresponde con ________.",
-    type: "choice",
-    correct: "Cultivos agrícolas diversificados según ciclos naturales.",
+    prompt: "Completa la oración seleccionando la práctica correspondiente:",
+    type: "fill_blanks",
+    sentence: "Un ejemplo del concepto de sustentabilidad corresponde con {0}.",
+    correctOrder: [
+      "cultivos agrícolas diversificados según ciclos naturales"
+    ],
     distractors: [
-      "La conversión de superficies para el cultivo agrícola.",
-      "La manipulación genética de especies agrícolas.",
-      "La tala de los bosques en superficies amplias."
+      "la conversión de superficies para el cultivo agrícola",
+      "la manipulación genética de especies agrícolas",
+      "la tala de los bosques en superficies amplias"
     ],
     hint: "Busca la práctica agrícola que respeta los tiempos ecológicos del suelo sin degradarlo.",
     explanation: "La rotación y diversificación de cultivos respeta los ciclos biogeoquímicos del suelo, evitando la erosión y preservando la fertilidad a largo plazo."
@@ -166,51 +159,25 @@ const questionBank = [
     type: "multi_select",
     correctAnswers: [
       "Revisar publicaciones científicas.",
-      "Citar a los autores cuando haga una investigación.",
-      "Parafrasear citas o textos para integrarlos a mi investigación."
+      "Citar a los autores cuando se haga una investigación.",
+      "Parafrasear citas o textos para integrarlos a una investigación."
     ],
     distractors: [
-      "Preguntar a personas de mi nivel de conocimiento y usar sus ideas.",
+      "Preguntar a personas del mismo nivel de conocimiento para usar sus ideas.",
       "Usar una tesis o trabajo ajeno como propio."
     ],
     hint: "La ética académica exige rigor en las fuentes consultadas y honestidad intelectual al reconocer créditos.",
     explanation: "Consultar fuentes arbitradas, dar crédito explícito mediante citas y sintetizar respetando la autoría son los pilares éticos de la investigación científica."
   },
   {
-    id: "m16-q10",
-    prompt: "¿Te autoevalúas durante la preparación del tema de biomasa?",
-    type: "choice",
-    correct: "Sí, porque te gusta ser autocrítico con tus estudios.",
-    distractors: [
-      "Sí, sólo si el material de estudio tiene guías con respuestas correctas.",
-      "No, porque el ritmo de trabajo es muy rápido y no da tiempo de hacerlo.",
-      "No, porque no tiene caso que tú mismo te califiques."
-    ],
-    hint: "La autoevaluación fomenta el aprendizaje autorregulado e independiente.",
-    explanation: "La metacognición y el monitoreo reflexivo de los propios avances permiten identificar áreas de oportunidad durante el estudio."
-  },
-  {
-    id: "m16-q11",
-    prompt: "Si te pidieran que apliques tus conocimientos sobre los servicios ecosistémicos a algún aspecto de tu vida diaria, ¿podrías hacerlo?",
-    type: "choice",
-    correct: "Sí, ya que tienes facilidad para relacionar los conceptos con tu vida diaria.",
-    distractors: [
-      "No, porque te cuesta mucho trabajo aplicar los conceptos a la realidad.",
-      "Sí, aunque te resulta difícil adaptar los conocimientos del tema a la vida diaria.",
-      "No, porque tú no te dedicas a eso y en tu vida diaria no tienen aplicación."
-    ],
-    hint: "Las acciones cotidianas como el consumo de agua, alimentos y energía están directamente vinculadas con el entorno.",
-    explanation: "El aprendizaje significativo se consolida cuando los conceptos biológicos y ecológicos se transfieren a las decisiones de consumo y convivencia cotidianas."
-  },
-  {
     id: "m16-q12",
-    prompt: "Selecciona la opción que completa la siguiente definición:<br><br>Bioética es:",
+    prompt: "¿Qué es la bioética?",
     type: "choice",
-    correct: "Investigar la forma como las decisiones humanas afectan al medio ambiente.",
+    correct: "La investigación de la forma en que las decisiones humanas afectan al medio ambiente.",
     distractors: [
-      "Realizar estudios de los seres vivos y sus interacciones con el entorno físico.",
-      "Apoyar a la ciencia y la tecnología para tratar enfermedades contagiosas.",
-      "Aplicar conocimientos de la Biología para realizar experimentos en seres vivos."
+      "El estudio de los seres vivos y sus interacciones con el entorno físico.",
+      "El esfuerzo de la ciencia y la tecnología para tratar enfermedades contagiosas.",
+      "La aplicación de conocimientos biológicos para realizar experimentos en seres vivos."
     ],
     hint: "Analiza el puente moral entre las intervenciones humanas y la preservación de la vida en el planeta.",
     explanation: "La bioética reflexiona sobre la responsabilidad de los actos tecnológicos y humanos sobre la vida, los seres vivos y los ecosistemas."
@@ -218,13 +185,19 @@ const questionBank = [
   {
     id: "m16-q13",
     topicId: "intro-redox",
-    prompt: "Analiza esta ecuación química a la que le faltan los coeficientes estequiométricos:<br>$$\\_\\text{CO}_2 + \\_\\text{H}_2\\text{O} \\rightarrow \\_\\text{C}_6\\text{H}_{12}\\text{O}_6 + \\_\\text{O}_2$$<br>¿Cuáles son los coeficientes de los compuestos participantes?",
-    type: "choice",
-    correct: "$$6, 6 \\rightarrow 1, 6$$",
+    prompt: "Completa la ecuación química arrastrando o seleccionando los coeficientes estequiométricos correspondientes:",
+    type: "fill_blanks",
+    sentence: "{0} $\\text{CO}_2$ + {1} $\\text{H}_2\\text{O} \\rightarrow$ {2} $\\text{C}_6\\text{H}_{12}\\text{O}_6$ + {3} $\\text{O}_2$",
+    correctOrder: [
+      "6",
+      "6",
+      "1",
+      "6"
+    ],
     distractors: [
-      "$$1, 1 \\rightarrow 1, 6$$",
-      "$$6, 1 \\rightarrow 6, 1$$",
-      "$$1, 6 \\rightarrow 1, 6$$"
+      "2",
+      "3",
+      "12"
     ],
     hint: "Se requieren $6\\text{ C}$ a la izquierda para formar una molécula de glucosa y $12\\text{ H}$ provenientes del agua.",
     explanation: "La reacción balanceada de fotosíntesis es:\n$$6\\text{CO}_2 + 6\\text{H}_2\\text{O} \\rightarrow 1\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$\nQuedando $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$ en ambos lados."
@@ -236,13 +209,13 @@ const questionBank = [
     type: "classification",
     categories: ["Coloide", "Disolución", "Suspensión"],
     items: [
-      { text: "Acero inoxidable", correct: "Disolución" },
-      { text: "Leche", correct: "Coloide" },
-      { text: "Refresco", correct: "Disolución" },
-      { text: "Jugo de frutas", correct: "Suspensión" },
-      { text: "Muestra de sangre", correct: "Coloide" },
-      { text: "Latón", correct: "Disolución" },
-      { text: "Aderezo para ensalada", correct: "Suspensión" }
+      { text: "Acero inoxidable.", correct: "Disolución" },
+      { text: "Leche.", correct: "Coloide" },
+      { text: "Refresco.", correct: "Disolución" },
+      { text: "Jugo de frutas.", correct: "Suspensión" },
+      { text: "Muestra de sangre.", correct: "Coloide" },
+      { text: "Latón.", correct: "Disolución" },
+      { text: "Aderezo para ensalada.", correct: "Suspensión" }
     ],
     hint: "Las aleaciones y bebidas sin sedimentos son disoluciones; las mezclas lechosas con efecto Tyndall son coloides; las mezclas con partículas visibles que sedimentan son suspensiones.",
     explanation: "El acero y el latón son disoluciones sólidas (aleaciones) y el refresco es una disolución líquida. La leche y la sangre son coloides con partículas intermedias que no sedimentan fácilmente. El jugo y el aderezo sedimentan al reposar, siendo suspensiones."
@@ -267,13 +240,13 @@ const questionBank = [
   },
   {
     id: "m16-q16",
-    prompt: "¿Cuál de las leyes de la termodinámica hace referencia a la dirección que deben llevar las transformaciones energéticas?",
+    prompt: "¿Cuál de las leyes de la termodinámica hace referencia a la dirección de las transformaciones energéticas?",
     type: "choice",
-    correct: "Segunda.",
+    correct: "Segunda Ley de la Termodinámica.",
     distractors: [
-      "Ley cero.",
-      "Primera.",
-      "Tercera."
+      "Ley Cero de la Termodinámica.",
+      "Primera Ley de la Termodinámica.",
+      "Tercera Ley de la Termodinámica."
     ],
     hint: "Establece que el calor fluye espontáneamente de los cuerpos calientes a los fríos y que la entropía del universo tiende a aumentar.",
     explanation: "La segunda ley de la termodinámica determina el sentido espontáneo de los procesos y la degradación irreversible de la energía en forma de entropía."
@@ -361,13 +334,13 @@ const questionBank = [
   {
     id: "m16-q22",
     topicId: "distribucion-especies",
-    prompt: "El lince ibérico (<i>Lynx pardinus</i>) es un mamífero carnívoro propio de la península ibérica y no se encuentra de forma natural en ninguna otra parte del mundo. ¿A qué categoría pertenece este felino?",
+    prompt: "El lince ibérico es un mamífero propio de la península Ibérica que no se encuentra de forma natural en ninguna otra parte del mundo. ¿A qué categoría pertenece esta especie?",
     type: "choice",
-    correct: "Endémico.",
+    correct: "Especie endémica.",
     distractors: [
-      "Nativo.",
-      "Invasor.",
-      "Exótico."
+      "Especie nativa.",
+      "Especie invasora.",
+      "Especie exótica."
     ],
     hint: "Se refiere a una especie cuya distribución geográfica está restringida de forma exclusiva a una región específica.",
     explanation: "Una especie endémica es aquella confinada exclusivamente a un área geográfica determinada y que no habita de manera silvestre en ningún otro lugar."
@@ -392,20 +365,20 @@ const questionBank = [
   },
   {
     id: "m16-q24",
-    prompt: "¿Qué se entiende por \"huella ecológica\"?",
+    prompt: "¿Qué es la huella ecológica?",
     type: "choice",
-    correct: "Impacto que ejerce una cierta comunidad, como familia, empresa, región, ciudad o país, sobre su entorno.",
+    correct: "El impacto que ejerce una comunidad, como una familia o una empresa, sobre su entorno.",
     distractors: [
-      "Procedimiento que regula la ejecución de obras o actividades para evitar o reducir efectos ambientales negativos.",
-      "Procedimiento para identificar, cuantificar y caracterizar los diferentes impactos ambientales potenciales.",
-      "Comunicación previa exigida por las leyes ambientales, sobre consecuencias en el ambiente predichas por una evaluación."
+      "El procedimiento que regula la ejecución de obras o actividades para evitar o reducir efectos ambientales negativos.",
+      "El procedimiento para identificar, cuantificar y caracterizar los diferentes impactos ambientales potenciales.",
+      "La comunicación previa exigida por las leyes ambientales, sobre consecuencias en el ambiente predichas por una evaluación."
     ],
     hint: "Mide el área biológicamente productiva necesaria para proveer los recursos y absorber los residuos generados.",
     explanation: "La huella ecológica mide la superficie ecológicamente productiva requerida para sostener las actividades de una población humana y neutralizar sus desechos."
   },
   {
     id: "m16-q25",
-    prompt: "Selecciona las actividades humanas que generan gases de efecto invernadero:",
+    prompt: "¿Cuáles son las principales actividades humanas que generan gases de efecto invernadero?",
     type: "multi_select",
     correctAnswers: [
       "Combustión de petróleo y carbón.",
@@ -449,7 +422,7 @@ const questionBank = [
   },
   {
     id: "m16-q28",
-    prompt: "Selecciona las acciones que han incrementado los problemas de contaminación ambiental:",
+    prompt: "¿Qué acciones han incrementado los problemas de contaminación ambiental?",
     type: "multi_select",
     correctAnswers: [
       "Uso de productos de corta duración.",
@@ -466,9 +439,9 @@ const questionBank = [
   },
   {
     id: "m16-q29",
-    prompt: "¿Cuál es la función de la capa de ozono?",
+    prompt: "¿Cuál es el propósito de la capa de ozono?",
     type: "choice",
-    correct: "Proteger de las radiaciones ultravioleta provenientes del Sol.",
+    correct: "Proteger la Tierra de las radiaciones ultravioleta provenientes del Sol.",
     distractors: [
       "Regular la temperatura terrestre impidiendo cambios bruscos.",
       "Transmitir el calor, la luz y permitir la formación de nubes.",
@@ -479,7 +452,7 @@ const questionBank = [
   },
   {
     id: "m16-q30",
-    prompt: "Selecciona las medidas que pueden reducir el impacto del cambio climático:",
+    prompt: "¿Qué medidas pueden ayudar a reducir el impacto del cambio climático?",
     type: "multi_select",
     correctAnswers: [
       "Promover el uso y fabricación de biogás.",
