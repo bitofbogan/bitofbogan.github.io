@@ -42,29 +42,26 @@ const questionBank = [
   {
     id: "m16-q01",
     topicId: "intro-redox",
-    prompt: "¿Cuál es la ecuación química para la glucosa?",
+    prompt: "¿Cuál es el coeficiente estequiométrico que balancea la molécula de glucosa ($\\text{C}_6\\text{H}_{12}\\text{O}_6$) en la siguiente reacción química?<br>$$6\\text{H}_2\\text{O} + 6\\text{CO}_2 \\rightarrow \\underline{\\quad}\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$",
     type: "choice",
-    correct: "$$\\text{C}_6\\text{H}_{12}\\text{O}_6$$",
+    correct: "1",
     distractors: [
-      "$$2\\text{C}_6\\text{H}_{12}\\text{O}_6$$",
-      "$$4\\text{C}_6\\text{H}_{12}\\text{O}_6$$",
-      "$$3\\text{C}_6\\text{H}_{12}\\text{O}_6$$"
+      "2",
+      "3",
+      "4"
     ],
-    hint: null,
-    explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$. Al restar los $12\\text{ O}$ de las $6\\text{ O}_2$, el compuesto resultante debe contener exactamente $\\text{C}_6\\text{H}_{12}\\text{O}_6$ con coeficiente $1$."
+    hint: "Contabiliza los átomos de carbono presentes en los reactivos ($6\\text{CO}_2$) y compáralos con los que aporta cada molécula de glucosa ($6\\text{ C}$).",
+    explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$[cite: 6]. Como una sola molécula de glucosa ya contiene $6\\text{ C}$, $12\\text{ H}$ y $6\\text{ O}$, y el oxígeno restante forma $6\\text{O}_2$ ($12\\text{ O}$), el coeficiente necesario es $1$[cite: 6]."
   },
   {
     id: "m16-q02",
-    prompt: "Completa la oración seleccionando el término correspondiente:",
-    type: "fill_blanks",
-    sentence: "En la biomasa natural se encuentran productos como el petróleo, el gas natural y los minerales que son recursos energéticos {0}.",
-    correctOrder: [
-      "no renovables"
-    ],
+    prompt: "¿Qué tipo de recursos energéticos son productos como el petróleo, el gas natural y los minerales?",
+    type: "choice",
+    correct: "No renovables.",
     distractors: [
-      "renovables",
-      "artificiales",
-      "finitos"
+      "Renovables.",
+      "Artificiales.",
+      "Finitos."
     ],
     hint: "Se trata de recursos cuyos depósitos tardaron millones de años en formarse y no se regeneran a escala humana.",
     explanation: "El petróleo, el gas natural y los minerales requieren escalas de tiempo geológicas para formarse, por lo que su tasa de consumo excede su reposición natural y se clasifican como no renovables."
@@ -122,36 +119,42 @@ const questionBank = [
   },
   {
     id: "m16-q07",
-    prompt: "Completa la oración seleccionando la práctica correspondiente:",
-    type: "fill_blanks",
-    sentence: "Un ejemplo del concepto de sustentabilidad corresponde con {0}.",
-    correctOrder: [
-      "cultivos agrícolas diversificados según ciclos naturales"
-    ],
+    prompt: "¿Qué opción representa un ejemplo de sustentabilidad?",
+    type: "choice",
+    correct: "Cultivos agrícolas diversificados según ciclos naturales.",
     distractors: [
-      "la conversión de superficies para el cultivo agrícola",
-      "la manipulación genética de especies agrícolas",
-      "la tala de los bosques en superficies amplias"
+      "La conversión de superficies para el cultivo agrícola.",
+      "La manipulación genética de especies agrícolas.",
+      "La tala de los bosques en superficies amplias."
     ],
     hint: "Busca la práctica agrícola que respeta los tiempos ecológicos del suelo sin degradarlo.",
     explanation: "La rotación y diversificación de cultivos respeta los ciclos biogeoquímicos del suelo, evitando la erosión y preservando la fertilidad a largo plazo."
   },
-  {
-    id: "m16-q08",
-    prompt: "Relaciona las características de los indicadores ambientales con su respectivo concepto:",
-    type: "match_columns",
-    pairs: [
-      {
-        left: "Indicador integrador del impacto humano sobre el entorno, evaluando recursos necesarios y residuos generados.",
-        right: "Huella ecológica."
-      },
-      {
-        left: "Indicador que cuantifica el valor de los recursos naturales y el costo de restauración ecológica y contaminación.",
-        right: "PIB verde."
-      }
+{
+    id: "m16-q08a",
+    prompt: "¿Qué indicador ambiental mide el impacto que ejerce una cierta comunidad humana sobre su entorno, considerando tanto los recursos necesarios como los residuos generados para el mantenimiento del modelo de producción y consumo de la comunidad?",
+    type: "choice",
+    correct: "Huella ecológica.",
+    distractors: [
+      "PIB verde.",
+      "Sustentabilidad ambiental.",
+      "Capacidad de carga."
     ],
-    hint: "Uno mide el área bioproductiva demandada y el otro ajusta las cuentas macroeconómicas con el costo ecológico.",
-    explanation: "La huella ecológica mide la demanda de biósfera requerida para sostener un estilo de vida, mientras que el PIB verde descuenta del producto interno el agotamiento ambiental y los costos de remediación."
+    hint: "Evalúa integralmente la demanda sobre la biosfera en términos de área bioproductiva para obtener insumos y asimilar residuos.",
+    explanation: "La huella ecológica mide el impacto total que genera una población sobre el entorno al cuantificar la superficie requerida para producir lo que consume y absorber sus desechos[cite: 13, 36]."
+  },
+  {
+    id: "m16-q08b",
+    prompt: "¿Qué indicador ambiental considera el valor de los recursos naturales, la capacidad del medio ambiente y el costo del tratamiento de la contaminación y la rehabilitación ecológica?",
+    type: "choice",
+    correct: "PIB verde.",
+    distractors: [
+      "Huella ecológica.",
+      "Sustentabilidad ambiental.",
+      "Índice de desarrollo humano."
+    ],
+    hint: "Es una métrica macroeconómica que descuenta del valor de producción los costos por agotamiento y daño ecológico.",
+    explanation: "El PIB verde ajusta las cuentas nacionales tradicionales incorporando la depreciación de los recursos naturales y los costos asociados a revertir o mitigar la contaminación[cite: 13, 36]."
   },
   {
     id: "m16-q09",
@@ -182,12 +185,12 @@ const questionBank = [
     hint: "Analiza el puente moral entre las intervenciones humanas y la preservación de la vida en el planeta.",
     explanation: "La bioética reflexiona sobre la responsabilidad de los actos tecnológicos y humanos sobre la vida, los seres vivos y los ecosistemas."
   },
-  {
+{
     id: "m16-q13",
     topicId: "intro-redox",
     prompt: "Completa la ecuación química arrastrando o seleccionando los coeficientes estequiométricos correspondientes:",
     type: "fill_blanks",
-    sentence: "{0} $\\text{CO}_2$ + {1} $\\text{H}_2\\text{O} \\rightarrow$ {2} $\\text{C}_6\\text{H}_{12}\\text{O}_6$ + {3} $\\text{O}_2$",
+    sentence: "<div class='overflow-x-auto whitespace-nowrap py-1 text-sm sm:text-base'>{0} $\\text{CO}_2$ + {1} $\\text{H}_2\\text{O} \\rightarrow$ {2} $\\text{C}_6\\text{H}_{12}\\text{O}_6$ + {3} $\\text{O}_2$</div>",
     correctOrder: [
       "6",
       "6",
@@ -205,7 +208,7 @@ const questionBank = [
   {
     id: "m16-q14",
     topicId: "dispersiones",
-    prompt: "De acuerdo al tamaño de partículas, las dispersiones presentan características diferentes. Clasifica las siguientes sustancias:",
+    prompt: "Clasifica las siguientes sustancias como coloides, suspensiones o disoluciones.",
     type: "classification",
     categories: ["Coloide", "Disolución", "Suspensión"],
     items: [
@@ -220,23 +223,23 @@ const questionBank = [
     hint: "Las aleaciones y bebidas sin sedimentos son disoluciones; las mezclas lechosas con efecto Tyndall son coloides; las mezclas con partículas visibles que sedimentan son suspensiones.",
     explanation: "El acero y el latón son disoluciones sólidas (aleaciones) y el refresco es una disolución líquida. La leche y la sangre son coloides con partículas intermedias que no sedimentan fácilmente. El jugo y el aderezo sedimentan al reposar, siendo suspensiones."
   },
-  {
+{
     id: "m16-q15",
     topicId: "balance-redox",
-    prompt: "Se requiere balancear la siguiente ecuación química por el método de oxidación-reducción:<br>$$\\_\\text{Al} + \\_\\text{Fe}_2\\text{O}_3 \\rightarrow \\_\\text{Al}_2\\text{O}_3 + \\_\\text{Fe}$$<br>Selecciona las aseveraciones que son verdaderas:",
+    prompt: "A partir de la siguiente reacción química balanceada por el método de oxidación-reducción:<br>$$2\\text{Al} + \\text{Fe}_2\\text{O}_3 \\rightarrow \\text{Al}_2\\text{O}_3 + 2\\text{Fe}$$<br>Selecciona las aseveraciones que son verdaderas:",
     type: "multi_select",
     correctAnswers: [
-      "El Fe se reduce porque gana 3 electrones.",
-      "El elemento que se oxida es Aluminio.",
-      "El Al cambió su número de oxidación de 0 a +3."
+      "El $\\text{Fe}$ se reduce porque gana 3 electrones.",
+      "El elemento que se oxida es el $\\text{Al}$.",
+      "El $\\text{Al}$ cambió su número de oxidación de $0$ a $+3$."
     ],
     distractors: [
-      "El agente reductor es el Fe.",
-      "El Fe cambió su número de oxidación de +3 a +2.",
-      "El agente oxidante es el Al."
+      "El agente reductor es el $\\text{Fe}$.",
+      "El $\\text{Fe}$ cambió su número de oxidación de $+3$ a $+2$.",
+      "El agente oxidante es el $\\text{Al}$."
     ],
     hint: "El hierro pasa de $+3$ a $0$ y el aluminio pasa de $0$ a $+3$.",
-    explanation: "El $\\text{Al}$ pasa de $0$ a $+3$ (pierde electrones, se oxida, agente reductor). El $\\text{Fe}$ pasa de $+3$ a $0$ (gana 3 electrones por átomo, se reduce, proviene del agente oxidante)."
+    explanation: "El $\\text{Al}$ pasa de $0$ a $+3$ (pierde electrones, se oxida y actúa como agente reductor). El $\\text{Fe}$ pasa de $+3$ a $0$ (gana 3 electrones por átomo, se reduce y proviene del agente oxidante)."
   },
   {
     id: "m16-q16",
@@ -253,7 +256,7 @@ const questionBank = [
   },
   {
     id: "m16-q17",
-    prompt: "Clasifica los siguientes ciclos biogeoquímicos según su reservorio principal:",
+    prompt: "Clasifica los ciclos biogeoquímicos como gaseosos, sedimentarios o mixtos.",
     type: "classification",
     categories: ["Gaseoso", "Sedimentario", "Mixto"],
     items: [
@@ -270,17 +273,16 @@ const questionBank = [
   {
     id: "m16-q18",
     topicId: "redox-troficas",
-    prompt: "Considerando la productividad neta en la relación trófica representada en la imagen, ¿qué cantidad de energía $[X]$ tendrá a su disposición un herbívoro si el vegetal elabora $6800\\text{ kcal}$ de tejido?",
-    image: "assets/m16_cadena_energia.png",
-    type: "choice",
-    correct: "$$X = 6800 \\times 20\\% = 1360\\text{ kcal}$$",
+    prompt: "¿Qué cantidad de energía tendrá a su disposición un herbívoro que consume un vegetal con 6800 kcal de tejido considerando que pierde el 70% de su energía en respiración y el 10% en desechos?",
+        type: "choice",
+    correct: "$$6800 \\times 20\\% = 1360\\text{ kcal}$$",
     distractors: [
-      "$$X = 6800 \\times 70\\% = 4760\\text{ kcal}$$",
-      "$$X = 6800 \\times 10\\% = 680\\text{ kcal}$$",
-      "$$X = 6800 \\times 80\\% = 5440\\text{ kcal}$$"
+      "$$6800 \\times 70\\% = 4760\\text{ kcal}$$",
+      "$$6800 \\times 10\\% = 680\\text{ kcal}$$",
+      "$$6800 \\times 80\\% = 5440\\text{ kcal}$$"
     ],
     hint: "El $70\\%$ se gasta en respiración y el $10\\%$ en desechos; únicamente el porcentaje restante pasa al tejido disponible para el consumidor.",
-    explanation: "De las $6800\\text{ kcal}$, se disipa el $70\\% + 10\\% = 80\\%$. El $20\\%$ remanente se almacena como biomasa disponible:\n$$\\begin{aligned} X &= 6800 \\times 0.20 \\\\[3pt] &= 1360\\text{ kcal} \\end{aligned}$$"
+    explanation: "De las $6800\\text{ kcal}$, se disipa el $70\\% + 10\\% = 80\\%$. El $20\\%$ remanente se almacena como biomasa disponible:\n$$\\begin{aligned} &6800 \\times 0.20 \\\\[3pt] &= 1360\\text{ kcal} \\end{aligned}$$"
   },
   {
     id: "m16-q19",
@@ -319,7 +321,7 @@ const questionBank = [
   },
   {
     id: "m16-q21",
-    prompt: "Con ayuda de una hoja de cálculo se construye la gráfica que representa la influencia de la temperatura en el crecimiento de dos especies vegetales. ¿Cuál de las siguientes aseveraciones se concluye a partir de la información gráfica?",
+    prompt: "¿Cuál de las siguientes afirmaciones se concluye a partir de la información en la gráfica?",
     image: "assets/m16_grafica_temperatura_cultivos.png",
     type: "choice",
     correct: "La cereza es una planta que no tiene crecimiento a los $30^{\\circ}\\text{C}$.",
@@ -395,20 +397,20 @@ const questionBank = [
   },
   {
     id: "m16-q26",
-    prompt: "En 2009 se modificó la ley para prohibir que comercios regalaran bolsas de plástico, aplicando multas a infractores. Atendiendo a que existen argumentos a favor y en contra, ¿cuál concepto involucra la reacción de los consumidores y de los comercios afectados? Justifica la respuesta.",
+    prompt: "De acuerdo a la Ley de Residuos Sólidos del Distrito Federal, se prohibió que los establecimientos regalaran bolsas de plástico a sus consumidores en 2009, bajo pena de multa en caso de no acatarse la disposición. ¿Qué concepto involucra la reacción de los consumidores y de los propietarios afectados?",
     type: "choice",
-    correct: "Responsabilidad social $\\rightarrow$ Se deben realizar acciones y tomar decisiones que conduzcan a impactos positivos.",
+    correct: "Responsabilidad social, porque se deben realizar acciones y tomar decisiones que conduzcan a impactos positivos.",
     distractors: [
-      "Bioética $\\rightarrow$ Porque se relaciona con las dimensiones éticas de la ciencia y las acciones en la salud humana.",
-      "Bioética $\\rightarrow$ Considera la distribución de bienes y servicios entre los miembros de la sociedad en un momento dado.",
-      "Responsabilidad social $\\rightarrow$ Se refiere a las formas con las cuales el ser humano se relaciona con su entorno."
+      "Bioética, porque se relaciona con las dimensiones éticas de la ciencia y las acciones en la salud humana.",
+      "Bioética, porque considera la distribución de bienes y servicios entre los miembros de la sociedad en un momento dado.",
+      "Responsabilidad social, porque se refiere a las formas con las cuales el ser humano se relaciona con su entorno."
     ],
     hint: "Evalúa el compromiso de organizaciones y ciudadanos con el impacto ambiental derivado de sus decisiones.",
     explanation: "La responsabilidad social implica que tanto los comercios como los ciudadanos adecuen sus prácticas cotidianas para generar beneficios colectivos y mitigar el daño ecológico."
   },
   {
     id: "m16-q27",
-    prompt: "Analiza la gráfica de sectores sobre el uso doméstico del agua potable. ¿Qué conclusión es correcta a partir de la información?",
+    prompt: "De acuerdo a la gráfica de sectores sobre el uso doméstico del agua potable, ¿qué conclusión es correcta?",
     image: "assets/m16_uso_domestico_agua.png",
     type: "choice",
     correct: "El consumo de agua en ducha, lavabo y lavado de ropa equivale al uso total en el excusado.",
