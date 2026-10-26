@@ -285,7 +285,7 @@ const questionBank = [
   {
     id: "m16-q19",
     topicId: "redox-troficas",
-    prompt: "Analiza la red trófica en la imagen. ¿Cuáles de los siguientes animales completan la red en el eslabón número 6 como depredadores tope?",
+    prompt: "¿Cuáles de los siguientes animales pueden completar la red trófica de la imagen?",
     image: "assets/m16_red_trofica.png",
     type: "multi_select",
     correctAnswers: [
@@ -298,8 +298,8 @@ const questionBank = [
       "Elefante.",
       "Cebra."
     ],
-    hint: "El eslabón 6 debe ser ocupado por grandes carnívoros que consuman a los consumidores previos.",
-    explanation: "El búfalo, el elefante y la cebra son herbívoros (consumidores primarios). Los felinos como la pantera, el tigre y el león son superdepredadores carnívoros que cierran la cadena trófica."
+    hint: "El eslabón debe ser ocupado por grandes carnívoros que consuman a los consumidores previos.",
+    explanation: "El búfalo, el elefante y la cebra son herbívoros (consumidores primarios). Los felinos como la pantera, el tigre y el león son depredadores carnívoros que cierran la cadena trófica."
   },
   {
     id: "m16-q20",
