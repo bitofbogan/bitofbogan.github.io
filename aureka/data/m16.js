@@ -39,16 +39,16 @@ const moduleInfo = {
 };
 
 const questionBank = [
-  {
+{
     id: "m16-q01",
     topicId: "intro-redox",
-    prompt: "¿Cuál es el coeficiente estequiométrico que balancea la molécula de glucosa ($\\text{C}_6\\text{H}_{12}\\text{O}_6$) en la siguiente reacción química?<br>$$6\\text{H}_2\\text{O} + 6\\text{CO}_2 \\rightarrow \\underline{\\quad}\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$",
+    prompt: "¿Cuál es el coeficiente estequiométrico que balancea la molécula de glucosa ($\\text{C}_6\\text{H}_{12}\\text{O}_6$) en la siguiente reacción química?<br>$$\\small\\begin{gathered} 6\\text{H}_2\\text{O} + 6\\text{CO}_2 \\\\[2pt] \\rightarrow \\underline{\\quad}\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2 \\end{gathered}$$",
     type: "choice",
-    correct: "1",
+    correct: "1.",
     distractors: [
-      "2",
-      "3",
-      "4"
+      "2.",
+      "3.",
+      "4."
     ],
     hint: "Contabiliza los átomos de carbono presentes en los reactivos ($6\\text{CO}_2$) y compáralos con los que aporta cada molécula de glucosa ($6\\text{ C}$).",
     explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$. Como una sola molécula de glucosa ya contiene $6\\text{ C}$, $12\\text{ H}$ y $6\\text{ O}$, y el oxígeno restante forma $6\\text{O}_2$ ($12\\text{ O}$), el coeficiente necesario es $1$."
@@ -72,9 +72,9 @@ const questionBank = [
     type: "choice",
     correct: "Ecosistémicos.",
     distractors: [
-      "Apoyo.",
-      "Regulación.",
-      "Aprovisionamiento."
+      "De apoyo.",
+      "Regulatorios.",
+      "De aprovisionamiento."
     ],
     hint: "Es el concepto general que agrupa a los servicios de aprovisionamiento, regulación, soporte y culturales.",
     explanation: "Los servicios ecosistémicos engloban todas las contribuciones directas e indirectas de los ecosistemas al bienestar humano."
@@ -226,7 +226,7 @@ const questionBank = [
 {
     id: "m16-q15",
     topicId: "balance-redox",
-    prompt: "A partir de la siguiente reacción química balanceada por el método de oxidación-reducción:<br>$$2\\text{Al} + \\text{Fe}_2\\text{O}_3 \\rightarrow \\text{Al}_2\\text{O}_3 + 2\\text{Fe}$$<br>Selecciona las aseveraciones que son verdaderas:",
+    prompt: "Selecciona las afirmaciones correctas a partir de la siguiente reacción química:<br>$$2\\text{Al} + \\text{Fe}_2\\text{O}_3 \\rightarrow \\text{Al}_2\\text{O}_3 + 2\\text{Fe}$$",
     type: "multi_select",
     correctAnswers: [
       "El $\\text{Fe}$ se reduce porque gana 3 electrones.",
@@ -450,7 +450,7 @@ const questionBank = [
       "Absorber y reflejar la energía solar en la corteza terrestre."
     ],
     hint: "El gas triatómico de oxígeno ($\\text{O}_3$) estratosférico filtra las ondas UV nocivas.",
-    explanation: "La capa de ozono en la estratosfera absorbe entre el $97\\%$ y el $99\\%$ de la radiación ultravioleta de alta frecuencia (UV-B y UV-C), evitando daños genéticos y celulares en los seres vivos."
+    explanation: "La capa de ozono en la estratosfera absorbe entre el $97\\%$ y el $99\\%$ de la radiación ultravioleta, evitando daños genéticos y celulares en los seres vivos."
   },
   {
     id: "m16-q30",
