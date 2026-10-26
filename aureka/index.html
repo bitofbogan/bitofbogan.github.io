@@ -378,7 +378,7 @@
       const iconEl = document.getElementById('themeIcon');
       if (!iconEl) return;
       const isDark = document.documentElement.classList.contains('dark');
-      iconEl.textContent = isDark ? '☀️️' : '🌙';
+      iconEl.textContent = isDark ? '☀' : '🌙';
     }
 
     function initQuiz() {
@@ -786,17 +786,25 @@
           text: text
         }));
 
+        // ENFOQUE B: Detección automática del tipo de contenido (fórmula/coeficiente vs. texto regular)
+        const maxTokenLength = allTokens.reduce((max, t) => {
+          const raw = String(t.text).replace(/<[^>]*>?/gm, '').trim();
+          return Math.max(max, raw.length);
+        }, 0);
+        const isCompact = maxTokenLength <= 4;
+        const slotWidthClass = isCompact ? "min-w-[42px] px-2 mx-0.5" : "min-w-[85px] px-3 mx-1";
+
         const slotsState = new Array(q.correctOrder.length).fill(null);
         let activeSlotIndex = 0;
 
         const sentenceBox = document.createElement("div");
-        sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 rounded-xl leading-loose text-base font-medium text-auge-dark dark:text-stone-200 select-none";
+        sentenceBox.className = "p-4 sm:p-5 bg-stone-50/70 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 rounded-xl leading-relaxed text-base font-medium text-auge-dark dark:text-stone-200 select-none";
 
         let formattedSentence = q.sentence;
         q.correctOrder.forEach((_, idx) => {
           formattedSentence = formattedSentence.replace(
             `{${idx}}`,
-            `<span class="blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-800/80 rounded-lg text-sm font-semibold align-middle cursor-pointer transition-all hover:border-auge-orange" data-slot="${idx}"></span>`
+            `<span class="blank-slot inline-flex items-center justify-center ${slotWidthClass} h-[34px] border-2 border-dashed border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-800/80 rounded-lg text-sm font-semibold align-middle cursor-pointer transition-all hover:border-auge-orange" data-slot="${idx}"></span>`
           );
         });
         sentenceBox.innerHTML = formattedSentence;
@@ -827,7 +835,7 @@
             if (!isUsed) {
               const chip = document.createElement("button");
               chip.type = "button";
-              chip.className = "token-chip px-3.5 py-1.5 bg-white dark:bg-stone-800 hover:bg-orange-50 dark:hover:bg-orange-950/40 border-2 border-stone-200 dark:border-stone-700 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark dark:text-stone-200 shadow-sm active:scale-95 transition-all";
+              chip.className = `token-chip ${isCompact ? 'px-3 py-1.5 min-w-[38px] text-center' : 'px-3.5 py-1.5'} bg-white dark:bg-stone-800 hover:bg-orange-50 dark:hover:bg-orange-950/40 border-2 border-stone-200 dark:border-stone-700 hover:border-auge-orange rounded-lg text-sm font-semibold text-auge-dark dark:text-stone-200 shadow-sm active:scale-95 transition-all`;
               chip.innerHTML = token.text;
               chip.onclick = () => placeOrReplaceToken(token);
               poolContainer.appendChild(chip);
@@ -844,7 +852,7 @@
             const isActive = slotIdx === activeSlotIndex;
 
             if (currentToken) {
-              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-auge-orange bg-orange-50 dark:bg-orange-950/50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
+              el.className = `blank-slot inline-flex items-center justify-center ${slotWidthClass} h-[34px] border-2 border-auge-orange bg-orange-50 dark:bg-orange-950/50 text-auge-orange font-bold rounded-lg text-sm cursor-pointer shadow-sm animate-pop align-middle ${isActive ? 'ring-2 ring-auge-orange/30' : ''}`;
               el.innerHTML = `<span>${currentToken.text}</span>`;
               el.onclick = () => {
                 slotsState[slotIdx] = null;
@@ -853,12 +861,13 @@
                 renderPool();
               };
             } else {
-              el.className = `blank-slot inline-flex items-center justify-center min-w-[90px] h-[34px] px-3 mx-1 border-2 border-dashed rounded-lg text-sm align-middle cursor-pointer transition-all ${
+              el.className = `blank-slot inline-flex items-center justify-center ${slotWidthClass} h-[34px] border-2 border-dashed rounded-lg text-sm align-middle cursor-pointer transition-all ${
                 isActive 
                   ? 'border-auge-orange bg-orange-50/40 dark:bg-orange-950/30 ring-2 ring-orange-200 dark:ring-orange-900 shadow-sm' 
                   : 'border-stone-300 dark:border-stone-700 bg-white/90 dark:bg-stone-800/80 hover:border-stone-400'
               }`;
-              el.innerHTML = `<span class="w-6 h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200 dark:bg-stone-700'}"></span>`;
+              const barWidth = isCompact ? 'w-3' : 'w-6';
+              el.innerHTML = `<span class="${barWidth} h-0.5 rounded-full ${isActive ? 'bg-auge-orange/60' : 'bg-stone-200 dark:bg-stone-700'}"></span>`;
               el.onclick = () => {
                 activeSlotIndex = slotIdx;
                 updateSlotsDisplay();
@@ -1286,11 +1295,11 @@
       slotElements.forEach((el, idx) => {
         const isSlotCorrect = slotsState[idx].text === question.correctOrder[idx];
         if (isSlotCorrect) {
-          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-950 dark:text-emerald-200 font-black rounded-lg text-sm shadow-sm align-middle";
-          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-emerald-600 dark:text-emerald-400">✓</span>`;
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[38px] px-2 py-1 mx-0.5 border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-950 dark:text-emerald-200 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-emerald-600 dark:text-emerald-400 text-xs">✓</span>`;
         } else {
-          el.className = "blank-slot inline-flex items-center justify-center min-w-[80px] px-2.5 py-1 mx-1 border-2 border-red-500 bg-red-50 dark:bg-red-950/50 text-red-950 dark:text-red-200 line-through decoration-red-500 font-black rounded-lg text-sm shadow-sm align-middle";
-          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-red-600 dark:text-red-400">✕</span>`;
+          el.className = "blank-slot inline-flex items-center justify-center min-w-[38px] px-2 py-1 mx-0.5 border-2 border-red-500 bg-red-50 dark:bg-red-950/50 text-red-950 dark:text-red-200 line-through decoration-red-500 font-black rounded-lg text-sm shadow-sm align-middle";
+          el.innerHTML = `${slotsState[idx].text} <span class="ml-1 text-red-600 dark:text-red-400 text-xs">✕</span>`;
         }
       });
 
