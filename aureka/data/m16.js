@@ -51,7 +51,7 @@ const questionBank = [
       "4"
     ],
     hint: "Contabiliza los átomos de carbono presentes en los reactivos ($6\\text{CO}_2$) y compáralos con los que aporta cada molécula de glucosa ($6\\text{ C}$).",
-    explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$[cite: 6]. Como una sola molécula de glucosa ya contiene $6\\text{ C}$, $12\\text{ H}$ y $6\\text{ O}$, y el oxígeno restante forma $6\\text{O}_2$ ($12\\text{ O}$), el coeficiente necesario es $1$[cite: 6]."
+    explanation: "En los reactivos hay $6\\text{ C}$, $12\\text{ H}$ y $18\\text{ O}$. Como una sola molécula de glucosa ya contiene $6\\text{ C}$, $12\\text{ H}$ y $6\\text{ O}$, y el oxígeno restante forma $6\\text{O}_2$ ($12\\text{ O}$), el coeficiente necesario es $1$."
   },
   {
     id: "m16-q02",
@@ -141,7 +141,7 @@ const questionBank = [
       "Capacidad de carga."
     ],
     hint: "Evalúa integralmente la demanda sobre la biosfera en términos de área bioproductiva para obtener insumos y asimilar residuos.",
-    explanation: "La huella ecológica mide el impacto total que genera una población sobre el entorno al cuantificar la superficie requerida para producir lo que consume y absorber sus desechos[cite: 13, 36]."
+    explanation: "La huella ecológica mide el impacto total que genera una población sobre el entorno al cuantificar la superficie requerida para producir lo que consume y absorber sus desechos."
   },
   {
     id: "m16-q08b",
@@ -154,7 +154,7 @@ const questionBank = [
       "Índice de desarrollo humano."
     ],
     hint: "Es una métrica macroeconómica que descuenta del valor de producción los costos por agotamiento y daño ecológico.",
-    explanation: "El PIB verde ajusta las cuentas nacionales tradicionales incorporando la depreciación de los recursos naturales y los costos asociados a revertir o mitigar la contaminación[cite: 13, 36]."
+    explanation: "El PIB verde ajusta las cuentas nacionales tradicionales incorporando la depreciación de los recursos naturales y los costos asociados a revertir o mitigar la contaminación."
   },
   {
     id: "m16-q09",
