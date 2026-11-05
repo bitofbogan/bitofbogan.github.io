@@ -40,27 +40,14 @@ const questionBank = [
     id: "m02-q03",
     prompt: "¿Cuál de los siguientes sucesos NO corresponde a un fenómeno natural y por qué?",
     type: "choice",
-    correct: "Marea negra, porque se produce como resultado del derrame de petróleo.",
+    correct: "La marea negra, porque se produce como resultado del derrame de petróleo.",
     distractors: [
-      "Cambio climático, porque ha sufrido cambios a lo largo del tiempo.",
-      "Aurora boreal, es producto del choque de la energía solar con la ionosfera.",
-      "Formación de icebergs, ya que es un fenómeno que ocurre espontáneamente."
+      "El cambio climático, porque ha sufrido cambios a lo largo del tiempo.",
+      "La aurora boreal, porque es producto del choque de la energía solar con la ionosfera.",
+      "La formación de icebergs, ya que es un fenómeno que ocurre espontáneamente."
     ],
     hint: "Identifica el evento que deriva directamente de un accidente o actividad industrial humana y no de las leyes de la naturaleza.",
     explanation: "La marea negra es un desastre antropogénico causado por el vertido accidental o negligente de hidrocarburos, a diferencia de los procesos geológicos o atmosféricos propios de la Tierra."
-  },
-  {
-    id: "m02-q04",
-    prompt: "Una amiga que está cursando el bachillerato igual que tú, tiene dudas sobre el manejo de un concepto dentro de su material de consulta, por lo que te pide ayuda. ¿Qué recomendación le harías?",
-    type: "choice",
-    correct: "Cotejar contra un libro, revista, publicación o página de Internet realizada por una institución experta en el área.",
-    distractors: [
-      "Pedir ayuda académica profesional a algún experto en la materia.",
-      "Evitar angustiarse para que trabaje tranquilo y no induzca errores en su material.",
-      "Publicar en algún foro y ayudas que hay en Internet para hacer tareas, para que otras personas lo asesoren."
-    ],
-    hint: "La autonomía en el estudio se fortalece al verificar la información en fuentes avaladas y rigurosas.",
-    explanation: "Contrastar las definiciones en fuentes académicas e institucionales permite validar el conocimiento de forma autónoma, confiable y verificable."
   },
   {
     id: "m02-q05",
@@ -68,16 +55,16 @@ const questionBank = [
     type: "match_columns",
     pairs: [
       {
-        left: "Esquemas",
-        right: "Presentar en solo una vista las ideas principales de un texto y la relación entre ellas."
+        left: "Esquema.",
+        right: "Presenta visualmente las ideas principales de un texto y la relación entre ellas."
       },
       {
         left: "Síntesis",
-        right: "Expresar con sus propias palabras las ideas principales de un texto."
+        right: "Expresa con palabras propias las ideas principales de un texto."
       },
       {
         left: "Resumen",
-        right: "Recabar las ideas principales de un texto de forma breve."
+        right: "Recaba las ideas principales de un texto de forma breve."
       }
     ],
     hint: "El esquema organiza visualmente la jerarquía; la síntesis reelabora con vocabulario personal; el resumen extrae las ideas condensadas del texto original.",
@@ -99,9 +86,9 @@ const questionBank = [
   },
   {
     id: "m02-q07",
-    prompt: "Identifica a qué clasificación corresponden las palabras subrayadas en la siguiente frase e indica por qué:<br><br><i>La <u>Laptop</u> que opera con el sistema <u>Java</u> tiene dañado el <u>Microchip</u>.</i>",
+    prompt: "¿Como se denominan las palabras subrayadas en la siguiente frase?<br><br><i>La <u>laptop</u> que opera con el sistema <u>Java</u> tiene dañado el <u>microchip</u>.</i>",
     type: "choice",
-    correct: "Tecnicismos, porque son palabras que poseen un significado concreto y específico dentro del ámbito de la tecnología.",
+    correct: "Tecnicismos, porque son palabras que poseen un significado concreto y específico dentro de algun ámbito.",
     distractors: [
       "Modismos, porque son palabras o términos especializados que toman sentido dentro del área de aplicación.",
       "Anglicismos, porque son palabras adoptadas del idioma inglés ante la falta del vocablo o término específico en español.",
@@ -128,43 +115,43 @@ const questionBank = [
     prompt: "Ordena los pasos para redactar un suceso histórico:",
     type: "drag_order",
     correctOrder: [
-      "Planear",
-      "Redactar",
-      "Revisar",
-      "Reescribir"
+      "Planear.",
+      "Redactar.",
+      "Revisar.",
+      "Reescribir."
     ],
     hint: "Inicia con la delimitación y recopilación de ideas, plasma el borrador, examina errores y genera la versión final pulida.",
     explanation: "El proceso canónico de redacción textual comprende: 1) Planear (definir objetivos y estructura), 2) Redactar (elaboración del primer borrador), 3) Revisar (detección de inconsistencias) y 4) Reescribir (edición final)."
   },
   {
     id: "m02-q10",
-    prompt: "¿Por qué es importante distinguir la expresión ideológica del autor en un material consultado en cualquier referencia, bibliografía o página web?",
+    prompt: "¿Por qué es importante distinguir la expresión ideológica del autor en un material de consulta?",
     type: "choice",
-    correct: "Determina el tratamiento de la información.",
+    correct: "Porque determina el tratamiento de la información.",
     distractors: [
-      "Genera una visión propia.",
-      "Mejora la calidad del ensayo.",
-      "Valida la fuente de información."
+      "Porque genera una visión propia.",
+      "Porque mejora la calidad del ensayo.",
+      "Porque valida la fuente de información."
     ],
     hint: "La postura política, social o filosófica del autor influye directamente en el ángulo con el que se interpretan y presentan los hechos.",
     explanation: "Reconocer la postura ideológica del emisor permite entender desde qué marco interpretativo selecciona datos, formula argumentos y orienta su mensaje."
   },
   {
     id: "m02-q11",
-    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto, pero en palabras del investigador, sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
+    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto, pero en palabras del investigador y sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
     type: "choice",
-    correct: "De paráfrasis - sin comillas.",
+    correct: "De paráfrasis y sin comillas.",
     distractors: [
-      "Mixta - entre comillas.",
-      "De comentario - entre comillas.",
-      "Textual - entre paréntesis."
+      "Mixta y entre comillas.",
+      "De comentario y entre comillas.",
+      "Textual y entre paréntesis."
     ],
     hint: "Cuando se reproduce con vocabulario propio no se usan comillas, a diferencia de la cita textual literal.",
     explanation: "La ficha de paráfrasis reescribe el contenido fuente con redacción propia preservando el sentido original; al no ser una cita textual, no lleva comillas."
   },
   {
     id: "m02-q12",
-    prompt: "¿Cuál es el tratado celebrado por varios países con el propósito de generar medidas que desaceleren el cambio climático?",
+    prompt: "¿Como se llama el tratado internacional con el propósito de generar medidas que desaceleren el cambio climático?",
     type: "choice",
     correct: "Protocolo de Kioto.",
     distractors: [
@@ -177,20 +164,20 @@ const questionBank = [
   },
   {
     id: "m02-q13",
-    prompt: "¿Cómo define la antropóloga mexicana Gloria Delgado un hecho histórico?",
+    prompt: "¿Cómo define se define un hecho histórico antropologicamente?",
     type: "choice",
-    correct: "Construcción intelectual de la realidad social.",
+    correct: "Como una construcción intelectual de la realidad social.",
     distractors: [
-      "Descripción de la realidad libre de interpretaciones.",
-      "Invención o creación artística de un investigador.",
-      "Narración objetiva de acontecimientos."
+      "Como una descripción de la realidad libre de interpretaciones.",
+      "Como una invención o creación artística de un investigador.",
+      "Como una narración objetiva de acontecimientos."
     ],
     hint: "Enfatiza que el hecho histórico no es un dato aislado, sino una interpretación analítica elaborada por el historiador a partir de fuentes.",
-    explanation: "Para Gloria Delgado, el hecho histórico constituye una construcción intelectual que el especialista edifica al analizar críticamente los testimonios del pasado dentro de un contexto social."
+    explanation: "De acuerdo a la antropologa Gloria Delgado, el hecho histórico constituye una construcción intelectual que el especialista edifica al analizar críticamente los testimonios del pasado dentro de un contexto social."
   },
   {
     id: "m02-q14",
-    prompt: "Para hacer una investigación documental sobre el uso de la tecnología para elaborar un ensayo, selecciona cuáles de las siguientes fuentes pueden usarse considerando que estas deben ser confiables:",
+    prompt: "¿Cuales de las siguientes fuentes son confiables al momento de hacer una investigacion documental?",
     type: "multi_select",
     correctAnswers: [
       "Notas informativas.",
@@ -198,7 +185,8 @@ const questionBank = [
       "Artículos de opinión."
     ],
     distractors: [
-      "Chats o foros de opinión."
+      "Salas de chat.",
+    "Foros de opinión."
     ],
     hint: "Los foros y salas de conversación carecen de filtro editorial y rigor académico de autoría verificada.",
     explanation: "Las notas informativas, los textos de divulgación científica y los artículos de opinión firmados por especialistas cuentan con respaldo editorial, a diferencia de los foros abiertos donde prima la especulación anónima."
@@ -218,7 +206,7 @@ const questionBank = [
   },
   {
     id: "m02-q16",
-    prompt: "Lee el siguiente enunciado e identifica cuál de las opciones NO sirve para refutar la idea planteada:<br><br><i>Con el uso de la tecnología se afecta la convivencia del ser humano con el medio natural y se altera el funcionamiento de los ecosistemas.</i>",
+    prompt: "¿Cuál de las siguientes opciones NO sirve para refutar la siguiente idea planteada?<br><br><i>Con el uso de la tecnología se afecta la convivencia del ser humano con el medio natural y se altera el funcionamiento de los ecosistemas.</i>",
     type: "choice",
     correct: "La actividad tecnológica favorece el crecimiento del consumismo dentro de la sociedad, al brindar productos que cubren nuevos estándares de bienestar.",
     distractors: [
@@ -244,20 +232,20 @@ const questionBank = [
   },
   {
     id: "m02-q18",
-    prompt: "Ordena los pasos a seguir en una investigación documental:",
+    prompt: "Ordena los pasos a seguir en una investigación documental.",
     type: "drag_order",
     correctOrder: [
-      "Elegir un tema específico",
-      "Buscar bibliografía especializada",
-      "Elaborar un esquema o bosquejo del contenido de la investigación",
-      "Realizar fichas bibliográficas y clasificar las obras por orden de importancia"
+      "Elegir un tema específico.",
+      "Buscar bibliografía especializada.",
+      "Elaborar un bosquejo del contenido de la investigación.",
+      "Realizar fichas bibliográficas y clasificar las obras por orden de importancia."
     ],
     hint: "Inicia con la delimitación temática, continúa con la localización de fuentes y procede al diseño del esquema previo a la catalogación sistemática.",
     explanation: "La metodología documental parte de la delimitación temática (1), búsqueda de fuentes pertinentes (2), organización del esquema preliminar (3) y registro analítico en fichas (4)."
   },
   {
     id: "m02-q19",
-    prompt: "Según los historiadores, ¿en qué momento es preferible hacer la interpretación de un suceso histórico: (a) de inmediato o (b) tiempo después?",
+    prompt: "De acuerdo con los historiadores, ¿en qué momento es preferible hacer la interpretación de un suceso histórico?",
     type: "choice",
     correct: "Tiempo después, porque se tienen más elementos para ser interpretados.",
     distractors: [
@@ -283,20 +271,20 @@ const questionBank = [
   },
   {
     id: "m02-q21",
-    prompt: "Relaciona los ejemplos con el tipo de conjunción o nexo al que corresponden:",
+    prompt: "Relaciona los ejemplos con el tipo de conjunción o nexo al que corresponden.",
     type: "match_columns",
     pairs: [
       {
-        left: "Después de todo, al mismo tiempo, pero",
-        right: "Contraste"
+        left: "Después de todo, al mismo tiempo, pero.",
+        right: "Contraste."
       },
       {
-        left: "En conclusión, en resumen, por lo tanto",
-        right: "Síntesis"
+        left: "En conclusión, en resumen, por lo tanto.",
+        right: "Síntesis."
       },
       {
-        left: "Después de, antes de, inmediatamente",
-        right: "Tiempo"
+        left: "Después de, antes de, inmediatamente.",
+        right: "Tiempo."
       }
     ],
     hint: "Uno establece oposición o salvedad; otro clausura o resume lo expuesto; y el último sitúa cronológicamente las acciones.",
@@ -304,7 +292,7 @@ const questionBank = [
   },
   {
     id: "m02-q22",
-    prompt: "El cambio climático se ha convertido en un problema muy serio por sus consecuencias ambientales. Selecciona en qué otras áreas se pueden observar efectos y consecuencias debido a este problema:",
+    prompt: "¿En que aspectos se pueden observar los efectos y consecuencias del cambio climatico?",
     type: "multi_select",
     correctAnswers: [
       "Económico.",
@@ -336,7 +324,7 @@ const questionBank = [
     type: "choice",
     correct: "Es todo cambio que sucede por sí solo sin la intervención del hombre.",
     distractors: [
-      "Es el suceso en el cual las sustancias 'cambian' al combinarse entre sí.",
+      "Es el suceso en el cual las sustancias cambian al combinarse entre sí.",
       "Es un hecho provocado por el hombre susceptible de interpretación científica.",
       "Es aquél que no cambia la composición de ninguna sustancia y es reversible."
     ],
@@ -345,7 +333,7 @@ const questionBank = [
   },
   {
     id: "m02-q25",
-    prompt: "¿Cómo se denomina al mundo social, económico, político y cultural en el que se desenvuelven los historiadores al momento de escribir la historia?",
+    prompt: "¿Cómo se denomina al mundo social, económico, político y cultural en el que se desenvuelven los autores al momento de escribir la historia?",
     type: "choice",
     correct: "Contexto de producción.",
     distractors: [
@@ -384,7 +372,7 @@ const questionBank = [
   },
   {
     id: "m02-q28",
-    prompt: "Selecciona los criterios que se deben seguir para garantizar la confiabilidad de fuentes o referencias electrónicas:",
+    prompt: "¿Que criterios deben seguirse para garantizar la confiabilidad de fuentes o referencias electrónicas?",
     type: "multi_select",
     correctAnswers: [
       "Origen de sitios especializados.",
@@ -392,16 +380,16 @@ const questionBank = [
       "Debe acreditar la identidad del autor."
     ],
     distractors: [
-      "Producido por instituciones internacionales.",
+      "Debe ser producido por instituciones internacionales.",
       "No debe ser antiguos u obsoletos.",
-      "Producido por instituciones públicas nacionales."
+      "Debe ser producido por instituciones públicas nacionales."
     ],
     hint: "La validez exige autoría identificable, respaldo editorial de expertos y plataformas no editables por usuarios anónimos.",
     explanation: "La confiabilidad digital demanda sitios especializados con arbitraje, autoría reconocida y restricción de edición colaborativa abierta para garantizar la integridad académica."
   },
   {
     id: "m02-q29",
-    prompt: "Identifica las características primarias de los textos narrativos:",
+    prompt: "¿Cuales son las características principales de los textos narrativos?",
     type: "multi_select",
     correctAnswers: [
       "Tiempo y espacio.",
