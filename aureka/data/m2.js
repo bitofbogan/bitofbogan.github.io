@@ -25,8 +25,7 @@ const questionBank = [
   },
   {
     id: "m02-q02",
-    prompt: "¿Qué tipo de modo discursivo emplea el autor del siguiente texto? ¿Por qué?",
-    image: "assets/m02_amor_en_redes.png",
+    prompt: "¿Qué tipo de modo discursivo emplea el autor del siguiente texto? ¿Por qué?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">El amor en las redes sociales</b></div><p class=\"mb-2.5\">Delicada, detallista, amorosa con los animales, divertida, inteligente y con gusto de viajar. La que suscribe estas cualidades es una mujer interesada en conocer personas y, si hay suerte, encontrar en el ciberespacio a su \"media naranja\". Como ella, miles de personas en el mundo ingresan diariamente a diversas redes sociales para crear su perfil y establecer contacto con usuarios de otros lugares ya sea para concertar una cita casual, sexual o crear una relación amistosa o de pareja.</p><p class=\"mb-2.5\">Con la llegada de las redes sociales y la popularidad adquirida por Internet, millones de personas en el mundo están en búsqueda del amor, adaptándose a nuevas herramientas para conseguirlo ya sea a través de <i>emails</i>, poemas, canciones, videos, tarjetas virtuales, <i>podcast</i>, entre otros.</p><p class=\"mb-2.5\">El amor, el ligue y el flirteo utilizan nuevas herramientas y toda persona puede expresarse y mantenerse en contacto, compartir noticias, divertirse, jugar y sobre todo conocer a otras personas. El mundo del ciberespacio provee al usuario de una máscara, atrás del monitor ya no existe espacio para los tímidos. Se amplían las posibilidades.</p><p>Recientes estudios demuestran que la gente sociable en el mundo real también tiene más contactos en páginas virtuales; por ello distintos usuarios inundan las redes sociales, fortalecen y amplían sus amistades o contactos profesionales.</p></div>",
     type: "choice",
     correct: "Descriptivo, porque da una visión de las formas afectivas de relacionarse por Internet.",
     distractors: [
@@ -35,7 +34,7 @@ const questionBank = [
       "Descriptivo, porque desarrolla ideas sobre las relaciones afectivas en Internet tratando de convencer al lector."
     ],
     hint: "El texto detalla características, recursos y dinámicas de interacción virtual sin relatar una anécdota personal ni buscar persuadir.",
-    explanation: "El autor emplea un modo discursivo descriptivo porque expone y caracteriza objetivamente cómo las plataformas digitales sirven de canal para los vínculos afectivos contemporáneos."
+    explanation: "El autor emplea un modo descriptivo porque expone objetivamente cómo las plataformas digitales sirven de canal para los vínculos afectivos, sin intentar convencer al lector."
   },
   {
     id: "m02-q03",
@@ -44,11 +43,11 @@ const questionBank = [
     correct: "La marea negra, porque se produce como resultado del derrame de petróleo, que es una actividad exclusivamente humana.",
     distractors: [
       "El cambio climático, porque ha sufrido cambios a lo largo del tiempo.",
-      "La aurora boreal, porque es producto del choque de la energía solar con la ionósfera.",
+      "La aurora boreal, porque es producto del choque de la energía solar con la ionosfera.",
       "La formación de icebergs, ya que es un fenómeno que ocurre espontáneamente sin la intervención del hombre."
     ],
     hint: "Identifica el evento que deriva directamente de un accidente o actividad industrial humana y no de las leyes de la naturaleza.",
-    explanation: "La marea negra es un desastre antropogénico causado por el vertido accidental o negligente de hidrocarburos, a diferencia de los procesos geológicos o atmosféricos propios de la Tierra."
+    explanation: "La marea negra es un desastre causado por el derrame de petróleo, provocado únicamente por seres humanos y no de forma natural."
   },
   {
     id: "m02-q05",
@@ -60,20 +59,20 @@ const questionBank = [
         right: "Presenta visualmente las ideas principales de un texto y la relación entre ellas."
       },
       {
-        left: "Síntesis",
-        right: "Recaba las ideas principales de un texto de forma breve."          
+        left: "Síntesis.",
+        right: "Recaba las ideas principales de un texto de forma breve."
       },
       {
-        left: "Resumen",
+        left: "Resumen.",
         right: "Expresa con palabras propias las ideas principales de un texto."
       }
     ],
-    hint: "El esquema organiza visualmente la jerarquía; el resumen reelabora con vocabulario personal; la síntesis extrae las ideas condensadas del texto original.",
-    explanation: "Los esquemas ofrecen una panorámica gráfica y conceptual del contenido; el resumen interpreta y reconstruye con lenguaje propio; y la síntesis abrevia las proposiciones esenciales del texto fuente sin cambiar el lenguaje."
+    hint: "El esquema organiza; el resumen reescribe; la síntesis condensa.",
+    explanation: "Los esquemas ofrecen una visión gráfica del contenido; el resumen reconstruye con lenguaje propio; y la síntesis abrevia las proposiciones del texto sin cambiar el lenguaje."
   },
   {
     id: "m02-q06",
-    prompt: "Se estableció un plan de trabajo en una universidad para aumentar el dominio de herramientas tecnológicas en los estudiantes. De acuerdo a la gráfica de resultados, identifica la afirmación que no coincide con los datos.",
+    prompt: "Se estableció un plan de trabajo en una universidad para aumentar el dominio de herramientas tecnológicas en los estudiantes. De acuerdo con la gráfica de resultados, identifica la afirmación que no coincide con los datos.",
     image: "assets/m02_grafica_plan_trabajo.png",
     type: "choice",
     correct: "El dominio de la tecnología inicial de hombres y mujeres se duplicó al término del proyecto.",
@@ -83,20 +82,20 @@ const questionBank = [
       "Hombres y mujeres iniciaron las actividades del proyecto con un mismo nivel de dominio."
     ],
     hint: null,
-    explanation: "La gráfica muestra que la trayectoria de los hombres superó de forma consistente a la de las mujeres en la mayor parte del seguimiento, por lo que es falso afirmar que predominó un mayor dominio en el grupo femenino."
+    explanation: "La gráfica muestra a ambos géneros partiendo del mismo punto y llegando a un nivel mucho mayor que el doble inicial."
   },
   {
     id: "m02-q07",
-    prompt: "¿Como se denominan las palabras subrayadas en la siguiente frase?<br><br><i>La <u>laptop</u> que opera con el sistema <u>Java</u> tiene dañado el <u>microchip</u>.</i>",
+    prompt: "¿Cómo se denominan las palabras subrayadas en la siguiente frase?<br><br><i>La <u>laptop</u> que opera con el sistema <u>Java</u> tiene dañado el <u>microchip</u>.</i>",
     type: "choice",
-    correct: "Tecnicismos, porque son palabras que poseen un significado concreto y específico dentro de algun ámbito.",
+    correct: "Tecnicismos, porque son palabras que poseen un significado concreto y específico dentro de algún ámbito.",
     distractors: [
       "Modismos, porque son palabras o términos especializados que toman sentido dentro del área de aplicación.",
       "Anglicismos, porque son palabras adoptadas del idioma inglés ante la falta del vocablo o término específico en español.",
       "Extranjerismos, porque son vocablos o expresiones tomados del inglés para llenar un vacío semántico."
     ],
     hint: "Corresponden a la jerga y vocabulario científico y tecnológico con denotación exacta en la informática.",
-    explanation: "Términos como laptop, Java y microchip funcionan como tecnicismos ya que designan conceptos y herramientas especializadas de la computación y la ingeniería."
+    explanation: "Términos como <i>laptop</i>, <i>Java</i> y <i>microchip</i> funcionan como tecnicismos ya que designan conceptos especializados."
   },
   {
     id: "m02-q08",
@@ -109,7 +108,7 @@ const questionBank = [
       "Está dirigido al público en general sin una temática específica."
     ],
     hint: "Un boletín se caracteriza por su distribución regular en intervalos definidos y por tratar temas de actualidad temporal.",
-    explanation: "Los boletines institucionales son publicaciones periódicas estructuradas para divulgar información oportuna con una vigencia determinada entre los miembros de una comunidad o sector."
+    explanation: "Los boletines son publicaciones periódicas para divulgar información vigente entre una comunidad."
   },
   {
     id: "m02-q09",
@@ -122,7 +121,7 @@ const questionBank = [
       "Reescribir."
     ],
     hint: "Inicia con la delimitación y recopilación de ideas, plasma el borrador, examina errores y genera la versión final pulida.",
-    explanation: "El proceso canónico de redacción textual comprende: 1) Planear (definir objetivos y estructura), 2) Redactar (elaboración del primer borrador), 3) Revisar (detección de inconsistencias) y 4) Reescribir (edición final)."
+    explanation: "El proceso canónico de redacción textual comprende:<br><br>1. <b>Planear</b>: Definir objetivos y estructura del texto.<br>2. <b>Redactar</b>: Elaboración del primer borrador.<br>3. <b>Revisar</b>: Detección de inconsistencias y errores.<br>4. <b>Reescribir</b>: Edición y versión final pulida."
   },
   {
     id: "m02-q10",
@@ -135,7 +134,7 @@ const questionBank = [
       "Porque valida la fuente de información."
     ],
     hint: null,
-    explanation: "Reconocer la postura ideológica del emisor permite entender desde qué marco interpretativo selecciona datos, formula argumentos y orienta su mensaje."
+    explanation: "Reconocer la postura ideológica del autor permite entender desde qué punto de vista selecciona datos, realiza argumentos y orienta su mensaje."
   },
   {
     id: "m02-q11",
@@ -148,11 +147,11 @@ const questionBank = [
       "Ficha textual y entre paréntesis."
     ],
     hint: "Cuando se reproduce con vocabulario propio no se usan comillas, a diferencia de la cita textual literal.",
-    explanation: "La ficha de paráfrasis reescribe el contenido fuente con redacción propia preservando el sentido original; al no ser una cita textual, no lleva comillas."
+    explanation: "La ficha de paráfrasis reescribe el contenido con palabras propias preservando el sentido original. Al no ser una cita textual, no lleva comillas."
   },
   {
     id: "m02-q12",
-    prompt: "¿Como se llama el tratado internacional con el propósito de generar medidas que desaceleren el cambio climático?",
+    prompt: "¿Cómo se llama el tratado internacional con el propósito de generar medidas que desaceleren el cambio climático?",
     type: "choice",
     correct: "Protocolo de Kioto.",
     distractors: [
@@ -161,11 +160,11 @@ const questionBank = [
       "Protocolo de Gotemburgo."
     ],
     hint: "Acuerdo internacional adoptado en Japón en 1997 para reducir las emisiones de gases de efecto invernadero.",
-    explanation: "El Protocolo de Kioto es el instrumento internacional enfocado en fijar metas vinculantes de reducción de emisiones de gases de efecto invernadero para los países firmantes."
+    explanation: "El Protocolo de Kioto es el plan internacional enfocado en fijar metas de reducción de emisiones de gases de efecto invernadero."
   },
   {
     id: "m02-q13",
-    prompt: "¿Cómo define se define un hecho histórico antropologicamente?",
+    prompt: "¿Cómo se define un hecho histórico antropológicamente?",
     type: "choice",
     correct: "Como una construcción intelectual de la realidad social.",
     distractors: [
@@ -174,11 +173,11 @@ const questionBank = [
       "Como una narración objetiva de acontecimientos."
     ],
     hint: "Enfatiza que el hecho histórico no es un dato aislado, sino una interpretación analítica elaborada por el historiador a partir de fuentes.",
-    explanation: "De acuerdo a la antropologa Gloria Delgado, el hecho histórico constituye una construcción intelectual que el especialista edifica al analizar críticamente los testimonios del pasado dentro de un contexto social."
+    explanation: "De acuerdo con la antropóloga Gloria Delgado, el hecho histórico constituye una construcción intelectual que el historiador edifica al analizar los testimonios del pasado dentro de un contexto."
   },
   {
     id: "m02-q14",
-    prompt: "¿Cuales de las siguientes fuentes son confiables al momento de hacer una investigacion documental?",
+    prompt: "¿Cuáles de las siguientes fuentes son confiables al momento de hacer una investigación documental?",
     type: "multi_select",
     correctAnswers: [
       "Notas informativas.",
@@ -187,15 +186,14 @@ const questionBank = [
     ],
     distractors: [
       "Salas de chat.",
-    "Foros de opinión."
+      "Foros de opinión."
     ],
-    hint: "Los foros y salas de conversación carecen de filtro editorial y rigor académico de autoría verificada.",
-    explanation: "Las notas informativas, los textos de divulgación científica y los artículos de opinión firmados por especialistas cuentan con respaldo editorial, a diferencia de los foros abiertos donde prima la especulación anónima."
+    hint: "Los espacios digitales públicos y salas de conversación carecen de filtros, rigor y autoría.",
+    explanation: "Las notas informativas, los textos de divulgación científica y los artículos de opinión firmados por especialistas cuentan con respaldo editorial, a diferencia de los foros abiertos."
   },
   {
     id: "m02-q15",
-    prompt: "A partir de la lectura del texto, ¿cuál es la postura del autor sobre las relaciones sociales a través de Internet?",
-    image: "assets/m02_amor_en_redes.png",
+    prompt: "A partir de la lectura del siguiente texto, ¿cuál es la postura del autor sobre las relaciones sociales a través de Internet?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">El amor en las redes sociales</b></div><p class=\"mb-2.5\">Delicada, detallista, amorosa con los animales, divertida, inteligente y con gusto de viajar. La que suscribe estas cualidades es una mujer interesada en conocer personas y, si hay suerte, encontrar en el ciberespacio a su \"media naranja\". Como ella, miles de personas en el mundo ingresan diariamente a diversas redes sociales para crear su perfil y establecer contacto con usuarios de otros lugares ya sea para concertar una cita casual, sexual o crear una relación amistosa o de pareja.</p><p class=\"mb-2.5\">Con la llegada de las redes sociales y la popularidad adquirida por Internet, millones de personas en el mundo están en búsqueda del amor, adaptándose a nuevas herramientas para conseguirlo ya sea a través de <i>emails</i>, poemas, canciones, videos, tarjetas virtuales, <i>podcast</i>, entre otros.</p><p class=\"mb-2.5\">El amor, el ligue y el flirteo utilizan nuevas herramientas y toda persona puede expresarse y mantenerse en contacto, compartir noticias, divertirse, jugar y sobre todo conocer a otras personas. El mundo del ciberespacio provee al usuario de una máscara, atrás del monitor ya no existe espacio para los tímidos. Se amplían las posibilidades.</p><p>Recientes estudios demuestran que la gente sociable en el mundo real también tiene más contactos en páginas virtuales; por ello distintos usuarios inundan las redes sociales, fortalecen y amplían sus amistades o contactos profesionales.</p></div>",
     type: "choice",
     correct: "Indica que el ciberespacio permite a las personas sociables ampliar sus contactos.",
     distractors: [
@@ -204,7 +202,7 @@ const questionBank = [
       "No muestra una postura personal; en cambio, se enfoca a proporcionar datos y hechos."
     ],
     hint: "Observa la conclusión del último párrafo sobre las personas sociables en el entorno físico y digital.",
-    explanation: "El texto cita estudios para sostener que los individuos sociables en el mundo real aprovechan los canales digitales para potenciar, fortalecer y multiplicar sus redes personales y profesionales."
+    explanation: "El texto cita estudios para sostener que los individuos sociables en el mundo real aprovechan los canales digitales para fortalecer y multiplicar sus redes personales."
   },
   {
     id: "m02-q16",
@@ -221,7 +219,7 @@ const questionBank = [
   },
   {
     id: "m02-q17",
-    prompt: "¿Qué tipo de ficha se muestra y qué información le falta especificar?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-3 rounded-lg text-xs leading-relaxed font-sans\"><div class=\"flex justify-between font-bold border-b pb-1 mb-2\"><span>El Cid en la épica</span><span>ECelE</span></div>El penúltimo cantar gesta español es el <i>Poema de Mio Cid</i>. Este género de desarrolló durante los siglos X al XIV. El serio carácter castellano no permitía divagaciones; sin exageraciones sobre el personaje histórico, va elevando a éste de la realidad tangible a los altos planos de la grandeza épica.<br>Homero puede inventar batallas inexistentes. Nuestro poeta no puede proceder de la misma manera, hay que hablar con la verdad en la mano, que lo grotesco no sea sarcástico con un héroe histórico, que ha consagrado su vida a alejar al odiado enemigo de los límites de sus villas y ciudades.<br>Las escenas familiares se multiplican, pero ¡con cuánta dignidad están relatadas!. El episodio de las arcas de arena es tópico literario; pero el poeta aleja con cuidado al Cid de compararlo con un vulgar estafador. Martín Antolínez es el encargado de llevar a cabo la negociación del préstamo. Raquel y Vidas parecen los que piden el préstamo, aunque son los que le prestan el dinero al Cid.</div>",
+    prompt: "¿Qué tipo de ficha se muestra y qué información le falta especificar?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-3 rounded-lg text-xs leading-relaxed font-sans text-justify\"><div class=\"flex justify-between font-bold border-b border-stone-200 dark:border-stone-700 pb-1 mb-2\"><b>El Cid en la épica</b><span>ECelE</span></div>El penúltimo cantar de gesta español es el <i>Poema de Mio Cid</i>. Este género se desarrolló durante los siglos X al XIV. El serio carácter castellano no permitía divagaciones; sin exageraciones sobre el personaje histórico, va elevando a este de la realidad tangible a los altos planos de la grandeza épica.<br><br>Homero puede inventar batallas inexistentes. Nuestro poeta no puede proceder de la misma manera, hay que hablar con la verdad en la mano, que lo grotesco no sea sarcástico con un héroe histórico, que ha consagrado su vida a alejar al odiado enemigo de los límites de sus villas y ciudades.<br><br>Las escenas familiares se multiplican, pero ¡con cuánta dignidad están relatadas! El episodio de las arcas de arena es tópico literario; pero el poeta aleja con cuidado al Cid de compararlo con un vulgar estafador. Martín Antolínez es el encargado de llevar a cabo la negociación del préstamo. Raquel y Vidas parecen los que piden el préstamo, aunque son los que le prestan el dinero al Cid.</div>",
     type: "choice",
     correct: "Ficha de resumen; falta la referencia.",
     distractors: [
@@ -230,20 +228,20 @@ const questionBank = [
       "Ficha de resumen; falta el autor."
     ],
     hint: "El cuerpo sintetiza ideas centrales de una obra literaria, pero carece de los datos de la fuente editorial o publicación.",
-    explanation: "Contiene la condensación conceptual de un texto crítico (ficha de resumen), pero omite la referencia bibliográfica completa que respalda la procedencia de la obra."
+    explanation: "Contiene la condensación de un texto, pero omite la referencia bibliográfica que indica la procedencia de la obra."
   },
   {
     id: "m02-q18",
-    prompt: "Ordena los pasos a seguir en una investigación documental.",
+    prompt: "Ordena los pasos a seguir en una investigación documental:",
     type: "drag_order",
     correctOrder: [
       "Elegir un tema específico.",
       "Elaborar un bosquejo del contenido de la investigación.",
-      "Buscar bibliografía especializada.",      
+      "Buscar bibliografía especializada.",
       "Realizar fichas bibliográficas y clasificar las obras por orden de importancia."
     ],
-    hint: "Inicia con la delimitación temática, continúa con la localización de fuentes y procede al diseño del esquema previo a la catalogación sistemática.",
-    explanation: "La metodología documental parte de la delimitación temática, la organización del esquema preliminar, la búsqueda de fuentes pertinentes y el registro analítico en fichas."
+    hint: null,
+    explanation: "La metodología documental parte de la delimitación del tema, la organización del esquema, la búsqueda de fuentes y el registro en fichas."
   },
   {
     id: "m02-q19",
@@ -256,12 +254,11 @@ const questionBank = [
       "Ambos son idóneos, porque debe aislarse el hecho histórico al estudiarlo."
     ],
     hint: "La distancia temporal otorga perspectiva analítica y permite que emerjan documentos, testimonios y consecuencias a largo plazo.",
-    explanation: "El análisis histórico gana objetividad y rigor al realizarse a posteriori, cuando se dispone del panorama completo de causas, testimonios cruzados e impacto social."
+    explanation: "El análisis histórico gana objetividad y rigor al realizarse posteriormente, cuando se dispone del panorama completo de causas, testimonios e impacto."
   },
   {
     id: "m02-q20",
-    prompt: "¿Puede afirmarse que la información presentada por el autor de este texto es de actualidad? ¿Por qué?",
-    image: "assets/m02_amor_en_redes.png",
+    prompt: "¿Puede afirmarse que la información presentada por el autor en el siguiente texto es de actualidad? ¿Por qué?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">El amor en las redes sociales</b></div><p class=\"mb-2.5\">Delicada, detallista, amorosa con los animales, divertida, inteligente y con gusto de viajar. La que suscribe estas cualidades es una mujer interesada en conocer personas y, si hay suerte, encontrar en el ciberespacio a su \"media naranja\". Como ella, miles de personas en el mundo ingresan diariamente a diversas redes sociales para crear su perfil y establecer contacto con usuarios de otros lugares ya sea para concertar una cita casual, sexual o crear una relación amistosa o de pareja.</p><p class=\"mb-2.5\">Con la llegada de las redes sociales y la popularidad adquirida por Internet, millones de personas en el mundo están en búsqueda del amor, adaptándose a nuevas herramientas para conseguirlo ya sea a través de <i>emails</i>, poemas, canciones, videos, tarjetas virtuales, <i>podcast</i>, entre otros.</p><p class=\"mb-2.5\">El amor, el ligue y el flirteo utilizan nuevas herramientas y toda persona puede expresarse y mantenerse en contacto, compartir noticias, divertirse, jugar y sobre todo conocer a otras personas. El mundo del ciberespacio provee al usuario de una máscara, atrás del monitor ya no existe espacio para los tímidos. Se amplían las posibilidades.</p><p>Recientes estudios demuestran que la gente sociable en el mundo real también tiene más contactos en páginas virtuales; por ello distintos usuarios inundan las redes sociales, fortalecen y amplían sus amistades o contactos profesionales.</p></div>",
     type: "choice",
     correct: "Sí, porque detalla las formas vigentes para comunicarse y establecer relaciones sociales.",
     distractors: [
@@ -270,11 +267,11 @@ const questionBank = [
       "No, porque describe un escenario que no refleja la realidad social en el país."
     ],
     hint: "Trata sobre el uso cotidiano de plataformas digitales para el cortejo y las redes profesionales en el presente.",
-    explanation: "El texto examina conductas, herramientas y aplicaciones que forman parte de la vida cotidiana contemporánea, manteniendo plena vigencia temática."
+    explanation: "El texto examina conductas, herramientas y aplicaciones que forman parte de la vida cotidiana actual."
   },
   {
     id: "m02-q21",
-    prompt: "Relaciona los ejemplos con el tipo de conjunción o nexo al que corresponden.",
+    prompt: "Relaciona los ejemplos con el tipo de conjunción o nexo al que corresponden:",
     type: "match_columns",
     pairs: [
       {
@@ -291,11 +288,11 @@ const questionBank = [
       }
     ],
     hint: "Uno establece oposición o comparación; otro clausura o resume lo expuesto; y el último sitúa cronológicamente las acciones.",
-    explanation: "Los conectores adversativos y concesivos expresan contraste; las locuciones conclusivas estructuran la síntesis; y los adverbios temporales marcan la secuencia cronológica de los hechos."
+    explanation: "Los conectores de contraste realizan comparaciones; los de síntesis proveen una compresión del texto; y los temporales marcan una secuencia cronológica."
   },
   {
     id: "m02-q22",
-    prompt: "¿En que aspectos se pueden observar los efectos y consecuencias del cambio climatico?",
+    prompt: "¿En qué aspectos se pueden observar los efectos y consecuencias del cambio climático?",
     type: "multi_select",
     correctAnswers: [
       "Económico.",
@@ -305,11 +302,11 @@ const questionBank = [
     ],
     distractors: [
       "Tecnológico.",
-      "Geográfico",
+      "Geográfico.",
       "Legal."
     ],
-    hint: "Afecta los presupuestos estatales, detona migraciones humanas y reconfigura los acuerdos de gobernanza internacional.",
-    explanation: "El impacto del cambio climático trasciende lo ecológico al causar severas pérdidas económicas, tensiones políticas y desplazamientos sociales forzados."
+    hint: null,
+    explanation: "El impacto del cambio climático trasciende lo ecológico al causar pérdidas económicas, tensiones políticas y desplazamientos sociales y culturales forzados."
   },
   {
     id: "m02-q23",
@@ -321,8 +318,8 @@ const questionBank = [
       "Relaciones causales.",
       "Autores de los hechos."
     ],
-    hint: "Son elementos gramaticales indispensables para ordenar la cronología del relato (primero, luego, más tarde).",
-    explanation: "Los conectores temporales son marcas gramaticales esenciales en el discurso narrativo para articular la progresión de las acciones en el tiempo."
+    hint: "Son elementos gramaticales indispensables para ordenar la cronología de un relato.",
+    explanation: "Los conectores temporales son marcas gramaticales del discurso narrativo para marcar la progresión de las acciones en el tiempo."
   },
   {
     id: "m02-q24",
@@ -332,10 +329,10 @@ const questionBank = [
     distractors: [
       "Es el suceso en el cual las sustancias cambian al combinarse entre sí.",
       "Es un hecho provocado por el hombre susceptible de interpretación científica.",
-      "Es aquél que no cambia la composición de ninguna sustancia y es reversible."
+      "Es aquel que no cambia la composición de ninguna sustancia y es reversible."
     ],
-    hint: "Se define por su origen espontáneo y ajeno a la acción o manufactura humana.",
-    explanation: "Un fenómeno natural es cualquier manifestación, cambio o proceso que se produce en la naturaleza sin que medie la voluntad o actividad antropogénica."
+    hint: "Se define por su origen ajeno a la acción humana.",
+    explanation: "Un fenómeno natural es cualquier proceso que se produce en la naturaleza sin intervención del hombre."
   },
   {
     id: "m02-q25",
@@ -347,13 +344,12 @@ const questionBank = [
       "Segmento histórico.",
       "Modalidad narrativa."
     ],
-    hint: "Es el entorno sociohistórico particular que rodea la creación de la obra o discurso.",
+    hint: "Es el entorno sociohistórico que rodea la creación de una obra.",
     explanation: "El contexto de producción abarca el conjunto de condiciones políticas, económicas y culturales que influyen en el autor al momento de concebir su texto."
   },
-{
+  {
     id: "m02-q26",
-    prompt: "A partir de la siguiente nota informativa, selecciona las preguntas a las que el texto da respuesta.",
-    image: "assets/m02_intel.png",
+    prompt: "A partir de la siguiente nota informativa, selecciona las preguntas a las que el texto da respuesta. <div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">Intel presentó su prototipo de smartwatch</b></div><p class=\"mb-2.5\">El director ejecutivo de Intel, Brian Krzanich, anunció que la empresa trabaja en su propio <i>smartwatch</i>. Aunque el accesorio será similar al Pebble o al Samsung Galaxy Gear, este no dependerá de un <i>smartphone</i> para funcionar, pues contará con conectividad propia. Asimismo, incluirá tecnología de geocercas, lo que le permitirá recibir notificaciones basadas en localización. Intel mostró varios ejemplos de tecnología portátil, lo que nos lleva a pensar que a lo largo de este año, la atención de la compañía se centrará en dispositivos de menor tamaño. \"Lo portátil no está en todos lados hoy, porque no resuelve problemas importantes y porque no ha sido integrado en nuestro estilo de vida\", comentó Krzanich. \"Estamos enfocados en atacar este reto de ingeniería e innovación\", añadió.</p><p>Intel también desarrolló un chip del tamaño de una tarjeta SD que es alimentado por Quark SOC, al que llamó Intel Edison. La compañía quiere que en el futuro, esta tecnología les permita convertir dispositivos como el <i>smartwatch</i> en computadoras inalámbricas.</p></div>",
     type: "multi_select",
     correctAnswers: [
       "¿Qué?",
@@ -365,12 +361,12 @@ const questionBank = [
       "¿Cuándo?",
       "¿Dónde?"
     ],
-    hint: "El texto detalla el suceso, el protagonista, el funcionamiento técnico y los motivos de diseño, pero omite fechas exactas y sedes de presentación.",
-    explanation: "La nota responde a: <i>¿Qué?</i> (presentación del prototipo de smartwatch y chip Quark SOC), <i>¿Quién?</i> (Brian Krzanich, CEO de Intel), <i>¿Cómo?</i> (funcionamiento autónomo con geocercas y conectividad propia) y <i>¿Por qué?</i> (para resolver problemas de integración cotidiana mediante innovación tecnológica). En cambio, no menciona fechas precisas (<i>¿Cuándo?</i>) ni el lugar geográfico del anuncio (<i>¿Dónde?</i>)."
+    hint: null,
+    explanation: "La nota informativa responde a las siguientes preguntas:<br><br>• <i>¿Qué?</i>: Presentación del prototipo de <i>smartwatch</i> y del chip Quark SOC.<br>• <i>¿Quién?</i>: Brian Krzanich, director ejecutivo de Intel.<br>• <i>¿Cómo?</i>: Mediante funcionamiento autónomo con conectividad propia y geocercas.<br>• <i>¿Por qué?</i>: Para resolver problemas de integración en el estilo de vida mediante innovación tecnológica.<br><br>En cambio, el texto no menciona fechas precisas (<i>¿Cuándo?</i>) ni la sede o lugar geográfico del anuncio (<i>¿Dónde?</i>)."
   },
   {
     id: "m02-q27",
-    prompt: "Para conocer el impacto que ha tenido la Tecnología de la Información y Comunicación en la enseñanza media superior, ¿qué tipos de investigación deben usarse?",
+    prompt: "Para conocer el impacto que ha tenido la tecnología de la información y comunicación en la enseñanza media superior, ¿qué tipos de investigación deben usarse?",
     type: "multi_select",
     correctAnswers: [
       "De campo.",
@@ -382,11 +378,11 @@ const questionBank = [
       "De laboratorio."
     ],
     hint: "Se requiere tanto revisar fuentes bibliográficas existentes como recabar datos directamente en el entorno escolar.",
-    explanation: "Se combinan la investigación documental (para fundamentar antecedentes, teorías y estadísticas previas) y la de campo (para recopilar información directamente de alumnos y docentes en los planteles escolares)."
+    explanation: "Se combinan la investigación documental para fundamentar antecedentes y teorías, y la de campo para recopilar información directa."
   },
   {
     id: "m02-q28",
-    prompt: "¿Que criterios deben seguirse para garantizar la confiabilidad de fuentes o referencias electrónicas?",
+    prompt: "¿Qué criterios deben seguirse para garantizar la confiabilidad de fuentes o referencias electrónicas?",
     type: "multi_select",
     correctAnswers: [
       "Origen de sitios especializados.",
@@ -398,12 +394,12 @@ const questionBank = [
       "No debe ser antiguos u obsoletos.",
       "Debe ser producido por instituciones públicas nacionales."
     ],
-    hint: "La validez exige autoría identificable, respaldo editorial de expertos y plataformas no editables por usuarios anónimos.",
-    explanation: "La confiabilidad digital demanda sitios especializados con arbitraje, autoría reconocida y restricción de edición colaborativa abierta para garantizar la integridad académica."
+    hint: "La validez requiere autoría identificable, respaldo editorial de expertos y plataformas no editables por usuarios anónimos.",
+    explanation: "La confiabilidad digital requiere sitios con arbitraje, autoría y restricción de edición colaborativa abierta para buscar la integridad académica."
   },
   {
     id: "m02-q29",
-    prompt: "¿Cuales son las características principales de los textos narrativos?",
+    prompt: "¿Cuáles son las características principales de los textos narrativos?",
     type: "multi_select",
     correctAnswers: [
       "Tiempo y espacio.",
@@ -414,8 +410,8 @@ const questionBank = [
     distractors: [
       "Tipo de fuentes."
     ],
-    hint: "Todo relato requiere coordenadas cronotópicas, participantes que ejecutan la trama y un encadenamiento de causa-efecto.",
-    explanation: "La narración se cimenta en la secuencia temporal y espacial donde intervienen personajes situados en un contexto y articulados mediante vínculos causales."
+    hint: "Todo relato requiere participantes, secuencia, lugar y momento.",
+    explanation: "La narración es la secuencia temporal y espacial donde intervienen personajes situados en un contexto."
   },
   {
     id: "m02-q30",
@@ -430,7 +426,7 @@ const questionBank = [
       "Lenguaje formal y técnico."
     ],
     hint: "Un material de divulgación comunitaria debe ser accesible, visualmente atractivo y fácil de comprender para el público general.",
-    explanation: "Un folleto de concientización social utiliza recursos gráficos, estructura segmentada con encabezados claros y datos factuales accesibles, evitando la complejidad de los tecnicismos especializados."
+    explanation: "Un folleto utiliza recursos gráficos, estructura con encabezados claros y datos accesibles, evitando la complejidad de los tecnicismos."
   }
 ];
 
