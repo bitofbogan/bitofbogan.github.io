@@ -431,6 +431,7 @@
     let repuestoState = {}; // moduloId -> boolean
     let sedeActiva = 'ermita'; // 'ermita' | 'soledad'
     let aliasStore = {}; // matricula -> alias string (persistido en localStorage)
+    let diasParaCalendario = []; // Estructura de días del calendario grupal
 
     // Cargar alias almacenados en localStorage
     function loadAliasStore() {
@@ -564,7 +565,6 @@
       countErmita.textContent = `${ermitaLines} registros`;
       countSoledad.textContent = `${soledadLines} registros`;
       
-      // Guardar contenido en localStorage
       try {
         localStorage.setItem('matrixpro_input_ermita', inputErmita.value);
         localStorage.setItem('matrixpro_input_soledad', inputSoledad.value);
@@ -929,22 +929,18 @@
       if (!alumnosSedePresentan || alumnosSedePresentan.length === 0) return '';
       const totalSede = todosAlumnosSede.length;
 
-      // 1. Si presentan absolutamente todos (con al menos 2 alumnos)
       if (totalSede > 1 && alumnosSedePresentan.length === totalSede) {
         return 'TODOS.';
       }
 
-      // Identificar quiénes NO presentan en este turno
       const idsPresentan = new Set(alumnosSedePresentan.map(a => a.index));
       const noPresentan = todosAlumnosSede.filter(a => !idsPresentan.has(a.index));
 
-      // 2. Si los que NO presentan son poquitos (<= 30% del grupo total y al menos 1)
       if (totalSede >= 3 && noPresentan.length > 0 && (noPresentan.length / totalSede) <= 0.30) {
         const nombresExcluidos = noPresentan.map(a => resolverNombreAlumno(a));
         return `(TODOS excepto ${formatearNombresCadena(nombresExcluidos)}).`;
       }
 
-      // 3. Formato normal: listar a los que presentan
       const nombresPresentan = alumnosSedePresentan.map(a => resolverNombreAlumno(a));
       return `${formatearNombresCadena(nombresPresentan)}.`;
     }
@@ -964,30 +960,165 @@
     }
 
     /**
+     * CONVERTIDOR DE TEXTO A FORMATO HTML PARA GOOGLE SHEETS
+     * Inyecta color de fondo #b4a7d6 y tipografías específicas a 11pt:
+     * - Horarios y Títulos: Trebuchet MS, 11pt, bold
+     * - Ermita: Arial, 11pt, etiqueta bold y nombres normales
+     * - Soledad: Georgia, 11pt, etiqueta bold y nombres normales
+     */
+    function convertirTextoDiaAHtml(texto) {
+      if (!texto || !texto.trim()) {
+        return '<td></td>';
+      }
+
+      const lineas = texto.split(/\r?\n/);
+      const htmlPartes = [];
+
+      lineas.forEach(linea => {
+        const l = linea.trim();
+        if (!l) {
+          htmlPartes.push('<br>');
+          return;
+        }
+
+        const esc = (str) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // 1. Horario o Título de Examen (ej. "9:00 a.m.:", "Examen M8", "Examen M8 REPUESTO")
+        if (/^\d{1,2}:\d{2}\s*(?:a\.m\.|p\.m\.|am|pm)?:?$/i.test(l) || /^Examen\s+M\d+/i.test(l)) {
+          htmlPartes.push(`<span style="font-family: 'Trebuchet MS', sans-serif; font-size: 11pt; font-weight: bold;">${esc(l)}</span><br>`);
+          return;
+        }
+
+        // 2. Línea de Ermita (Arial 11pt)
+        if (/^Ermita:/i.test(l)) {
+          const contenido = l.substring(7).trim();
+          let innerHtml = '';
+          if (/^TODOS\.$/i.test(contenido)) {
+            innerHtml = `<b>Ermita:</b> <b>TODOS.</b>`;
+          } else if (/^\(TODOS excepto\s+(.+)\)\.?$/i.test(contenido)) {
+            const match = contenido.match(/^\(TODOS excepto\s+(.+)\)\.?$/i);
+            const nombres = match ? match[1] : '';
+            innerHtml = `<b>Ermita:</b> <b>(TODOS excepto </b>${esc(nombres)}<b>).</b>`;
+          } else {
+            innerHtml = `<b>Ermita:</b> ${esc(contenido)}`;
+          }
+          htmlPartes.push(`<span style="font-family: Arial, sans-serif; font-size: 11pt;">${innerHtml}</span><br>`);
+          return;
+        }
+
+        // 3. Línea de Soledad (Georgia 11pt)
+        if (/^Soledad:/i.test(l)) {
+          const contenido = l.substring(8).trim();
+          let innerHtml = '';
+          if (/^TODOS\.$/i.test(contenido)) {
+            innerHtml = `<b>Soledad:</b> <b>TODOS.</b>`;
+          } else if (/^\(TODOS excepto\s+(.+)\)\.?$/i.test(contenido)) {
+            const match = contenido.match(/^\(TODOS excepto\s+(.+)\)\.?$/i);
+            const nombres = match ? match[1] : '';
+            innerHtml = `<b>Soledad:</b> <b>(TODOS excepto </b>${esc(nombres)}<b>).</b>`;
+          } else {
+            innerHtml = `<b>Soledad:</b> ${esc(contenido)}`;
+          }
+          htmlPartes.push(`<span style="font-family: Georgia, serif; font-size: 11pt;">${innerHtml}</span><br>`);
+          return;
+        }
+
+        // Línea general adicional
+        htmlPartes.push(`<span style="font-family: 'Trebuchet MS', sans-serif; font-size: 11pt;">${esc(l)}</span><br>`);
+      });
+
+      return `<td style="background-color: #b4a7d6; vertical-align: top; padding: 6px;">${htmlPartes.join('')}</td>`;
+    }
+
+    /**
      * SECCIÓN 3: RENDERIZADO DEL CALENDARIO GRUPAL
+     * Genera siempre la Semana 1 fija (Lunes a Sábado) y añade el Lunes de la siguiente semana si aplica.
      */
     function renderizarCalendarioGrupal() {
       contenedorDiasCalendario.innerHTML = '';
+      diasParaCalendario = [];
 
-      const diasAgrupados = {};
-      turnosDetallados.forEach(turno => {
-        const diaClave = turno.infoHorario.dia || 'Sin Fecha';
-        if (!diasAgrupados[diaClave]) {
-          diasAgrupados[diaClave] = {
-            diaTexto: diaClave,
-            timestampBase: turno.timestamp,
-            turnos: []
-          };
+      const dataCalendario = getDatosCalendario();
+      const etapaActual = dataCalendario ? dataCalendario[selectEtapa.value] : null;
+      let anioEtapa = 2026;
+      if (etapaActual && etapaActual.fechaFin) {
+        const parts = etapaActual.fechaFin.split('-');
+        if (parts.length === 3) anioEtapa = parseInt(parts[0], 10);
+      }
+
+      // Mapear todas las fechas oficiales presentes en la etapa
+      const fechasOficialesMap = new Map();
+      if (etapaActual && etapaActual.horarios) {
+        Object.values(etapaActual.horarios).forEach(h => {
+          const p = parseFechaHoraEspanol(h.dia, h.hora, anioEtapa);
+          if (p) {
+            const d = new Date(anioEtapa, p.mes - 1, p.dia);
+            fechasOficialesMap.set(d.getTime(), {
+              dateObj: d,
+              diaTexto: h.dia
+            });
+          }
+        });
+      }
+
+      const DIAS_NOMBRES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const MESES_NOMBRES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+      function formatearFechaTexto(d) {
+        const midTime = d.getTime();
+        if (fechasOficialesMap.has(midTime)) {
+          return fechasOficialesMap.get(midTime).diaTexto;
         }
-        diasAgrupados[diaClave].turnos.push(turno);
-      });
+        return `${DIAS_NOMBRES[d.getDay()]} ${d.getDate()} de ${MESES_NOMBRES[d.getMonth()]}`;
+      }
 
-      const diasOrdenados = Object.values(diasAgrupados).sort((a, b) => a.timestampBase - b.timestampBase);
+      // Determinar Lunes de la Semana 1
+      const timestampsOficiales = Array.from(fechasOficialesMap.keys()).sort((a, b) => a - b);
+      let primeraFecha = timestampsOficiales.length > 0 ? new Date(timestampsOficiales[0]) : new Date(anioEtapa, 10, 2);
+      
+      let diaSemana = primeraFecha.getDay(); // 0 = Domingo, 1 = Lunes, etc.
+      let offsetLunes = diaSemana === 0 ? -1 : diaSemana - 1;
+      let lunesSemana1 = new Date(primeraFecha);
+      lunesSemana1.setDate(lunesSemana1.getDate() - offsetLunes);
+      lunesSemana1.setHours(0, 0, 0, 0);
 
-      diasOrdenados.forEach((diaObj, dIdx) => {
+      // 1. Construir siempre los 6 días fijos de la Semana 1 (Lunes a Sábado)
+      for (let i = 0; i < 6; i++) {
+        const d = new Date(lunesSemana1);
+        d.setDate(d.getDate() + i);
+        diasParaCalendario.push({
+          dateObj: d,
+          diaTexto: formatearFechaTexto(d),
+          isSemana2: false
+        });
+      }
+
+      // 2. Verificar si aplica el Lunes de la siguiente semana
+      const maxTimestamp = timestampsOficiales.length > 0 ? timestampsOficiales[timestampsOficiales.length - 1] : 0;
+      const sabadoSemana1Time = diasParaCalendario[5].dateObj.getTime();
+
+      if (maxTimestamp > sabadoSemana1Time) {
+        const lunesSemana2 = new Date(lunesSemana1);
+        lunesSemana2.setDate(lunesSemana2.getDate() + 7);
+        diasParaCalendario.push({
+          dateObj: lunesSemana2,
+          diaTexto: formatearFechaTexto(lunesSemana2),
+          isSemana2: true
+        });
+      }
+
+      // Renderizar tarjetas en pantalla
+      diasParaCalendario.forEach((diaData, dIdx) => {
+        const diaNum = diaData.dateObj.getDate();
+        const mesNum = diaData.dateObj.getMonth() + 1;
+
+        // Filtrar los turnos que caen exactamente en este día
+        const turnosDelDia = turnosDetallados.filter(t => {
+          return t.parseInfo && t.parseInfo.dia === diaNum && t.parseInfo.mes === mesNum;
+        });
+
         const bloquesTextoDia = [];
-
-        diaObj.turnos.forEach(turno => {
+        turnosDelDia.forEach(turno => {
           const alumnosErmitaTurno = alumnosErmita.filter(a => a.modulos.includes(turno.moduloId));
           const alumnosSoledadTurno = alumnosSoledad.filter(a => a.modulos.includes(turno.moduloId));
 
@@ -1014,19 +1145,27 @@
         const textoCompletoDia = bloquesTextoDia.join('\n\n');
 
         const card = document.createElement('div');
+        card.setAttribute('data-card-dia', dIdx);
         card.className = "bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex flex-col justify-between space-y-3";
+
+        const badgeSemana2 = diaData.isSemana2 ? '<span class="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-1.5 py-0.5 rounded">Semana 2</span>' : '';
+        const badgeSinExamen = (!textoCompletoDia && !diaData.isSemana2) ? '<span class="text-[10px] bg-slate-200 text-slate-600 font-medium px-1.5 py-0.5 rounded">Sin examen</span>' : '';
 
         card.innerHTML = `
           <div>
-            <div class="pb-2 border-b border-slate-200/80">
-              <label class="flex items-center gap-2 cursor-pointer select-none">
+            <div class="pb-2 border-b border-slate-200/80 flex items-center justify-between gap-1">
+              <label class="flex items-center gap-2 cursor-pointer select-none truncate">
                 <input type="checkbox" data-check-dia="${dIdx}" checked class="checkDiaSemana w-3.5 h-3.5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                <h4 class="font-bold text-xs text-brand-900 truncate">
-                  ${diaObj.diaTexto}
+                <h4 class="font-bold text-xs text-brand-900 truncate" title="${diaData.diaTexto}">
+                  ${diaData.diaTexto}
                 </h4>
               </label>
+              <div class="flex items-center gap-1 flex-shrink-0">
+                ${badgeSemana2}
+                ${badgeSinExamen}
+              </div>
             </div>
-            <textarea rows="7" data-textarea-dia="${dIdx}" class="mt-2.5 w-full text-xs font-mono p-2 bg-white border border-slate-200 rounded-lg text-slate-700 focus:ring-1 focus:ring-indigo-500 transition resize-y">${textoCompletoDia}</textarea>
+            <textarea rows="7" data-textarea-dia="${dIdx}" class="mt-2.5 w-full text-xs font-mono p-2 bg-white border border-slate-200 rounded-lg text-slate-700 focus:ring-1 focus:ring-indigo-500 transition resize-y" placeholder="${textoCompletoDia ? '' : '(Día sin exámenes programados)'}">${textoCompletoDia}</textarea>
           </div>
           <div class="flex items-center justify-between pt-1">
             <span class="text-[10px] text-slate-400">Editable antes de copiar</span>
@@ -1039,54 +1178,60 @@
         contenedorDiasCalendario.appendChild(card);
       });
 
-      // Copiado individual de un día: envuelto en comillas para guardarse en una sola celda de Sheets
+      // Listener individual para "Copiar día" inyectando color #b4a7d6 y formato en celda única
       contenedorDiasCalendario.querySelectorAll('.btnCopiarDia').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const idx = e.currentTarget.getAttribute('data-dia-idx');
           const txtArea = contenedorDiasCalendario.querySelector(`textarea[data-textarea-dia="${idx}"]`);
           if (txtArea) {
-            let val = txtArea.value;
-            const textoEnCeldaUnica = `"${val.replace(/"/g, '""')}"`;
-            copiarTextoPortapapeles(textoEnCeldaUnica, "Bloque del día copiado para una sola celda en Google Sheets.");
+            const val = txtArea.value;
+            const tdHtml = convertirTextoDiaAHtml(val);
+            const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><table><tr>${tdHtml}</tr></table></body></html>`;
+            const plainCell = val ? `"${val.replace(/"/g, '""')}"` : "";
+            copiarHtmlYTexto(fullHtml, plainCell, "Bloque del día copiado con formato y color (#b4a7d6).");
           }
         });
       });
     }
 
     /**
-     * Copiar la semana completa en una sola fila (TSV horizontal)
-     * Respetando únicamente los días marcados con el checkbox
+     * Copiar fila de semana completa (Lunes a Sábado de Semana 1)
+     * Respeta celdas vacías para los días sin examen e inyecta color #b4a7d6 y tipografías en Sheets
      */
     btnCopiarSemanaCalendario.addEventListener('click', () => {
-      const cards = contenedorDiasCalendario.children;
-      if (cards.length === 0) {
+      if (!diasParaCalendario || diasParaCalendario.length === 0) {
         showToast("Error", "No hay días generados en el calendario.", "error");
         return;
       }
 
-      const celdasFila = [];
+      const tdsHtml = [];
+      const plainCells = [];
       let diasIncluidos = 0;
 
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
+      diasParaCalendario.forEach((diaData, idx) => {
+        if (diaData.isSemana2) return; // Se excluye Semana 2 (se copia por separado)
+
+        const card = contenedorDiasCalendario.querySelector(`[data-card-dia="${idx}"]`);
+        if (!card) return;
         const chk = card.querySelector('.checkDiaSemana');
         const txtArea = card.querySelector('textarea');
 
-        if (chk && chk.checked && txtArea) {
-          let val = txtArea.value;
-          val = `"${val.replace(/"/g, '""')}"`;
-          celdasFila.push(val);
+        if (chk && chk.checked) {
+          const val = txtArea ? txtArea.value : '';
+          tdsHtml.push(convertirTextoDiaAHtml(val));
+          plainCells.push(val ? `"${val.replace(/"/g, '""')}"` : "");
           diasIncluidos++;
         }
-      }
+      });
 
       if (diasIncluidos === 0) {
         showToast("Advertencia", "No tienes ningún día seleccionado para copiar.", "warn");
         return;
       }
 
-      const tsvSemana = celdasFila.join('\t');
-      copiarTextoPortapapeles(tsvSemana, `Fila copiada con ${diasIncluidos} días seleccionados.`);
+      const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><table><tr>${tdsHtml.join('')}</tr></table></body></html>`;
+      const tsvSemana = plainCells.join('\t');
+      copiarHtmlYTexto(fullHtml, tsvSemana, `Semana copiada (${diasIncluidos} días) con formato y color (#b4a7d6).`);
     });
 
     /**
@@ -1171,7 +1316,51 @@
     });
 
     /**
-     * Utilidad Genérica de Copiado al Portapapeles
+     * Utilidad para escribir simultáneamente HTML enriquecido y texto plano al portapapeles
+     */
+    async function copiarHtmlYTexto(htmlStr, plainStr, mensajeExito) {
+      let copiado = false;
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        try {
+          const blobHtml = new Blob([htmlStr], { type: 'text/html' });
+          const blobText = new Blob([plainStr], { type: 'text/plain' });
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'text/html': blobHtml,
+              'text/plain': blobText
+            })
+          ]);
+          copiado = true;
+        } catch (err) {
+          copiado = false;
+        }
+      }
+
+      if (!copiado) {
+        const listener = function(e) {
+          e.preventDefault();
+          e.clipboardData.setData('text/html', htmlStr);
+          e.clipboardData.setData('text/plain', plainStr);
+        };
+        document.addEventListener('copy', listener);
+        try {
+          copiado = document.execCommand('copy');
+        } catch (err) {
+          copiado = false;
+        }
+        document.removeEventListener('copy', listener);
+      }
+
+      if (copiado) {
+        showToast("📋 ¡Copiado con éxito!", mensajeExito, "success");
+      } else {
+        showToast("Error al copiar", "No se pudo acceder automáticamente al portapapeles.", "error");
+      }
+    }
+
+    /**
+     * Utilidad Genérica de Copiado al Portapapeles (Texto plano)
      */
     function copiarTextoPortapapeles(texto, mensajeExito) {
       const tempTextArea = document.createElement('textarea');
@@ -1269,7 +1458,6 @@
     btnProcesar.addEventListener('click', procesarTodo);
 
     window.addEventListener('DOMContentLoaded', () => {
-      // Recuperar datos previos si existen
       try {
         inputErmita.value = localStorage.getItem('matrixpro_input_ermita') || '';
         inputSoledad.value = localStorage.getItem('matrixpro_input_soledad') || '';
