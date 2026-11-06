@@ -25,13 +25,14 @@ const questionBank = [
   },
   {
     id: "m02-q02",
-    prompt: "Lee el siguiente fragmento tomado y adaptado del libro de texto del Módulo \"El lenguaje en la relación del hombre con el mundo\" y responde la siguiente pregunta:<br><br><b>El amor en las redes sociales</b><br><br>Delicada, detallista, amorosa con los animales, divertida, inteligente y con gusto de viajar. La que suscribe estas cualidades es una mujer interesada en conocer personas y, si hay suerte, encontrar en el ciberespacio a su \"media naranja\". Como ella, miles de personas en el mundo ingresan diariamente a diversas redes sociales para crear su perfil y establecer contacto con usuarios de otros lugares ya sea para concertar una cita casual, sexual o crear una relación amistosa o de pareja.<br><br>Con la llegada de las redes sociales y la popularidad adquirida por Internet, millones de personas en el mundo, están en búsqueda del amor, adaptándose a nuevas herramientas para conseguirlo ya sea a través de emails, poemas, canciones, videos, tarjetas virtuales, podcast, entre otros.<br><br>El amor, el ligue y el flirteo utilizan nuevas herramientas y toda persona puede expresarse y mantenerse en contacto, compartir noticias, divertirse, jugar y sobre todo conocer a otras personas. El mundo del ciberespacio provee al usuario de una máscara, atrás del monitor ya no existe espacio para los tímidos. Se amplían las posibilidades.<br><br>Recientes estudios demuestran que la gente sociable en el mundo real también tiene más contactos en páginas virtuales; por ello distintos usuarios inundan las redes sociales, fortalecen y amplían sus amistades o contactos profesionales.<br><br>¿Qué tipo de modo discursivo emplea el autor? Arguméntalo.",
+    prompt: "¿Qué tipo de modo discursivo emplea el autor del siguiente texto? ¿Por qué?",
+    image: "assets/m02_amor_en_redes.png",
     type: "choice",
-    correct: "Descriptivo, trata de dar una visión de las formas afectivas de relacionarse a través de Internet.",
+    correct: "Descriptivo, porque da una visión de las formas afectivas de relacionarse por Internet.",
     distractors: [
-      "Narrativo, da testimonio de su propia experiencia y las formas que sugiere para entablar relaciones afectivas en Internet.",
-      "Narrativo, usa un lenguaje sencillo y coloquial para dar testimonio de su experiencia.",
-      "Descriptivo, desarrolla ideas sobre las relaciones afectivas en Internet tratando de convencer al lector."
+      "Narrativo, porque el autor cuenta su propia experiencia y sugiere formas para entablar relaciones afectivas en Internet.",
+      "Narrativo, porque usa un lenguaje sencillo y coloquial para dar testimonio de su experiencia.",
+      "Descriptivo, porque desarrolla ideas sobre las relaciones afectivas en Internet tratando de convencer al lector."
     ],
     hint: "El texto detalla características, recursos y dinámicas de interacción virtual sin relatar una anécdota personal ni buscar persuadir.",
     explanation: "El autor emplea un modo discursivo descriptivo porque expone y caracteriza objetivamente cómo las plataformas digitales sirven de canal para los vínculos afectivos contemporáneos."
@@ -40,11 +41,11 @@ const questionBank = [
     id: "m02-q03",
     prompt: "¿Cuál de los siguientes sucesos NO corresponde a un fenómeno natural y por qué?",
     type: "choice",
-    correct: "La marea negra, porque se produce como resultado del derrame de petróleo.",
+    correct: "La marea negra, porque se produce como resultado del derrame de petróleo, que es una actividad exclusivamente humana.",
     distractors: [
       "El cambio climático, porque ha sufrido cambios a lo largo del tiempo.",
-      "La aurora boreal, porque es producto del choque de la energía solar con la ionosfera.",
-      "La formación de icebergs, ya que es un fenómeno que ocurre espontáneamente."
+      "La aurora boreal, porque es producto del choque de la energía solar con la ionósfera.",
+      "La formación de icebergs, ya que es un fenómeno que ocurre espontáneamente sin la intervención del hombre."
     ],
     hint: "Identifica el evento que deriva directamente de un accidente o actividad industrial humana y no de las leyes de la naturaleza.",
     explanation: "La marea negra es un desastre antropogénico causado por el vertido accidental o negligente de hidrocarburos, a diferencia de los procesos geológicos o atmosféricos propios de la Tierra."
@@ -60,28 +61,28 @@ const questionBank = [
       },
       {
         left: "Síntesis",
-        right: "Expresa con palabras propias las ideas principales de un texto."
+        right: "Recaba las ideas principales de un texto de forma breve."          
       },
       {
         left: "Resumen",
-        right: "Recaba las ideas principales de un texto de forma breve."
+        right: "Expresa con palabras propias las ideas principales de un texto."
       }
     ],
-    hint: "El esquema organiza visualmente la jerarquía; la síntesis reelabora con vocabulario personal; el resumen extrae las ideas condensadas del texto original.",
-    explanation: "Los esquemas ofrecen una panorámica gráfica y conceptual del contenido; la síntesis interpreta y reconstruye con lenguaje propio; y el resumen sintetiza con fidelidad las proposiciones esenciales del texto fuente."
+    hint: "El esquema organiza visualmente la jerarquía; el resumen reelabora con vocabulario personal; la síntesis extrae las ideas condensadas del texto original.",
+    explanation: "Los esquemas ofrecen una panorámica gráfica y conceptual del contenido; el resumen interpreta y reconstruye con lenguaje propio; y la síntesis abrevia las proposiciones esenciales del texto fuente sin cambiar el lenguaje."
   },
   {
     id: "m02-q06",
-    prompt: "Se estableció un plan de trabajo de 21 días en una universidad para aumentar el dominio de herramientas tecnológicas en los estudiantes, obteniéndose los siguientes resultados.<br><br>A partir de los resultados presentados en la gráfica, identifica la aseveración que NO COINCIDE con los datos.",
+    prompt: "Se estableció un plan de trabajo en una universidad para aumentar el dominio de herramientas tecnológicas en los estudiantes. De acuerdo a la gráfica de resultados, identifica la afirmación que no coincide con los datos.",
     image: "assets/m02_grafica_plan_trabajo.png",
     type: "choice",
-    correct: "Predominó una frecuencia de mayor dominio entre las mujeres que entre los hombres.",
+    correct: "El dominio de la tecnología inicial de hombres y mujeres se duplicó al término del proyecto.",
     distractors: [
-      "El dominio de la tecnología inicial de hombres y mujeres se duplicó al término del proyecto.",
+      "Predominó una frecuencia de mayor dominio entre las mujeres que entre los hombres.",
       "Al término del proyecto los hombres obtuvieron resultados ligeramente superiores.",
       "Hombres y mujeres iniciaron las actividades del proyecto con un mismo nivel de dominio."
     ],
-    hint: "Analiza qué curva o serie de puntos se ubica por encima durante la mayor parte del periodo de 21 días.",
+    hint: null,
     explanation: "La gráfica muestra que la trayectoria de los hombres superó de forma consistente a la de las mujeres en la mayor parte del seguimiento, por lo que es falso afirmar que predominó un mayor dominio en el grupo femenino."
   },
   {
@@ -99,7 +100,7 @@ const questionBank = [
   },
   {
     id: "m02-q08",
-    prompt: "José, responsable de una dirección de la Secretaría de Turismo, está encargado de producir un \"boletín\" informativo sobre los aspectos ambientales y su relación en las actividades turísticas, así como noticias sobre las nuevas leyes ambientales y turísticas, avisos relacionados con el sector y anuncios clasificados. ¿Cuál de las siguientes características es correcta con relación a la elección de este tipo de material informativo?",
+    prompt: "¿Cuál de las siguientes características es correcta respecto al boletín como material informativo?",
     type: "choice",
     correct: "Se debe publicar en forma periódica y tener una vigencia.",
     distractors: [
@@ -127,24 +128,24 @@ const questionBank = [
     id: "m02-q10",
     prompt: "¿Por qué es importante distinguir la expresión ideológica del autor en un material de consulta?",
     type: "choice",
-    correct: "Porque determina el tratamiento de la información.",
+    correct: "Porque genera una visión propia.",
     distractors: [
-      "Porque genera una visión propia.",
+      "Porque determina el tratamiento de la información.",
       "Porque mejora la calidad del ensayo.",
       "Porque valida la fuente de información."
     ],
-    hint: "La postura política, social o filosófica del autor influye directamente en el ángulo con el que se interpretan y presentan los hechos.",
+    hint: null,
     explanation: "Reconocer la postura ideológica del emisor permite entender desde qué marco interpretativo selecciona datos, formula argumentos y orienta su mensaje."
   },
   {
     id: "m02-q11",
-    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto, pero en palabras del investigador y sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
+    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto en palabras del investigador y sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
     type: "choice",
-    correct: "De paráfrasis y sin comillas.",
+    correct: "Ficha de paráfrasis y sin comillas.",
     distractors: [
-      "Mixta y entre comillas.",
-      "De comentario y entre comillas.",
-      "Textual y entre paréntesis."
+      "Ficha mixta y entre comillas.",
+      "Ficha de comentario y entre comillas.",
+      "Ficha textual y entre paréntesis."
     ],
     hint: "Cuando se reproduce con vocabulario propio no se usan comillas, a diferencia de la cita textual literal.",
     explanation: "La ficha de paráfrasis reescribe el contenido fuente con redacción propia preservando el sentido original; al no ser una cita textual, no lleva comillas."
@@ -193,7 +194,8 @@ const questionBank = [
   },
   {
     id: "m02-q15",
-    prompt: "A partir de la lectura de \"El amor en las redes sociales\", ¿cuál es la postura del autor sobre las relaciones sociales a través de Internet?",
+    prompt: "A partir de la lectura del texto, ¿cuál es la postura del autor sobre las relaciones sociales a través de Internet?",
+    image: "assets/m02_amor_en_redes.png",
     type: "choice",
     correct: "Indica que el ciberespacio permite a las personas sociables ampliar sus contactos.",
     distractors: [
@@ -219,13 +221,13 @@ const questionBank = [
   },
   {
     id: "m02-q17",
-    prompt: "A continuación, se presenta una ficha. Indica a qué tipo corresponde y qué información le falta especificar:<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-3 rounded-lg text-xs leading-relaxed font-sans\"><div class=\"flex justify-between font-bold border-b pb-1 mb-2\"><span>El Cid en la épica</span><span>ECelE</span></div>El penúltimo cantar gesta español es el <i>Poema de Mio Cid</i>. Este género de desarrolló durante los siglos X al XIV. El serio carácter castellano no permitía divagaciones; sin exageraciones sobre el personaje histórico, va elevando a éste de la realidad tangible a los altos planos de la grandeza épica.<br>Homero puede inventar batallas inexistentes. Nuestro poeta no puede proceder de la misma manera, hay que hablar con la verdad en la mano, que lo grotesco no sea sarcástico con un héroe histórico, que ha consagrado su vida a alejar al odiado enemigo de los límites de sus villas y ciudades.<br>Las escenas familiares se multiplican, pero ¡con cuánta dignidad están relatadas!. El episodio de las arcas de arena es tópico literario; pero el poeta aleja con cuidado al Cid de compararlo con un vulgar estafador. Martín Antolínez es el encargado de llevar a cabo la negociación del préstamo. Raquel y Vidas parecen los que piden el préstamo, aunque son los que le prestan el dinero al Cid.</div>",
+    prompt: "¿Qué tipo de ficha se muestra y qué información le falta especificar?<br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-3 rounded-lg text-xs leading-relaxed font-sans\"><div class=\"flex justify-between font-bold border-b pb-1 mb-2\"><span>El Cid en la épica</span><span>ECelE</span></div>El penúltimo cantar gesta español es el <i>Poema de Mio Cid</i>. Este género de desarrolló durante los siglos X al XIV. El serio carácter castellano no permitía divagaciones; sin exageraciones sobre el personaje histórico, va elevando a éste de la realidad tangible a los altos planos de la grandeza épica.<br>Homero puede inventar batallas inexistentes. Nuestro poeta no puede proceder de la misma manera, hay que hablar con la verdad en la mano, que lo grotesco no sea sarcástico con un héroe histórico, que ha consagrado su vida a alejar al odiado enemigo de los límites de sus villas y ciudades.<br>Las escenas familiares se multiplican, pero ¡con cuánta dignidad están relatadas!. El episodio de las arcas de arena es tópico literario; pero el poeta aleja con cuidado al Cid de compararlo con un vulgar estafador. Martín Antolínez es el encargado de llevar a cabo la negociación del préstamo. Raquel y Vidas parecen los que piden el préstamo, aunque son los que le prestan el dinero al Cid.</div>",
     type: "choice",
-    correct: "Ficha de resumen - referencia.",
+    correct: "Ficha de resumen; falta la referencia.",
     distractors: [
-      "Ficha técnica - referencia.",
-      "Ficha técnica - autor.",
-      "Ficha de resumen - autor."
+      "Ficha técnica; falta la referencia.",
+      "Ficha técnica; falta el autor.",
+      "Ficha de resumen; falta el autor."
     ],
     hint: "El cuerpo sintetiza ideas centrales de una obra literaria, pero carece de los datos de la fuente editorial o publicación.",
     explanation: "Contiene la condensación conceptual de un texto crítico (ficha de resumen), pero omite la referencia bibliográfica completa que respalda la procedencia de la obra."
@@ -236,12 +238,12 @@ const questionBank = [
     type: "drag_order",
     correctOrder: [
       "Elegir un tema específico.",
-      "Buscar bibliografía especializada.",
       "Elaborar un bosquejo del contenido de la investigación.",
+      "Buscar bibliografía especializada.",      
       "Realizar fichas bibliográficas y clasificar las obras por orden de importancia."
     ],
     hint: "Inicia con la delimitación temática, continúa con la localización de fuentes y procede al diseño del esquema previo a la catalogación sistemática.",
-    explanation: "La metodología documental parte de la delimitación temática (1), búsqueda de fuentes pertinentes (2), organización del esquema preliminar (3) y registro analítico en fichas (4)."
+    explanation: "La metodología documental parte de la delimitación temática, la organización del esquema preliminar, la búsqueda de fuentes pertinentes y el registro analítico en fichas."
   },
   {
     id: "m02-q19",
@@ -258,12 +260,13 @@ const questionBank = [
   },
   {
     id: "m02-q20",
-    prompt: "Tomando en cuenta el texto \"El amor en las redes sociales\", ¿puede afirmarse que la información presentada por el autor es de actualidad? Justifica la respuesta.",
+    prompt: "¿Puede afirmarse que la información presentada por el autor de este texto es de actualidad? ¿Por qué?",
+    image: "assets/m02_amor_en_redes.png",
     type: "choice",
-    correct: "Sí, detalla las formas vigentes para comunicarse y establecer relaciones sociales.",
+    correct: "Sí, porque detalla las formas vigentes para comunicarse y establecer relaciones sociales.",
     distractors: [
       "Sí, porque describe el futuro de la comunicación y de las relaciones sociales.",
-      "No, describe las formas de actuar cuando entró en boga el uso de las redes sociales.",
+      "No, porque describe las formas de actuar cuando entró en boga el uso de las redes sociales.",
       "No, porque describe un escenario que no refleja la realidad social en el país."
     ],
     hint: "Trata sobre el uso cotidiano de plataformas digitales para el cortejo y las redes profesionales en el presente.",
@@ -275,19 +278,19 @@ const questionBank = [
     type: "match_columns",
     pairs: [
       {
-        left: "Después de todo, al mismo tiempo, pero.",
+        left: "<i>Después de todo</i>, <i>al mismo tiempo</i>, <i>pero</i>.",
         right: "Contraste."
       },
       {
-        left: "En conclusión, en resumen, por lo tanto.",
+        left: "<i>En conclusión</i>, <i>en resumen</i>, <i>por lo tanto</i>.",
         right: "Síntesis."
       },
       {
-        left: "Después de, antes de, inmediatamente.",
+        left: "<i>Después de</i>, <i>antes de</i>, <i>inmediatamente</i>.",
         right: "Tiempo."
       }
     ],
-    hint: "Uno establece oposición o salvedad; otro clausura o resume lo expuesto; y el último sitúa cronológicamente las acciones.",
+    hint: "Uno establece oposición o comparación; otro clausura o resume lo expuesto; y el último sitúa cronológicamente las acciones.",
     explanation: "Los conectores adversativos y concesivos expresan contraste; las locuciones conclusivas estructuran la síntesis; y los adverbios temporales marcan la secuencia cronológica de los hechos."
   },
   {
@@ -297,17 +300,20 @@ const questionBank = [
     correctAnswers: [
       "Económico.",
       "Social.",
-      "Político."
+      "Político.",
+      "Cultural."
     ],
     distractors: [
-      "Cultural."
+      "Tecnológico.",
+      "Geográfico",
+      "Legal."
     ],
     hint: "Afecta los presupuestos estatales, detona migraciones humanas y reconfigura los acuerdos de gobernanza internacional.",
     explanation: "El impacto del cambio climático trasciende lo ecológico al causar severas pérdidas económicas, tensiones políticas y desplazamientos sociales forzados."
   },
   {
     id: "m02-q23",
-    prompt: "Completa el siguiente enunciado con la información que corresponda:<br><br>En un texto narrativo existen diversas particularidades lingüísticas entre las que se pueden citar: verbos de acción, marcas lingüísticas y ________.",
+    prompt: "Además de los verbos de acción y las marcas lingüísticas, ¿qué otras particularidades lingüísticas existen en los textos narrativos?",
     type: "choice",
     correct: "Conectores temporales.",
     distractors: [
@@ -344,31 +350,39 @@ const questionBank = [
     hint: "Es el entorno sociohistórico particular que rodea la creación de la obra o discurso.",
     explanation: "El contexto de producción abarca el conjunto de condiciones políticas, económicas y culturales que influyen en el autor al momento de concebir su texto."
   },
-  {
+{
     id: "m02-q26",
-    prompt: "Analiza la siguiente nota informativa para identificar cuáles de estas preguntas responde:<br><br><b>Intel presentó su prototipo de smartwatch</b><br><br>El director ejecutivo de Intel, Brian Krzanich, anunció que la empresa trabaja en su propio smartwatch. Aunque el accesorio será similar al Pebble o al Samsung Galaxy Gear, éste no dependerá de un smartphone para funcionar, pues contará con conectividad propia. Asimismo, incluirá tecnología de geocercas, lo que le permitirá recibir notificaciones basadas en localización. Intel mostró varios ejemplos de tecnología portátil, lo que nos lleva a pensar que a lo largo de este año, la atención de la compañía se centrará en dispositivos de menor tamaño. \"Lo portátil no está en todos lados hoy, porque no resuelve problemas importantes y porque no ha sido integrado en nuestro estilo de vida\", comentó Krzanich. \"Estamos enfocados en atacar este reto de ingeniería e innovación\", añadió.<br><br>Intel también desarrolló un chip del tamaño de una tarjeta SD que es alimentado por Quark SOC, al que llamó Intel Edison. La compañía quiere que en el futuro, esta tecnología les permita convertir dispositivos como el smartwatch en computadoras inalámbricas.<br><br>¿Cuáles preguntas responde la nota informativa?",
-    type: "choice",
-    correct: "¿Qué? ¿Quién? ¿Cómo? ¿Por qué?",
-    distractors: [
-      "¿Qué? ¿Cómo? ¿Cuándo? ¿Dónde?",
-      "¿Quién? ¿Cómo? ¿Por qué?",
-      "¿Qué? ¿Quién? ¿Cuándo?"
+    prompt: "A partir de la siguiente nota informativa, selecciona las preguntas a las que el texto da respuesta.",
+    image: "assets/m02_intel.png",
+    type: "multi_select",
+    correctAnswers: [
+      "¿Qué?",
+      "¿Quién?",
+      "¿Cómo?",
+      "¿Por qué?"
     ],
-    hint: "Responde al suceso (presentación del smartwatch), al actor (director de Intel), a la operación técnica y a las razones de innovación tecnológica.",
-    explanation: "La nota detalla el hecho (¿Qué?), el protagonista corporativo (¿Quién?), el funcionamiento autónomo del dispositivo (¿Cómo?) y la visión estratégica para solucionar vacíos tecnológicos (¿Por qué?)."
+    distractors: [
+      "¿Cuándo?",
+      "¿Dónde?"
+    ],
+    hint: "El texto detalla el suceso, el protagonista, el funcionamiento técnico y los motivos de diseño, pero omite fechas exactas y sedes de presentación.",
+    explanation: "La nota responde a: <i>¿Qué?</i> (presentación del prototipo de smartwatch y chip Quark SOC), <i>¿Quién?</i> (Brian Krzanich, CEO de Intel), <i>¿Cómo?</i> (funcionamiento autónomo con geocercas y conectividad propia) y <i>¿Por qué?</i> (para resolver problemas de integración cotidiana mediante innovación tecnológica). En cambio, no menciona fechas precisas (<i>¿Cuándo?</i>) ni el lugar geográfico del anuncio (<i>¿Dónde?</i>)."
   },
   {
     id: "m02-q27",
-    prompt: "Para conocer el impacto que ha tenido la Tecnología de la Información y Comunicación en la enseñanza media superior, ¿qué tipo de investigación debe usarse?",
-    type: "choice",
-    correct: "1, 3",
-    distractors: [
-      "Solo 3",
-      "Solo 2",
-      "2, 3"
+    prompt: "Para conocer el impacto que ha tenido la Tecnología de la Información y Comunicación en la enseñanza media superior, ¿qué tipos de investigación deben usarse?",
+    type: "multi_select",
+    correctAnswers: [
+      "De campo.",
+      "Documental."
     ],
-    hint: "Se requiere indagar la bibliografía existente y recopilar evidencias empíricas directamente en las aulas o planteles.",
-    explanation: "Se combinan la investigación documental (revisión de literatura previa y marcos curriculares) y la de campo (encuestas y entrevistas a docentes y alumnos en el entorno escolar)."
+    distractors: [
+      "Experimental.",
+      "Científica.",
+      "De laboratorio."
+    ],
+    hint: "Se requiere tanto revisar fuentes bibliográficas existentes como recabar datos directamente en el entorno escolar.",
+    explanation: "Se combinan la investigación documental (para fundamentar antecedentes, teorías y estadísticas previas) y la de campo (para recopilar información directamente de alumnos y docentes en los planteles escolares)."
   },
   {
     id: "m02-q28",
@@ -405,7 +419,7 @@ const questionBank = [
   },
   {
     id: "m02-q30",
-    prompt: "Irma va a preparar un folleto para concientizar a la comunidad sobre las actividades que todos debemos realizar para contribuir a la desaceleración del cambio climático.<br><br>Selecciona las características que debe poseer el folleto:",
+    prompt: "¿Qué características debe poseer un folleto?",
     type: "multi_select",
     correctAnswers: [
       "Imágenes explicativas.",
