@@ -331,7 +331,7 @@ const questionBank = [
     prompt: "¿Cuáles son las coordenadas del punto $T$?",
     image: "assets/m19_geogebra_puntoT.png",
     type: "choice",
-    correct: "$(-2, -5.5)$$",
+    correct: "$(-2, -5.5)$",
     distractors: [
       "$(-5.5, -2)$",
       "$(-5, -2)$",
