@@ -51,7 +51,7 @@ const questionBank = [
   },
   {
     id: "m02-q05",
-    prompt: "Relaciona los tipos de estrategias didácticas con su definición correspondiente:",
+    prompt: "Relaciona los tipos de estrategias didácticas con su definición.",
     type: "match_columns",
     pairs: [
       {
@@ -138,7 +138,7 @@ const questionBank = [
   },
   {
     id: "m02-q11",
-    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto en palabras del investigador y sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
+    prompt: "¿Cómo se llama la ficha de trabajo que repite la idea de un texto en palabras del investigador sin distorsionar la idea original? ¿Cómo se incluye en el texto?",
     type: "choice",
     correct: "Ficha de paráfrasis y sin comillas.",
     distractors: [
@@ -232,7 +232,7 @@ const questionBank = [
   },
   {
     id: "m02-q18",
-    prompt: "Ordena los pasos a seguir en una investigación documental:",
+    prompt: "Ordena los pasos a seguir en una investigación documental.",
     type: "drag_order",
     correctOrder: [
       "Elegir un tema específico.",
@@ -271,7 +271,7 @@ const questionBank = [
   },
   {
     id: "m02-q21",
-    prompt: "Relaciona los ejemplos con el tipo de conjunción o nexo al que corresponden:",
+    prompt: "Relaciona los ejemplos con el tipo de conjunción al que corresponden.",
     type: "match_columns",
     pairs: [
       {
@@ -349,7 +349,7 @@ const questionBank = [
   },
   {
     id: "m02-q26",
-    prompt: "A partir de la siguiente nota informativa, selecciona las preguntas a las que el texto da respuesta. <div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">Intel presentó su prototipo de smartwatch</b></div><p class=\"mb-2.5\">El director ejecutivo de Intel, Brian Krzanich, anunció que la empresa trabaja en su propio <i>smartwatch</i>. Aunque el accesorio será similar al Pebble o al Samsung Galaxy Gear, este no dependerá de un <i>smartphone</i> para funcionar, pues contará con conectividad propia. Asimismo, incluirá tecnología de geocercas, lo que le permitirá recibir notificaciones basadas en localización. Intel mostró varios ejemplos de tecnología portátil, lo que nos lleva a pensar que a lo largo de este año, la atención de la compañía se centrará en dispositivos de menor tamaño. \"Lo portátil no está en todos lados hoy, porque no resuelve problemas importantes y porque no ha sido integrado en nuestro estilo de vida\", comentó Krzanich. \"Estamos enfocados en atacar este reto de ingeniería e innovación\", añadió.</p><p>Intel también desarrolló un chip del tamaño de una tarjeta SD que es alimentado por Quark SOC, al que llamó Intel Edison. La compañía quiere que en el futuro, esta tecnología les permita convertir dispositivos como el <i>smartwatch</i> en computadoras inalámbricas.</p></div>",
+    prompt: "A partir de la siguiente nota informativa, selecciona las preguntas a las que el texto da respuesta. <br><br><div class=\"bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 p-4 rounded-xl text-xs sm:text-sm leading-relaxed font-sans text-justify shadow-2xs\"><div class=\"border-b border-stone-200 dark:border-stone-700 pb-2 mb-3\"><b class=\"text-sm sm:text-base text-auge-dark dark:text-stone-100 font-bold\">Intel presentó su prototipo de smartwatch</b></div><p class=\"mb-2.5\">El director ejecutivo de Intel, Brian Krzanich, anunció que la empresa trabaja en su propio <i>smartwatch</i>. Aunque el accesorio será similar al Pebble o al Samsung Galaxy Gear, este no dependerá de un <i>smartphone</i> para funcionar, pues contará con conectividad propia. Asimismo, incluirá tecnología de geocercas, lo que le permitirá recibir notificaciones basadas en localización. Intel mostró varios ejemplos de tecnología portátil, lo que nos lleva a pensar que a lo largo de este año, la atención de la compañía se centrará en dispositivos de menor tamaño. \"Lo portátil no está en todos lados hoy, porque no resuelve problemas importantes y porque no ha sido integrado en nuestro estilo de vida\", comentó Krzanich. \"Estamos enfocados en atacar este reto de ingeniería e innovación\", añadió.</p><p>Intel también desarrolló un chip del tamaño de una tarjeta SD que es alimentado por Quark SOC, al que llamó Intel Edison. La compañía quiere que en el futuro, esta tecnología les permita convertir dispositivos como el <i>smartwatch</i> en computadoras inalámbricas.</p></div>",
     type: "multi_select",
     correctAnswers: [
       "¿Qué?",
@@ -366,7 +366,7 @@ const questionBank = [
   },
   {
     id: "m02-q27",
-    prompt: "Para conocer el impacto que ha tenido la tecnología de la información y comunicación en la enseñanza media superior, ¿qué tipos de investigación deben usarse?",
+    prompt: "Para conocer el impacto que han tenido las tecnologías de la información y comunicación en la enseñanza media superior, ¿qué tipos de investigación deben usarse?",
     type: "multi_select",
     correctAnswers: [
       "De campo.",
